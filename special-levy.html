@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BC Special Levy Calculator — Split a Special Levy by Unit Entitlement | Strata Property Act</title>
-<meta name="description" content="Free calculator for BC strata treasurers: split a special levy across units by unit entitlement, the legally correct method under the Strata Property Act, with the math shown in full.">
+<meta name="description" content="Free calculator for BC strata treasurers: split a special levy across units by unit entitlement — the standard section 99 method behind a 3/4-vote levy — with the math and the vote threshold shown in full.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -115,6 +115,34 @@
   }
   .verified-badge .check{color:var(--spruce);font-weight:700}
 
+  .flag{
+    margin:-8px 0 20px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.88rem;border-radius:0 8px 8px 0;
+  }
+  .flag .ref{opacity:.85}
+
+  .checklist{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .checklist h3{
+    font-family:'Zilla Slab',serif;font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .checklist .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .checklist ul{list-style:none;font-size:.9rem}
+  .checklist li{
+    display:flex;gap:9px;align-items:baseline;
+    padding:5px 0;color:#3D4C47;
+  }
+  .checklist li::before{
+    content:"☐";color:var(--spruce);flex:none;font-size:.95rem;
+  }
+  .checklist .done::before{content:"☑"}
+  .checklist .cite{
+    margin-top:11px;font-size:.8rem;color:#5E6E68;
+  }
+
   .table-wrap{margin-top:26px;overflow-x:auto}
   table{width:100%;border-collapse:collapse;font-size:.92rem}
   thead th{
@@ -194,7 +222,7 @@
   <header>
     <p class="eyebrow">British Columbia · Strata Property Act</p>
     <h1>How much does each unit owe on our special levy?</h1>
-    <p class="lede">Enter the total levy and each unit's entitlement. Get the per-unit breakdown — split by unit entitlement, the way the Act actually requires, not equal shares and not headcount.</p>
+    <p class="lede">Enter the total levy and each unit's entitlement. Get the per-unit breakdown — split by unit entitlement, the standard method behind a 3/4-vote levy. A different split is lawful too, but it takes a unanimous vote.</p>
   </header>
 
   <div class="card">
@@ -224,6 +252,10 @@
         <div class="unit-rows" id="unitRows"></div>
         <button type="button" class="add-row" id="addRow">+ Add unit</button>
       </div>
+
+      <p class="flag" id="equalFlag">
+        <strong>Check your vote threshold.</strong> If every unit's entitlement really is identical on your Schedule of Unit Entitlement, an equal split <em>is</em> the section 99 result and a 3/4 vote carries it. If the entitlements differ, splitting equally is a "fair division" under s. 108(2)(b) instead — lawful, but only by <strong>unanimous vote</strong>. <span class="ref">SPA s. 108(2)</span>
+      </p>
     </div>
 
     <button id="calc" class="no-print">Calculate each unit's share</button>
@@ -234,7 +266,7 @@
         <p class="k">Total special levy</p>
         <p class="date" id="totalStamp">—</p>
       </div>
-      <p class="verified-badge">✓ Verified August 12, 2026 · Strata Property Act ss. 99, 108</p>
+      <p class="verified-badge">✓ Verified August 13, 2026 · Strata Property Act ss. 99, 108(2)–(3)</p>
       <p class="buffer" id="reconcileNote"></p>
 
       <div class="table-wrap">
@@ -247,6 +279,19 @@
             <tr><td colspan="3">Total</td><td class="num" id="tableTotal">—</td></tr>
           </tfoot>
         </table>
+      </div>
+
+      <div class="checklist">
+        <h3>Before this levy is valid, the resolution must say five things</h3>
+        <p class="sub">The numbers above cover two of them. The approving resolution has to set out all five.</p>
+        <ul>
+          <li><span>The <strong>purpose</strong> of the levy</span></li>
+          <li class="done"><span>The <strong>total amount</strong> of the levy</span></li>
+          <li><span>The <strong>method</strong> used to determine each strata lot's share</span></li>
+          <li class="done"><span>The <strong>amount of each strata lot's share</strong></span></li>
+          <li><span>The <strong>date the levy is payable</strong> — or, if paid in instalments, the date of each instalment</span></li>
+        </ul>
+        <p class="cite">Strata Property Act s. 108(3). Miss one and the resolution can be challenged, even when the arithmetic is right.</p>
       </div>
 
       <div class="copybar no-print">
@@ -281,14 +326,17 @@
   </section>
 
   <section class="explain">
-    <h2>Why unit entitlement, not equal shares</h2>
-    <p>Section 108 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_04" rel="noopener">Strata Property Act</a> lets a strata corporation approve a special levy by a 3/4 vote — but only if each strata lot's share is calculated using the same formula as regular strata fees, set out in section 99. That formula divides costs by <strong>unit entitlement</strong>: each lot's share is its own entitlement number divided by the total entitlement of every lot in the strata plan, applied to the total levy. It is almost never an equal split per unit, and it is never a per-person or per-vote split.</p>
+    <h2>Two lawful ways to split a levy — and the vote each one needs</h2>
+    <p>Under section 108 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_06" rel="noopener">Strata Property Act</a>, a strata calculates each lot's share of a special levy one of two ways. The standard method is by <strong>unit entitlement</strong> (section 99), approved by a <strong>3/4 vote</strong>. A strata may instead use any method that is a fair division of expenses for that levy — including equal shares — but that route requires a <strong>unanimous vote</strong> (section 108(2)(b)).</p>
+    <p>So unit entitlement is not the only legal answer; it is the one that carries on a 3/4 vote, which is why it is what most stratas use and what this calculator applies by default. The formula divides costs by entitlement: each lot's share is its own entitlement number divided by the total entitlement of every lot in the strata plan, applied to the total levy. It is rarely an equal split, and it is never a per-person or per-vote split.</p>
     <p>Unit entitlement numbers come from the Schedule of Unit Entitlement filed at the Land Title Office under section 246 — usually a fixed number tied to each lot's size or type, set when the strata plan was registered. Boards should pull these from the strata plan or the strata's records, not estimate them.</p>
-    <p>The one exception: section 108(2)(b) allows a strata corporation to apportion a levy "another way that establishes a fair division of expenses" — including equally, or by some other formula — but only with a <strong>unanimous vote</strong>, not the standard 3/4. If your levy was approved by anything less than a unanimous resolution, the unit-entitlement formula this calculator uses is the legally correct one. If it was unanimous and the minutes describe a different split, follow the minutes instead.</p>
+    <p>Two practical consequences. If your levy passed on a 3/4 vote, it has to be the section 99 entitlement split — a 3/4 vote cannot authorise an equal split unless the entitlements happen to be equal. And if the meeting minutes describe some other division, that division is only good if the resolution passed unanimously. Either way, check your own bylaws and the minutes before relying on the numbers here.</p>
 
     <dl class="faq">
       <dt>Can our strata split a levy equally instead of by entitlement?</dt>
-      <dd>Only with a unanimous vote under s. 108(2)(b). A standard 3/4 vote special levy must use the s. 99 unit-entitlement formula. Check how your levy was actually approved before using any other split.</dd>
+      <dd>Yes, but it takes a unanimous vote under s. 108(2)(b) — an equal split is a "fair division," not the s. 99 formula. The exception: if every lot's entitlement is already identical, the s. 99 result <em>is</em> an equal split, and a 3/4 vote carries it. Check how your levy was actually approved before using any other split.</dd>
+      <dt>What has to be written into the resolution itself?</dt>
+      <dd>Five things, under s. 108(3): the purpose, the total amount, the method used to determine each lot's share, each lot's share, and the payment date or instalment dates. A levy with correct arithmetic can still be challenged if the resolution omits one of them.</dd>
       <dt>Where do we find each unit's entitlement number?</dt>
       <dd>On the Schedule of Unit Entitlement filed with the strata plan at the Land Title Office (SPA s. 246), or in your strata's council/AGM package — it doesn't change unless the strata plan is amended.</dd>
       <dt>What if our strata is divided into sections?</dt>
@@ -301,7 +349,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 99, 100, 108 and 246. Last verified August 12, 2026 against the official consolidations at bclaws.gov.bc.ca.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 99, 100, 108 and 246. Last verified August 13, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 4, 2026.</p>
     <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
   </footer>
 </div>
@@ -317,6 +365,7 @@
       unitCount=document.getElementById('unitCount'),
       unitRows=document.getElementById('unitRows'),
       addRow=document.getElementById('addRow'),
+      equalFlag=document.getElementById('equalFlag'),
       calcBtn=document.getElementById('calc'),
       err=document.getElementById('err'),
       result=document.getElementById('result'),
@@ -332,6 +381,7 @@
 
   var fmtMoney=new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'});
   var fmtDate=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'long',day:'numeric'});
+  var VERIFIED=new Date(2026,7,13);
 
   function addUnitRow(label,ent){
     var row=document.createElement('div');
@@ -357,7 +407,9 @@
     var custom=modeCustom.checked;
     equalBlock.style.display=custom?'none':'block';
     customBlock.style.display=custom?'block':'none';
+    equalFlag.style.display=custom?'none':'block';
   }
+  toggleMode();
   modeEqual.addEventListener('change',toggleMode);
   modeCustom.addEventListener('change',toggleMode);
 
@@ -454,7 +506,11 @@
     if(!total||!units)return;
     var name=strataName.value.trim();
     var who=name?('for '+name):'for the strata corporation';
-    var sentence='Special levy of '+fmtMoney.format(total)+' '+who+', apportioned by unit entitlement across '+units.length+' strata lots per Strata Property Act s. 108 (unit-entitlement formula under s. 99). Verified '+fmtDate.format(new Date(2026,7,12))+' against the Strata Property Act. Full per-unit breakdown below.';
+    var sentence='Special levy of '+fmtMoney.format(total)+' '+who+', apportioned by unit entitlement across '+units.length+
+      ' strata lots using the section 99 formula — the method approved by a 3/4 vote under Strata Property Act s. 108(2)(a). '+
+      'A different division of the levy would be lawful only by unanimous vote under s. 108(2)(b). '+
+      'The approving resolution must also set out the purpose of the levy, the total amount, the method used, each lot’s share, and the payment or instalment dates (s. 108(3)). '+
+      'Verified '+fmtDate.format(VERIFIED)+' against the Strata Property Act. Full per-unit breakdown below.';
     navigator.clipboard.writeText(sentence).then(function(){
       copiedNote.classList.add('show');
       setTimeout(function(){copiedNote.classList.remove('show');},2000);
