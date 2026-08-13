@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Quorum Calculator — Do We Have Quorum for Our General Meeting? | Strata Property Act</title>
+<meta name="description" content="Free calculator for BC strata councils: work out how many votes you need present in person or by proxy for quorum at an AGM or SGM under Strata Property Act s. 48, plus the adjournment rule if you fall short.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --spruce:#1E4A43;
+    --spruce-deep:#123833;
+    --paper:#FAF9F5;
+    --ink:#22302D;
+    --sage:#8CA79C;
+    --line:#DDD9CE;
+    --amber:#8A6100;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:'Public Sans',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="number"]{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input[type="number"]:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .pair{display:flex;gap:14px;flex-wrap:wrap}
+  .pair>div{flex:1;min-width:150px}
+  .subhead{
+    font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--spruce);margin:6px 0 12px;padding-top:16px;border-top:1px solid var(--line);
+  }
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.5rem,5vw,2rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:6px}
+
+  .verdict{
+    margin-top:12px;padding:14px 18px;border-radius:8px;
+    font-weight:700;font-size:1rem;display:none;
+  }
+  .verdict.met{background:#EAF3EE;color:#1E4A43;border-left:3px solid #2C6B60}
+  .verdict.notmet{background:#FAEFEC;color:#8F2D1E;border-left:3px solid #8F2D1E}
+  .verdict .detail{display:block;font-weight:400;font-size:.9rem;margin-top:4px}
+
+  .buffer{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.92rem;border-radius:0 8px 8px 0;
+  }
+  .flag{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.88rem;border-radius:0 8px 8px 0;
+  }
+  .flag .ref{opacity:.85}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:14px;font-size:.82rem;color:#3D4C47;
+    background:#EEF3F0;border:1px solid var(--line);
+    border-radius:20px;padding:5px 12px;
+  }
+  .verified-badge .check{color:var(--spruce);font-weight:700}
+
+  .strip{margin-top:26px}
+  .strip h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .legend{list-style:none;font-size:.9rem}
+  .legend li{display:flex;gap:10px;align-items:baseline;margin-bottom:8px}
+  .dot{width:11px;height:11px;border-radius:3px;flex:none;transform:translateY(1px)}
+  .d1{background:#2C6B60}.d2{background:#5B8F82}.d3{background:#8CA79C}
+  .legend .ref{color:#5E6E68;font-size:.82rem}
+
+  .adjourn{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .adjourn h3{
+    font-family:'Zilla Slab',serif;font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .adjourn .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .adjourn ol{list-style:none;counter-reset:step;font-size:.9rem}
+  .adjourn li{
+    display:flex;gap:10px;align-items:baseline;
+    padding:5px 0;color:#3D4C47;counter-increment:step;
+  }
+  .adjourn li::before{
+    content:counter(step);flex:none;
+    width:20px;height:20px;border-radius:50%;
+    background:var(--spruce);color:#fff;
+    font-size:.72rem;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center;
+    transform:translateY(2px);
+  }
+  .adjourn .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+
+  .email-capture{
+    margin-top:26px;padding:22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .email-capture h3{font-family:'Zilla Slab',serif;font-size:1.05rem;color:var(--spruce-deep);margin-bottom:6px}
+  .email-capture p{font-size:.9rem;color:#3D4C47;margin-bottom:14px;max-width:52ch}
+  .email-row{display:flex;gap:10px;flex-wrap:wrap}
+  .email-row input[type="email"]{
+    flex:1;min-width:180px;padding:11px 14px;font-size:.95rem;
+    font-family:inherit;border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .email-row button{width:auto;padding:11px 18px;font-size:.92rem;white-space:nowrap}
+  .email-note{margin-top:10px;font-size:.85rem;color:var(--spruce);font-weight:600;display:none}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:'Zilla Slab',serif;font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>Do we have quorum for our general meeting?</h1>
+    <p class="lede">Enter how many strata lots you have. Get the votes you need present — in person or by proxy — before any business can be conducted, and what happens if you fall short.</p>
+  </header>
+
+  <div class="card">
+    <div class="inputs no-print">
+      <label for="lots">Total strata lots <span class="hint">(one vote each under s. 53(1) — if a Schedule of Voting Rights gives different vote counts, enter your total votes instead)</span></label>
+      <input type="number" id="lots" min="1" step="1" placeholder="42">
+
+      <label for="owners">Number of separate owners <span class="hint">(optional — only changes the answer if it's fewer than 4)</span></label>
+      <input type="number" id="owners" min="1" step="1" placeholder="Leave blank if same as lots">
+
+      <p class="subhead">Who turned up (optional)</p>
+      <div class="pair">
+        <div>
+          <label for="inPerson">Votes present in person</label>
+          <input type="number" id="inPerson" min="0" step="1" placeholder="0">
+        </div>
+        <div>
+          <label for="proxy">Votes held by proxy</label>
+          <input type="number" id="proxy" min="0" step="1" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <button id="calc" class="no-print">Check our quorum</button>
+    <p class="error no-print" id="err"></p>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Quorum requires</p>
+        <p class="date" id="quorumStamp">—</p>
+        <p class="sub" id="quorumSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 13, 2026 · Strata Property Act s. 48</p>
+
+      <p class="verdict" id="verdict"></p>
+
+      <p class="flag">
+        <strong>Your own bylaws win.</strong> Section 48 sets this threshold "subject to the bylaws," and the adjournment rule applies "unless otherwise provided in the bylaws." A strata that has registered a different quorum bylaw follows that bylaw, not this number. Check your registered bylaws at the Land Title Office before relying on it. <span class="ref">SPA s. 48(2), 48(3)</span>
+      </p>
+
+      <div class="strip">
+        <h2>Where the number comes from</h2>
+        <ul class="legend">
+          <li id="legStd"><span class="dot d1"></span><span><strong>1/3 of the strata corporation's votes</strong> — the default quorum, held by eligible voters present in person or by proxy. <span class="ref">SPA s. 48(2)(a)</span></span></li>
+          <li id="legSmall"><span class="dot d2"></span><span><strong>2/3 of the strata corporation's votes</strong> — the higher threshold that applies because there are fewer than 4 strata lots or fewer than 4 owners. <span class="ref">SPA s. 48(2)(b)</span></span></li>
+          <li><span class="dot d3"></span><span><strong>Rounded up to a whole vote</strong> — a fraction of a vote can't attend, so reaching "1/3 of the votes" means the next whole number up. <span class="ref">Calculator's reading of s. 48(2)</span></span></li>
+        </ul>
+      </div>
+
+      <div class="adjourn">
+        <h3>If quorum isn't there, the meeting doesn't just fail</h3>
+        <p class="sub">Section 48(3) sets out exactly what happens next.</p>
+        <ol>
+          <li><span>Wait <strong>1/2 hour</strong> from the time the meeting was called for. If quorum still isn't present, the meeting stands adjourned.</span></li>
+          <li><span>It reconvenes <strong>the same day in the next week</strong>, at the same time and, if applicable, the same place.</span></li>
+          <li><span>At that reconvened meeting, wait another <strong>1/2 hour</strong>. If quorum still isn't present, <strong>the eligible voters who are there — in person or by proxy — are the quorum</strong>, however few.</span></li>
+        </ol>
+        <p class="cite">Strata Property Act s. 48(3), which applies unless your bylaws provide otherwise.</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+
+      <div class="email-capture no-print">
+        <h3>Want the full BC Strata Compliance Cheat Sheet?</h3>
+        <p>AGM notice, quorum, voting, levies, records, depreciation reports — every deadline your council needs, on one page.</p>
+        <div class="email-row">
+          <input type="email" id="guideEmail" placeholder="you@yourstrata.ca" aria-label="Email address">
+          <button type="button" id="guideBtn">Get the free guide →</button>
+        </div>
+        <p class="email-note" id="guideNote">Thanks — the guide is coming soon. Check back shortly.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/">AGM / SGM notice calculator</a></li>
+      <li><a href="/special-levy">Special levy calculator</a></li>
+      <li><span>Quorum calculator</span><span class="current">You're here</span></li>
+      <li><span>Voting threshold checker</span><span class="soon">Coming soon</span></li>
+      <li><span>Records request deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Strata fee / budget calculator</span><span class="soon">Coming soon</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>What quorum actually requires</h2>
+    <p>Quorum is the minimum turnout before your strata can do anything at a general meeting. Section 48(1) of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_04" rel="noopener">Strata Property Act</a> puts it bluntly: business must not be conducted at an annual or special general meeting unless a quorum is present. Vote without one and the decisions taken are open to challenge.</p>
+    <p>The threshold itself is in section 48(2):</p>
+    <p class="quote">"Subject to the bylaws, a quorum for an annual or special general meeting is (a) eligible voters holding 1/3 of the strata corporation's votes, present in person or by proxy, or (b) if there are fewer than 4 strata lots or fewer than 4 owners, eligible voters holding 2/3 of the strata corporation's votes, present in person or by proxy."</p>
+    <p>Two details in that wording do real work. The fraction is measured against <strong>the strata corporation's total votes</strong> — not against how many owners are eligible on the day, and not against how many bothered to show up. And the votes have to be held by <strong>eligible voters</strong>, so a lot whose vote can't be exercised — for example where the strata has registered a lien under section 53(2) — doesn't help you reach the number.</p>
+    <p>Proxies count the same as bodies in the room. Section 48(2) says "present in person or by proxy" for both thresholds, so a well-organised proxy round-up is a legitimate way to reach quorum.</p>
+
+    <h2 style="margin-top:32px">Where this calculator could be wrong for your strata</h2>
+    <p>Section 48(2) opens with the words "subject to the bylaws," and section 48(3) applies only "unless otherwise provided in the bylaws." That is not boilerplate — it means a strata corporation can register a bylaw setting a different quorum or a different adjournment procedure, and that bylaw governs instead of the numbers on this page.</p>
+    <p>Quorum is <em>not</em> one of the Standard Bylaws in the Schedule to the Act. The Schedule's only quorum bylaw is bylaw 16, "Quorum of council," which governs council meetings and has nothing to do with general meetings. So the figure here comes from the Act itself, and the only thing that can displace it is your strata's own registered bylaws. Pull them and check before you rely on this.</p>
+
+    <dl class="faq">
+      <dt>Do proxies count toward quorum?</dt>
+      <dd>Yes. Section 48(2) counts eligible voters "present in person or by proxy" for both the 1/3 and the 2/3 threshold.</dd>
+      <dt>Why does the calculator round up?</dt>
+      <dd>Because a third of a vote cannot attend a meeting. To have eligible voters <em>holding</em> 1/3 of the votes, you need at least that fraction, so any remainder rounds to the next whole vote. With 10 votes, a third is 3.33 and quorum is 4. This is the calculator's reading of s. 48(2); the Act does not spell out a rounding rule.</dd>
+      <dt>When does the 2/3 threshold apply?</dt>
+      <dd>When there are fewer than 4 strata lots <em>or</em> fewer than 4 owners — either one triggers it. One person owning three of a four-lot strata can put you under the "fewer than 4 owners" branch even though there are 4 lots, which is why the owner count is worth entering.</dd>
+      <dt>We waited half an hour and still had no quorum. Now what?</dt>
+      <dd>The meeting stands adjourned to the same day the following week, same time and place. If quorum still isn't there within half an hour of that meeting, whoever is present in person or by proxy constitutes quorum and the meeting proceeds (s. 48(3)) — unless your bylaws say otherwise.</dd>
+      <dt>Is one vote per strata lot always right?</dt>
+      <dd>Usually, but not always. Section 53(1) gives each strata lot one vote "unless different voting rights are set out in a Schedule of Voting Rights." If your strata has one — most often where residential and non-residential lots are mixed — use your total vote count instead of your lot count.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. Your registered bylaws govern if they differ, and for anything contested, talk to a strata lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 48, 53 and 54. Last verified August 13, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 4, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var lots=document.getElementById('lots'),
+      owners=document.getElementById('owners'),
+      inPerson=document.getElementById('inPerson'),
+      proxy=document.getElementById('proxy'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      quorumStamp=document.getElementById('quorumStamp'),
+      quorumSub=document.getElementById('quorumSub'),
+      verdict=document.getElementById('verdict'),
+      legStd=document.getElementById('legStd'),
+      legSmall=document.getElementById('legSmall'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote'),
+      guideBtn=document.getElementById('guideBtn'),
+      guideNote=document.getElementById('guideNote');
+
+  var fmtDate=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'long',day:'numeric'});
+  var VERIFIED=new Date(2026,7,13);
+
+  // s. 48(2): 1/3 of the strata corporation's votes, or 2/3 where there are
+  // fewer than 4 strata lots or fewer than 4 owners. Integer division keeps
+  // exact multiples exact; the remainder rounds up to a whole vote.
+  function quorumFor(totalVotes,ownerCount){
+    var small=(totalVotes<4)||(ownerCount!==null&&ownerCount<4);
+    var required=small?Math.ceil(totalVotes*2/3):Math.ceil(totalVotes/3);
+    return {required:required,small:small,fraction:small?'2/3':'1/3'};
+  }
+
+  function readInt(el){
+    var v=el.value.trim();
+    if(v==='')return null;
+    var n=parseInt(v,10);
+    return isNaN(n)?null:n;
+  }
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  calcBtn.addEventListener('click',function(){
+    var totalVotes=readInt(lots);
+    var ownerCount=readInt(owners);
+    var present=readInt(inPerson);
+    var byProxy=readInt(proxy);
+
+    if(totalVotes===null||totalVotes<1){
+      show('Enter how many strata lots (or total votes) your strata has.');
+      return;
+    }
+    if(ownerCount!==null&&ownerCount<1){
+      show('The number of owners must be at least 1.');
+      return;
+    }
+    if((present!==null&&present<0)||(byProxy!==null&&byProxy<0)){
+      show('Attendance numbers cannot be negative.');
+      return;
+    }
+    var attended=(present||0)+(byProxy||0);
+    var attendanceEntered=(present!==null||byProxy!==null);
+    if(attendanceEntered&&attended>totalVotes){
+      show('Votes present ('+attended+') cannot exceed the strata’s total votes ('+totalVotes+').');
+      return;
+    }
+    err.style.display='none';
+
+    var q=quorumFor(totalVotes,ownerCount);
+
+    quorumStamp.textContent=q.required+(q.required===1?' vote':' votes');
+    quorumSub.textContent=q.fraction+' of '+totalVotes+(totalVotes===1?' vote':' votes')+', present in person or by proxy';
+
+    legStd.style.display=q.small?'none':'flex';
+    legSmall.style.display=q.small?'flex':'none';
+
+    if(attendanceEntered){
+      var met=attended>=q.required;
+      verdict.style.display='block';
+      verdict.className='verdict '+(met?'met':'notmet');
+      var breakdown=(present||0)+' in person + '+(byProxy||0)+' by proxy = '+attended+
+        (attended===1?' vote':' votes')+' of the '+q.required+' needed.';
+      verdict.innerHTML=(met?'Quorum met ✓':'Quorum not met ✗')+
+        '<span class="detail">'+breakdown+
+        (met?'':' Short by '+(q.required-attended)+'. See the adjournment rule below.')+'</span>';
+    } else {
+      verdict.style.display='none';
+    }
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  copyBtn.addEventListener('click',function(){
+    var totalVotes=readInt(lots);
+    if(totalVotes===null||totalVotes<1)return;
+    var ownerCount=readInt(owners);
+    var present=readInt(inPerson);
+    var byProxy=readInt(proxy);
+    var q=quorumFor(totalVotes,ownerCount);
+    var attended=(present||0)+(byProxy||0);
+    var attendanceEntered=(present!==null||byProxy!==null);
+
+    var s='Quorum for our general meeting is '+q.required+(q.required===1?' vote':' votes')+
+      ' — '+q.fraction+' of the strata corporation’s '+totalVotes+
+      (totalVotes===1?' vote':' votes')+', held by eligible voters present in person or by proxy'+
+      (q.small?' (the higher 2/3 threshold applies because there are fewer than 4 strata lots or fewer than 4 owners)':'')+
+      ' under Strata Property Act s. 48(2)'+(q.small?'(b)':'(a)')+'.';
+    if(attendanceEntered){
+      s+=' On the day we had '+(present||0)+' in person and '+(byProxy||0)+' by proxy, '+attended+
+        (attended===1?' vote':' votes')+' in total — quorum '+(attended>=q.required?'met.':'NOT met, short by '+(q.required-attended)+'.');
+    }
+    s+=' If quorum is not present within 1/2 hour, the meeting adjourns to the same day the following week, and if quorum is still absent 1/2 hour after that meeting is called, the eligible voters present constitute a quorum (s. 48(3)).'+
+      ' Section 48 applies subject to our registered bylaws. Verified '+fmtDate.format(VERIFIED)+' against the Strata Property Act.';
+
+    navigator.clipboard.writeText(s).then(function(){
+      copiedNote.classList.add('show');
+      setTimeout(function(){copiedNote.classList.remove('show');},2000);
+    });
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+
+  guideBtn.addEventListener('click',function(){
+    guideNote.style.display='block';
+  });
+})();
+</script>
+</body>
+</html>
