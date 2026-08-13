@@ -101,6 +101,51 @@
   .faq dt{font-weight:700;margin-top:18px}
   .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
 
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:14px;font-size:.82rem;color:#3D4C47;
+    background:#EEF3F0;border:1px solid var(--line);
+    border-radius:20px;padding:5px 12px;
+  }
+  .verified-badge .check{color:var(--spruce);font-weight:700}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+
+  .email-capture{
+    margin-top:26px;padding:22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .email-capture h3{font-family:'Zilla Slab',serif;font-size:1.05rem;color:var(--spruce-deep);margin-bottom:6px}
+  .email-capture p{font-size:.9rem;color:#3D4C47;margin-bottom:14px;max-width:52ch}
+  .email-row{display:flex;gap:10px;flex-wrap:wrap}
+  .email-row input[type="email"]{
+    flex:1;min-width:180px;padding:11px 14px;font-size:.95rem;
+    font-family:inherit;border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .email-row button{width:auto;padding:11px 18px;font-size:.92rem;white-space:nowrap}
+  .email-note{margin-top:10px;font-size:.85rem;color:var(--spruce);font-weight:600;display:none}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
   footer{
     margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
     font-size:.82rem;color:#5E6E68;
@@ -138,6 +183,7 @@
         <p class="k">Send notice no later than</p>
         <p class="date" id="deadline">—</p>
       </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 12, 2026 · Strata Property Act ss. 45, 61</p>
       <p class="buffer" id="bufferNote"></p>
       <p class="past" id="pastNote"></p>
 
@@ -152,8 +198,35 @@
           <li id="leg3"><span class="dot d3"></span><span><strong>+4 days</strong> — notice sent by mail, email, fax, or left at the door is deemed received 4 days after it's given. <span class="ref">SPA s. 61(3)</span></span></li>
         </ul>
       </div>
+
+      <div class="copybar">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+
+      <div class="email-capture">
+        <h3>Want the full BC Strata Compliance Cheat Sheet?</h3>
+        <p>AGM notice, quorum, voting, levies, records, depreciation reports — every deadline your council needs, on one page.</p>
+        <div class="email-row">
+          <input type="email" id="guideEmail" placeholder="you@yourstrata.ca" aria-label="Email address">
+          <button type="button" id="guideBtn">Get the free guide →</button>
+        </div>
+        <p class="email-note" id="guideNote">Thanks — the guide is coming soon. Check back shortly.</p>
+      </div>
     </div>
   </div>
+
+  <section class="more-tools">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><span>Special levy calculator</span><span class="soon">Coming soon</span></li>
+      <li><span>Quorum calculator</span><span class="soon">Coming soon</span></li>
+      <li><span>Voting threshold checker</span><span class="soon">Coming soon</span></li>
+      <li><span>Records request deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Strata fee / budget calculator</span><span class="soon">Coming soon</span></li>
+    </ul>
+  </section>
 
   <section class="explain">
     <h2>Why "2 weeks" really means 20 days</h2>
@@ -192,7 +265,11 @@
       bufferNote=document.getElementById('bufferNote'),
       pastNote=document.getElementById('pastNote'),
       seg3=document.getElementById('seg3'),
-      leg3=document.getElementById('leg3');
+      leg3=document.getElementById('leg3'),
+      copyBtn=document.getElementById('copyBtn'),
+      copiedNote=document.getElementById('copiedNote'),
+      guideBtn=document.getElementById('guideBtn'),
+      guideNote=document.getElementById('guideNote');
 
   var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
@@ -239,6 +316,23 @@
     result.classList.remove('show');
     void result.offsetWidth;
     result.classList.add('show');
+  });
+
+  copyBtn.addEventListener('click',function(){
+    if(!meeting.value)return;
+    var extra=+method.value;
+    var total=16+extra;
+    var m=parseLocal(meeting.value);
+    var sendBy=minusDays(m,total);
+    var sentence='For our meeting on '+fmt.format(m)+', notice must be sent no later than '+fmt.format(sendBy)+" under BC's "+total+'-day calculation (Strata Property Act s. 45).';
+    navigator.clipboard.writeText(sentence).then(function(){
+      copiedNote.classList.add('show');
+      setTimeout(function(){copiedNote.classList.remove('show');},2000);
+    });
+  });
+
+  guideBtn.addEventListener('click',function(){
+    guideNote.style.display='block';
   });
 })();
 </script>
