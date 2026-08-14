@@ -282,7 +282,13 @@
     var ORIGIN='https://subscribe-forms.beehiiv.com';
     var box=document.querySelector('.subscribe');
     if(!box)return;
-    var done=false;
+    var settled=false;
+
+    /* The loader inflates the iframe to a 2000px placeholder before asking the
+       child to measure, and the child sometimes reports that placeholder back
+       instead of its true content height. Treat an implausible number as no
+       answer and keep asking. */
+    function plausible(h){var n=parseFloat(h);return n>80&&n<900;}
 
     /* Only ever reveal at a known-good height. Un-collapsing while the iframe
        is still at the loader's 2000px placeholder just swaps an invisible form
@@ -299,15 +305,15 @@
     window.addEventListener('message',function(e){
       if(e.origin!==ORIGIN)return;
       var m=e.data;
-      if(m&&m.type==='beehiiv:styles'&&m.payload&&m.payload.height){
+      if(m&&m.type==='beehiiv:styles'&&m.payload&&m.payload.height&&plausible(m.payload.height)){
         apply(m.payload.height);
-        done=true;
+        settled=true;
       }
     });
 
     var tries=0;
     var timer=setInterval(function(){
-      if(done){clearInterval(timer);return;}
+      if(settled){clearInterval(timer);return;}
       tries++;
       var ifr=box.querySelector('iframe');
       if(ifr){
@@ -315,7 +321,7 @@
           ifr.removeAttribute('data-bhv-sized');
           ifr.contentWindow.postMessage({type:'beehiiv:resize'},'*');
         }catch(err){}
-        if(tries>=6){apply('400px');done=true;clearInterval(timer);return;}
+        if(tries>=6){apply('400px');settled=true;clearInterval(timer);return;}
       }
       if(tries>=12)clearInterval(timer);
     },600);
