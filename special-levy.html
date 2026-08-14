@@ -306,24 +306,26 @@
     var ORIGIN='https://subscribe-forms.beehiiv.com';
     var box=document.querySelector('.subscribe');
     if(!box)return;
-    var reported=null,done=false;
+    var done=false;
 
-    function reveal(){
+    /* Only ever reveal at a known-good height. Un-collapsing while the iframe
+       is still at the loader's 2000px placeholder just swaps an invisible form
+       for a huge empty gap. */
+    function apply(height){
       var ifr=box.querySelector('iframe');
       if(!ifr)return false;
       var wrap=ifr.parentElement;
       if(wrap&&wrap.style.height==='0px'){wrap.style.height='';wrap.style.overflow='';}
-      if(reported)ifr.style.height=reported;
-      if(box.getBoundingClientRect().height>0){done=true;return true;}
-      return false;
+      if(height)ifr.style.height=height;
+      return true;
     }
 
     window.addEventListener('message',function(e){
       if(e.origin!==ORIGIN)return;
       var m=e.data;
       if(m&&m.type==='beehiiv:styles'&&m.payload&&m.payload.height){
-        reported=m.payload.height;
-        reveal();
+        apply(m.payload.height);
+        done=true;
       }
     });
 
@@ -333,14 +335,13 @@
       tries++;
       var ifr=box.querySelector('iframe');
       if(ifr){
-        if(reveal()){clearInterval(timer);return;}
         try{
           ifr.removeAttribute('data-bhv-sized');
           ifr.contentWindow.postMessage({type:'beehiiv:resize'},'*');
         }catch(err){}
-        if(tries>=6&&!reported){ifr.style.height='400px';reveal();}
+        if(tries>=6){apply('400px');done=true;clearInterval(timer);return;}
       }
-      if(tries>=10)clearInterval(timer);
+      if(tries>=12)clearInterval(timer);
     },600);
   })();
   </script>
