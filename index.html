@@ -119,7 +119,15 @@
   .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
   .copied-note.show{opacity:1}
 
+  /* Direct iframe rather than beehiiv's v3 loader script: the loader creates
+     inline forms collapsed and reveals them only on a postMessage handshake
+     that was unreliable here, leaving the form clipped to zero height. A plain
+     iframe at a fixed height renders deterministically. Height is generous
+     enough for the form (it measures ~375px) with room to reflow on narrow
+     screens; the iframe scrolls rather than clipping if it ever overflows. */
   .subscribe{margin-top:28px}
+  .subscribe-frame{display:block;width:100%;height:400px;border:0}
+  @media (max-width:520px){.subscribe-frame{height:470px}}
 
   .more-tools{margin-top:36px}
   .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
@@ -196,63 +204,10 @@
   </div>
 
   <div class="subscribe no-print">
-    <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9110b8b7-d934-446b-8a1c-195055545848"></script>
+    <iframe class="subscribe-frame"
+            src="https://subscribe-forms.beehiiv.com/v3/forms/9110b8b7-d934-446b-8a1c-195055545848"
+            title="Subscribe to get the free BC Strata Compliance Cheat Sheet"></iframe>
   </div>
-  <script>
-  /* Beehiiv watchdog. The v3 loader injects inline forms into a wrapper that
-     starts collapsed (overflow:hidden;height:0) and is only revealed when the
-     iframe posts a "beehiiv:styles" message. The earlier "beehiiv:child-loaded"
-     message clears the loader's own 5s safety fallback, so if the styles
-     handshake is then missed the form stays at zero height permanently — loaded
-     and functional, but clipped to nothing. This re-requests a measurement and
-     applies the height the iframe reports. No-op when the embed behaves. */
-  (function(){
-    var ORIGIN='https://subscribe-forms.beehiiv.com';
-    var box=document.querySelector('.subscribe');
-    if(!box)return;
-    var good=null,ticks=0;
-
-    /* The loader inflates the iframe to a 2000px placeholder before asking the
-       child to measure, and the child sometimes echoes that placeholder back
-       instead of its true content height. Anything outside this range is
-       treated as no answer rather than a measurement. */
-    function plausible(h){var n=parseFloat(h);return n>80&&n<900;}
-    function frame(){return box.querySelector('iframe');}
-
-    /* Re-asserted on every message and every tick rather than latched once:
-       the loader keeps its own listener and can overwrite a good height with
-       the placeholder afterwards, so a single "we're done" flag is not enough. */
-    function enforce(){
-      var f=frame();
-      if(!f)return;
-      var wrap=f.parentElement;
-      if(wrap&&wrap.style.height==='0px'){wrap.style.height='';wrap.style.overflow='';}
-      if(!plausible(f.style.height)&&(good||ticks>=6))f.style.height=good||'400px';
-    }
-
-    window.addEventListener('message',function(e){
-      if(e.origin!==ORIGIN)return;
-      var m=e.data;
-      if(m&&m.type==='beehiiv:styles'&&m.payload&&plausible(m.payload.height))good=m.payload.height;
-      enforce();
-    });
-
-    var timer=setInterval(function(){
-      ticks++;
-      var f=frame();
-      if(f){
-        if(!good){
-          try{
-            f.removeAttribute('data-bhv-sized');
-            f.contentWindow.postMessage({type:'beehiiv:resize'},'*');
-          }catch(err){}
-        }
-        enforce();
-      }
-      if(ticks>=40)clearInterval(timer);
-    },500);
-  })();
-  </script>
 
   <section class="more-tools">
     <h2>More BC strata tools</h2>
