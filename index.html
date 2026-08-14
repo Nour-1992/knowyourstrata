@@ -210,49 +210,47 @@
     var ORIGIN='https://subscribe-forms.beehiiv.com';
     var box=document.querySelector('.subscribe');
     if(!box)return;
-    var settled=false;
+    var good=null,ticks=0;
 
     /* The loader inflates the iframe to a 2000px placeholder before asking the
-       child to measure, and the child sometimes reports that placeholder back
-       instead of its true content height. Treat an implausible number as no
-       answer and keep asking. */
+       child to measure, and the child sometimes echoes that placeholder back
+       instead of its true content height. Anything outside this range is
+       treated as no answer rather than a measurement. */
     function plausible(h){var n=parseFloat(h);return n>80&&n<900;}
+    function frame(){return box.querySelector('iframe');}
 
-    /* Only ever reveal at a known-good height. Un-collapsing while the iframe
-       is still at the loader's 2000px placeholder just swaps an invisible form
-       for a huge empty gap. */
-    function apply(height){
-      var ifr=box.querySelector('iframe');
-      if(!ifr)return false;
-      var wrap=ifr.parentElement;
+    /* Re-asserted on every message and every tick rather than latched once:
+       the loader keeps its own listener and can overwrite a good height with
+       the placeholder afterwards, so a single "we're done" flag is not enough. */
+    function enforce(){
+      var f=frame();
+      if(!f)return;
+      var wrap=f.parentElement;
       if(wrap&&wrap.style.height==='0px'){wrap.style.height='';wrap.style.overflow='';}
-      if(height)ifr.style.height=height;
-      return true;
+      if(!plausible(f.style.height)&&(good||ticks>=6))f.style.height=good||'400px';
     }
 
     window.addEventListener('message',function(e){
       if(e.origin!==ORIGIN)return;
       var m=e.data;
-      if(m&&m.type==='beehiiv:styles'&&m.payload&&m.payload.height&&plausible(m.payload.height)){
-        apply(m.payload.height);
-        settled=true;
-      }
+      if(m&&m.type==='beehiiv:styles'&&m.payload&&plausible(m.payload.height))good=m.payload.height;
+      enforce();
     });
 
-    var tries=0;
     var timer=setInterval(function(){
-      if(settled){clearInterval(timer);return;}
-      tries++;
-      var ifr=box.querySelector('iframe');
-      if(ifr){
-        try{
-          ifr.removeAttribute('data-bhv-sized');
-          ifr.contentWindow.postMessage({type:'beehiiv:resize'},'*');
-        }catch(err){}
-        if(tries>=6){apply('400px');settled=true;clearInterval(timer);return;}
+      ticks++;
+      var f=frame();
+      if(f){
+        if(!good){
+          try{
+            f.removeAttribute('data-bhv-sized');
+            f.contentWindow.postMessage({type:'beehiiv:resize'},'*');
+          }catch(err){}
+        }
+        enforce();
       }
-      if(tries>=12)clearInterval(timer);
-    },600);
+      if(ticks>=40)clearInterval(timer);
+    },500);
   })();
   </script>
 
