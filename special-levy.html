@@ -167,15 +167,42 @@
   .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
   .copied-note.show{opacity:1}
 
-  /* Direct iframe rather than beehiiv's v3 loader script: the loader creates
-     inline forms collapsed and reveals them only on a postMessage handshake
-     that was unreliable here, leaving the form clipped to zero height. A plain
-     iframe at a fixed height renders deterministically. Height is generous
-     enough for the form (it measures ~375px) with room to reflow on narrow
-     screens; the iframe scrolls rather than clipping if it ever overflows. */
-  .subscribe{margin-top:28px}
-  .subscribe-frame{display:block;width:100%;height:400px;border:0}
-  @media (max-width:520px){.subscribe-frame{height:470px}}
+  /* Our own subscribe form: posts same-origin to /api/subscribe, which forwards
+     to beehiiv server-side. No third-party script, no iframe, nothing to render
+     but our own markup. */
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:'Zilla Slab',serif;font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{
+    display:none;padding:4px 0;
+  }
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
 
   .more-tools{margin-top:36px}
   .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
@@ -299,11 +326,24 @@
     </div>
   </div>
 
-  <div class="subscribe no-print">
-    <iframe class="subscribe-frame"
-            src="https://subscribe-forms.beehiiv.com/v3/forms/9110b8b7-d934-446b-8a1c-195055545848"
-            title="Subscribe to get the free BC Strata Compliance Cheat Sheet"></iframe>
-  </div>
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're on the list ✓</h2>
+      <p>Check your inbox to confirm. In the meantime, read it right now:
+         <a href="/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
 
   <section class="more-tools no-print">
     <h2>More BC strata tools</h2>
@@ -347,6 +387,63 @@
   </footer>
 </div>
 
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
 <script>
 (function(){
   var totalLevy=document.getElementById('totalLevy'),
