@@ -198,6 +198,56 @@
   <div class="subscribe no-print">
     <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9110b8b7-d934-446b-8a1c-195055545848"></script>
   </div>
+  <script>
+  /* Beehiiv watchdog. The v3 loader injects inline forms into a wrapper that
+     starts collapsed (overflow:hidden;height:0) and is only revealed when the
+     iframe posts a "beehiiv:styles" message. The earlier "beehiiv:child-loaded"
+     message clears the loader's own 5s safety fallback, so if the styles
+     handshake is then missed the form stays at zero height permanently — loaded
+     and functional, but clipped to nothing. This re-requests a measurement and
+     applies the height the iframe reports. No-op when the embed behaves. */
+  (function(){
+    var ORIGIN='https://subscribe-forms.beehiiv.com';
+    var box=document.querySelector('.subscribe');
+    if(!box)return;
+    var reported=null,done=false;
+
+    function reveal(){
+      var ifr=box.querySelector('iframe');
+      if(!ifr)return false;
+      var wrap=ifr.parentElement;
+      if(wrap&&wrap.style.height==='0px'){wrap.style.height='';wrap.style.overflow='';}
+      if(reported)ifr.style.height=reported;
+      if(box.getBoundingClientRect().height>0){done=true;return true;}
+      return false;
+    }
+
+    window.addEventListener('message',function(e){
+      if(e.origin!==ORIGIN)return;
+      var m=e.data;
+      if(m&&m.type==='beehiiv:styles'&&m.payload&&m.payload.height){
+        reported=m.payload.height;
+        reveal();
+      }
+    });
+
+    var tries=0;
+    var timer=setInterval(function(){
+      if(done){clearInterval(timer);return;}
+      tries++;
+      var ifr=box.querySelector('iframe');
+      if(ifr){
+        if(reveal()){clearInterval(timer);return;}
+        try{
+          ifr.removeAttribute('data-bhv-sized');
+          ifr.contentWindow.postMessage({type:'beehiiv:resize'},'*');
+        }catch(err){}
+        if(tries>=6&&!reported){ifr.style.height='400px';reveal();}
+      }
+      if(tries>=10)clearInterval(timer);
+    },600);
+  })();
+  </script>
 
   <section class="more-tools">
     <h2>More BC strata tools</h2>
