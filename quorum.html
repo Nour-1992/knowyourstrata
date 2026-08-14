@@ -315,9 +315,9 @@
       <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
     </div>
     <div class="sub-done" id="subDone">
-      <h2>You're on the list ✓</h2>
-      <p>Check your inbox to confirm. In the meantime, read it right now:
-         <a href="/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
     </div>
   </section>
 
@@ -381,6 +381,9 @@
   function fail(text){
     msg.textContent=text;
     msg.className='sub-msg err';
+    // Must be set inline: the reset below hides it with an inline style, which
+    // outranks the .err class rule, so the class alone can never re-show it.
+    msg.style.display='block';
     btn.disabled=false;
     btn.textContent='Send me the cheat sheet';
   }
