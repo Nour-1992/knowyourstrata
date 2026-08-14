@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Board Compliance Cheat Sheet — The Rules Boards Get Wrong Most Often</title>
+<meta name="description" content="One-page reference for BC strata councils: AGM notice periods, quorum thresholds and special levy apportionment, each with its Strata Property Act citation and the trap boards fall into.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --spruce:#1E4A43;
+    --spruce-deep:#123833;
+    --paper:#FAF9F5;
+    --ink:#22302D;
+    --sage:#8CA79C;
+    --line:#DDD9CE;
+    --amber:#8A6100;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:'Public Sans',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 60px}
+
+  header{padding:40px 0 6px}
+  .eyebrow{
+    font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.6rem,4.6vw,2.15rem);
+    line-height:1.15;margin:9px 0 8px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:60ch;font-size:.97rem}
+
+  .toolbar{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    padding:9px 16px;font-size:.88rem;font-weight:700;font-family:inherit;
+    color:var(--spruce);background:#fff;border:1.5px solid var(--spruce);
+    border-radius:8px;cursor:pointer;text-decoration:none;display:inline-block;
+  }
+  .btn:hover{background:#EEF3F0}
+  .btn:focus{outline:3px solid var(--sage);outline-offset:2px}
+
+  .rule{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:22px;margin-top:22px;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .rule-head{display:flex;gap:12px;align-items:baseline;margin-bottom:10px}
+  .num{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    background:var(--spruce);color:#fff;font-size:.8rem;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center;
+    transform:translateY(3px);
+  }
+  .rule h2{
+    font-family:'Zilla Slab',serif;font-size:1.16rem;
+    color:var(--spruce-deep);line-height:1.25;
+  }
+  .headline{
+    font-size:1rem;font-weight:600;color:var(--spruce-deep);
+    margin-bottom:12px;max-width:62ch;
+  }
+
+  .facts{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:12px}
+  .facts td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+  .facts tr:last-child td{border-bottom:none}
+  .facts td.n{
+    white-space:nowrap;font-weight:700;color:var(--spruce-deep);
+    padding-right:14px;width:1%;
+  }
+  .facts td.c{
+    text-align:right;color:#5E6E68;font-size:.8rem;white-space:nowrap;
+    padding-left:12px;width:1%;
+  }
+  .facts tr.total td{border-top:2px solid var(--line);border-bottom:none;padding-top:8px}
+  .facts tr.total td.n{color:var(--spruce)}
+
+  .watch{
+    padding:10px 14px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.87rem;
+    border-radius:0 8px 8px 0;margin-bottom:12px;max-width:64ch;
+  }
+  .domath{font-size:.87rem}
+  .domath a{color:var(--spruce);font-weight:700;text-decoration:none}
+  .domath a:hover{text-decoration:underline}
+
+  .checklist{list-style:none;font-size:.89rem;margin:2px 0 12px}
+  .checklist li{
+    display:flex;gap:8px;align-items:baseline;padding:3px 0;color:#3D4C47;
+  }
+  .checklist li::before{content:"☐";color:var(--spruce);flex:none}
+
+  footer{
+    margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:.79rem;color:#5E6E68;break-inside:avoid;page-break-inside:avoid;
+  }
+  footer p{margin-bottom:7px;max-width:76ch}
+  footer a{color:var(--spruce)}
+  .brandline{
+    font-family:'Zilla Slab',serif;font-size:.95rem;
+    color:var(--spruce-deep);font-weight:700;margin-bottom:6px;
+  }
+
+  @media print{
+    @page{margin:11mm}
+    html{font-size:9.8pt}
+    body{background:#fff;line-height:1.45}
+    .no-print{display:none !important}
+    .wrap{max-width:none;padding:0}
+    header{padding:0 0 2px}
+    h1{font-size:1.5rem;margin:5px 0 5px}
+    .lede{font-size:.86rem;max-width:none}
+    .rule{
+      border:1px solid #C9C4B6;border-radius:6px;
+      padding:10px 13px;margin-top:8px;
+    }
+    .rule h2{font-size:1.05rem}
+    .rule-head{margin-bottom:7px}
+    .headline{font-size:.92rem;margin-bottom:6px}
+    .facts{font-size:.84rem;margin-bottom:7px}
+    .facts td{padding:4px 0}
+    .watch{background:#F6F1E4;font-size:.82rem;margin-bottom:7px;padding:6px 10px}
+    .checklist{font-size:.84rem;margin-bottom:7px}
+    .checklist li{padding:2px 0}
+    .domath{font-size:.82rem}
+    footer{margin-top:12px;padding-top:9px;font-size:.75rem}
+    footer p{margin-bottom:5px}
+    a{text-decoration:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Know Your Strata · British Columbia</p>
+    <h1>BC Strata Board Compliance Cheat Sheet</h1>
+    <p class="lede">The rules boards get wrong most often — the three deadlines and thresholds that most often invalidate a decision, each with the section it comes from and the trap that catches councils.</p>
+    <div class="toolbar no-print">
+      <button type="button" class="btn" id="printBtn">Print / save as PDF</button>
+      <a class="btn" href="https://knowyourstrata.com/">All the calculators →</a>
+    </div>
+  </header>
+
+  <section class="rule">
+    <div class="rule-head">
+      <span class="num">1</span>
+      <h2>AGM &amp; SGM notice: "2 weeks" really means about 20 days</h2>
+    </div>
+    <p class="headline">Counting 14 days on the calendar is how councils send notice late. Two other rules stretch the period.</p>
+    <table class="facts">
+      <tr>
+        <td class="n">14 days</td>
+        <td>The Act requires "at least 2 weeks' written notice."</td>
+        <td class="c">SPA s. 45(1)</td>
+      </tr>
+      <tr>
+        <td class="n">+ 2 days</td>
+        <td>Counting "at least" a period excludes the first and last days.</td>
+        <td class="c">Interpretation Act s. 25</td>
+      </tr>
+      <tr>
+        <td class="n">+ 4 days</td>
+        <td>Notice mailed, emailed, faxed, or left in a mailbox or under a door is deemed received 4 days after it is given.</td>
+        <td class="c">SPA s. 61(3)</td>
+      </tr>
+      <tr class="total">
+        <td class="n">= 20 days</td>
+        <td>Before the meeting date. Notice <strong>handed directly to a person</strong> is received immediately, so only the 16 clear days apply.</td>
+        <td class="c">—</td>
+      </tr>
+    </table>
+    <p class="watch"><strong>Watch out for:</strong> authorities genuinely differ on whether the strict count is 20 or 21 days, so build in a buffer that satisfies both readings. A winding-up resolution needs <strong>at least 4 weeks</strong>, not 2 (s. 45(1.1)). And while s. 47 forgives a <em>reasonable attempt</em> at notice that goes astray, it does not forgive counting the days wrong.</p>
+    <p class="domath">Do the math: <a href="https://knowyourstrata.com/">knowyourstrata.com</a> — AGM / SGM notice calculator</p>
+  </section>
+
+  <section class="rule">
+    <div class="rule-head">
+      <span class="num">2</span>
+      <h2>Quorum: 1/3 of your votes, or 2/3 in a very small strata</h2>
+    </div>
+    <p class="headline">Business must not be conducted at a general meeting unless a quorum is present (s. 48(1)). Vote without one and the decisions are open to challenge.</p>
+    <table class="facts">
+      <tr>
+        <td class="n">1/3</td>
+        <td>Of the strata corporation's <strong>total votes</strong>, held by eligible voters present in person or by proxy.</td>
+        <td class="c">SPA s. 48(2)(a)</td>
+      </tr>
+      <tr>
+        <td class="n">2/3</td>
+        <td>Instead, if there are fewer than 4 strata lots <em>or</em> fewer than 4 owners.</td>
+        <td class="c">SPA s. 48(2)(b)</td>
+      </tr>
+      <tr class="total">
+        <td class="n">½ hour</td>
+        <td>No quorum? The meeting adjourns to the same day the next week, same time and place. If quorum is still absent ½ hour after that meeting is called, <strong>the eligible voters present constitute a quorum</strong>, however few.</td>
+        <td class="c">SPA s. 48(3)</td>
+      </tr>
+    </table>
+    <p class="watch"><strong>Watch out for:</strong> the fraction is measured against the strata's <em>total votes</em>, not against attendance or the number of eligible owners. Proxies count the same as bodies in the room. And s. 48(2) applies "subject to the bylaws" while s. 48(3) applies "unless otherwise provided in the bylaws" — <strong>a registered bylaw setting a different quorum governs instead</strong>.</p>
+    <p class="domath">Do the math: <a href="https://knowyourstrata.com/quorum">knowyourstrata.com/quorum</a> — quorum calculator</p>
+  </section>
+
+  <section class="rule">
+    <div class="rule-head">
+      <span class="num">3</span>
+      <h2>Special levies: two lawful splits, two different votes</h2>
+    </div>
+    <p class="headline">Unit entitlement is not mandatory — it is the method that carries on a 3/4 vote. Any other fair division needs unanimity.</p>
+    <table class="facts">
+      <tr>
+        <td class="n">3/4 vote</td>
+        <td>Each lot's share calculated by <strong>unit entitlement</strong> — its own entitlement ÷ the total entitlement of all lots, applied to the levy.</td>
+        <td class="c">SPA s. 108(2)(a), s. 99</td>
+      </tr>
+      <tr>
+        <td class="n">Unanimous</td>
+        <td>Any other method that is a fair division of expenses for that levy — <strong>including equal shares</strong>.</td>
+        <td class="c">SPA s. 108(2)(b)</td>
+      </tr>
+    </table>
+    <p class="headline" style="margin-bottom:6px">The approving resolution must set out all five:</p>
+    <ul class="checklist">
+      <li><span>The <strong>purpose</strong> of the levy</span></li>
+      <li><span>The <strong>total amount</strong> of the levy</span></li>
+      <li><span>The <strong>method</strong> used to determine each strata lot's share</span></li>
+      <li><span>The <strong>amount of each strata lot's share</strong></span></li>
+      <li><span>The <strong>date payable</strong> — or, if by instalments, each instalment date</span></li>
+    </ul>
+    <p class="watch"><strong>Watch out for:</strong> a 3/4 vote cannot authorise an equal split unless the entitlements happen to be equal. Miss any one of the five items above and the resolution can be challenged even when the arithmetic is right (s. 108(3)). Entitlement numbers come from the Schedule of Unit Entitlement filed at the Land Title Office (s. 246) — pull them, don't estimate.</p>
+    <p class="domath">Do the math: <a href="https://knowyourstrata.com/special-levy">knowyourstrata.com/special-levy</a> — special levy calculator</p>
+  </section>
+
+  <footer>
+    <p class="brandline">Know Your Strata — <a href="https://knowyourstrata.com/">knowyourstrata.com</a></p>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 45, 47, 48, 61, 99, 108 and 246, and the Interpretation Act, RSBC 1996, c. 238, s. 25. Verified 12–13 August 2026 against the official consolidations at bclaws.gov.bc.ca, Strata Property Act consolidation current to 4 August 2026. <strong>Your strata's registered bylaws govern if they differ.</strong> For anything contested, talk to a strata lawyer.</p>
+    <p>Calculators: <a href="https://knowyourstrata.com/">AGM / SGM notice</a> · <a href="https://knowyourstrata.com/quorum">Quorum</a> · <a href="https://knowyourstrata.com/special-levy">Special levy</a></p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById('printBtn');
+  if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+</body>
+</html>
