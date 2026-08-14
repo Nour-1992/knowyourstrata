@@ -167,19 +167,7 @@
   .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
   .copied-note.show{opacity:1}
 
-  .email-capture{
-    margin-top:26px;padding:22px;border-radius:10px;
-    background:#EEF3F0;border:1px solid var(--line);
-  }
-  .email-capture h3{font-family:'Zilla Slab',serif;font-size:1.05rem;color:var(--spruce-deep);margin-bottom:6px}
-  .email-capture p{font-size:.9rem;color:#3D4C47;margin-bottom:14px;max-width:52ch}
-  .email-row{display:flex;gap:10px;flex-wrap:wrap}
-  .email-row input[type="email"]{
-    flex:1;min-width:180px;padding:11px 14px;font-size:.95rem;
-    font-family:inherit;border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
-  }
-  .email-row button{width:auto;padding:11px 18px;font-size:.92rem;white-space:nowrap}
-  .email-note{margin-top:10px;font-size:.85rem;color:var(--spruce);font-weight:600;display:none}
+  .subscribe{margin-top:28px}
 
   .more-tools{margin-top:36px}
   .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
@@ -300,16 +288,11 @@
         <span class="copied-note" id="copiedNote">Copied ✓</span>
       </div>
 
-      <div class="email-capture no-print">
-        <h3>Want the full BC Strata Compliance Cheat Sheet?</h3>
-        <p>AGM notice, quorum, voting, levies, records, depreciation reports — every deadline your council needs, on one page.</p>
-        <div class="email-row">
-          <input type="email" id="guideEmail" placeholder="you@yourstrata.ca" aria-label="Email address">
-          <button type="button" id="guideBtn">Get the free guide →</button>
-        </div>
-        <p class="email-note" id="guideNote">Thanks — the guide is coming soon. Check back shortly.</p>
-      </div>
     </div>
+  </div>
+
+  <div class="subscribe no-print">
+    <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9110b8b7-d934-446b-8a1c-195055545848"></script>
   </div>
 
   <section class="more-tools no-print">
@@ -375,9 +358,7 @@
       tableTotal=document.getElementById('tableTotal'),
       copyBtn=document.getElementById('copyBtn'),
       printBtn=document.getElementById('printBtn'),
-      copiedNote=document.getElementById('copiedNote'),
-      guideBtn=document.getElementById('guideBtn'),
-      guideNote=document.getElementById('guideNote');
+      copiedNote=document.getElementById('copiedNote');
 
   var fmtMoney=new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'});
   var fmtDate=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'long',day:'numeric'});
@@ -519,10 +500,6 @@
 
   printBtn.addEventListener('click',function(){
     window.print();
-  });
-
-  guideBtn.addEventListener('click',function(){
-    guideNote.style.display='block';
   });
 })();
 </script>
