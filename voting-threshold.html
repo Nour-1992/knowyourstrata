@@ -222,6 +222,8 @@
           <option value="cp34">Significant change to the use or appearance of common property</option>
           <option value="cpev">Significant change related to EV charging infrastructure</option>
           <option value="land">Sell, lease, mortgage or grant an easement over common-asset land</option>
+          <option value="pp34">Buy or dispose of personal property — general</option>
+          <option value="ppev">Buy or dispose of personal property — for EV charging</option>
         </optgroup>
         <optgroup label="Bylaws &amp; rules">
           <option value="bylawres">Amend the bylaws — all-residential strata</option>
@@ -231,7 +233,7 @@
           <option value="rule">Ratify a rule the council made</option>
         </optgroup>
         <optgroup label="Structural">
-          <option value="ue">Amend the Schedule of Unit Entitlement</option>
+          <option value="ue">Amend the Schedule of Unit Entitlement (habitable-area change)</option>
           <option value="wind272">Wind up the strata without a liquidator</option>
           <option value="wind277">Wind up the strata with a liquidator</option>
         </optgroup>
@@ -352,7 +354,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 1, 71, 79, 96, 103, 104, 108, 125, 127, 128, 261, 272 and 277. Last verified August 15, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 11, 2026.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 1, 71, 79, 82, 96, 103, 104, 108, 125, 127, 128, 261, 272 and 277. Last verified August 15, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 11, 2026.</p>
     <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
   </footer>
 </div>
@@ -465,6 +467,12 @@
       text:'A significant change related to the installation of EV charging infrastructure, or the management of electricity used by it, needs only a majority vote.'},
     land:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 79(a)',
       text:'To sell, lease, mortgage, grant an easement over, grant a restrictive covenant affecting or otherwise dispose of land that is a common asset, the resolution "must be passed by a 3/4 vote at an annual or special general meeting."'},
+    pp34:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 82(3)–(3.1)',
+      text:'Acquiring or disposing of personal property for any purpose other than EV charging needs a 3/4 vote.',
+      flag:'The vote is only needed where the market value is more than the amount set in your bylaws, or more than $1,000 if the bylaws are silent (s. 82(3)). Below that figure no general meeting approval is required at all.'},
+    ppev:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 82(3)–(3.1)',
+      text:'Personal property acquired or disposed of for the installation, operation, maintenance or repair of EV charging infrastructure, or for the management of electricity used by it, needs only a majority vote.',
+      flag:'The vote is only needed where the market value is more than the amount set in your bylaws, or more than $1,000 if the bylaws are silent (s. 82(3)). Below that figure no general meeting approval is required at all.'},
     bylawres:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 128(1)(a)',
       text:'In a strata plan composed entirely of residential strata lots, a bylaw amendment is approved by a 3/4 vote.',
       flag:'The amendment has no effect until an Amendment to Bylaws is filed in the land title office (s. 128(2)).'},
@@ -479,7 +487,8 @@
     rule:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 125',
       text:'Council can make a rule on its own, but it "ceases to have effect at the first annual general meeting held after it is made, unless the rule is ratified by a resolution passed by a majority vote."'},
     ue:{t:'Unanimous vote',g:UNAN,cite:'Strata Property Act s. 261',
-      text:'Amending the Schedule of Unit Entitlement requires a resolution "passed by a unanimous vote at an annual or special general meeting."'},
+      text:'Amending the Schedule of Unit Entitlement to reflect a change in the habitable area of a residential strata lot — where that lot’s entitlement is calculated on habitable area — requires a resolution passed by a unanimous vote.',
+      flag:'This is the habitable-area route only. An entitlement change that comes from dividing, consolidating or adding strata lots, or from adding land, runs under ss. 259, 262 or 263 instead, and those carry their own thresholds — some unanimous, some 3/4. Confirm which route you are on before relying on this answer.'},
     wind272:{t:'80% vote',g:P80,cite:'Strata Property Act s. 272',
       text:'Winding up the strata corporation without a liquidator requires a resolution passed by an 80% vote at an annual or special general meeting.',
       flag:'Confirmation by the court is required for strata plans with 5 or more strata lots (s. 273.1). Wind-up is lawyer territory — this gives the vote, not the process.'},
