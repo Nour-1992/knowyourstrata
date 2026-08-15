@@ -166,6 +166,7 @@
   .copy-btn:hover{background:#EEF3F0}
   .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
   .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
 
   /* Our own subscribe form: posts same-origin to /api/subscribe, which forwards
      to beehiiv server-side. No third-party script, no iframe, nothing to render
@@ -591,6 +592,52 @@
     result.classList.add('show');
   });
 
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(err){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(err){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
   copyBtn.addEventListener('click',function(){
     var total=parseFloat(totalLevy.value);
     var units=readUnits();
@@ -602,10 +649,7 @@
       'A different division of the levy would be lawful only by unanimous vote under s. 108(2)(b). '+
       'The approving resolution must also set out the purpose of the levy, the total amount, the method used, each lot’s share, and the payment or instalment dates (s. 108(3)). '+
       'Verified '+fmtDate.format(VERIFIED)+' against the Strata Property Act. Full per-unit breakdown below.';
-    navigator.clipboard.writeText(sentence).then(function(){
-      copiedNote.classList.add('show');
-      setTimeout(function(){copiedNote.classList.remove('show');},2000);
-    });
+    copyToClipboard(sentence);
   });
 
   printBtn.addEventListener('click',function(){
