@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Voting Threshold Checker — Majority, 3/4, 80% or Unanimous? | Strata Property Act</title>
+<meta name="description" content="Free checker for BC strata councils: pick the decision you're facing and get the vote it needs — majority, 3/4, 80% or unanimous — with the exact Strata Property Act section for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --spruce:#1E4A43;
+    --spruce-deep:#123833;
+    --paper:#FAF9F5;
+    --ink:#22302D;
+    --sage:#8CA79C;
+    --line:#DDD9CE;
+    --amber:#8A6100;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:'Public Sans',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.5rem,5vw,2rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:14px;font-size:.82rem;color:#3D4C47;
+    background:#EEF3F0;border:1px solid var(--line);
+    border-radius:20px;padding:5px 12px;
+  }
+  .verified-badge .check{color:var(--spruce);font-weight:700}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+    display:none;
+  }
+  .flag.show{display:block}
+  .bylaw-note{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.88rem;border-radius:0 8px 8px 0;
+  }
+
+  .tiers{margin-top:26px}
+  .tiers h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .tier-table{width:100%;border-collapse:collapse;font-size:.9rem}
+  .tier-table td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+  .tier-table tr:last-child td{border-bottom:none}
+  .tier-table td.t{
+    white-space:nowrap;font-weight:700;color:var(--spruce-deep);
+    padding-right:14px;width:1%;
+  }
+  .tier-table td.c{text-align:right;color:#5E6E68;font-size:.8rem;white-space:nowrap;padding-left:10px;width:1%}
+  .base-warn{
+    margin-top:12px;padding:11px 15px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.87rem;border-radius:0 8px 8px 0;
+  }
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:'Zilla Slab',serif;font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:'Zilla Slab',serif;font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>What kind of vote do we need to pass this?</h1>
+    <p class="lede">Pick the decision you're facing. Get the threshold the Act requires — majority, 3/4, 80% or unanimous — and the exact section it comes from, so the resolution isn't challenged for using the wrong bar.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="decision">What are you deciding?</label>
+      <select id="decision">
+        <option value="" selected>Choose a decision…</option>
+        <optgroup label="Money">
+          <option value="budget">Approve the annual budget</option>
+          <option value="budget2">Approve a replacement budget after one was voted down</option>
+          <option value="crf34">Spend from the contingency reserve fund — general</option>
+          <option value="crfmaj">Spend from the CRF — depreciation report, EV charging, electrical planning report</option>
+          <option value="levy34">Special levy split by unit entitlement (the section 99 formula)</option>
+          <option value="levyun">Special levy split some other "fair division" — including equally</option>
+        </optgroup>
+        <optgroup label="Property">
+          <option value="cp34">Significant change to the use or appearance of common property</option>
+          <option value="cpev">Significant change related to EV charging infrastructure</option>
+          <option value="land">Sell, lease, mortgage or grant an easement over common-asset land</option>
+        </optgroup>
+        <optgroup label="Bylaws &amp; rules">
+          <option value="bylawres">Amend the bylaws — all-residential strata</option>
+          <option value="bylawnon">Amend the bylaws — all-non-residential strata</option>
+          <option value="bylawmix">Amend the bylaws — mixed residential and non-residential</option>
+          <option value="bylawearly">Amend the bylaws before the second AGM — residential or bare land</option>
+          <option value="rule">Ratify a rule the council made</option>
+        </optgroup>
+        <optgroup label="Structural">
+          <option value="ue">Amend the Schedule of Unit Entitlement</option>
+          <option value="wind272">Wind up the strata without a liquidator</option>
+          <option value="wind277">Wind up the strata with a liquidator</option>
+        </optgroup>
+        <optgroup label="Not listed">
+          <option value="other">Something else</option>
+        </optgroup>
+      </select>
+
+      <button id="check">Show the threshold</button>
+      <p class="error" id="err">Choose a decision first.</p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k" id="stampKey">This needs a</p>
+        <p class="date" id="threshold">—</p>
+        <p class="sub" id="gloss"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 15, 2026 · <span id="badgeCite">Strata Property Act</span></p>
+
+      <p class="cite-line" id="citeLine"></p>
+      <p class="flag" id="extraFlag"></p>
+
+      <p class="bylaw-note" id="bylawNote"></p>
+
+      <div class="tiers">
+        <h2>The four thresholds, and what each counts</h2>
+        <table class="tier-table">
+          <tr>
+            <td class="t">Majority</td>
+            <td>More than 1/2 of the votes <strong>cast</strong> by eligible voters present in person or by proxy, ignoring abstentions.</td>
+            <td class="c">s. 1</td>
+          </tr>
+          <tr>
+            <td class="t">3/4 vote</td>
+            <td>At least 3/4 of the votes <strong>cast</strong> by eligible voters present in person or by proxy, ignoring abstentions.</td>
+            <td class="c">s. 1</td>
+          </tr>
+          <tr>
+            <td class="t">80% vote</td>
+            <td>At least 80% of the votes of <strong>all</strong> the eligible voters — not just those who turned up.</td>
+            <td class="c">s. 1</td>
+          </tr>
+          <tr>
+            <td class="t">Unanimous</td>
+            <td>All the votes of <strong>all</strong> the eligible voters. One absent owner is enough to defeat it.</td>
+            <td class="c">s. 1</td>
+          </tr>
+        </table>
+        <p class="base-warn"><strong>The base changes, and that is what catches councils.</strong> Majority and 3/4 count only the votes actually cast in the room. 80% and unanimous count every eligible vote in the strata, so an owner who stays home counts as a no.</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/">AGM / SGM notice calculator</a></li>
+      <li><a href="/special-levy">Special levy calculator</a></li>
+      <li><a href="/quorum">Quorum calculator</a></li>
+      <li><span>Voting threshold checker</span><span class="current">You're here</span></li>
+      <li><span>Records request deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Strata fee / budget calculator</span><span class="soon">Coming soon</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>Why the threshold is the thing that gets challenged</h2>
+    <p>The <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_01" rel="noopener">Strata Property Act</a> defines four vote types in section 1, then assigns one to each kind of decision throughout the Act. Run a decision at the wrong bar and the resolution is vulnerable even when everyone agreed in the room, because the Act — not the meeting — sets the requirement.</p>
+    <p>The definitions are worth reading closely, because two of them count a different population:</p>
+    <p class="quote">"majority vote" means a vote in favour of a resolution by more than 1/2 of the votes cast by eligible voters who are present in person or by proxy at the time the vote is taken and who have not abstained from voting … "80% vote" means a vote in favour of a resolution by at least 80% of the votes of all the eligible voters … "unanimous vote" means a vote in favour of a resolution by all the votes of all the eligible voters.</p>
+    <p>So a 3/4 vote is three quarters of the votes actually cast — abstentions and absentees simply drop out. An 80% or unanimous vote is measured against every eligible vote in the strata, which is why winding up and changing unit entitlement are so much harder to carry than a bylaw amendment: the people who never show up are counted, and they count against you.</p>
+
+    <h2 style="margin-top:32px">What your bylaws can and cannot change</h2>
+    <p>Most of these thresholds are fixed by the Act and a bylaw cannot lower them. Of the decisions in this tool, the only one the Act itself opens to variation is bylaw amendment in a <strong>non-residential</strong> strata: section 128(1)(b) allows a 3/4 vote "or as otherwise provided in the bylaws", and section 128(1)(c) extends the same latitude to the non-residential half of a mixed strata. Everything else here is stated by the Act without any "subject to the bylaws" qualifier.</p>
+    <p>What your bylaws <em>can</em> always do is add requirements — extra notice, a further approval step, conditions on when a matter may be put. So treat the answer here as the floor set by the Act, then read your registered bylaws for anything stacked on top. Where the two differ, the stricter one governs.</p>
+
+    <dl class="faq">
+      <dt>Is there such a thing as a "special resolution" in BC strata law?</dt>
+      <dd>Not in this Act. "Special resolution" is a term from company legislation and does not appear in the Strata Property Act's definitions — the Act uses majority, 3/4, 80% and unanimous. If a document or a manager refers to a special resolution, ask which of the four they actually mean.</dd>
+      <dt>Do abstentions count against a 3/4 vote?</dt>
+      <dd>No. The definition counts votes cast by eligible voters "who have not abstained from voting," so an abstention is not a no — it leaves the pool entirely. That is the opposite of an 80% or unanimous vote, where an owner who does not vote at all still counts in the denominator.</dd>
+      <dt>Do we need a vote at all to fix something urgently?</dt>
+      <dd>Not for a significant change to common property where "there are reasonable grounds to believe that immediate change is necessary to ensure safety or prevent significant loss or damage" (s. 71(a)). That is a narrow emergency exception, not a general shortcut.</dd>
+      <dt>Why do EV charging decisions keep appearing at a lower threshold?</dt>
+      <dd>The Act was amended to make EV infrastructure easier to approve. A significant change to common property related to EV charging needs only a majority vote (s. 71(b)(i)) rather than 3/4, and CRF spending on EV charging is in the majority-vote list in s. 96.</dd>
+      <dt>Our strata has fewer than 5 lots — is winding up simpler?</dt>
+      <dd>The 80% vote still applies. What changes is the court step: confirmation by the court is required for strata plans with 5 or more lots (ss. 273.1 and 278.1). Wind-up is complex and lawyer territory regardless — this tool gives the vote, not the process.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. Your registered bylaws may add requirements, and for anything contested, talk to a strata lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 1, 71, 79, 96, 103, 104, 108, 125, 127, 128, 261, 272 and 277. Last verified August 15, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 11, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    // Must be set inline: the reset below hides it with an inline style, which
+    // outranks the .err class rule, so the class alone can never re-show it.
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var decision=document.getElementById('decision'),
+      checkBtn=document.getElementById('check'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      stampKey=document.getElementById('stampKey'),
+      thresholdEl=document.getElementById('threshold'),
+      glossEl=document.getElementById('gloss'),
+      badgeCite=document.getElementById('badgeCite'),
+      citeLine=document.getElementById('citeLine'),
+      extraFlag=document.getElementById('extraFlag'),
+      bylawNote=document.getElementById('bylawNote'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var MAJ='at least a simple majority — more than 1/2 of the votes cast by eligible voters present in person or by proxy, abstentions excluded';
+  var Q34='at least 3/4 of the votes cast by eligible voters present in person or by proxy, abstentions excluded';
+  var P80='at least 80% of the votes of ALL eligible voters in the strata — absentees count against it';
+  var UNAN='every vote of every eligible voter in the strata — one absent owner defeats it';
+
+  /* Every row below was checked against the section named in `cite`. Nothing is
+     listed here that is not tied to a specific provision. */
+  var DECISIONS={
+    budget:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 103',
+      text:'The budget for the coming fiscal year is approved "by a resolution to be passed by a majority vote at each annual general meeting."'},
+    budget2:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 104',
+      text:'A replacement budget goes to a special general meeting "for approval by a resolution passed by a majority vote."',
+      flag:'Extending the 30-day deadline for producing that replacement budget is the one part that needs a 3/4 vote (s. 104).'},
+    crf34:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 96 (b)(i)(B)',
+      text:'Spending from the contingency reserve fund needs a 3/4 vote where the expenditure is not one of the specific cases listed in s. 96 (b)(i)(A).'},
+    crfmaj:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 96 (b)(i)(A)',
+      text:'A majority vote is enough where the CRF spending is to obtain a depreciation report, to do repair or replacement recommended in the current depreciation report, for EV charging infrastructure, or to obtain an electrical planning report.',
+      flag:'These are the only CRF cases at majority. Anything outside the s. 96 (b)(i)(A) list falls back to a 3/4 vote.'},
+    levy34:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 108(2)(a)',
+      text:'A special levy calculated using the section 99 unit-entitlement formula is approved by a 3/4 vote.'},
+    levyun:{t:'Unanimous vote',g:UNAN,cite:'Strata Property Act s. 108(2)(b)',
+      text:'Splitting a levy "in another way that establishes a fair division of expenses for that particular levy" — including equal shares — requires a unanimous vote.',
+      flag:'A 3/4 vote cannot authorise an equal split unless the unit entitlements happen to be equal, in which case it is simply the s. 99 result.'},
+    cp34:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 71(b)(ii)',
+      text:'A significant change in the use or appearance of common property, or of land that is a common asset, needs a 3/4 vote.',
+      flag:'No vote is needed where "there are reasonable grounds to believe that immediate change is necessary to ensure safety or prevent significant loss or damage" (s. 71(a)).'},
+    cpev:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 71(b)(i)',
+      text:'A significant change related to the installation of EV charging infrastructure, or the management of electricity used by it, needs only a majority vote.'},
+    land:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 79(a)',
+      text:'To sell, lease, mortgage, grant an easement over, grant a restrictive covenant affecting or otherwise dispose of land that is a common asset, the resolution "must be passed by a 3/4 vote at an annual or special general meeting."'},
+    bylawres:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 128(1)(a)',
+      text:'In a strata plan composed entirely of residential strata lots, a bylaw amendment is approved by a 3/4 vote.',
+      flag:'The amendment has no effect until an Amendment to Bylaws is filed in the land title office (s. 128(2)).'},
+    bylawnon:{t:'3/4 vote — unless your bylaws say otherwise',g:Q34,cite:'Strata Property Act s. 128(1)(b)',
+      text:'In a strata plan composed entirely of non-residential strata lots, amendment is "by a 3/4 vote or as otherwise provided in the bylaws."',
+      bylaw:true},
+    bylawmix:{t:'Two separate 3/4 votes',g:'a 3/4 vote of the residential strata lots AND a 3/4 vote of the non-residential strata lots — both must pass',cite:'Strata Property Act s. 128(1)(c)',
+      text:'In a mixed strata plan, amendment needs "both a resolution passed by a 3/4 vote of the residential strata lots and a resolution passed by a 3/4 vote of the nonresidential strata lots, or as otherwise provided in the bylaws for the nonresidential strata lots."',
+      bylaw:true},
+    bylawearly:{t:'Unanimous vote',g:UNAN,cite:'Strata Property Act s. 127',
+      text:'In a bare land or all-residential strata plan, no bylaw amendment may be made before the second annual general meeting unless it is approved by a unanimous vote.'},
+    rule:{t:'Majority vote',g:MAJ,cite:'Strata Property Act s. 125',
+      text:'Council can make a rule on its own, but it "ceases to have effect at the first annual general meeting held after it is made, unless the rule is ratified by a resolution passed by a majority vote."'},
+    ue:{t:'Unanimous vote',g:UNAN,cite:'Strata Property Act s. 261',
+      text:'Amending the Schedule of Unit Entitlement requires a resolution "passed by a unanimous vote at an annual or special general meeting."'},
+    wind272:{t:'80% vote',g:P80,cite:'Strata Property Act s. 272',
+      text:'Winding up the strata corporation without a liquidator requires a resolution passed by an 80% vote at an annual or special general meeting.',
+      flag:'Confirmation by the court is required for strata plans with 5 or more strata lots (s. 273.1). Wind-up is lawyer territory — this gives the vote, not the process.'},
+    wind277:{t:'80% vote',g:P80,cite:'Strata Property Act s. 277',
+      text:'A resolution to cancel the strata plan and appoint a liquidator must be passed by an 80% vote at an annual or special general meeting.',
+      flag:'Confirmation by the court is required for strata plans with 5 or more strata lots (s. 278.1). Wind-up is lawyer territory — this gives the vote, not the process.'},
+    other:{t:'Check the section',g:'the Act assigns a threshold decision by decision, so there is no safe default to fall back on',cite:'Strata Property Act',
+      other:true,
+      text:'This tool only lists decisions whose threshold was verified against a specific section. For anything else, find the section of the Act that governs the decision and read the threshold it names — do not assume a 3/4 vote because most things are.',
+      flag:'Guessing the threshold is exactly how resolutions get challenged. If you cannot find the section, ask your strata manager or a strata lawyer before putting it to a vote.'}
+  };
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(err2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(err2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  var current=null;
+
+  checkBtn.addEventListener('click',function(){
+    var key=decision.value;
+    if(!key||!DECISIONS[key]){
+      err.style.display='block';
+      result.style.display='none';
+      return;
+    }
+    err.style.display='none';
+    var d=DECISIONS[key];
+    current={key:key,d:d,label:decision.options[decision.selectedIndex].text};
+
+    stampKey.textContent=d.other?'For this one':'This needs a';
+    thresholdEl.textContent=d.t;
+    glossEl.textContent=d.g;
+    badgeCite.textContent=d.cite;
+    citeLine.innerHTML='<strong>'+d.cite+'</strong> — '+d.text;
+
+    if(d.flag){
+      extraFlag.textContent=d.flag;
+      extraFlag.className='flag show';
+    } else {
+      extraFlag.className='flag';
+    }
+
+    if(d.other){
+      bylawNote.innerHTML='<strong>Check both.</strong> Find the section of the Act that governs the decision and read the threshold it names, then read your registered bylaws for anything stacked on top. Where the Act fixes a threshold a bylaw cannot lower it, but bylaws can always add requirements.';
+    } else if(d.bylaw){
+      bylawNote.innerHTML='<strong>This is one the Act lets your bylaws change.</strong> Section 128 allows the non-residential threshold to be set "as otherwise provided in the bylaws", so read your registered bylaws before relying on 3/4.';
+    } else {
+      bylawNote.innerHTML='<strong>Your bylaws cannot lower this.</strong> The Act fixes this threshold, and a bylaw setting a lower bar does not override it. Bylaws can still add requirements on top, so check your registered bylaws as well.';
+    }
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var d=current.d;
+    var s='Decision: '+current.label+'. Required vote: '+d.t+' — '+d.g+'. '+
+      d.cite+': '+d.text+
+      (d.flag?' Note: '+d.flag:'')+
+      (d.other
+        ? ' Find the governing section before putting it to a vote, and check the registered bylaws as well.'
+        : d.bylaw
+          ? ' The Act allows this threshold to be varied by bylaw for non-residential strata lots, so check the registered bylaws.'
+          : ' This threshold is fixed by the Act and cannot be lowered by bylaw, though bylaws may add requirements.')+
+      ' Verified August 15, 2026 against the Strata Property Act, consolidation current to August 11, 2026.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
