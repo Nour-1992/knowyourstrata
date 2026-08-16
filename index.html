@@ -3,290 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC AGM Notice Calculator — When to Send Strata Meeting Notice | Strata Property Act</title>
-<meta name="description" content="Free calculator for BC strata councils: pick your AGM or SGM date and get the last legal day to send notice under the Strata Property Act, with the 20-day math explained.">
+<title>Know Your Strata — Free Condo &amp; Strata Compliance Tools, Every Answer Cited</title>
+<meta name="description" content="Free compliance calculators for Canadian condo and strata boards. AGM notice, quorum, special levies, voting thresholds and records deadlines — every answer carries its statute section and the date it was verified.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
 <style>
-  :root{
-    --spruce:#1E4A43;
-    --spruce-deep:#123833;
-    --paper:#FAF9F5;
-    --ink:#22302D;
-    --sage:#8CA79C;
-    --line:#DDD9CE;
-    --amber:#8A6100;
-    --card:#FFFFFF;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{font-size:17px}
-  body{
-    font-family:'Public Sans',system-ui,sans-serif;
-    background:var(--paper);
-    color:var(--ink);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
-  header{padding:44px 0 8px}
-  .eyebrow{
-    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--spruce);font-weight:700;
-  }
-  h1{
-    font-family:'Zilla Slab',serif;font-weight:700;
-    font-size:clamp(1.7rem,5.5vw,2.4rem);
-    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
-  }
-  .lede{color:#4A5A55;max-width:52ch}
-  .card{
-    background:var(--card);border:1px solid var(--line);
-    border-radius:10px;padding:26px 22px;margin-top:28px;
-  }
-  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
-  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
-  input[type="date"],select{
-    width:100%;padding:12px 14px;font-size:1.05rem;
-    font-family:inherit;color:var(--ink);
-    border:1.5px solid var(--line);border-radius:8px;background:#fff;
-    margin-bottom:20px;
-  }
-  input[type="date"]:focus,select:focus,button:focus{
-    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
-  }
-  button{
-    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
-    font-family:inherit;color:#fff;background:var(--spruce);
-    border:none;border-radius:8px;cursor:pointer;
-  }
-  button:hover{background:var(--spruce-deep)}
-  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px 40px}
 
-  .result{display:none;margin-top:30px}
-  .stamp{
-    background:var(--spruce);color:var(--paper);
-    border-radius:10px;padding:22px;text-align:center;
+  .hero{padding:56px 0 8px}
+  .hero .eyebrow{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--spruce);
   }
-  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
-  .stamp .date{
-    font-family:'Zilla Slab',serif;font-weight:700;
-    font-size:clamp(1.5rem,5vw,2rem);margin-top:6px;
+  .hero h1{
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(2.1rem,6.2vw,3.2rem);
+    line-height:1.08;margin:14px 0 16px;color:var(--spruce-deep);
+    letter-spacing:-.016em;max-width:19ch;
   }
-  .buffer{
-    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
-    background:#FBF6EA;color:var(--amber);font-size:.92rem;border-radius:0 8px 8px 0;
+  .hero .lede{color:var(--ink-soft);max-width:58ch;font-size:1.08rem}
+  .hero .stamp-verified{margin-top:22px}
+
+  /* The proof block: an actual answer, shown the way the tools show it. */
+  .proof{
+    margin-top:38px;background:var(--surface);
+    border:1px solid var(--rule);border-radius:4px;overflow:hidden;
   }
-  .past{
-    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
-    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  .proof-head{
+    background:var(--spruce);color:#EAF1ED;padding:16px 22px;
+  }
+  .proof-head .k{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+    text-transform:uppercase;opacity:.82;
+  }
+  .proof-head .answer{
+    font-family:var(--display);font-weight:600;font-size:clamp(1.3rem,4vw,1.7rem);
+    margin-top:5px;line-height:1.15;
+  }
+  .proof-body{padding:16px 22px 18px}
+  .proof-body p{font-size:.93rem;color:var(--ink-soft);max-width:60ch}
+  .proof-body .cite-rail{margin-top:12px}
+
+  .sec-title{
+    font-family:var(--display);font-size:1.32rem;font-weight:600;
+    color:var(--spruce-deep);margin:44px 0 6px;
+  }
+  .sec-sub{color:var(--ink-soft);font-size:.95rem;max-width:58ch;margin-bottom:18px}
+
+  .jurs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:640px){.jurs{grid-template-columns:1fr}}
+  .jur{
+    display:block;text-decoration:none;color:inherit;
+    background:var(--surface);border:1px solid var(--rule);border-radius:4px;
+    padding:22px 22px 20px;border-top:3px solid var(--spruce);
+  }
+  .jur:hover{border-color:var(--sage)}
+  .jur:hover .jur-name{text-decoration:underline}
+  .jur:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+  .jur-code{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--spruce);
+  }
+  .jur-name{
+    font-family:var(--display);font-size:1.34rem;font-weight:600;
+    color:var(--spruce-deep);margin-top:4px;display:block;line-height:1.2;
+  }
+  .jur-act{font-family:var(--mono);font-size:.73rem;color:var(--ink-soft);margin-top:6px;display:block}
+  .jur-count{margin-top:12px;font-size:.92rem;color:var(--ink-soft)}
+  .jur-more{
+    grid-column:1/-1;border:1px dashed var(--rule);border-radius:4px;
+    padding:16px 20px;font-size:.92rem;color:var(--ink-soft);background:transparent;
+  }
+  .jur-more strong{color:var(--spruce-deep);font-weight:600}
+
+  .quick{margin-top:14px;border-top:1px solid var(--rule)}
+  .quick a{
+    display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+    padding:13px 0;border-bottom:1px solid var(--rule);
+    text-decoration:none;color:inherit;
+  }
+  .quick a:hover .q-name{color:var(--spruce);text-decoration:underline}
+  .quick a:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+  .q-name{font-weight:600;font-size:.98rem;color:var(--spruce-deep)}
+  .q-jur{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;
+    text-transform:uppercase;color:#fff;background:var(--spruce);
+    padding:2px 7px;border-radius:3px;
+  }
+  .q-cite{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);margin-left:auto}
+  @media (max-width:560px){.q-cite{margin-left:0;flex-basis:100%}}
+
+  .trust{
+    margin-top:44px;padding:22px 24px;background:var(--surface);
+    border:1px solid var(--rule);border-radius:4px;
+  }
+  .trust h2{font-family:var(--display);font-size:1.2rem;font-weight:600;color:var(--spruce-deep);margin-bottom:10px}
+  .trust p{font-size:.94rem;color:var(--ink-soft);max-width:64ch;margin-bottom:12px}
+  .trust ul{list-style:none;font-size:.93rem;color:var(--ink-soft)}
+  .trust li{display:flex;gap:10px;align-items:baseline;padding:5px 0}
+  .trust li::before{
+    content:"§";font-family:var(--mono);color:var(--spruce);
+    font-weight:500;flex:none;
   }
 
-  .strip{margin-top:26px}
-  .strip h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
-  .bar{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
-  .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700;min-width:0}
-  .seg.s1{background:#2C6B60;flex:14}
-  .seg.s2{background:#5B8F82;flex:2}
-  .seg.s3{background:#8CA79C;flex:4}
-  .legend{list-style:none;margin-top:12px;font-size:.9rem}
-  .legend li{display:flex;gap:10px;align-items:baseline;margin-bottom:8px}
-  .dot{width:11px;height:11px;border-radius:3px;flex:none;transform:translateY(1px)}
-  .d1{background:#2C6B60}.d2{background:#5B8F82}.d3{background:#8CA79C}
-  .legend .ref{color:#5E6E68;font-size:.82rem}
-
-  section.explain{margin-top:44px}
-  section.explain h2{font-family:'Zilla Slab',serif;font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
-  section.explain p{margin-bottom:14px;max-width:60ch}
-  section.explain a{color:var(--spruce)}
-  .faq dt{font-weight:700;margin-top:18px}
-  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
-
-  .verified-badge{
-    display:inline-flex;align-items:center;gap:6px;
-    margin-top:14px;font-size:.82rem;color:#3D4C47;
-    background:#EEF3F0;border:1px solid var(--line);
-    border-radius:20px;padding:5px 12px;
-  }
-  .verified-badge .check{color:var(--spruce);font-weight:700}
-
-  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .copy-btn{
-    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
-    font-family:inherit;color:var(--spruce);background:#fff;
-    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
-  }
-  .copy-btn:hover{background:#EEF3F0}
-  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
-  .copied-note.show{opacity:1}
-  .copied-note.err{color:#8F2D1E}
-
-  /* Our own subscribe form: posts same-origin to /api/subscribe, which forwards
-     to beehiiv server-side. No third-party script, no iframe, nothing to render
-     but our own markup. */
   .subscribe{
-    margin-top:28px;padding:24px 22px;border-radius:10px;
-    background:#EEF3F0;border:1px solid var(--line);
+    margin-top:30px;padding:24px 22px;border-radius:4px;
+    background:var(--surface);border:1px solid var(--rule);
   }
-  .subscribe h2{
-    font-family:'Zilla Slab',serif;font-size:1.12rem;
-    color:var(--spruce-deep);margin-bottom:6px;
-  }
-  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .subscribe h2{font-family:var(--display);font-size:1.14rem;font-weight:600;color:var(--spruce-deep);margin-bottom:6px}
+  .subscribe .sub{font-size:.92rem;color:var(--ink-soft);margin-bottom:16px;max-width:54ch}
   .sub-row{display:flex;gap:10px;flex-wrap:wrap}
   .sub-row input[type="email"]{
     flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
     font-family:inherit;color:var(--ink);background:#fff;
-    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+    border:1.5px solid var(--rule);border-radius:4px;
   }
-  .sub-row input[type="email"]:focus{
-    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
-  }
+  .sub-row input[type="email"]:focus{outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce)}
   .sub-row button{
-    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    padding:12px 22px;font-size:.95rem;font-weight:600;
     font-family:inherit;color:#fff;background:var(--spruce);
-    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+    border:none;border-radius:4px;cursor:pointer;white-space:nowrap;
   }
   .sub-row button:hover{background:var(--spruce-deep)}
   .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-row button:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
   .sub-msg{margin-top:12px;font-size:.92rem;display:none}
   .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
-  .sub-done{
-    display:none;padding:4px 0;
-  }
+  .sub-done{display:none}
   .sub-done h2{margin-bottom:6px}
-  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
-  .sub-done a{color:var(--spruce);font-weight:700}
-
-  .more-tools{margin-top:36px}
-  .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
-  .more-tools ul{list-style:none}
-  .more-tools li{
-    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
-  }
-  .more-tools li:last-child{border-bottom:none}
-  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
-  .more-tools a:hover{text-decoration:underline}
-  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-
-  footer{
-    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
-    font-size:.82rem;color:#5E6E68;
-  }
-  footer p{margin-bottom:8px;max-width:70ch}
-  @media (prefers-reduced-motion:no-preference){
-    .result.show{animation:rise .35s ease}
-    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  }
+  .sub-done p{font-size:.95rem;color:var(--ink-soft);max-width:54ch}
 </style>
 </head>
 <body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+
 <div class="wrap">
-  <header>
-    <p class="eyebrow">British Columbia · Strata Property Act</p>
-    <h1>When do we have to send AGM notice?</h1>
-    <p class="lede">Pick your meeting date. Get the last legal day to send notice — with the day-counting rules most councils miss, shown in full.</p>
+  <header class="hero">
+    <p class="eyebrow">For volunteer condo &amp; strata boards</p>
+    <h1>Know the rule. Show the section.</h1>
+    <p class="lede">Free compliance tools for Canadian condo and strata councils. Every answer these tools give you arrives with the statute section it came from and the date that section was last read against the official consolidation — so you can forward it to your board without hedging.</p>
+    <p class="stamp-verified"><span class="tick">✓</span> Every answer cited &amp; dated</p>
   </header>
 
-  <div class="card">
-    <label for="meeting">Your meeting date <span class="hint">(AGM or SGM)</span></label>
-    <input type="date" id="meeting">
-
-    <label for="method">How is notice being delivered?</label>
-    <select id="method">
-      <option value="4" selected>Mail, email, fax, or left in mailbox / under the door</option>
-      <option value="0">Handed directly to the person</option>
-    </select>
-
-    <button id="calc">Get the send-by date</button>
-    <p class="error" id="err">Pick a meeting date first.</p>
-
-    <div class="result" id="result">
-      <div class="stamp">
-        <p class="k">Send notice no later than</p>
-        <p class="date" id="deadline">—</p>
-      </div>
-      <p class="verified-badge"><span class="check">✓</span> Verified August 12, 2026 · Strata Property Act ss. 45, 61</p>
-      <p class="buffer" id="bufferNote"></p>
-      <p class="past" id="pastNote"></p>
-
-      <div class="strip">
-        <h2>Where the days come from</h2>
-        <div class="bar" id="bar" role="img" aria-label="Breakdown of the notice period">
-          <div class="seg s1">14</div><div class="seg s2">2</div><div class="seg s3" id="seg3">4</div>
-        </div>
-        <ul class="legend">
-          <li><span class="dot d1"></span><span><strong>14 days</strong> — the Act requires "at least 2 weeks' written notice." <span class="ref">SPA s. 45(1)</span></span></li>
-          <li><span class="dot d2"></span><span><strong>+2 days</strong> — when counting "at least" a period, the first and last days don't count. <span class="ref">Interpretation Act s. 25</span></span></li>
-          <li id="leg3"><span class="dot d3"></span><span><strong>+4 days</strong> — notice sent by mail, email, fax, or left at the door is deemed received 4 days after it's given. <span class="ref">SPA s. 61(3)</span></span></li>
-        </ul>
-      </div>
-
-      <div class="copybar">
-        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
-        <span class="copied-note" id="copiedNote">Copied ✓</span>
-      </div>
-
+  <div class="proof">
+    <div class="proof-head">
+      <p class="k">For an AGM on Thursday, October 15, 2026</p>
+      <p class="answer">Send notice no later than Friday, September 25, 2026</p>
+    </div>
+    <div class="proof-body">
+      <p>That is what the AGM calculator returns — not just a date, but the derivation: 14 days of notice, plus 2 for the clear-day counting rule, plus 4 because notice sent by mail or email is deemed received four days later. Councils that count 14 days on a calendar send notice late.</p>
+      <p class="cite-rail">Strata Property Act ss. 45, 61 · Interpretation Act s. 25 · verified 12 August 2026</p>
     </div>
   </div>
 
-  <section class="subscribe no-print" aria-labelledby="subHead">
+  <h2 class="sec-title">Pick your province</h2>
+  <p class="sec-sub">The statutes are different, so the tools are separate. Nothing is shared between them except the discipline.</p>
+
+  <div class="jurs">
+    <a class="jur" href="/bc/">
+      <span class="jur-code">BC</span>
+      <span class="jur-name">British Columbia</span>
+      <span class="jur-act">Strata Property Act, SBC 1998, c. 43</span>
+      <span class="jur-count">Five tools — AGM notice, special levies, quorum, voting thresholds, records deadlines.</span>
+    </a>
+    <a class="jur" href="/on/">
+      <span class="jur-code">ON</span>
+      <span class="jur-name">Ontario</span>
+      <span class="jur-act">Condominium Act, 1998, S.O. 1998, c. 19</span>
+      <span class="jur-count">One tool so far — quorum for meetings of owners. More being read now.</span>
+    </a>
+    <p class="jur-more"><strong>More provinces coming.</strong> Each one waits until its statute has actually been read, section by section, rather than adapted from a neighbouring province's rules. That is slower, and it is the whole point.</p>
+  </div>
+
+  <h2 class="sec-title">Straight to a tool</h2>
+  <p class="sec-sub">The five most-used, if you already know what you need.</p>
+
+  <div class="quick">
+    <a href="/bc/agm-notice">
+      <span class="q-jur">BC</span><span class="q-name">AGM / SGM notice calculator</span>
+      <span class="q-cite">SPA ss. 45, 61</span>
+    </a>
+    <a href="/bc/special-levy">
+      <span class="q-jur">BC</span><span class="q-name">Special levy calculator</span>
+      <span class="q-cite">SPA ss. 99, 108</span>
+    </a>
+    <a href="/bc/quorum">
+      <span class="q-jur">BC</span><span class="q-name">Quorum calculator</span>
+      <span class="q-cite">SPA s. 48</span>
+    </a>
+    <a href="/bc/voting-threshold">
+      <span class="q-jur">BC</span><span class="q-name">Voting threshold checker</span>
+      <span class="q-cite">SPA ss. 1, 108, 128</span>
+    </a>
+    <a href="/on/quorum">
+      <span class="q-jur">ON</span><span class="q-name">Quorum calculator</span>
+      <span class="q-cite">Condo Act s. 50</span>
+    </a>
+  </div>
+
+  <section class="trust">
+    <h2>Why you can forward these to your board</h2>
+    <p>Compliance answers are only worth anything if you can show where they came from. These tools are built to a single rule: nothing is published until its section has been read from the official consolidation — bclaws.gov.bc.ca for British Columbia, ontario.ca for Ontario — not from memory, and not from a summary site.</p>
+    <ul>
+      <li>Every figure carries the exact subsection it rests on, down to <span class="cite-rail" style="border:0;padding:0;display:inline">s. 108(2)(b)</span> rather than a vague "section 108".</li>
+      <li>Every page shows the date its law was last checked, and the consolidation that text was current to.</li>
+      <li>Where the law is genuinely unsettled, the tool says so — the 20-versus-21-day notice count is shown as a real disagreement, not resolved quietly.</li>
+      <li>Where your own bylaws can override the Act, the answer tells you which rule is which.</li>
+    </ul>
+  </section>
+
+  <section class="subscribe" aria-labelledby="subHead">
     <div id="subForm">
-      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
-      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
       <form class="sub-row" id="subscribeForm" novalidate>
-        <input type="email" id="subEmail" name="email" required
-               autocomplete="email" placeholder="you@yourstrata.ca"
-               aria-label="Your email address">
-        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+        <input type="email" id="subEmail" name="email" required autocomplete="email"
+               placeholder="you@yourbuilding.ca" aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
       </form>
       <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
     </div>
     <div class="sub-done" id="subDone">
       <h2>You're in ✓</h2>
-      <p>Check your inbox — or get your cheat sheet now:
-         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+      <p>Check your inbox to confirm. New tools land here first.</p>
     </div>
   </section>
-
-  <section class="more-tools">
-    <h2>More BC strata tools</h2>
-    <ul>
-      <li><a href="/special-levy">Special levy calculator</a></li>
-      <li><a href="/quorum">Quorum calculator</a></li>
-      <li><a href="/voting-threshold">Voting threshold checker</a></li>
-      <li><a href="/records-deadline">Records request deadline</a></li>
-      <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
-      <li><span>Strata fee / budget calculator</span><span class="soon">Coming soon</span></li>
-    </ul>
-  </section>
-
-  <section class="explain">
-    <h2>Why "2 weeks" really means 20 days</h2>
-    <p>Section 45 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_04" rel="noopener">Strata Property Act</a> says a strata corporation must give at least 2 weeks' written notice of an annual or special general meeting. Councils who count 14 days on the calendar routinely send notice late, because two other rules stretch the period.</p>
-    <p>First, B.C.'s Interpretation Act says that when a law requires "at least" a number of days between two events, the days on which both events happen are excluded — so 14 becomes 16 clear days. Second, section 61(3) of the Act deems a notice sent by mail, email, or fax, or left in a mailbox or under a door, to be received <em>4 days after it is given</em>. Sixteen plus four is the 20-day period this calculator applies. Notice handed directly to a person is received immediately, so only the 16 clear days apply.</p>
-    <p>Getting this wrong has consequences: resolutions passed at a badly-noticed meeting can be challenged, and while section 47 forgives a <em>reasonable attempt</em> that goes astray, it does not forgive counting the days wrong.</p>
-
-    <dl class="faq">
-      <dt>Does this apply to special general meetings too?</dt>
-      <dd>Yes — section 45 covers both annual and special general meetings.</dd>
-      <dt>What about a meeting to consider winding up the strata?</dt>
-      <dd>Different rule: winding-up resolutions require at least 4 weeks' notice under s. 45(1.1). This calculator covers standard AGMs and SGMs only.</dd>
-      <dt>Do weekends or holidays extend the period?</dt>
-      <dd>No — the notice period runs in calendar days. But sending a day or two early costs nothing, and late notice can cost a meeting.</dd>
-      <dt>Why do some sources say 21 days, not 20?</dt>
-      <dd>Authorities genuinely differ on one counting step: whether the day notice is sent is excluded before adding the 4 deemed-receipt days. Owner associations describe a 20-day period; some strata lawyers count 21. This calculator shows the 20-day derivation and recommends a buffer that satisfies both readings — when the experts disagree, send earlier.</dd>
-      <dt>Is this legal advice?</dt>
-      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For anything contested, talk to a strata lawyer.</dd>
-    </dl>
-  </section>
-
-  <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 45, 47 and 61, and the Interpretation Act, RSBC 1996, c. 238, s. 25. Last verified August 12, 2026 against the official consolidations at bclaws.gov.bc.ca.</p>
-    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
-  </footer>
 </div>
+
+<footer class="kys-foot">
+  <div class="kys-foot-inner">
+    <p><strong>General information, not legal advice.</strong> These tools summarise provincial condominium and strata legislation. Your building's registered bylaws may add requirements, and for anything contested you should talk to a lawyer in your province.</p>
+    <p class="kys-foot-note">Know Your Strata · <a href="/bc/">British Columbia</a> · <a href="/on/">Ontario</a> · <a href="/cheat-sheet">BC compliance cheat sheet</a></p>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -301,11 +262,9 @@
   function fail(text){
     msg.textContent=text;
     msg.className='sub-msg err';
-    // Must be set inline: the reset below hides it with an inline style, which
-    // outranks the .err class rule, so the class alone can never re-show it.
     msg.style.display='block';
     btn.disabled=false;
-    btn.textContent='Send me the cheat sheet';
+    btn.textContent='Subscribe';
   }
 
   form.addEventListener('submit',function(e){
@@ -330,140 +289,15 @@
       if(data&&data.ok){
         panel.style.display='none';
         done.style.display='block';
-        done.scrollIntoView({block:'nearest'});
         return;
       }
-      if(data&&data.error==='invalid_email'){
-        fail('That email address does not look right — please check it.');
-      } else if(data&&data.error==='rate_limited'){
-        fail('Too many attempts just now. Please try again in a minute.');
-      } else if(data&&data.error==='not_configured'){
-        fail('The signup service is temporarily unavailable. Please try again later.');
-      } else {
-        fail('Something went wrong sending that. Please try again.');
-      }
+      if(data&&data.error==='invalid_email'){fail('That email address does not look right — please check it.');}
+      else if(data&&data.error==='rate_limited'){fail('Too many attempts just now. Please try again in a minute.');}
+      else if(data&&data.error==='not_configured'){fail('The signup service is temporarily unavailable. Please try again later.');}
+      else {fail('Something went wrong sending that. Please try again.');}
     }).catch(function(){
       fail('Could not reach the signup service. Please check your connection and try again.');
     });
-  });
-})();
-</script>
-<script>
-(function(){
-  var meeting=document.getElementById('meeting'),
-      method=document.getElementById('method'),
-      btn=document.getElementById('calc'),
-      err=document.getElementById('err'),
-      result=document.getElementById('result'),
-      deadlineEl=document.getElementById('deadline'),
-      bufferNote=document.getElementById('bufferNote'),
-      pastNote=document.getElementById('pastNote'),
-      seg3=document.getElementById('seg3'),
-      leg3=document.getElementById('leg3'),
-      copyBtn=document.getElementById('copyBtn'),
-      copiedNote=document.getElementById('copiedNote');
-
-  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-
-  function parseLocal(v){
-    var p=v.split('-');
-    return new Date(+p[0], +p[1]-1, +p[2]);
-  }
-  function minusDays(d,n){
-    var c=new Date(d.getTime());
-    c.setDate(c.getDate()-n);
-    return c;
-  }
-  function today0(){
-    var t=new Date();
-    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
-  }
-
-  btn.addEventListener('click',function(){
-    if(!meeting.value){err.style.display='block';result.classList.remove('show');result.style.display='none';return;}
-    err.style.display='none';
-
-    var extra=+method.value;
-    var total=16+extra;
-    var m=parseLocal(meeting.value);
-    var sendBy=minusDays(m,total);
-    var buffered=minusDays(sendBy,2);
-
-    seg3.style.display=extra?'flex':'none';
-    leg3.style.display=extra?'flex':'none';
-
-    deadlineEl.textContent=fmt.format(sendBy);
-    bufferNote.textContent='Authorities differ on whether the strict count is 20 or 21 days, and cutting it close invites challenges. The safe target: have notice out by '+fmt.format(buffered)+'.';
-
-    if(sendBy < today0()){
-      var earliest=new Date(today0().getTime());
-      earliest.setDate(earliest.getDate()+total);
-      pastNote.style.display='block';
-      pastNote.textContent='That send-by date has already passed. If notice goes out today, the earliest compliant meeting date is '+fmt.format(earliest)+'.';
-    } else {
-      pastNote.style.display='none';
-    }
-
-    result.style.display='block';
-    result.classList.remove('show');
-    void result.offsetWidth;
-    result.classList.add('show');
-  });
-
-  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
-     contexts and can still reject on HTTPS (denied permission, document not
-     focused), so neither path is assumed and neither fails silently. */
-  function flashNote(text,isError){
-    copiedNote.textContent=text;
-    copiedNote.className='copied-note show'+(isError?' err':'');
-    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
-  }
-  function legacyCopy(text){
-    try{
-      var ta=document.createElement('textarea');
-      ta.value=text;
-      ta.setAttribute('readonly','');
-      ta.style.position='fixed';
-      ta.style.top='0';
-      ta.style.left='-9999px';
-      document.body.appendChild(ta);
-      ta.select();
-      ta.setSelectionRange(0,text.length);
-      var ok=document.execCommand('copy');
-      document.body.removeChild(ta);
-      return ok;
-    }catch(err){
-      return false;
-    }
-  }
-  function copyFallback(text){
-    if(legacyCopy(text))flashNote('Copied ✓',false);
-    else flashNote('Copy not supported — please select the text and copy manually.',true);
-  }
-  function copyToClipboard(text){
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      try{
-        navigator.clipboard.writeText(text).then(
-          function(){flashNote('Copied ✓',false);},
-          function(){copyFallback(text);}
-        );
-        return;
-      }catch(err){
-        copyFallback(text);
-        return;
-      }
-    }
-    copyFallback(text);
-  }
-
-  copyBtn.addEventListener('click',function(){
-    if(!meeting.value)return;
-    var extra=+method.value;
-    var total=16+extra;
-    var m=parseLocal(meeting.value);
-    var sendBy=minusDays(m,total);
-    var sentence='For our meeting on '+fmt.format(m)+', notice must be sent no later than '+fmt.format(sendBy)+" under BC's "+total+'-day calculation (Strata Property Act s. 45).';
-    copyToClipboard(sentence);
   });
 })();
 </script>

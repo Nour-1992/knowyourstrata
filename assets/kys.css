@@ -1,0 +1,124 @@
+/* Know Your Strata — shared design system.
+   Loaded before each page's own <style>, so a page can still override.
+
+   Palette note: the ground moved off warm cream to a cool pale sage. Spruce is
+   kept as the trust anchor since five tools already carry it, but it now sits
+   in a cool system rather than a warm one. Citations and verified dates are set
+   in mono throughout — that is the signature, not decoration. */
+
+:root{
+  /* ground + ink */
+  --paper:#E9ECE8;
+  --surface:#FDFDFC;
+  --ink:#131B18;
+  --ink-soft:#41504A;
+  --rule:#CBD3CC;
+
+  /* trust anchor */
+  --spruce:#1E4A43;
+  --spruce-deep:#0E2A26;
+  --sage:#8CA79C;
+
+  /* signals */
+  --seal:#7A2E2E;      /* registry-seal oxblood: verified stamp accent */
+  --amber:#8A6100;     /* caution, kept functional */
+  --card:#FDFDFC;
+  --line:#CBD3CC;
+
+  --display:'Newsreader',Georgia,serif;
+  --body:'Archivo',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px}
+body{
+  font-family:var(--body);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Site navigation ───────────────────────────────────────────────── */
+.kys-nav{
+  background:var(--spruce-deep);
+  color:#E6EDE9;
+  border-bottom:3px solid var(--spruce);
+}
+.kys-nav-inner{
+  max-width:960px;margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+  min-height:56px;
+}
+.kys-mark{
+  font-family:var(--display);font-weight:600;font-size:1.06rem;
+  color:#FFF;text-decoration:none;letter-spacing:.01em;
+  display:inline-flex;align-items:baseline;gap:7px;
+}
+.kys-mark .kys-mark-rule{
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--sage);font-weight:400;
+}
+.kys-jur{display:flex;align-items:center;gap:4px;margin-left:auto;flex-wrap:wrap}
+.kys-jur a{
+  font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;
+  text-transform:uppercase;text-decoration:none;
+  color:#C6D4CC;padding:5px 10px;border-radius:5px;
+  border:1px solid transparent;
+}
+.kys-jur a:hover{background:rgba(255,255,255,.09);color:#fff}
+.kys-jur a[aria-current="true"]{
+  color:#fff;border-color:var(--sage);background:rgba(255,255,255,.07);
+}
+.kys-jur .kys-soon{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;
+  color:#8CA79C;padding:5px 2px 5px 8px;white-space:nowrap;
+}
+.kys-nav a:focus-visible,.kys-nav a:focus{
+  outline:2px solid var(--sage);outline-offset:2px;
+}
+
+/* ── Back-to-hub link on tool pages ────────────────────────────────── */
+.kys-back{
+  max-width:680px;margin:0 auto;padding:16px 20px 0;
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;
+}
+.kys-back a{color:var(--spruce);text-decoration:none}
+.kys-back a:hover{text-decoration:underline}
+
+/* ── Citation rail: the signature element ──────────────────────────── */
+.cite-rail{
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.02em;
+  color:var(--ink-soft);border-left:2px solid var(--sage);
+  padding-left:10px;
+}
+
+/* ── Verified stamp ────────────────────────────────────────────────── */
+.stamp-verified{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--seal);
+  border:1px solid var(--seal);border-radius:3px;
+  padding:5px 11px;background:rgba(122,46,46,.045);
+}
+.stamp-verified .tick{font-size:.85rem;line-height:1}
+
+/* ── Shared page furniture ─────────────────────────────────────────── */
+.kys-foot{
+  border-top:1px solid var(--rule);
+  margin-top:56px;padding:22px 20px 60px;
+  font-size:.82rem;color:var(--ink-soft);
+}
+.kys-foot-inner{max-width:960px;margin:0 auto}
+.kys-foot a{color:var(--spruce)}
+.kys-foot .kys-foot-note{font-family:var(--mono);font-size:.72rem;color:#6C7A73;margin-top:10px}
+
+@media (prefers-reduced-motion:no-preference){
+  .rise{animation:kysRise .35s ease}
+  @keyframes kysRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+}
+@media print{
+  .kys-nav,.kys-back,.no-print{display:none !important}
+  body{background:#fff}
+}

@@ -1,0 +1,25 @@
+# Cloudflare Pages redirects.
+#
+# The BC tools moved under /bc/ when the site gained a real homepage and
+# jurisdiction hubs. Every old URL 301s to its new home so existing links and
+# search rankings follow.
+#
+# Note on "/": it previously served the AGM notice calculator and is now the
+# homepage, so it cannot redirect. The calculator lives at /bc/agm-notice and
+# the homepage links to it prominently.
+
+/special-levy       /bc/special-levy       301
+/quorum             /bc/quorum             301
+/voting-threshold   /bc/voting-threshold   301
+/records-deadline   /bc/records-deadline   301
+
+# Extension-bearing forms, in case anything linked them directly.
+/special-levy.html      /bc/special-levy      301
+/quorum.html            /bc/quorum            301
+/voting-threshold.html  /bc/voting-threshold  301
+/records-deadline.html  /bc/records-deadline  301
+/index.html             /                     301
+
+# Convenience aliases for the AGM calculator's old identity.
+/agm-notice         /bc/agm-notice         301
+/bc/agm             /bc/agm-notice         301

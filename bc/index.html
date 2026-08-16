@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Compliance Tools — Free Calculators with Statute Citations | Know Your Strata</title>
+<meta name="description" content="Free compliance tools for BC strata councils: AGM notice deadlines, special levy apportionment, quorum, voting thresholds and records-request deadlines — each answer carrying its Strata Property Act section and verified date.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<style>
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 40px}
+  header.hub{padding:44px 0 4px}
+  .eyebrow{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--spruce);
+  }
+  h1{
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(1.9rem,5.4vw,2.6rem);
+    line-height:1.12;margin:12px 0 14px;color:var(--spruce-deep);
+    letter-spacing:-.012em;
+  }
+  .lede{color:var(--ink-soft);max-width:56ch;font-size:1.03rem}
+
+  .tools{margin-top:34px;border-top:1px solid var(--rule)}
+  .tool{
+    display:block;text-decoration:none;color:inherit;
+    padding:20px 0;border-bottom:1px solid var(--rule);
+  }
+  .tool:hover .tool-name{color:var(--spruce);text-decoration:underline}
+  .tool:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+  .tool-top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tool-name{
+    font-family:var(--display);font-size:1.2rem;font-weight:600;
+    color:var(--spruce-deep);line-height:1.25;
+  }
+  .tool-cite{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;
+    color:var(--ink-soft);margin-left:auto;white-space:nowrap;
+  }
+  .tool-desc{margin-top:5px;color:var(--ink-soft);font-size:.95rem;max-width:60ch}
+  .tool.soon{opacity:.62}
+  .tool.soon .tool-name{color:var(--ink-soft)}
+  .tool.soon .tool-cite{color:#7E8C85}
+  /* margin-left:auto only right-aligns the citation when the title fits on one
+     line; once it wraps the alignment goes ragged. Stack them on narrow screens
+     so every row reads the same way. */
+  @media (max-width:560px){
+    .tool-top{flex-direction:column;align-items:flex-start;gap:3px}
+    .tool-cite{margin-left:0}
+  }
+
+  .assurance{
+    margin-top:34px;padding:20px 22px;background:var(--surface);
+    border:1px solid var(--rule);border-radius:4px;
+  }
+  .assurance h2{
+    font-family:var(--display);font-size:1.12rem;font-weight:600;
+    color:var(--spruce-deep);margin-bottom:8px;
+  }
+  .assurance p{font-size:.93rem;color:var(--ink-soft);max-width:62ch}
+  .assurance .cite-rail{margin-top:12px}
+
+  .subscribe{
+    margin-top:30px;padding:24px 22px;border-radius:4px;
+    background:var(--surface);border:1px solid var(--rule);
+  }
+  .subscribe h2{font-family:var(--display);font-size:1.14rem;font-weight:600;color:var(--spruce-deep);margin-bottom:6px}
+  .subscribe .sub{font-size:.92rem;color:var(--ink-soft);margin-bottom:16px;max-width:54ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--rule);border-radius:4px;
+  }
+  .sub-row input[type="email"]:focus{outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce)}
+  .sub-row button{
+    padding:12px 22px;font-size:.95rem;font-weight:600;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:4px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-row button:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:var(--ink-soft);max-width:54ch}
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hub">
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>BC strata compliance tools</h1>
+    <p class="lede">Five free calculators for the deadlines and thresholds BC councils get wrong most often. Every answer carries the section it came from and the date that section was last checked against the official consolidation.</p>
+  </header>
+
+  <div class="tools">
+    <a class="tool" href="/bc/agm-notice">
+      <span class="tool-top">
+        <span class="tool-name">AGM / SGM notice calculator</span>
+        <span class="tool-cite">SPA ss. 45, 61</span>
+      </span>
+      <span class="tool-desc">Pick your meeting date, get the last legal day to send notice — including the counting rules that turn "2 weeks" into about 20 days.</span>
+    </a>
+
+    <a class="tool" href="/bc/special-levy">
+      <span class="tool-top">
+        <span class="tool-name">Special levy calculator</span>
+        <span class="tool-cite">SPA ss. 99, 108</span>
+      </span>
+      <span class="tool-desc">Split a levy across units by unit entitlement, reconciled to the cent, with the 3/4-vote and unanimous-vote routes explained.</span>
+    </a>
+
+    <a class="tool" href="/bc/quorum">
+      <span class="tool-top">
+        <span class="tool-name">Quorum calculator</span>
+        <span class="tool-cite">SPA s. 48</span>
+      </span>
+      <span class="tool-desc">How many votes you need present in person or by proxy — plus the adjournment rule when you fall short.</span>
+    </a>
+
+    <a class="tool" href="/bc/voting-threshold">
+      <span class="tool-top">
+        <span class="tool-name">Voting threshold checker</span>
+        <span class="tool-cite">SPA ss. 1, 71, 96, 108, 128</span>
+      </span>
+      <span class="tool-desc">Nineteen decisions mapped to the vote each one needs — majority, 3/4, 80% or unanimous — with the section for every row.</span>
+    </a>
+
+    <a class="tool" href="/bc/records-deadline">
+      <span class="tool-top">
+        <span class="tool-name">Records request deadline</span>
+        <span class="tool-cite">SPA ss. 36, 59</span>
+      </span>
+      <span class="tool-desc">Two weeks for records, one week for bylaws or a Form B. Enter the date the request arrived and get the day you must comply by.</span>
+    </a>
+
+    <span class="tool soon">
+      <span class="tool-top">
+        <span class="tool-name">Depreciation report deadline</span>
+        <span class="tool-cite">coming soon</span>
+      </span>
+      <span class="tool-desc">Not published until its sections have been read and confirmed, like every tool above.</span>
+    </span>
+  </div>
+
+  <section class="assurance">
+    <h2>Why these carry citations</h2>
+    <p>A compliance answer without its source is just an opinion. Every figure in these tools was read from the official consolidation at bclaws.gov.bc.ca rather than from memory or a summary site, and each page shows the section and the date it was checked. Where the law is genuinely unsettled — the 20-versus-21-day notice count, for instance — the tool says so instead of picking a side quietly.</p>
+    <p class="cite-rail">Strata Property Act, SBC 1998, c. 43 · consolidation current to 11 August 2026</p>
+  </section>
+
+  <section class="subscribe" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required autocomplete="email"
+               placeholder="you@yourstrata.ca" aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox to confirm. New tools land here first.</p>
+    </div>
+  </section>
+</div>
+
+<footer class="kys-foot">
+  <div class="kys-foot-inner">
+    <p><strong>General information, not legal advice.</strong> These tools summarise the Strata Property Act, SBC 1998, c. 43. Your strata's registered bylaws may add requirements, and for anything contested you should talk to a strata lawyer.</p>
+    <p class="kys-foot-note">Know Your Strata · <a href="/">home</a> · <a href="/on/">Ontario tools</a> · <a href="/cheat-sheet">BC compliance cheat sheet</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        return;
+      }
+      if(data&&data.error==='invalid_email'){fail('That email address does not look right — please check it.');}
+      else if(data&&data.error==='rate_limited'){fail('Too many attempts just now. Please try again in a minute.');}
+      else if(data&&data.error==='not_configured'){fail('The signup service is temporarily unavailable. Please try again later.');}
+      else {fail('Something went wrong sending that. Please try again.');}
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+</body>
+</html>
