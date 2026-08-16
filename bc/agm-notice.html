@@ -6,22 +6,13 @@
 <title>BC AGM Notice Calculator — When to Send Strata Meeting Notice | Strata Property Act</title>
 <meta name="description" content="Free calculator for BC strata councils: pick your AGM or SGM date and get the last legal day to send notice under the Strata Property Act, with the 20-day math explained.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
 <style>
-  :root{
-    --spruce:#1E4A43;
-    --spruce-deep:#123833;
-    --paper:#FAF9F5;
-    --ink:#22302D;
-    --sage:#8CA79C;
-    --line:#DDD9CE;
-    --amber:#8A6100;
-    --card:#FFFFFF;
-  }
   *{box-sizing:border-box;margin:0;padding:0}
   html{font-size:17px}
   body{
-    font-family:'Public Sans',system-ui,sans-serif;
+    font-family:var(--body);
     background:var(--paper);
     color:var(--ink);
     line-height:1.6;
@@ -34,7 +25,7 @@
     color:var(--spruce);font-weight:700;
   }
   h1{
-    font-family:'Zilla Slab',serif;font-weight:700;
+    font-family:var(--display);font-weight:700;
     font-size:clamp(1.7rem,5.5vw,2.4rem);
     line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
   }
@@ -69,7 +60,7 @@
   }
   .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
   .stamp .date{
-    font-family:'Zilla Slab',serif;font-weight:700;
+    font-family:var(--display);font-weight:700;
     font-size:clamp(1.5rem,5vw,2rem);margin-top:6px;
   }
   .buffer{
@@ -82,7 +73,7 @@
   }
 
   .strip{margin-top:26px}
-  .strip h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .strip h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
   .bar{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
   .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700;min-width:0}
   .seg.s1{background:#2C6B60;flex:14}
@@ -95,19 +86,20 @@
   .legend .ref{color:#5E6E68;font-size:.82rem}
 
   section.explain{margin-top:44px}
-  section.explain h2{font-family:'Zilla Slab',serif;font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
   section.explain p{margin-bottom:14px;max-width:60ch}
   section.explain a{color:var(--spruce)}
   .faq dt{font-weight:700;margin-top:18px}
   .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
 
   .verified-badge{
-    display:inline-flex;align-items:center;gap:6px;
-    margin-top:14px;font-size:.82rem;color:#3D4C47;
-    background:#EEF3F0;border:1px solid var(--line);
-    border-radius:20px;padding:5px 12px;
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
   }
-  .verified-badge .check{color:var(--spruce);font-weight:700}
+  .verified-badge .check{font-weight:600}
 
   .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .copy-btn{
@@ -128,7 +120,7 @@
     background:#EEF3F0;border:1px solid var(--line);
   }
   .subscribe h2{
-    font-family:'Zilla Slab',serif;font-size:1.12rem;
+    font-family:var(--display);font-size:1.12rem;
     color:var(--spruce-deep);margin-bottom:6px;
   }
   .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
@@ -158,7 +150,7 @@
   .sub-done a{color:var(--spruce);font-weight:700}
 
   .more-tools{margin-top:36px}
-  .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
   .more-tools ul{list-style:none}
   .more-tools li{
     display:flex;justify-content:space-between;align-items:baseline;gap:12px;
@@ -182,6 +174,18 @@
 </style>
 </head>
 <body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All British Columbia tools</a></p>
 <div class="wrap">
   <header>
     <p class="eyebrow">British Columbia · Strata Property Act</p>
@@ -253,10 +257,10 @@
   <section class="more-tools">
     <h2>More BC strata tools</h2>
     <ul>
-      <li><a href="/special-levy">Special levy calculator</a></li>
-      <li><a href="/quorum">Quorum calculator</a></li>
-      <li><a href="/voting-threshold">Voting threshold checker</a></li>
-      <li><a href="/records-deadline">Records request deadline</a></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
+      <li><a href="/bc/quorum">Quorum calculator</a></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
+      <li><a href="/bc/records-deadline">Records request deadline</a></li>
       <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
       <li><span>Strata fee / budget calculator</span><span class="soon">Coming soon</span></li>
     </ul>
