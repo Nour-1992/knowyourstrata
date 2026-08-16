@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Records Request Deadline Calculator — 1 Week or 2? | Strata Property Act</title>
+<meta name="description" content="Free calculator for BC strata councils: enter the date a records request arrived and get the legal deadline to comply — 2 weeks for records, 1 week for bylaws, rules or a Form B — with the Strata Property Act section for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Zilla+Slab:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --spruce:#1E4A43;
+    --spruce-deep:#123833;
+    --paper:#FAF9F5;
+    --ink:#22302D;
+    --sage:#8CA79C;
+    --line:#DDD9CE;
+    --amber:#8A6100;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:'Public Sans',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="date"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input[type="date"]:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:'Zilla Slab',serif;font-weight:700;
+    font-size:clamp(1.5rem,5vw,2rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:14px;font-size:.82rem;color:#3D4C47;
+    background:#EEF3F0;border:1px solid var(--line);
+    border-radius:20px;padding:5px 12px;
+  }
+  .verified-badge .check{color:var(--spruce);font-weight:700}
+
+  .countdown{
+    margin-top:12px;padding:14px 18px;border-radius:8px;
+    font-weight:700;font-size:1rem;display:none;
+  }
+  .countdown.ok{background:#EAF3EE;color:#1E4A43;border-left:3px solid #2C6B60}
+  .countdown.due{background:#FBF6EA;color:var(--amber);border-left:3px solid var(--amber)}
+  .countdown.late{background:#FAEFEC;color:#8F2D1E;border-left:3px solid #8F2D1E}
+  .countdown .detail{display:block;font-weight:400;font-size:.9rem;margin-top:4px}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+  }
+
+  .who{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .who h3{
+    font-family:'Zilla Slab',serif;font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .who .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .who ul{list-style:none;font-size:.9rem}
+  .who li{
+    display:flex;gap:9px;align-items:baseline;
+    padding:4px 0;color:#3D4C47;
+  }
+  .who li::before{content:"•";color:var(--spruce);flex:none;font-weight:700}
+  .who .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:'Zilla Slab',serif;font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:'Zilla Slab',serif;font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:'Zilla Slab',serif;font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>When do we have to answer this records request?</h1>
+    <p class="lede">Pick what was asked for and the day it arrived. Get the legal deadline to comply — the Act runs two different clocks, and using the wrong one is how councils end up late.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="kind">What was requested?</label>
+      <select id="kind">
+        <option value="" selected>Choose a request type…</option>
+        <option value="general">Records or documents — minutes, financials, contracts, depreciation report</option>
+        <option value="bylaws">Bylaws or rules only</option>
+        <option value="formb">Information Certificate (Form B)</option>
+      </select>
+
+      <label for="received">Date the request was received</label>
+      <input type="date" id="received">
+
+      <button id="calc">Get the deadline</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Comply no later than</p>
+        <p class="date" id="deadline">—</p>
+        <p class="sub" id="ruleSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 15, 2026 · <span id="badgeCite">Strata Property Act</span></p>
+
+      <p class="countdown" id="countdown"></p>
+      <p class="cite-line" id="citeLine"></p>
+
+      <p class="flag">
+        <strong>An unpaid fee can hold up the copies, not the clock.</strong> The strata may charge a fee for copies up to the amount set in the regulations, and may refuse to supply them until it is paid (s. 36(4); for a Form B, s. 59(7)). That is a limit on handing over copies — it is not a licence to ignore the request, and inspection is a separate right from copying.
+      </p>
+
+      <div class="who">
+        <h3>Who is entitled to ask</h3>
+        <p class="sub">If the requester is not on this list, check the section before releasing anything.</p>
+        <ul>
+          <li>An <strong>owner</strong>.</li>
+          <li>A <strong>tenant</strong> who has been assigned the landlord's right to inspect and copy under s. 147 or s. 148.</li>
+          <li>Anyone <strong>authorised in writing</strong> by such an owner or tenant.</li>
+          <li>A <strong>former owner or former tenant</strong>, but only for records relating to the period when they were an owner or tenant.</li>
+          <li>Any <strong>tenant</strong> may ask for the bylaws and rules, whether or not rights were assigned.</li>
+          <li>For a Form B: an <strong>owner, a purchaser</strong>, or a person authorised by either.</li>
+        </ul>
+        <p class="cite">Strata Property Act ss. 36(1), 36(1.1), 36(2) and 59(1).</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/">AGM / SGM notice calculator</a></li>
+      <li><a href="/special-levy">Special levy calculator</a></li>
+      <li><a href="/quorum">Quorum calculator</a></li>
+      <li><a href="/voting-threshold">Voting threshold checker</a></li>
+      <li><span>Records request deadline</span><span class="current">You're here</span></li>
+      <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
+      <li><span>Strata fee / budget calculator</span><span class="soon">Coming soon</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>Two clocks, and the one most councils miss</h2>
+    <p>Section 36 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_04" rel="noopener">Strata Property Act</a> sets the deadline for producing records, and it is not a single period. The whole rule sits in one sentence:</p>
+    <p class="quote">"The strata corporation must comply with a request under subsection (1), (1.1) or (2) within 2 weeks unless the request is in respect of bylaws or rules, in which case the strata corporation must comply with the request within one week."</p>
+    <p>So the default is two weeks, and bylaws or rules are the exception at one week. A council that treats every request as a fortnight job is already late whenever someone asks for the bylaws.</p>
+    <p>The Information Certificate — Form B — runs on a separate clock in a different Part of the Act, and it is the short one:</p>
+    <p class="quote">"Within one week of a request by an owner, a purchaser or a person authorized by an owner or purchaser, the strata corporation must give to the person making the request an Information Certificate in the prescribed form."</p>
+    <p>These are plain calendar counts from the day the request came in. Unlike meeting notice, there is no deemed-receipt period and no clear-day arithmetic to apply here — the Act says "within 2 weeks" and "within one week", so that is what this tool counts.</p>
+
+    <h2 style="margin-top:32px">The fee, and what it does and does not delay</h2>
+    <p>Section 36(4) lets the strata charge a fee for copies, capped by the regulations, and lets it "refuse to supply the copy until the fee is paid". Section 59(7) does the same for a Form B. That is worth understanding precisely: it is a hold on handing over copies pending a permitted fee, not a general extension of the deadline, and it does not touch the separate right to <em>inspect</em> records. Treat the date this tool gives you as the date you must have complied by, and deal with the fee promptly rather than using it as a reason to sit on the request.</p>
+
+    <dl class="faq">
+      <dt>Does the clock start the day the request arrives or the day after?</dt>
+      <dd>The Act says the corporation must comply "within 2 weeks" (or one week) of the request. This tool counts forward from the date you enter, so a request received on the 1st has a two-week deadline of the 15th. If a request lands close to the line, produce the records early rather than arguing about the first day.</dd>
+      <dt>What if the request mixes bylaws with other records?</dt>
+      <dd>The one-week period applies where the request "is in respect of bylaws or rules". A mixed request is safest handled on the shorter clock for the bylaws and rules portion — send those within one week and the rest within two — rather than putting everything on the longer period.</dd>
+      <dt>Do weekends and holidays extend it?</dt>
+      <dd>Nothing in section 36 or section 59 says so. Treat these as straight calendar periods, and if the deadline lands awkwardly, respond before it rather than after.</dd>
+      <dt>Can we refuse because the requester will not pay the fee?</dt>
+      <dd>You may refuse to supply the <em>copies</em> until the permitted fee is paid (s. 36(4), and s. 59(7) for a Form B). That is narrower than refusing the request: the entitlement to inspect is separate, and the fee is capped by the regulations.</dd>
+      <dt>What about a former owner?</dt>
+      <dd>Section 36(1.1) entitles a former owner or former tenant to records relating to the period when they held that status, whenever those records were created. The same two-week and one-week deadlines apply.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For a contested or unusual request, talk to a strata lawyer or your strata manager.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 35, 36, 59, 147 and 148. Last verified August 15, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 11, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    // Must be set inline: the reset below hides it with an inline style, which
+    // outranks the .err class rule, so the class alone can never re-show it.
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var kind=document.getElementById('kind'),
+      received=document.getElementById('received'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      deadlineEl=document.getElementById('deadline'),
+      ruleSub=document.getElementById('ruleSub'),
+      badgeCite=document.getElementById('badgeCite'),
+      countdown=document.getElementById('countdown'),
+      citeLine=document.getElementById('citeLine'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  /* Straight calendar counts. s. 36(3) and s. 59(1) say "within 2 weeks" and
+     "within one week" of the request, with no deemed-receipt period and no
+     clear-day rule, so nothing is added beyond the stated days. */
+  var KINDS={
+    general:{days:14,rule:'2 weeks',cite:'Strata Property Act s. 36(3)',
+      what:'records and documents under section 35',
+      text:'"The strata corporation must comply with a request under subsection (1), (1.1) or (2) within 2 weeks unless the request is in respect of bylaws or rules…" — the two-week period is the default for the section 35 records.'},
+    bylaws:{days:7,rule:'1 week',cite:'Strata Property Act s. 36(3)',
+      what:'bylaws or rules',
+      text:'"…unless the request is in respect of bylaws or rules, in which case the strata corporation must comply with the request within one week." Bylaws and rules are the exception to the two-week default.'},
+    formb:{days:7,rule:'1 week',cite:'Strata Property Act s. 59(1)',
+      what:'an Information Certificate (Form B)',
+      text:'"Within one week of a request by an owner, a purchaser or a person authorized by an owner or purchaser, the strata corporation must give to the person making the request an Information Certificate in the prescribed form."'}
+  };
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function plusDays(d,n){
+    var c=new Date(d.getTime());
+    c.setDate(c.getDate()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+  function dayDiff(a,b){
+    return Math.round((a.getTime()-b.getTime())/86400000);
+  }
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  var current=null;
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  calcBtn.addEventListener('click',function(){
+    var k=kind.value;
+    if(!k||!KINDS[k]){show('Choose what was requested first.');return;}
+    if(!received.value){show('Enter the date the request was received.');return;}
+    err.style.display='none';
+
+    var cfg=KINDS[k];
+    var start=parseLocal(received.value);
+    var due=plusDays(start,cfg.days);
+    current={cfg:cfg,start:start,due:due,label:kind.options[kind.selectedIndex].text};
+
+    deadlineEl.textContent=fmt.format(due);
+    ruleSub.textContent=cfg.rule+' ('+cfg.days+' days) from '+fmt.format(start);
+    badgeCite.textContent=cfg.cite;
+    citeLine.innerHTML='<strong>'+cfg.cite+'</strong> — '+cfg.text;
+
+    var left=dayDiff(due,today0());
+    countdown.style.display='block';
+    if(left>3){
+      countdown.className='countdown ok';
+      countdown.innerHTML='On track<span class="detail">'+left+' days left to comply. Producing the records early costs nothing.</span>';
+    } else if(left>=0){
+      countdown.className='countdown due';
+      countdown.innerHTML=(left===0?'Due today':'Due in '+left+(left===1?' day':' days'))+
+        '<span class="detail">This one is tight — get it out now rather than on the last day.</span>';
+    } else {
+      countdown.className='countdown late';
+      countdown.innerHTML='Overdue by '+Math.abs(left)+(Math.abs(left)===1?' day':' days')+
+        '<span class="detail">The deadline under '+cfg.cite+' has passed. Comply as soon as possible; a late response is a compliance issue the CRT can be asked to look at.</span>';
+    }
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var c=current;
+    var s='Records request for '+c.cfg.what+', received '+fmt.format(c.start)+
+      '. The strata corporation must comply by '+fmt.format(c.due)+
+      ' — '+c.cfg.rule+' ('+c.cfg.days+' days) under '+c.cfg.cite+'.'+
+      ' A fee for copies may be charged up to the amount set in the regulations, and copies may be withheld until it is paid (s. 36(4); s. 59(7) for an Information Certificate), but that does not extend the deadline.'+
+      ' Verified August 15, 2026 against the Strata Property Act, consolidation current to August 11, 2026.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
