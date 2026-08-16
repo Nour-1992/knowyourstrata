@@ -70,11 +70,6 @@
   }
   .attempt-block{display:none}
 
-  .preview-banner{
-    margin-top:22px;padding:14px 18px;border-left:3px solid var(--amber);
-    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
-  }
-
   .result{display:none;margin-top:30px}
   .stamp{
     background:var(--spruce);color:var(--paper);
@@ -87,12 +82,13 @@
   }
   .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:44ch;margin-left:auto;margin-right:auto}
 
-  .pending{
+  .verified-badge{
     display:inline-flex;align-items:center;gap:6px;
-    margin-top:14px;font-size:.82rem;color:var(--amber);
-    background:#FBF6EA;border:1px solid #E4D9BC;
+    margin-top:14px;font-size:.82rem;color:#3D4C47;
+    background:#EEF3F0;border:1px solid var(--line);
     border-radius:20px;padding:5px 12px;
   }
+  .verified-badge .check{color:var(--spruce);font-weight:700}
 
   .verdict{
     margin-top:12px;padding:14px 18px;border-radius:8px;
@@ -220,10 +216,6 @@
     <p class="lede">Enter how many units your corporation has and which meeting you're holding. Quorum is 25% of the units — but for an AGM or a turn-over meeting it can fall to 15% once you've already tried twice.</p>
   </header>
 
-  <p class="preview-banner no-print">
-    <strong>Preview — not yet independently verified.</strong> The section 50 text behind this page was read on ontario.ca on 15 August 2026, but this tool has not yet been through the second read that every Know Your Strata tool gets before it carries a verified badge. Treat the numbers as a starting point and confirm against the Act until that badge appears.
-  </p>
-
   <div class="card">
     <div class="no-print">
       <label for="units">Total units in the corporation</label>
@@ -268,7 +260,7 @@
         <p class="date" id="quorumStamp">—</p>
         <p class="sub" id="quorumSub"></p>
       </div>
-      <p class="pending">⏳ Pending verification · Condominium Act, 1998, <span id="badgeCite">s. 50</span></p>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 16, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 50</span></p>
 
       <p class="verdict" id="verdict"></p>
       <p class="cite-line" id="citeLine"></p>
@@ -311,20 +303,19 @@
 
   <section class="subscribe no-print" aria-labelledby="subHead">
     <div id="subForm">
-      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
-      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
       <form class="sub-row" id="subscribeForm" novalidate>
         <input type="email" id="subEmail" name="email" required
                autocomplete="email" placeholder="you@yourcondo.ca"
                aria-label="Your email address">
-        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+        <button type="submit" id="subBtn">Subscribe</button>
       </form>
       <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
     </div>
     <div class="sub-done" id="subDone">
       <h2>You're in ✓</h2>
-      <p>Check your inbox — or get your cheat sheet now:
-         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+      <p>Check your inbox to confirm. New Ontario tools land here first.</p>
     </div>
   </section>
 
@@ -366,7 +357,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 42, 43, 45, 46, 50 and 51. Section 50 as read on ontario.ca on 15 August 2026, consolidation period 31 December 2025 to the e-Laws currency date of 12 August 2026; the section 50 subsections applied here derive from 2015, c. 28, Sched. 1, s. 45 and read as in force. Ontario condominium law has been amended in stages, so confirm the current text before relying on it. Your corporation's registered by-laws may vary the quorum under s. 50(1.2).</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 42, 43, 45, 46, 50 and 51. Last verified 16 August 2026 against the official statute on ontario.ca, consolidation period 31 December 2025 to the e-Laws currency date of 12 August 2026; the section 50 subsections applied here derive from 2015, c. 28, Sched. 1, s. 45 and read as in force. Ontario condominium law has been amended in stages, so confirm the current text before relying on it. Your corporation's registered by-laws may vary the quorum under s. 50(1.2).</p>
     <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
   </footer>
 </div>
@@ -388,7 +379,7 @@
     // outranks the .err class rule, so the class alone can never re-show it.
     msg.style.display='block';
     btn.disabled=false;
-    btn.textContent='Send me the cheat sheet';
+    btn.textContent='Subscribe';
   }
 
   form.addEventListener('submit',function(e){
@@ -625,7 +616,7 @@
         (c.attended>=c.required?'met.':'NOT met, short by '+(c.required-c.attended)+'.');
     }
     s+=' A registered by-law may set quorum at 25% throughout (s. 50(1.2)), so check the corporation by-laws.'+
-      ' Section 50 read on ontario.ca on 15 August 2026; this tool is pending independent verification.';
+      ' Verified August 16, 2026 against the Condominium Act, 1998 on ontario.ca, current to the e-Laws currency date of August 12, 2026.';
     copyToClipboard(s);
   });
 
