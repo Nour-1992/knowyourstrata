@@ -87,11 +87,29 @@ body{
 .kys-back a{color:var(--spruce);text-decoration:none}
 .kys-back a:hover{text-decoration:underline}
 
-/* ── Citation rail: the signature element ──────────────────────────── */
+/* ── The registry mark ─────────────────────────────────────────────
+   One motif, used consistently: oxblood marks anything that is an
+   official reference — a citation or a verified stamp. Spruce stays the
+   primary structural colour; oxblood never carries structure, only the
+   mark. Keeping it to these three classes is what stops it reading as
+   scattered red. */
+
 .cite-rail{
   font-family:var(--mono);font-size:.78rem;letter-spacing:.02em;
-  color:var(--ink-soft);border-left:2px solid var(--sage);
+  color:var(--ink-soft);border-left:2px solid var(--seal);
   padding-left:10px;
+}
+
+/* Section marker: the § glyph, always oxblood, always mono. */
+.sec-mark{
+  font-family:var(--mono);color:var(--seal);font-weight:500;
+  margin-right:5px;
+}
+
+/* A citation shown inline in a list or table cell. */
+.cite-tag{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;
+  color:var(--seal);white-space:nowrap;
 }
 
 /* ── Verified stamp ────────────────────────────────────────────────── */
