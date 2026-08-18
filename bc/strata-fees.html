@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC Special Levy Calculator — Split a Special Levy by Unit Entitlement | Strata Property Act</title>
-<meta name="description" content="Free calculator for BC strata treasurers: split a special levy across units by unit entitlement — the standard section 99 method behind a 3/4-vote levy — with the math and the vote threshold shown in full.">
+<title>BC Strata Fee Calculator — Split the Annual Budget by Unit Entitlement | Strata Property Act</title>
+<meta name="description" content="Free calculator for BC strata treasurers: split the annual budget (operating fund + CRF) across units by unit entitlement — the section 99 default — with annual and monthly fees per unit.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/kys.css">
@@ -36,13 +36,13 @@
   }
   label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
   .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
-  input[type="date"],input[type="text"],input[type="number"],select{
+  input[type="text"],input[type="number"],select{
     width:100%;padding:12px 14px;font-size:1.05rem;
     font-family:inherit;color:var(--ink);
     border:1.5px solid var(--line);border-radius:8px;background:#fff;
     margin-bottom:20px;
   }
-  input[type="date"]:focus,input[type="text"]:focus,input[type="number"]:focus,select:focus,button:focus{
+  input[type="text"]:focus,input[type="number"]:focus,select:focus,button:focus{
     outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
   }
   .dollar-input{position:relative;margin-bottom:20px}
@@ -83,6 +83,12 @@
   }
   .add-row:hover{background:#EEF3F0}
 
+  .flag{
+    margin-bottom:20px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.88rem;border-radius:0 8px 8px 0;
+  }
+  .flag .ref{opacity:.85}
+
   .result{display:none;margin-top:30px}
   .stamp{
     background:var(--spruce);color:var(--paper);
@@ -93,6 +99,7 @@
     font-family:var(--display);font-weight:700;
     font-size:clamp(1.5rem,5vw,2rem);margin-top:6px;
   }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:6px}
   .buffer{
     margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
     background:#FBF6EA;color:var(--amber);font-size:.92rem;border-radius:0 8px 8px 0;display:none;
@@ -107,34 +114,6 @@
   }
   .verified-badge .check{font-weight:600}
 
-  .flag{
-    margin:-8px 0 20px;padding:12px 16px;border-left:3px solid var(--amber);
-    background:#FBF6EA;color:var(--amber);font-size:.88rem;border-radius:0 8px 8px 0;
-  }
-  .flag .ref{opacity:.85}
-
-  .checklist{
-    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
-    border-radius:10px;background:#F6F8F6;
-  }
-  .checklist h3{
-    font-family:var(--display);font-size:1rem;
-    color:var(--spruce-deep);margin-bottom:4px;
-  }
-  .checklist .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
-  .checklist ul{list-style:none;font-size:.9rem}
-  .checklist li{
-    display:flex;gap:9px;align-items:baseline;
-    padding:5px 0;color:#3D4C47;
-  }
-  .checklist li::before{
-    content:"☐";color:var(--spruce);flex:none;font-size:.95rem;
-  }
-  .checklist .done::before{content:"☑"}
-  .checklist .cite{
-    margin-top:11px;font-size:.8rem;color:#5E6E68;
-  }
-
   .table-wrap{margin-top:26px;overflow-x:auto}
   table{width:100%;border-collapse:collapse;font-size:.92rem}
   thead th{
@@ -148,6 +127,7 @@
     color:var(--spruce-deep);
   }
   td.num,th.num{text-align:right}
+  .table-note{margin-top:8px;font-size:.8rem;color:#5E6E68}
 
   .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .copy-btn{
@@ -214,6 +194,11 @@
   section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
   section.explain p{margin-bottom:14px;max-width:60ch}
   section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
   .faq dt{font-weight:700;margin-top:18px}
   .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
 
@@ -249,22 +234,22 @@
 <div class="wrap">
   <header>
     <p class="eyebrow">British Columbia · Strata Property Act</p>
-    <h1>How much does each unit owe on our special levy?</h1>
-    <p class="lede">Enter the total levy and each unit's entitlement. Get the per-unit breakdown — split by unit entitlement, the standard method behind a 3/4-vote levy. A different split is lawful too, but it takes a unanimous vote.</p>
+    <h1>What are each unit's strata fees for this budget?</h1>
+    <p class="lede">Enter the total annual budget and each unit's entitlement. Get every lot's share — annual and monthly — split by unit entitlement, the way the Act sets strata fees by default.</p>
   </header>
 
   <div class="card">
     <div class="inputs no-print">
-      <label for="totalLevy">Total special levy amount</label>
+      <label for="totalBudget">Total annual budgeted contribution <span class="hint">(operating fund + CRF)</span></label>
       <div class="dollar-input">
         <span class="prefix">$</span>
-        <input type="number" id="totalLevy" min="0" step="0.01" placeholder="600000">
+        <input type="number" id="totalBudget" min="0" step="0.01" placeholder="360000">
       </div>
 
       <label for="strataName">Strata plan number or name <span class="hint">(optional — for labeling only, never stored)</span></label>
       <input type="text" id="strataName" placeholder="e.g. Strata Plan VR1234">
 
-      <label>How should we split it?</label>
+      <label>How is entitlement set?</label>
       <div class="mode-toggle">
         <label class="radio"><input type="radio" name="mode" value="equal" id="modeEqual" checked> All units share equal entitlement</label>
         <label class="radio"><input type="radio" name="mode" value="custom" id="modeCustom"> Enter each unit's entitlement</label>
@@ -281,46 +266,35 @@
         <button type="button" class="add-row" id="addRow">+ Add unit</button>
       </div>
 
-      <p class="flag" id="equalFlag">
-        <strong>Check your vote threshold.</strong> If every unit's entitlement really is identical on your Schedule of Unit Entitlement, an equal split <em>is</em> the section 99 result and a 3/4 vote carries it. If the entitlements differ, splitting equally is a "fair division" under s. 108(2)(b) instead — lawful, but only by <strong>unanimous vote</strong>. <span class="ref">SPA s. 108(2)</span>
+      <p class="flag">
+        <strong>This is the section 99 default.</strong> If your strata adopted a different formula by unanimous vote under section 100 — filed at the Land Title Office — that governs instead of the calculation below. And non-residential, mixed-use and certain phased stratas can have formula variations under the regulations that this calculator doesn't account for; it covers the standard residential case only. <span class="ref">SPA ss. 99(1), 100</span>
       </p>
     </div>
 
-    <button id="calc" class="no-print">Calculate each unit's share</button>
+    <button id="calc" class="no-print">Calculate each unit's fees</button>
     <p class="error no-print" id="err"></p>
 
     <div class="result" id="result">
       <div class="stamp">
-        <p class="k">Total special levy</p>
+        <p class="k">Total annual budget</p>
         <p class="date" id="totalStamp">—</p>
+        <p class="sub" id="budgetSub"></p>
       </div>
-      <p class="verified-badge">✓ Verified August 13, 2026 · Strata Property Act ss. 99, 108(2)–(3)</p>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 18, 2026 · Strata Property Act ss. 99, 100, 246</p>
       <p class="buffer" id="reconcileNote"></p>
 
       <div class="table-wrap">
         <table id="shareTable">
           <thead>
-            <tr><th>Unit</th><th class="num">Entitlement</th><th class="num">Share</th><th class="num">Amount owed</th></tr>
+            <tr><th>Unit</th><th class="num">Entitlement</th><th class="num">Share</th><th class="num">Annual fee</th><th class="num">Monthly fee</th></tr>
           </thead>
           <tbody id="shareBody"></tbody>
           <tfoot>
-            <tr><td colspan="3">Total</td><td class="num" id="tableTotal">—</td></tr>
+            <tr><td colspan="3">Total</td><td class="num" id="tableTotal">—</td><td class="num" id="tableTotalMonthly">—</td></tr>
           </tfoot>
         </table>
       </div>
-
-      <div class="checklist">
-        <h3>Before this levy is valid, the resolution must say five things</h3>
-        <p class="sub">The numbers above cover two of them. The approving resolution has to set out all five.</p>
-        <ul>
-          <li><span>The <strong>purpose</strong> of the levy</span></li>
-          <li class="done"><span>The <strong>total amount</strong> of the levy</span></li>
-          <li><span>The <strong>method</strong> used to determine each strata lot's share</span></li>
-          <li class="done"><span>The <strong>amount of each strata lot's share</strong></span></li>
-          <li><span>The <strong>date the levy is payable</strong> — or, if paid in instalments, the date of each instalment</span></li>
-        </ul>
-        <p class="cite">Strata Property Act s. 108(3). Miss one and the resolution can be challenged, even when the arithmetic is right.</p>
-      </div>
+      <p class="table-note">Annual fees are rounded so the column sums exactly to the total budget. Monthly fees are each unit's annual fee ÷ 12, rounded to the cent for reference — many stratas true up the last month of the year to absorb that rounding, so treat the monthly column as indicative, not a billing schedule.</p>
 
       <div class="copybar no-print">
         <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
@@ -354,40 +328,41 @@
     <h2>More BC strata tools</h2>
     <ul>
       <li><a href="/bc/agm-notice">AGM / SGM notice calculator</a></li>
-      <li><span>Special levy calculator</span><span class="current">You're here</span></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
       <li><a href="/bc/quorum">Quorum calculator</a></li>
       <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
       <li><a href="/bc/records-deadline">Records request deadline</a></li>
       <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
-      <li><a href="/bc/strata-fees">Strata fee / budget calculator</a></li>
+      <li><span>Strata fee / budget calculator</span><span class="current">You're here</span></li>
     </ul>
   </section>
 
   <section class="explain">
-    <h2>Two lawful ways to split a levy — and the vote each one needs</h2>
-    <p>Under section 108 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_06" rel="noopener">Strata Property Act</a>, a strata calculates each lot's share of a special levy one of two ways. The standard method is by <strong>unit entitlement</strong> (section 99), approved by a <strong>3/4 vote</strong>. A strata may instead use any method that is a fair division of expenses for that levy — including equal shares — but that route requires a <strong>unanimous vote</strong> (section 108(2)(b)).</p>
-    <p>So unit entitlement is not the only legal answer; it is the one that carries on a 3/4 vote, which is why it is what most stratas use and what this calculator applies by default. The formula divides costs by entitlement: each lot's share is its own entitlement number divided by the total entitlement of every lot in the strata plan, applied to the total levy. It is rarely an equal split, and it is never a per-person or per-vote split.</p>
+    <h2>Fees follow unit entitlement — not equal shares, not headcount</h2>
+    <p>Section 99(1) of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_06" rel="noopener">Strata Property Act</a> is where the obligation to pay strata fees actually comes from:</p>
+    <p class="quote">"Subject to section 100, owners must contribute to the strata corporation their strata lots' shares of the total contributions budgeted for the operating fund and contingency reserve fund by means of strata fees calculated in accordance with this section and the regulations."</p>
+    <p>Section 99(2) then sets the formula: each lot's share is its own <strong>unit entitlement</strong> number divided by the total entitlement of every lot in the strata plan, applied to the total budgeted contribution. It is not a per-unit flat fee, and it is not based on how many people live there — a two-bedroom lot with double the entitlement of a studio pays double, a bare land strata lot with a large entitlement pays more than a small one, regardless of headcount.</p>
     <p>Unit entitlement numbers come from the Schedule of Unit Entitlement filed at the Land Title Office under section 246 — usually a fixed number tied to each lot's size or type, set when the strata plan was registered. Boards should pull these from the strata plan or the strata's records, not estimate them.</p>
-    <p>Two practical consequences. If your levy passed on a 3/4 vote, it has to be the section 99 entitlement split — a 3/4 vote cannot authorise an equal split unless the entitlements happen to be equal. And if the meeting minutes describe some other division, that division is only good if the resolution passed unanimously. Either way, check your own bylaws and the minutes before relying on the numbers here.</p>
+    <p>This calculator does not set the budget itself — that is approved separately, by majority vote at the annual general meeting. It only splits an already-approved budget across units using the section 99 formula.</p>
 
     <dl class="faq">
-      <dt>Can our strata split a levy equally instead of by entitlement?</dt>
-      <dd>Yes, but it takes a unanimous vote under s. 108(2)(b) — an equal split is a "fair division," not the s. 99 formula. The exception: if every lot's entitlement is already identical, the s. 99 result <em>is</em> an equal split, and a 3/4 vote carries it. Check how your levy was actually approved before using any other split.</dd>
-      <dt>What has to be written into the resolution itself?</dt>
-      <dd>Five things, under s. 108(3): the purpose, the total amount, the method used to determine each lot's share, each lot's share, and the payment date or instalment dates. A levy with correct arithmetic can still be challenged if the resolution omits one of them.</dd>
+      <dt>Does approving the budget also approve how it's split?</dt>
+      <dd>The budget and the apportionment are two different things. The budget total is approved by majority vote at the AGM; once it's approved, section 99 apportions it automatically by unit entitlement — there's no separate vote on each unit's share unless your strata has adopted a different formula under section 100.</dd>
+      <dt>Can our strata use a different formula than unit entitlement?</dt>
+      <dd>Yes, but only by unanimous vote at an annual or special general meeting held after the strata's first AGM, and the resolution has to be filed at the Land Title Office (s. 100). Until that's done, the section 99 unit-entitlement formula is what applies — a council can't quietly switch to per-unit flat fees or a different split without that vote and filing.</dd>
+      <dt>Does this work for a non-residential or mixed strata?</dt>
+      <dd>Not reliably. The regulations set out variations for some non-residential, mixed-use and phased strata situations that this calculator doesn't attempt to apply. It covers the standard residential case only — if your strata is non-residential, mixed, or phased, check with your strata manager or the regulations before relying on this.</dd>
       <dt>Where do we find each unit's entitlement number?</dt>
-      <dd>On the Schedule of Unit Entitlement filed with the strata plan at the Land Title Office (SPA s. 246), or in your strata's council/AGM package — it doesn't change unless the strata plan is amended.</dd>
-      <dt>What if our strata is divided into sections?</dt>
-      <dd>Sections can have separate expense schedules and voting groups. Confirm which owners the levy actually applies to before running the total through this calculator — it assumes one flat pool of units sharing one levy.</dd>
+      <dd>On the Schedule of Unit Entitlement filed with the strata plan at the Land Title Office (SPA s. 246), or in your strata's council/AGM package — it doesn't change unless the strata plan itself is amended.</dd>
       <dt>Why doesn't the total split evenly to the cent?</dt>
-      <dd>Dividing by unit entitlement almost never lands on a round number. This calculator rounds every unit to the cent and puts any leftover cent(s) on the unit with the largest entitlement, so the column always adds up to the exact levy approved.</dd>
+      <dd>Dividing by unit entitlement almost never lands on a round number. This calculator rounds every unit's annual fee to the cent and puts any leftover cent(s) on the unit with the largest entitlement, so the annual column always adds up to the exact budget approved. Monthly figures are derived from the annual fee and are indicative rather than independently reconciled.</dd>
       <dt>Is this legal or financial advice?</dt>
-      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For a contested apportionment, talk to a strata lawyer or your strata manager.</dd>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For a contested apportionment or an unusual strata structure, talk to a strata lawyer or your strata manager.</dd>
     </dl>
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 99, 100, 108 and 246. Last verified August 13, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 4, 2026.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 99, 100 and 246. Last verified August 18, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 11, 2026.</p>
     <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
   </footer>
 </div>
@@ -454,7 +429,7 @@
 </script>
 <script>
 (function(){
-  var totalLevy=document.getElementById('totalLevy'),
+  var totalBudget=document.getElementById('totalBudget'),
       strataName=document.getElementById('strataName'),
       modeEqual=document.getElementById('modeEqual'),
       modeCustom=document.getElementById('modeCustom'),
@@ -463,21 +438,22 @@
       unitCount=document.getElementById('unitCount'),
       unitRows=document.getElementById('unitRows'),
       addRow=document.getElementById('addRow'),
-      equalFlag=document.getElementById('equalFlag'),
       calcBtn=document.getElementById('calc'),
       err=document.getElementById('err'),
       result=document.getElementById('result'),
       totalStamp=document.getElementById('totalStamp'),
+      budgetSub=document.getElementById('budgetSub'),
       reconcileNote=document.getElementById('reconcileNote'),
       shareBody=document.getElementById('shareBody'),
       tableTotal=document.getElementById('tableTotal'),
+      tableTotalMonthly=document.getElementById('tableTotalMonthly'),
       copyBtn=document.getElementById('copyBtn'),
       printBtn=document.getElementById('printBtn'),
       copiedNote=document.getElementById('copiedNote');
 
   var fmtMoney=new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'});
   var fmtDate=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'long',day:'numeric'});
-  var VERIFIED=new Date(2026,7,13);
+  var VERIFIED=new Date(2026,7,18);
 
   function addUnitRow(label,ent){
     var row=document.createElement('div');
@@ -503,7 +479,6 @@
     var custom=modeCustom.checked;
     equalBlock.style.display=custom?'none':'block';
     customBlock.style.display=custom?'block':'none';
-    equalFlag.style.display=custom?'none':'block';
   }
   toggleMode();
   modeEqual.addEventListener('change',toggleMode);
@@ -529,6 +504,12 @@
     return out.length>=2?out:null;
   }
 
+  /* Annual fees are reconciled to the cent, same as the special levy tool:
+     round every unit, then push the leftover cent(s) onto the unit with the
+     largest entitlement so the column sums exactly to the approved budget.
+     Monthly is a derived, indicative figure (annual / 12 per row) and is not
+     independently reconciled -- there is no separately-approved "monthly
+     budget" to reconcile against. */
   function apportion(totalDollars,units){
     var totalCents=Math.round(totalDollars*100);
     var sumEnt=units.reduce(function(s,u){return s+u.ent;},0);
@@ -543,22 +524,29 @@
 
   function render(totalDollars,units,calc){
     totalStamp.textContent=fmtMoney.format(totalDollars);
+    budgetSub.textContent='split across '+units.length+' units by unit entitlement';
     shareBody.innerHTML='';
+    var monthlySum=0;
     units.forEach(function(u,i){
       var pct=(u.ent/calc.sumEnt*100);
+      var annualDollars=calc.cents[i]/100;
+      var monthlyDollars=Math.round(calc.cents[i]/12)/100;
+      monthlySum+=monthlyDollars;
       var tr=document.createElement('tr');
       tr.innerHTML='<td>'+escapeHtml(u.label)+'</td>'+
         '<td class="num">'+u.ent+'</td>'+
         '<td class="num">'+pct.toFixed(2)+'%</td>'+
-        '<td class="num">'+fmtMoney.format(calc.cents[i]/100)+'</td>';
+        '<td class="num">'+fmtMoney.format(annualDollars)+'</td>'+
+        '<td class="num">'+fmtMoney.format(monthlyDollars)+'</td>';
       shareBody.appendChild(tr);
     });
     var sum=calc.cents.reduce(function(s,c){return s+c;},0)/100;
     tableTotal.textContent=fmtMoney.format(sum);
+    tableTotalMonthly.textContent=fmtMoney.format(sum/12);
 
     if(calc.diff!==0){
       reconcileNote.style.display='block';
-      reconcileNote.textContent='Rounding remainder of '+fmtMoney.format(Math.abs(calc.diff)/100)+' '+(calc.diff>0?'added to':'deducted from')+' '+units[calc.adjustedIdx].label+' (largest entitlement) so the column totals exactly '+fmtMoney.format(totalDollars)+'.';
+      reconcileNote.textContent='Rounding remainder of '+fmtMoney.format(Math.abs(calc.diff)/100)+' '+(calc.diff>0?'added to':'deducted from')+' '+units[calc.adjustedIdx].label+' (largest entitlement) so the annual column totals exactly '+fmtMoney.format(totalDollars)+'.';
     } else {
       reconcileNote.style.display='none';
     }
@@ -571,10 +559,10 @@
   }
 
   calcBtn.addEventListener('click',function(){
-    var total=parseFloat(totalLevy.value);
+    var total=parseFloat(totalBudget.value);
     var units=readUnits();
     if(!total||total<=0){
-      err.textContent='Enter a total levy amount greater than $0.';
+      err.textContent='Enter a total annual budget greater than $0.';
       err.style.display='block';
       result.style.display='none';
       return;
@@ -643,16 +631,17 @@
   }
 
   copyBtn.addEventListener('click',function(){
-    var total=parseFloat(totalLevy.value);
+    var total=parseFloat(totalBudget.value);
     var units=readUnits();
     if(!total||!units)return;
     var name=strataName.value.trim();
     var who=name?('for '+name):'for the strata corporation';
-    var sentence='Special levy of '+fmtMoney.format(total)+' '+who+', apportioned by unit entitlement across '+units.length+
-      ' strata lots using the section 99 formula — the method approved by a 3/4 vote under Strata Property Act s. 108(2)(a). '+
-      'A different division of the levy would be lawful only by unanimous vote under s. 108(2)(b). '+
-      'The approving resolution must also set out the purpose of the levy, the total amount, the method used, each lot’s share, and the payment or instalment dates (s. 108(3)). '+
-      'Verified '+fmtDate.format(VERIFIED)+' against the Strata Property Act. Full per-unit breakdown below.';
+    var sentence='Annual strata fees of '+fmtMoney.format(total)+' '+who+', apportioned by unit entitlement across '+units.length+
+      ' strata lots under the section 99 default formula (Strata Property Act s. 99(1)-(2)). '+
+      'A different formula only applies if adopted by unanimous vote and filed at the Land Title Office under s. 100. '+
+      'Entitlement numbers come from the Schedule of Unit Entitlement (s. 246). '+
+      'Standard residential formula only — non-residential, mixed-use and phased stratas can vary under the regulations. '+
+      'Verified '+fmtDate.format(VERIFIED)+' against the Strata Property Act. Full per-unit annual and monthly breakdown below.';
     copyToClipboard(sentence);
   });
 
