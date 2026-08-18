@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Board Starter Pack — $39 Compliance Calendar, Checklists &amp; Templates | Know Your Strata</title>
+<meta name="description" content="The BC strata board starter pack: a compliance calendar, checklists and templates, every claim cited to the Strata Property Act and traced to a verified tool. $39 one-time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.8rem,5.5vw,2.5rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:56ch;font-size:1.03rem}
+
+  /* Price / CTA card — the primary action on the page. */
+  .buy{
+    margin-top:30px;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 24px;
+  }
+  .buy-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  .price{
+    font-family:var(--display);font-weight:700;font-size:2.4rem;color:var(--spruce-deep);
+  }
+  .price-unit{font-family:var(--mono);font-size:.8rem;color:#5E6E68;text-transform:uppercase;letter-spacing:.05em}
+  .buy-desc{font-size:.95rem;color:#3D4C47;margin-bottom:16px;max-width:56ch}
+  .buy ul.includes{list-style:none;font-size:.92rem;margin-bottom:18px}
+  .buy ul.includes li{display:flex;gap:9px;align-items:baseline;padding:4px 0;color:#3D4C47}
+  .buy ul.includes li::before{content:"✓";color:var(--spruce);font-weight:700;flex:none}
+  .buy-btn{
+    width:100%;padding:15px;font-size:1.08rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  .buy-btn:hover{background:var(--spruce-deep)}
+  .buy-btn:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+  .buy-msg{
+    margin-top:12px;padding:11px 15px;border-left:3px solid var(--sage);
+    background:#F1F4F2;color:#3D4C47;font-size:.87rem;border-radius:0 8px 8px 0;
+    display:none;
+  }
+  .buy-msg.show{display:block}
+  .buy-msg a{color:var(--spruce);font-weight:700}
+  .buy-stamp{margin-top:14px}
+
+  section.whatsin{margin-top:40px}
+  section.whatsin h2{font-family:var(--display);font-size:1.3rem;color:var(--spruce-deep);margin-bottom:14px}
+  .parts{display:grid;gap:14px}
+  .partcard{
+    background:var(--surface);border:1px solid var(--rule);border-radius:8px;
+    padding:16px 18px;
+  }
+  .partcard .pn{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--seal);
+  }
+  .partcard h3{font-family:var(--display);font-size:1.05rem;font-weight:600;color:var(--spruce-deep);margin:4px 0 6px}
+  .partcard p{font-size:.9rem;color:#4A5A55}
+
+  /* Preview — the actual Part 1 calendar, embedded live as the sample. */
+  section.preview{margin-top:40px}
+  section.preview h2{font-family:var(--display);font-size:1.3rem;color:var(--spruce-deep);margin-bottom:6px}
+  .preview-sub{font-size:.92rem;color:#4A5A55;margin-bottom:18px;max-width:60ch}
+  .rule{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:20px 22px;margin-top:14px;
+  }
+  .rule-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+  .rule-head h3{
+    font-family:var(--display);font-size:1.06rem;font-weight:600;
+    color:var(--spruce-deep);line-height:1.25;
+  }
+  .rule-when{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--seal);border:1px solid var(--seal);border-radius:3px;
+    padding:2px 8px;margin-left:auto;white-space:nowrap;
+  }
+  @media (max-width:520px){
+    .rule-head{flex-direction:column;align-items:flex-start;gap:4px}
+    .rule-when{margin-left:0}
+  }
+  .rule p{font-size:.9rem;color:#3D4C47;margin-bottom:8px;max-width:66ch}
+  .rule .cite-rail{margin-top:8px}
+  .preview-more{
+    margin-top:14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;color:#3D4C47;font-size:.87rem;border-radius:0 8px 8px 0;
+  }
+
+  section.assurance{
+    margin-top:40px;padding:20px 22px;background:var(--surface);
+    border:1px solid var(--rule);border-radius:4px;
+  }
+  section.assurance h2{
+    font-family:var(--display);font-size:1.12rem;font-weight:600;
+    color:var(--spruce-deep);margin-bottom:8px;
+  }
+  section.assurance p{font-size:.93rem;color:var(--ink-soft);max-width:62ch;margin-bottom:10px}
+  section.assurance .cite-rail{margin-top:10px}
+
+  .subscribe{
+    margin-top:30px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .free{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All British Columbia tools</a></p>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>The BC Strata Board Starter Pack</h1>
+    <p class="lede">Everything a board needs to stay on top of the recurring stuff — one compliance calendar, three checklists, four templates and a plain-English orientation guide. Every deadline and every required content list carries the section it came from.</p>
+  </header>
+
+  <div class="buy">
+    <div class="buy-top">
+      <span class="price">$39</span>
+      <span class="price-unit">one-time · lifetime access to this version</span>
+    </div>
+    <p class="buy-desc">Not a subscription. Buy it once, print it, keep it in the council binder. When the Act changes, the pack gets a dated update note the same way the free tools do.</p>
+    <ul class="includes">
+      <li>The Compliance Calendar — every recurring deadline, cited</li>
+      <li>3 checklists: calling an AGM, running a special levy, answering a records request</li>
+      <li>4 starting-point templates, including a levy resolution built around the s. 108(3) requirements</li>
+      <li>A new-treasurer orientation guide that points back to the free calculators for the math</li>
+    </ul>
+    <button type="button" class="buy-btn" id="buyBtn">Get the pack — $39</button>
+    <p class="buy-msg" id="buyMsg"></p>
+    <p class="buy-stamp"><span class="stamp-verified"><span class="tick">✓</span> Every claim cited to the Strata Property Act</span></p>
+  </div>
+
+  <section class="whatsin">
+    <h2>What's in it</h2>
+    <div class="parts">
+      <div class="partcard">
+        <p class="pn">Part 1</p>
+        <h3>The Compliance Calendar</h3>
+        <p>The recurring deadlines a board has to hit — AGM notice, budget approval, records-request response windows, the depreciation-report obligation, and the vote thresholds for levies and CRF spending. This is the piece previewed in full below.</p>
+      </div>
+      <div class="partcard">
+        <p class="pn">Part 2</p>
+        <h3>Checklists</h3>
+        <p>Calling an AGM, running a special levy, and responding to a records request — each checklist item cites the section it's built from, drawn directly from the corresponding free calculator.</p>
+      </div>
+      <div class="partcard">
+        <p class="pn">Part 3</p>
+        <h3>Templates</h3>
+        <p>An AGM notice, a meeting agenda skeleton, a special-levy resolution, and a records-request acknowledgment — clearly labelled starting points, not legal advice. Where the Act mandates specific contents, the template follows the mandate and cites it.</p>
+      </div>
+      <div class="partcard">
+        <p class="pn">Part 4</p>
+        <h3>New Treasurer Orientation</h3>
+        <p>A plain-English walk-through of the board's core recurring obligations, pointing back to the free tools for every calculation — nothing in this section is a new legal claim, it's the same citations from Part 1 explained.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="preview">
+    <h2>See the calendar</h2>
+    <p class="preview-sub">This is Part 1 in full — the pack's spine. Every entry below is exactly what ships in the pack, not a cut-down sample.</p>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>AGM / SGM notice</h3>
+        <span class="rule-when">~20 days before</span>
+      </div>
+      <p>Notice must go out at least 20 days before the meeting when sent by mail, email, fax, or left at the door — 16 days if handed directly to the person. That figure is 14 days of statutory notice, plus 2 for the "at least" counting rule, plus 4 for deemed receipt where notice isn't hand-delivered.</p>
+      <p class="cite-rail">Strata Property Act ss. 45(1), 61(3) · Interpretation Act s. 25</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Budget approval</h3>
+        <span class="rule-when">at the AGM</span>
+      </div>
+      <p>The strata's budget for the coming fiscal year is approved by a resolution passed by majority vote at the annual general meeting. If it's voted down, a replacement budget goes to a special general meeting, also decided by majority vote.</p>
+      <p class="cite-rail">Strata Property Act s. 103</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Records-request response</h3>
+        <span class="rule-when">1–2 weeks</span>
+      </div>
+      <p>A request for records or documents must be answered within 2 weeks. A request limited to the bylaws or rules, or a request for an Information Certificate (Form B), must be answered within 1 week. The clock runs from the date the request is received.</p>
+      <p class="cite-rail">Strata Property Act ss. 36(3), 59(1)</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Depreciation report &amp; electrical planning report</h3>
+        <span class="rule-when">dates set by regulation</span>
+      </div>
+      <p>The Act requires a strata corporation to obtain both a depreciation report and an electrical planning report from a qualified person, "on or before the dates determined in accordance with the regulations." The Act itself sets no fixed interval — the schedule lives in the Strata Property Regulation, which has changed before.</p>
+      <p class="cite-rail">Strata Property Act ss. 94, 94.1</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Special levy &amp; CRF spending — the vote to use</h3>
+        <span class="rule-when">before you spend</span>
+      </div>
+      <p>A special levy split by unit entitlement needs a 3/4 vote; splitting it any other way needs a unanimous vote. Contingency reserve fund spending needs only a majority vote for a short specific list of purposes; everything else needs a 3/4 vote.</p>
+      <p class="cite-rail">Strata Property Act ss. 108(2)(a)–(b), 96(b)(i)(A)–(B)</p>
+    </div>
+
+    <p class="preview-more">The checklists, templates, and the new-treasurer guide are not shown here — that's the paid part. Everything above is real, not a teaser rewrite.</p>
+  </section>
+
+  <section class="assurance">
+    <h2>Same discipline as the free tools</h2>
+    <p>Nothing in the pack is asserted without a section citation, and nothing appears that hasn't been read against the official consolidation — the same rule the six free calculators follow. Where the Act leaves something to the regulations rather than stating it directly (the depreciation-report cycle, for instance), the pack says so instead of guessing at a date.</p>
+    <p class="cite-rail">Strata Property Act, SBC 1998, c. 43 · verified 18 August 2026, current to 11 August 2026</p>
+  </section>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Not ready to buy yet?</h2>
+      <p class="sub">Get the free BC Strata Compliance Cheat Sheet, and hear when the pack goes live for real. No spam — just the rules boards get wrong, with the citation every time.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>The free BC tools</h2>
+    <ul>
+      <li><a href="/bc/agm-notice">AGM / SGM notice calculator</a><span class="free">Free</span></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a><span class="free">Free</span></li>
+      <li><a href="/bc/quorum">Quorum calculator</a><span class="free">Free</span></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a><span class="free">Free</span></li>
+      <li><a href="/bc/records-deadline">Records request deadline</a><span class="free">Free</span></li>
+      <li><a href="/bc/strata-fees">Strata fee / budget calculator</a><span class="free">Free</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 36, 45, 47, 48, 59, 61, 94, 94.1, 96, 99, 100, 103, 108 and 246, and the Interpretation Act, RSBC 1996, c. 238, s. 25. Last verified August 18, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 11, 2026. Your strata's registered bylaws may add requirements the pack's templates don't anticipate — check them before relying on any template as final.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  // Payment is explicitly not wired yet -- this is a placeholder that gives
+  // honest, visible feedback rather than doing nothing or faking a purchase.
+  var buyBtn=document.getElementById('buyBtn'),
+      buyMsg=document.getElementById('buyMsg');
+  if(!buyBtn)return;
+  buyBtn.addEventListener('click',function(){
+    buyMsg.innerHTML='Checkout isn’t live yet — the pack is built and verified, and payment is the next step. '+
+      '<a href="#subHead">Leave your email below</a> and you’ll be first to know when you can buy it.';
+    buyMsg.className='buy-msg show';
+  });
+})();
+</script>
+</body>
+</html>

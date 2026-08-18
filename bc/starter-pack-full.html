@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Board Starter Pack — Calendar, Checklists &amp; Templates | Know Your Strata</title>
+<meta name="description" content="The BC strata board starter pack: a compliance calendar, three checklists and four templates, every legal claim cited to the Strata Property Act and traced to a verified tool.">
+<meta name="robots" content="noindex, nofollow">
+<!-- This is the actual paid product content, not the sales page. It is not in
+     sitemap.xml and carries noindex so search engines don't surface it ahead of
+     /bc/starter-pack. It is still reachable by direct URL -- real access control
+     is part of the payment-gating step, not this pass. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 20px 60px}
+
+  header.cover{padding:40px 0 6px}
+  .eyebrow{
+    font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,4.8vw,2.3rem);
+    line-height:1.15;margin:9px 0 8px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:62ch;font-size:.98rem}
+  .toolbar{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    padding:9px 16px;font-size:.88rem;font-weight:700;font-family:inherit;
+    color:var(--spruce);background:#fff;border:1.5px solid var(--spruce);
+    border-radius:8px;cursor:pointer;text-decoration:none;display:inline-block;
+  }
+  .btn:hover{background:#EEF3F0}
+  .btn:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+
+  section.part{margin-top:40px}
+  section.part>.part-head{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:6px;
+    padding-bottom:10px;border-bottom:2px solid var(--spruce);
+  }
+  section.part>.part-head .pnum{
+    font-family:var(--mono);font-size:.78rem;color:var(--seal);font-weight:600;
+  }
+  section.part>.part-head h2{
+    font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--spruce-deep);
+  }
+  .part-sub{color:#4A5A55;font-size:.92rem;max-width:64ch;margin-bottom:18px}
+
+  /* Calendar entries reuse the cheat-sheet "rule card" pattern. */
+  .rule{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:20px 22px;margin-top:16px;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .rule-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+  .rule-head h3{
+    font-family:var(--display);font-size:1.08rem;font-weight:600;
+    color:var(--spruce-deep);line-height:1.25;
+  }
+  .rule-when{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--seal);border:1px solid var(--seal);border-radius:3px;
+    padding:2px 8px;margin-left:auto;white-space:nowrap;
+  }
+  /* margin-left:auto only right-aligns the badge cleanly when the title fits on
+     one line; once the title wraps the alignment goes ragged (same issue fixed
+     on the BC/Ontario hub tool cards). Stack on narrow screens instead. */
+  @media (max-width:520px){
+    .rule-head{flex-direction:column;align-items:flex-start;gap:4px}
+    .rule-when{margin-left:0}
+  }
+  .rule p{font-size:.9rem;color:#3D4C47;margin-bottom:8px;max-width:66ch}
+  .rule .cite-rail{margin-top:8px}
+  .rule .src{font-size:.76rem;color:#7E8C85;margin-top:6px;font-family:var(--mono)}
+
+  /* Checklists */
+  .clist{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:20px 22px;margin-top:16px;break-inside:avoid;page-break-inside:avoid;
+  }
+  .clist h3{font-family:var(--display);font-size:1.08rem;font-weight:600;color:var(--spruce-deep);margin-bottom:4px}
+  .clist .csub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .clist ul{list-style:none;font-size:.92rem}
+  .clist li{
+    display:flex;gap:9px;align-items:baseline;padding:6px 0;color:#3D4C47;
+    border-bottom:1px solid #EEEBE2;
+  }
+  .clist li:last-child{border-bottom:none}
+  .clist li::before{content:"☐";color:var(--spruce);flex:none;font-size:.95rem}
+  .clist .item-cite{font-family:var(--mono);font-size:.72rem;color:var(--seal);white-space:nowrap;margin-left:auto}
+  @media (max-width:520px){
+    .clist li{flex-direction:column;align-items:flex-start;gap:2px}
+    .clist .item-cite{margin-left:0}
+  }
+
+  /* Templates */
+  .tmpl{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:22px;margin-top:16px;break-inside:avoid;page-break-inside:avoid;
+  }
+  .tmpl h3{font-family:var(--display);font-size:1.1rem;font-weight:600;color:var(--spruce-deep);margin-bottom:4px}
+  .tmpl .tmpl-flag{
+    display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);
+    border-radius:3px;padding:2px 8px;margin-bottom:12px;
+  }
+  .field{margin-bottom:12px}
+  .field .flabel{
+    font-family:var(--mono);font-size:.74rem;color:var(--spruce);font-weight:600;
+    text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;display:block;
+  }
+  .field .fline{
+    border-bottom:1px solid var(--line);min-height:22px;padding:2px 0;
+  }
+  .field .fhint{font-size:.78rem;color:#8A8577;margin-top:2px}
+  .tmpl-cite{font-family:var(--mono);font-size:.74rem;color:var(--seal);margin-top:4px}
+  .tmpl-note{
+    margin-top:14px;padding:10px 14px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.83rem;border-radius:0 8px 8px 0;
+  }
+
+  /* Onboarding guide */
+  .guide p{font-size:.92rem;color:#3D4C47;margin-bottom:12px;max-width:66ch}
+  .guide h3{font-family:var(--display);font-size:1.02rem;font-weight:600;color:var(--spruce-deep);margin:16px 0 6px}
+  .guide .toollink{font-size:.85rem}
+  .guide .toollink a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .guide .toollink a:hover{text-decoration:underline}
+
+  /* Verification appendix */
+  .vtable-wrap{overflow-x:auto;margin-top:10px}
+  .vtable{width:100%;min-width:640px;border-collapse:collapse;font-size:.82rem}
+  .vtable th{
+    text-align:left;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;
+    letter-spacing:.04em;color:var(--spruce);padding:6px 8px;border-bottom:2px solid var(--line);
+  }
+  .vtable td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top;color:#3D4C47;max-width:260px}
+  .vtable td.cite{font-family:var(--mono);font-size:.76rem;color:var(--seal);white-space:nowrap;max-width:none}
+  .vtable td.src{font-size:.76rem;color:#7E8C85}
+
+  footer{
+    margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:.79rem;color:#5E6E68;break-inside:avoid;page-break-inside:avoid;
+  }
+  footer p{margin-bottom:7px;max-width:76ch}
+  footer a{color:var(--spruce)}
+  .brandline{
+    font-family:var(--display);font-size:.95rem;
+    color:var(--spruce-deep);font-weight:700;margin-bottom:6px;
+  }
+
+  @media print{
+    @page{margin:11mm}
+    html{font-size:9.6pt}
+    body{background:#fff;line-height:1.42}
+    .no-print{display:none !important}
+    .wrap{max-width:none;padding:0}
+    header.cover{padding:0 0 2px}
+    h1{font-size:1.55rem;margin:5px 0 5px}
+    .lede{font-size:.85rem;max-width:none}
+    section.part{margin-top:14px}
+    section.part.page-start{break-before:page;page-break-before:always;padding-top:2mm}
+    .part-sub{font-size:.82rem;margin-bottom:10px}
+    .rule,.clist,.tmpl{border:1px solid #C9C4B6;border-radius:6px;padding:10px 13px;margin-top:8px}
+    .rule-head h3,.clist h3,.tmpl h3{font-size:1rem}
+    .rule p,.clist ul,.tmpl .field{font-size:.83rem}
+    .clist li{padding:3px 0}
+    footer{margin-top:12px;padding-top:9px;font-size:.74rem}
+    footer p{margin-bottom:5px}
+    a{text-decoration:none}
+    .vtable{font-size:.72rem}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav no-print">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/starter-pack">&larr; Back to the Starter Pack page</a></p>
+
+<div class="wrap">
+  <header class="cover">
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>BC Strata Board Starter Pack</h1>
+    <p class="lede">The compliance calendar, checklists and templates a new board needs — every deadline and every required content list cited to the section it comes from, verified against the official consolidation.</p>
+    <p><span class="stamp-verified"><span class="tick">✓</span> Verified August 18, 2026 · Strata Property Act, current to 11 August 2026</span></p>
+    <div class="toolbar no-print">
+      <button type="button" class="btn" id="printBtn">Print / save as PDF</button>
+      <a class="btn" href="/bc/starter-pack">Back to overview</a>
+    </div>
+  </header>
+
+  <!-- ============ PART 1 — THE COMPLIANCE CALENDAR ============ -->
+  <section class="part">
+    <div class="part-head">
+      <span class="pnum">Part 1</span>
+      <h2>The Compliance Calendar</h2>
+    </div>
+    <p class="part-sub">The recurring obligations a board has to hit, in one place. Each one cites the section it rests on and the free tool that does the math.</p>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>AGM / SGM notice</h3>
+        <span class="rule-when">~20 days before</span>
+      </div>
+      <p>Notice must go out at least 20 days before the meeting when sent by mail, email, fax, or left at the door — 16 days if handed directly to the person. That figure is 14 days of statutory notice, plus 2 for the "at least" counting rule, plus 4 for deemed receipt where notice isn't hand-delivered.</p>
+      <p class="cite-rail">Strata Property Act ss. 45(1), 61(3) · Interpretation Act s. 25</p>
+      <p class="src">Source: knowyourstrata.com/bc/agm-notice — verified 12 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Budget approval</h3>
+        <span class="rule-when">at the AGM</span>
+      </div>
+      <p>The strata's budget for the coming fiscal year is approved by a resolution passed by majority vote at the annual general meeting. If it's voted down, a replacement budget goes to a special general meeting, also decided by majority vote.</p>
+      <p class="cite-rail">Strata Property Act s. 103</p>
+      <p class="src">Source: knowyourstrata.com/bc/voting-threshold — verified 15 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Records-request response</h3>
+        <span class="rule-when">1–2 weeks</span>
+      </div>
+      <p>A request for records or documents must be answered within 2 weeks. A request limited to the bylaws or rules, or a request for an Information Certificate (Form B), must be answered within 1 week. The clock runs from the date the request is received — a straight calendar count, with no deemed-receipt or clear-day adjustment.</p>
+      <p class="cite-rail">Strata Property Act ss. 36(3), 59(1)</p>
+      <p class="src">Source: knowyourstrata.com/bc/records-deadline — verified 15 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Depreciation report &amp; electrical planning report</h3>
+        <span class="rule-when">dates set by regulation</span>
+      </div>
+      <p>The Act itself requires a strata corporation to obtain both a depreciation report and an electrical planning report from a qualified person, "on or before the dates determined in accordance with the regulations." The Act does not state a fixed interval in its own text — the actual due dates and cycle are set by the Strata Property Regulation, which has been amended before and can be again.</p>
+      <p class="cite-rail">Strata Property Act ss. 94, 94.1</p>
+      <p class="src">This entry was verified fresh for this pack on 18 August 2026 — it is the one item here without a prior live tool behind it. Confirm the current regulation dates directly (a dedicated depreciation-report tool is planned) rather than treating any specific calendar year as fixed.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Special levy &amp; CRF spending — the vote to use</h3>
+        <span class="rule-when">before you spend</span>
+      </div>
+      <p>A special levy split by unit entitlement needs a 3/4 vote; splitting it any other way — including equally — needs a unanimous vote. Spending from the contingency reserve fund needs only a majority vote for a short list of specific purposes (a depreciation report, EV charging infrastructure, an electrical planning report, or repairs the current depreciation report recommends); everything else needs a 3/4 vote.</p>
+      <p class="cite-rail">Strata Property Act ss. 108(2)(a)–(b), 96(b)(i)(A)–(B)</p>
+      <p class="src">Source: knowyourstrata.com/bc/voting-threshold and /bc/special-levy — verified 15 &amp; 13 August 2026</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 2 — CHECKLISTS ============ -->
+  <section class="part page-start">
+    <div class="part-head">
+      <span class="pnum">Part 2</span>
+      <h2>Checklists</h2>
+    </div>
+    <p class="part-sub">Three checklists for the situations that generate the most disputes. Each line cites the section behind it.</p>
+
+    <div class="clist">
+      <h3>Calling an AGM</h3>
+      <p class="csub">Work through this before notice goes out.</p>
+      <ul>
+        <li><span>Notice will go out at least 20 days before the meeting (16 if hand-delivered)</span><span class="item-cite">ss. 45(1), 61(3)</span></li>
+        <li><span>Quorum confirmed: 1/3 of the strata's votes, or 2/3 if fewer than 4 lots or owners</span><span class="item-cite">s. 48(2)</span></li>
+        <li><span>Proxy collection under way — proxies count the same as bodies in the room toward quorum</span><span class="item-cite">s. 48(2)</span></li>
+        <li><span>Proposed budget is ready to present for majority-vote approval</span><span class="item-cite">s. 103</span></li>
+        <li><span>Registered bylaws checked for a different quorum or notice rule — the Act applies "subject to the bylaws"</span><span class="item-cite">s. 48(2)–(3)</span></li>
+      </ul>
+    </div>
+
+    <div class="clist">
+      <h3>Running a special levy</h3>
+      <p class="csub">Confirm each of these before the resolution goes to a vote.</p>
+      <ul>
+        <li><span>Apportionment method decided: unit entitlement (3/4 vote) or another fair division (unanimous vote)</span><span class="item-cite">s. 108(2)(a)–(b)</span></li>
+        <li><span>Entitlement figures pulled from the Schedule of Unit Entitlement, not estimated</span><span class="item-cite">s. 246</span></li>
+        <li><span>Resolution states all five required items: purpose, total amount, method, each lot's share, payment or instalment dates</span><span class="item-cite">s. 108(3)</span></li>
+        <li><span>Per-unit amounts reconcile exactly to the approved total, to the cent</span><span class="item-cite">—</span></li>
+      </ul>
+    </div>
+
+    <div class="clist">
+      <h3>Responding to a records request</h3>
+      <p class="csub">Identify the clock before you do anything else.</p>
+      <ul>
+        <li><span>Clock identified: general records (2 weeks) vs. bylaws/rules (1 week) vs. Form B (1 week)</span><span class="item-cite">s. 36(3), s. 59(1)</span></li>
+        <li><span>Requester's standing confirmed: owner, assigned tenant, written-authorized person, or (for their own period) a former owner or tenant</span><span class="item-cite">ss. 36(1), 36(1.1), 36(2)</span></li>
+        <li><span>Any fee charged is within the regulation cap, and copies aren't withheld for anything beyond that fee</span><span class="item-cite">s. 36(4), s. 59(7)</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 3 — TEMPLATES ============ -->
+  <section class="part page-start">
+    <div class="part-head">
+      <span class="pnum">Part 3</span>
+      <h2>Templates</h2>
+    </div>
+    <p class="part-sub">Starting points, not legal advice. Where the Act sets a required structure, the template follows it and cites the section — everything else is a fill-in-the-blank starting point your council should adapt.</p>
+
+    <div class="tmpl">
+      <h3>AGM Notice</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <div class="field"><span class="flabel">Strata plan</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Date this notice is given</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline">&nbsp;</div></div>
+      <div class="field">
+        <span class="flabel">Notice statement</span>
+        <div class="fline">This notice is given at least 20 days before the meeting date, in accordance with section 45 of the Strata Property Act.</div>
+        <p class="fhint">Confirm the actual gap between the date this notice is sent and the meeting date using the AGM notice calculator before relying on this line.</p>
+      </div>
+      <div class="field"><span class="flabel">Agenda items</span><div class="fline">&nbsp;</div><div class="fline">&nbsp;</div><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Attachments</span><div class="fline">☐ Proposed budget &nbsp; ☐ Proxy form &nbsp; ☐ Prior AGM minutes</div></div>
+      <p class="tmpl-cite">Notice timing: Strata Property Act ss. 45(1), 61(3)</p>
+    </div>
+
+    <div class="tmpl">
+      <h3>Meeting Agenda Skeleton</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <p style="font-size:.85rem;color:#5E6E68;margin-bottom:10px">The Act doesn't mandate a specific agenda format — this is a practical skeleton, not a cited requirement.</p>
+      <div class="field"><span class="flabel">Order of business</span>
+        <div class="fline">1. Call to order &amp; quorum confirmed</div>
+        <div class="fline">2. Approval of prior meeting's minutes</div>
+        <div class="fline">3. Financial report &amp; budget vote (majority vote — s. 103)</div>
+        <div class="fline">4. Special resolutions (state the vote each one needs — see the Voting Threshold Checker)</div>
+        <div class="fline">5. Other business</div>
+        <div class="fline">6. Adjournment</div>
+      </div>
+    </div>
+
+    <div class="tmpl">
+      <h3>Special Levy Resolution</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <p style="font-size:.85rem;color:#5E6E68;margin-bottom:10px">Structured around the five items section 108(3) requires the resolution to state.</p>
+      <div class="field"><span class="flabel">1. Purpose of the levy — s. 108(3)(a)</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">2. Total amount of the levy — s. 108(3)(b)</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">3. Method used to determine each lot's share — s. 108(3)(c)</span><div class="fline">☐ Unit entitlement (s. 99) — 3/4 vote &nbsp; ☐ Other fair division — unanimous vote (s. 108(2)(b))</div></div>
+      <div class="field"><span class="flabel">4. Each lot's share — s. 108(3)(d)</span><div class="fline">[Attach the per-unit table from the Special Levy Calculator]</div></div>
+      <div class="field"><span class="flabel">5. Payment date, or instalment dates — s. 108(3)(e)</span><div class="fline">&nbsp;</div></div>
+      <p class="tmpl-cite">Required contents: Strata Property Act s. 108(3). Vote threshold: s. 108(2)(a)–(b).</p>
+    </div>
+
+    <div class="tmpl">
+      <h3>Records-Request Acknowledgment</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <div class="field"><span class="flabel">Date request received</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline">☐ Owner &nbsp; ☐ Assigned tenant &nbsp; ☐ Authorized in writing &nbsp; ☐ Former owner/tenant (own period only)</div></div>
+      <div class="field"><span class="flabel">What was requested</span><div class="fline">☐ General records/documents (2-week clock) &nbsp; ☐ Bylaws or rules only (1-week clock) &nbsp; ☐ Information Certificate / Form B (1-week clock)</div></div>
+      <div class="field"><span class="flabel">Deadline to comply</span><div class="fline">&nbsp;</div><p class="fhint">Calculate this with the Records Request Deadline tool rather than counting by hand.</p></div>
+      <div class="field"><span class="flabel">Fee, if any (capped by regulation)</span><div class="fline">&nbsp;</div></div>
+      <p class="tmpl-cite">Who may request: ss. 36(1), 36(1.1), 36(2). Deadlines: s. 36(3), s. 59(1). Fee cap: s. 36(4), s. 59(7).</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 4 — NEW TREASURER GUIDE ============ -->
+  <section class="part page-start guide">
+    <div class="part-head">
+      <span class="pnum">Part 4</span>
+      <h2>New Treasurer Orientation</h2>
+    </div>
+    <p class="part-sub">A plain-English walk-through of the job's recurring obligations. Every specific figure here is the same one cited in Part 1 — this section doesn't introduce anything new, it just explains it.</p>
+
+    <p>Being strata treasurer mostly means running the same few obligations on repeat, on time, in the right order. The Compliance Calendar in Part 1 is the actual reference; this section is the plain-English version of why each entry matters.</p>
+
+    <h3>Notice comes first</h3>
+    <p>Nothing else on this list matters if the meeting itself wasn't properly called. Get notice out at least 20 days ahead (16 if you're hand-delivering), and resolutions passed at a badly-noticed meeting are open to challenge no matter how the vote went.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/bc/agm-notice">knowyourstrata.com/bc/agm-notice</a></p>
+
+    <h3>The budget is a majority vote, not a formality</h3>
+    <p>The board proposes it, but the owners approve it by majority vote at the AGM. If it doesn't pass, there's a process for a replacement — it doesn't just lapse.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/bc/voting-threshold">knowyourstrata.com/bc/voting-threshold</a></p>
+
+    <h3>Fees follow unit entitlement, not headcount</h3>
+    <p>Once the budget is approved, each unit's share is set automatically by its unit entitlement — not an equal split, not based on how many people live there. A strata can only use a different formula by unanimous vote, filed at the Land Title Office.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/bc/strata-fees">knowyourstrata.com/bc/strata-fees</a></p>
+
+    <h3>A special levy is a different vote, and a specific resolution</h3>
+    <p>Unlike regular fees, a special levy needs its own resolution — and that resolution has to state five specific things or it's vulnerable even if the arithmetic is right. See Part 3's levy resolution template.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/bc/special-levy">knowyourstrata.com/bc/special-levy</a></p>
+
+    <h3>Records requests run on two different clocks</h3>
+    <p>Most requests get 2 weeks. Bylaws, rules, and Information Certificates (Form B) only get 1. Identify which one you're on before you calculate a deadline.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/bc/records-deadline">knowyourstrata.com/bc/records-deadline</a></p>
+
+    <h3>Quorum is a share of votes, not a headcount of people</h3>
+    <p>You need 1/3 of the strata's total votes present or by proxy (2/3 in a very small strata) — measured against the whole strata's votes, not just who shows up.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/bc/quorum">knowyourstrata.com/bc/quorum</a></p>
+
+    <h3>Your bylaws can change some of this — always check them</h3>
+    <p>Quorum and some vote thresholds apply "subject to the bylaws." A registered bylaw can set a different rule than the Act's default. This pack gives you the Act's default in every case; your strata's own registered bylaws govern where they differ.</p>
+  </section>
+
+  <!-- ============ VERIFICATION APPENDIX ============ -->
+  <section class="part page-start no-print">
+    <div class="part-head">
+      <span class="pnum">Appendix</span>
+      <h2>Verification handshake</h2>
+    </div>
+    <p class="part-sub">Every legal claim in this pack, next to the section it rests on and the tool it was traced from. For Nour's review — this section is marked no-print and won't appear in the printed/PDF pack.</p>
+    <div class="vtable-wrap">
+    <table class="vtable">
+      <tr><th>Claim</th><th>Cite</th><th>Source</th></tr>
+      <tr><td>AGM/SGM notice ≥20 days (16 if hand-delivered)</td><td class="cite">ss. 45(1), 61(3); Interp. Act s. 25</td><td class="src">/bc/agm-notice (12 Aug)</td></tr>
+      <tr><td>Winding-up notice is 4 weeks, not 2</td><td class="cite">s. 45(1.1)</td><td class="src">/bc/agm-notice (referenced only, not restated in pack)</td></tr>
+      <tr><td>Budget approved by majority vote at AGM</td><td class="cite">s. 103</td><td class="src">/bc/voting-threshold (15 Aug)</td></tr>
+      <tr><td>Records/documents: 2-week response</td><td class="cite">s. 36(3)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
+      <tr><td>Bylaws/rules request: 1-week response</td><td class="cite">s. 36(3)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
+      <tr><td>Form B (Information Certificate): 1-week response</td><td class="cite">s. 59(1)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
+      <tr><td>Who may request records (owner/tenant/authorized/former)</td><td class="cite">ss. 36(1), 36(1.1), 36(2)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
+      <tr><td>Fee for copies capped by regulation; copies (not the request) may be withheld until paid</td><td class="cite">s. 36(4), s. 59(7)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
+      <tr><td>Depreciation report / electrical planning report obligation, dates set by regulation</td><td class="cite">ss. 94, 94.1</td><td class="src"><strong>New for this pack</strong> — verified 18 Aug directly against bclaws, not previously on a live tool. No cycle/interval asserted since the Act defers that to the regulation, which was not separately verified.</td></tr>
+      <tr><td>Special levy by unit entitlement: 3/4 vote</td><td class="cite">s. 108(2)(a)</td><td class="src">/bc/special-levy (13 Aug), /bc/voting-threshold (15 Aug)</td></tr>
+      <tr><td>Special levy by other division: unanimous vote</td><td class="cite">s. 108(2)(b)</td><td class="src">/bc/special-levy (13 Aug), /bc/voting-threshold (15 Aug)</td></tr>
+      <tr><td>Levy resolution must state 5 specific items</td><td class="cite">s. 108(3)</td><td class="src">/bc/special-levy (13 Aug)</td></tr>
+      <tr><td>CRF spend, majority-vote list (depreciation report, EV charging, elec. planning report, recommended repairs)</td><td class="cite">s. 96(b)(i)(A)</td><td class="src">/bc/voting-threshold (15 Aug)</td></tr>
+      <tr><td>CRF spend, all other purposes: 3/4 vote</td><td class="cite">s. 96(b)(i)(B)</td><td class="src">/bc/voting-threshold (15 Aug)</td></tr>
+      <tr><td>Quorum: 1/3 of votes (2/3 if &lt;4 lots/owners), present/proxy</td><td class="cite">s. 48(2)(a)–(b)</td><td class="src">/bc/quorum (13 Aug)</td></tr>
+      <tr><td>Quorum "subject to the bylaws"; adjournment rule</td><td class="cite">s. 48(2)–(3)</td><td class="src">/bc/quorum (13 Aug)</td></tr>
+      <tr><td>Fees follow unit entitlement (s. 99 default)</td><td class="cite">s. 99(1)–(2)</td><td class="src">/bc/strata-fees (18 Aug)</td></tr>
+      <tr><td>Different fee formula only by unanimous vote, filed at Land Title Office</td><td class="cite">s. 100</td><td class="src">/bc/strata-fees (18 Aug)</td></tr>
+      <tr><td>Entitlement figures come from the Schedule of Unit Entitlement</td><td class="cite">s. 246</td><td class="src">/bc/special-levy (13 Aug), /bc/strata-fees (18 Aug)</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <footer>
+    <p class="brandline">Know Your Strata — knowyourstrata.com</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 36, 45, 47, 48, 59, 61, 94, 94.1, 96, 99, 100, 103, 108 and 246, and the Interpretation Act, RSBC 1996, c. 238, s. 25. Verified 18 August 2026 against the official consolidation at bclaws.gov.bc.ca, current to 11 August 2026. Every calendar entry, checklist item and template field traces to a section actually read against that consolidation — see the verification appendix for the full list. <strong>Your strata's registered bylaws govern where they differ from the Act's default</strong>, and the templates in Part 3 are starting points, not legal advice. For anything contested, talk to a strata lawyer.</p>
+    <p>Calculators: <a href="https://knowyourstrata.com/bc/agm-notice">AGM / SGM notice</a> · <a href="https://knowyourstrata.com/bc/quorum">Quorum</a> · <a href="https://knowyourstrata.com/bc/special-levy">Special levy</a> · <a href="https://knowyourstrata.com/bc/strata-fees">Strata fees</a> · <a href="https://knowyourstrata.com/bc/voting-threshold">Voting threshold</a> · <a href="https://knowyourstrata.com/bc/records-deadline">Records deadline</a></p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById('printBtn');
+  if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+</body>
+</html>
