@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Notice of Meeting Deadline Calculator — Preliminary &amp; Full Notice | Condominium Act, 1998 s. 47</title>
+<meta name="description" content="Free calculator for Ontario condo boards: work out when the Preliminary Notice and Notice of Meeting must go out for a meeting of owners under Condominium Act ss. 45.1, 46 and 47 — board-called or owner-requisitioned.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="date"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input[type="date"]:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .mode-block{display:none}
+  .mode-block.active{display:block}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+  }
+  .past{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .strip{margin-top:26px}
+  .strip h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .bar{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+  .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700;min-width:0}
+  .seg.s1{background:#2C6B60;flex:15}
+  .seg.s2{background:#8CA79C;flex:20}
+  .legend{list-style:none;margin-top:12px;font-size:.9rem}
+  .legend li{display:flex;gap:10px;align-items:baseline;margin-bottom:8px}
+  .dot{width:11px;height:11px;border-radius:3px;flex:none;transform:translateY(1px)}
+  .d1{background:#2C6B60}.d2{background:#8CA79C}
+  .legend .ref{color:#5E6E68;font-size:.82rem}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario · Condominium Act, 1998</p>
+    <h1>When do we have to send meeting notice?</h1>
+    <p class="lede">Ontario runs a two-notice system: a Preliminary Notice first, then the Notice of Meeting itself — each with its own minimum lead time. Pick how the meeting is coming about and get the send-by dates.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="mode">How is this meeting coming about?</label>
+      <select id="mode">
+        <option value="board" selected>Board-called meeting — AGM, turn-over, or any other business (s. 45)</option>
+        <option value="requisition">Requisitioned by owners (s. 46)</option>
+      </select>
+
+      <div class="mode-block active" id="boardBlock">
+        <label for="meeting">Your meeting date</label>
+        <input type="date" id="meeting">
+      </div>
+
+      <div class="mode-block" id="requisitionBlock">
+        <label for="requisition">Date the board received the requisition</label>
+        <input type="date" id="requisition">
+      </div>
+    </div>
+
+    <button id="calc" class="no-print">Get the notice deadlines</button>
+    <p class="error no-print" id="err"></p>
+
+    <div class="result" id="result">
+
+      <div class="result-board">
+        <div class="stamp">
+          <p class="k">Send Preliminary Notice no later than</p>
+          <p class="date" id="prelimDate">—</p>
+          <p class="sub" id="boardSub"></p>
+        </div>
+        <p class="verified-badge"><span class="check">✓</span> Verified August 19, 2026 · <span id="badgeCiteBoard">Condominium Act, 1998, ss. 45.1, 47</span></p>
+        <p class="past" id="pastNoteBoard"></p>
+
+        <div class="strip">
+          <h2>Where the two deadlines come from</h2>
+          <div class="bar" role="img" aria-label="Breakdown of the notice period">
+            <div class="seg s1">15</div><div class="seg s2">20</div>
+          </div>
+          <ul class="legend">
+            <li><span class="dot d1"></span><span><strong>15 days</strong> — the Notice of Meeting must be "given at least 15 days before the day of the meeting." <span class="ref">Condominium Act s. 47(1)(b)</span></span></li>
+            <li><span class="dot d2"></span><span><strong>+20 days</strong> — the Preliminary Notice must be "given at least 20 days before the subsequent notice of meeting." <span class="ref">s. 47(1)(c)</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="result-requisition">
+        <div class="stamp">
+          <p class="k">Meeting must be held no later than</p>
+          <p class="date" id="meetByDate">—</p>
+          <p class="sub">if the board proceeds itself — s. 46(4)(b)</p>
+        </div>
+        <p class="verified-badge"><span class="check">✓</span> Verified August 19, 2026 · <span id="badgeCiteReq">Condominium Act, 1998, ss. 46, 47</span></p>
+        <p class="past" id="pastNoteReq"></p>
+
+        <p class="cite-line" id="reqNoticeLine"></p>
+        <p class="cite-line" id="reqPrelimLine"></p>
+        <p class="flag">That 5-day figure is <strong>CAO's recommended practice, not a Condominium Act deadline</strong> — the Act sets no separate day count for sending the Preliminary Notice, only the 35-day outer limit for the whole process. And the numbers are worth a second look together: 5 days plus the mandatory 15-day and 20-day notice periods that follow it add up to 40 days — five more than the 35-day meeting deadline the Act actually sets. Sending the Preliminary Notice sooner than CAO's 5-day mark leaves more room to still meet the statutory 15/20-day minimums inside the 35-day cap.</p>
+        <p class="flag">If the board doesn't call and hold the meeting within the 35 days, a requisitionist may call it instead — that meeting "shall be held within 45 days of the day on which the meeting is called." <span class="ref">s. 46(5)</span></p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox to confirm. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><span>Notice of meeting deadline</span><span class="current">You're here</span></li>
+      <li><span>Requisition threshold checker</span><span class="soon">Coming soon</span></li>
+      <li><span>Records request deadline</span><span class="soon">Coming soon</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>Two notices, and a different clock when owners requisition</h2>
+    <p>Before the board can send a Notice of Meeting, section 45.1 of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> requires it to first send owners a Preliminary Notice. Section 47(1) sets the minimum lead time for each:</p>
+    <p class="quote">"(b) be given at least 15 days before the day of the meeting, if the notice is a notice of meeting of owners; (c) if the notice is a preliminary notice described in subsection 45.1 (1), be given at least 20 days before the subsequent notice of meeting of owners described in that subsection…"</p>
+    <p>Stack the two and a board-called meeting — an AGM under s. 45(2), a meeting called for any other business under s. 45(4), or a turn-over meeting — needs the Preliminary Notice out at least 35 days before the meeting date. Neither day count differs by meeting type; s. 47(1) applies the same 15 and 20 days across the board.</p>
+
+    <h2 style="margin-top:32px">When owners requisition a meeting, the clock is a hard cap, not a notice period</h2>
+    <p>Section 46 lets owners holding at least 15% of the units requisition a meeting. Once the board receives it, section 46(4)(b) requires the board to "call and hold a meeting of owners within 35 days." If the board doesn't, section 46(5) lets a requisitionist call the meeting themselves, and it "shall be held within 45 days of the day on which the meeting is called."</p>
+    <p>The 15-day and 20-day notice minimums in s. 47(1) still apply to a requisitioned meeting — nothing in the Act carves it out. We looked for a stated deadline for sending the Preliminary Notice itself — a specific number of days after the requisition arrives — in both the Act and O. Reg. 48/01, and found none. The <a href="https://www.condoauthorityontario.ca/condo-living/owners-meetings/owner-requisitioned-meetings/" rel="noopener">Condominium Authority of Ontario recommends sending it within 5 days</a> of receiving the requisition, but that's CAO's own guidance to boards, not a section of the Act — it appears on CAO's site without a citation, unlike the 15-day and 35-day figures next to it, which do trace to ss. 47(1)(b) and 46(4)(b).</p>
+    <p>Do the math on CAO's own number, though, and it's tighter than it looks: 5 days to send the Preliminary Notice, plus the mandatory 20-day gap before the Notice of Meeting, plus the mandatory 15-day gap before the meeting itself, comes to 40 days — five more than the 35-day cap the Act sets in s. 46(4)(b). Following CAO's 5-day guidance to the letter and then the statutory minimums to the letter can't both fit inside 35 days. A board that wants to actually hit the 35-day deadline has less runway than CAO's recommended practice implies.</p>
+
+    <h2 style="margin-top:32px">Do by-laws change any of this?</h2>
+    <p>We checked. The only by-law power over notice we found in s. 47 is in subsection (6) — a by-law can restrict giving notice by electronic communication, or set extra conditions for it. Nothing in ss. 45.1, 46 or 47 lets a by-law shorten or lengthen the 15-day, 20-day, 35-day or 45-day counts themselves. That's different from quorum, where a registered by-law can hold quorum at 25% throughout (s. 50(1.2)) — there's no equivalent override here.</p>
+
+    <dl class="faq">
+      <dt>Does the Preliminary Notice apply to every meeting?</dt>
+      <dd>Section 45.1(1) applies "before the board sends out a notice to call a meeting of owners" generally — it isn't limited to AGMs. We found no carve-out for a requisitioned or turn-over meeting.</dd>
+      <dt>We're holding an AGM — is that "board-called"?</dt>
+      <dd>Yes. An AGM is called by the board under the s. 45(2) baseline, so it follows the same 15/20-day notice minimums as any other board-called meeting.</dd>
+      <dt>Where does the 5-day figure for the Preliminary Notice come from, then?</dt>
+      <dd>The Condominium Authority of Ontario. Its guidance tells boards to send the Preliminary Notice within 5 days of receiving the requisition — but that line carries no Condominium Act section number on CAO's own page, unlike the 15-day and 35-day figures beside it. We checked ss. 45.1, 46 and 47 of the Act and the relevant parts of O. Reg. 48/01 directly and found no statutory day count for this step; the closest "5 days" figure actually in the Act (s. 47(3)) is an unrelated record-date rule about who counts as a recipient. Treat CAO's 5 days as recommended practice, and the 35-day meeting deadline as the one hard legal limit.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. The notice-period minimums are statutory, and we found no by-law power to vary them — but for anything contested, talk to a condominium lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 45, 45.1, 46 and 47. Last verified 19 August 2026 against the official statute on ontario.ca, e-Laws currency date 12 August 2026. The 5-day Preliminary Notice figure for requisitioned meetings is recommended practice from the Condominium Authority of Ontario, not a statutory deadline — see condoauthorityontario.ca.</p>
+    <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var modeSel=document.getElementById('mode'),
+      boardBlock=document.getElementById('boardBlock'),
+      requisitionBlock=document.getElementById('requisitionBlock'),
+      meeting=document.getElementById('meeting'),
+      requisition=document.getElementById('requisition'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      resultBoard=document.querySelector('.result-board'),
+      resultReq=document.querySelector('.result-requisition'),
+      prelimDate=document.getElementById('prelimDate'),
+      boardSub=document.getElementById('boardSub'),
+      pastNoteBoard=document.getElementById('pastNoteBoard'),
+      meetByDate=document.getElementById('meetByDate'),
+      pastNoteReq=document.getElementById('pastNoteReq'),
+      reqNoticeLine=document.getElementById('reqNoticeLine'),
+      reqPrelimLine=document.getElementById('reqPrelimLine'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function addDays(d,n){
+    var c=new Date(d.getTime());
+    c.setDate(c.getDate()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+
+  function toggleMode(){
+    var isReq=modeSel.value==='requisition';
+    boardBlock.classList.toggle('active',!isReq);
+    requisitionBlock.classList.toggle('active',isReq);
+    result.style.display='none';
+  }
+  modeSel.addEventListener('change',toggleMode);
+  toggleMode();
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    var isReq=modeSel.value==='requisition';
+
+    if(!isReq){
+      if(!meeting.value){show('Pick your meeting date first.');return;}
+      err.style.display='none';
+
+      var m=parseLocal(meeting.value);
+      var noticeBy=addDays(m,-15);
+      var prelimBy=addDays(noticeBy,-20);
+
+      prelimDate.textContent=fmt.format(prelimBy);
+      boardSub.textContent='Notice of Meeting itself must go out by '+fmt.format(noticeBy)+' — s. 47(1)(b)';
+
+      if(prelimBy<today0()){
+        pastNoteBoard.style.display='block';
+        pastNoteBoard.textContent='That send-by date has already passed. Both notices need to go out as soon as possible if this meeting date is to stay compliant.';
+      } else {
+        pastNoteBoard.style.display='none';
+      }
+
+      resultBoard.style.display='block';
+      resultReq.style.display='none';
+      current={isReq:false,meeting:m,noticeBy:noticeBy,prelimBy:prelimBy};
+    } else {
+      if(!requisition.value){show('Pick the date the board received the requisition.');return;}
+      err.style.display='none';
+
+      var r=parseLocal(requisition.value);
+      var meetBy=addDays(r,35);
+      var noticeLatest=addDays(meetBy,-15);
+      var prelimRecommended=addDays(r,5);
+
+      meetByDate.textContent=fmt.format(meetBy);
+      reqNoticeLine.innerHTML='<strong>Notice of Meeting</strong> still needs to go out at least 15 days before whatever date is picked — at the very latest, that\'s '+fmt.format(noticeLatest)+'. <span class="ref">s. 47(1)(b)</span>';
+      reqPrelimLine.innerHTML='<strong>Preliminary Notice</strong> — CAO recommends sending it within 5 days of receiving the requisition, which would be '+fmt.format(prelimRecommended)+'. <span class="ref">CAO guidance, not a statutory deadline</span>';
+
+      if(meetBy<today0()){
+        pastNoteReq.style.display='block';
+        pastNoteReq.textContent='That 35-day deadline has already passed. Check whether a requisitionist has since called the meeting themselves under s. 46(5) — if so, it must be held within 45 days of the day they called it.';
+      } else {
+        pastNoteReq.style.display='none';
+      }
+
+      resultBoard.style.display='none';
+      resultReq.style.display='block';
+      current={isReq:true,requisition:r,meetBy:meetBy,noticeLatest:noticeLatest,prelimRecommended:prelimRecommended};
+    }
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s;
+    if(!current.isReq){
+      s='For our meeting on '+fmt.format(current.meeting)+', the Preliminary Notice must be sent no later than '+
+        fmt.format(current.prelimBy)+' and the Notice of Meeting no later than '+fmt.format(current.noticeBy)+
+        ", under Condominium Act, 1998 s. 47(1)(b)-(c). Verified August 19, 2026.";
+    } else {
+      s='For a meeting requisitioned on '+fmt.format(current.requisition)+
+        ', the board must call and hold it no later than '+fmt.format(current.meetBy)+
+        ' (s. 46(4)(b)), with the Notice of Meeting out by '+fmt.format(current.noticeLatest)+
+        ' at the latest (s. 47(1)(b)). CAO recommends sending the Preliminary Notice within 5 days of the requisition ('+
+        fmt.format(current.prelimRecommended)+') — that is CAO guidance, not an Act deadline; the Act only sets the 35-day outer limit.'+
+        ' If the board misses that deadline, a requisitionist may call the meeting themselves, to be held within 45 days of doing so (s. 46(5)). Verified August 19, 2026.';
+    }
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
