@@ -8,8 +8,9 @@
 <meta name="robots" content="noindex, nofollow">
 <!-- This is the actual paid product content, not the sales page. It is not in
      sitemap.xml and carries noindex so search engines don't surface it ahead of
-     /bc/starter-pack. It is still reachable by direct URL -- real access control
-     is part of the payment-gating step, not this pass. -->
+     /bc/starter-pack. Direct requests to this file are intercepted by
+     functions/bc/starter-pack-full.js, which checks payment before this HTML
+     is ever returned -- see that file for how. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/kys.css">

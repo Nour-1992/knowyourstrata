@@ -23,3 +23,8 @@
 # Convenience aliases for the AGM calculator's old identity.
 /agm-notice         /bc/agm-notice         301
 /bc/agm             /bc/agm-notice         301
+
+# The starter pack's paid content is gated by functions/bc/starter-pack-full.js,
+# which only intercepts the clean URL. Without this, the .html form would
+# still serve the static file directly and skip the payment check entirely.
+/bc/starter-pack-full.html   /bc/starter-pack-full   301
