@@ -28,11 +28,25 @@ function readCookie(request, name) {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
+// Response.redirect() with a URL object argument silently drops the query
+// string in this Workers runtime (confirmed by live testing right after
+// f2d841d shipped -- verify-purchase.js's plain-string Location headers
+// were unaffected, which is what pointed at the URL-object argument).
+function redirectTo(path, request) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: new URL(path, request.url).toString(),
+      'Cache-Control': 'no-store'
+    }
+  });
+}
+
 export async function onRequestGet({ request, env }) {
   const tokenSecret = env.ACCESS_TOKEN_SECRET;
   if (!tokenSecret) {
     console.error('starter-pack-full: missing ACCESS_TOKEN_SECRET');
-    return Response.redirect(new URL(SALES_PAGE, request.url), 302);
+    return redirectTo(SALES_PAGE, request);
   }
 
   const url = new URL(request.url);
@@ -40,7 +54,7 @@ export async function onRequestGet({ request, env }) {
   const payload = token ? await verifyAccessToken(tokenSecret, token) : null;
 
   if (!payload) {
-    return Response.redirect(new URL(`${SALES_PAGE}?access=required`, request.url), 302);
+    return redirectTo(`${SALES_PAGE}?access=required`, request);
   }
 
   // env.ASSETS.fetch reaches the deployed static file directly -- it does
