@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Requisition Threshold Checker — 15% of Units | Condominium Act, 1998 s. 46</title>
+<meta name="description" content="Free calculator for Ontario condo boards and owners: work out how many units are needed to requisition a meeting under Condominium Act s. 46 — 15% of units, the current 35/45-day timeline, and what changes when the pending December 2026 amendments take effect.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/on/requisition-threshold">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Requisition Threshold Checker — 15% of Units | Condominium Act, 1998 s. 46">
+<meta property="og:description" content="Free calculator for Ontario condo boards and owners: work out how many units are needed to requisition a meeting under Condominium Act s. 46 — 15% of units, the current 35/45-day timeline, and what changes when the pending December 2026 amendments take effect.">
+<meta property="og:url" content="https://knowyourstrata.com/on/requisition-threshold">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontario Requisition Threshold Checker — 15% of Units | Condominium Act, 1998 s. 46">
+<meta name="twitter:description" content="Free calculator for Ontario condo boards and owners: work out how many units are needed to requisition a meeting under Condominium Act s. 46 — 15% of units, the current 35/45-day timeline, and what changes when the pending December 2026 amendments take effect.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "How many owners do we need to requisition a meeting?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free calculator for Ontario condo boards and owners: work out how many units are needed to requisition a meeting under Condominium Act s. 46 — 15% of units, the current 35/45-day timeline, and what changes when the pending December 2026 amendments take effect."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="date"],input[type="number"]{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .past{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .who{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .who h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .who .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .who ul{list-style:none;font-size:.9rem}
+  .who li{
+    display:flex;gap:9px;align-items:baseline;
+    padding:4px 0;color:#3D4C47;
+  }
+  .who li::before{content:"•";color:var(--spruce);flex:none;font-weight:700}
+  .who .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  /* December 31, 2026 transition box -- deliberately the most visually
+     distinct element on the page, since the brief is explicit that this
+     cannot be a footnote. Oxblood border, not the usual amber flag, to
+     separate "changing" from the ordinary in-page caution notes. */
+  .transition{
+    margin-top:26px;padding:20px 20px;border:1.5px solid var(--seal);
+    border-radius:10px;background:rgba(122,46,46,.04);
+  }
+  .transition .transition-eyebrow{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--seal);font-weight:700;margin-bottom:6px;
+  }
+  .transition h3{
+    font-family:var(--display);font-size:1.05rem;color:var(--spruce-deep);margin-bottom:8px;
+  }
+  .transition p{font-size:.9rem;color:#3D4C47;margin-bottom:10px}
+  .transition ul{margin:0 0 10px 0;list-style:none;font-size:.88rem;max-width:100%}
+  /* Hanging indent via padding + absolutely-positioned arrow, not flex --
+     a flex row with mixed text/inline children wraps them into one
+     anonymous flex item that can refuse to shrink below its unwrapped
+     width in some engines, pushing the whole card past the viewport. */
+  .transition li{
+    position:relative;padding:5px 0 5px 20px;color:#3D4C47;
+    overflow-wrap:break-word;
+  }
+  .transition li::before{
+    content:"→";position:absolute;left:0;top:5px;color:var(--seal);font-weight:700;
+  }
+  .transition .cite{font-size:.78rem;color:#5E6E68;margin-top:8px}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .quote.future{border-left-color:var(--seal);background:rgba(122,46,46,.04)}
+  section.explain ul.plain{margin:0 0 14px 20px;max-width:60ch;color:#3D4C47;font-size:.95rem}
+  section.explain ul.plain li{margin-bottom:6px}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario · Condominium Act, 1998</p>
+    <h1>How many owners do we need to requisition a meeting?</h1>
+    <p class="lede">Enter the total units in the corporation. Get the number needed to requisition a meeting under the current 15% rule — plus what changes when Ontario's pending amendments take effect on December 31, 2026.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="units">Total units in the corporation</label>
+      <input type="number" id="units" min="1" step="1" placeholder="120">
+
+      <label for="received">Date the board received the requisition <span class="hint">(optional — leave blank for the general timeline)</span></label>
+      <input type="date" id="received">
+
+      <button id="calc">Check the threshold</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Requisitioning owners must together own at least</p>
+        <p class="date" id="unitsNeeded">—</p>
+        <p class="sub" id="unitsSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 20, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 46</span></p>
+
+      <p class="cite-line"><strong>Condominium Act, 1998, s. 46(1)</strong> — "A requisition for a meeting of owners may be made by those owners who at the time the board receives the requisition, own at least 15 per cent of the units, are listed in the record maintained by the corporation under section 46.1 and are entitled to vote."</p>
+
+      <div class="who">
+        <h3>What a valid requisition needs — current law</h3>
+        <ul>
+          <li>In <strong>writing</strong>, signed by the requisitionists.</li>
+          <li>States the <strong>nature of the business</strong> to be presented at the meeting.</li>
+          <li>Delivered <strong>personally or by registered mail</strong> to the board president or secretary, or deposited at the corporation's address for service.</li>
+        </ul>
+        <p class="cite">Condominium Act, 1998, s. 46(2). No prescribed form is required under current law.</p>
+      </div>
+
+      <p class="cite-line" id="meetByLine"><strong>Meeting deadline</strong> — the board must call and hold the meeting within 35 days, or the business goes onto the next AGM agenda if the requisitionists agree. <span class="cite-tag">s. 46(4)</span></p>
+      <p class="cite-line">If the board doesn't act, a requisitionist may call the meeting themselves — it must then be held within 45 days of the day they call it. <span class="cite-tag">s. 46(5)</span></p>
+      <p class="past" id="pastNote"></p>
+
+      <div class="transition no-print">
+        <p class="transition-eyebrow">Changing December 31, 2026</p>
+        <h3>The 15% threshold stays the same. Almost everything else doesn't.</h3>
+        <p>Ontario's 2015 amendments to this section are scheduled to be proclaimed into force on this date. The share of units needed to requisition does <strong>not</strong> change — but the eligibility conditions, the form, and the entire response timeline do:</p>
+        <ul>
+          <li>A <strong>new eligibility bar</strong>: requisitionists can't be 30+ days in arrears on common expenses. Not a rule today.</li>
+          <li>A <strong>prescribed form</strong> replaces today's plain written requisition.</li>
+          <li>The board gets <strong>20 days to respond</strong> in writing (the Act itself says 10, but O. Reg. 48/01 — coming into force alongside it — actually sets this at 20).</li>
+          <li>If it agrees, the meeting must be held within <strong>40 more days after that response window ends</strong> — around 60 days total, not 35.</li>
+          <li>If it declines, requisitionists get <strong>10 days to revise</strong>, then <strong>20 days to apply to the Condominium Authority Tribunal</strong> (or Superior Court) — replacing today's simple "call it yourself in 45 days" option.</li>
+        </ul>
+        <p class="cite">Condominium Act, 1998, s. 46 (as replaced by 2015, c. 28, Sched. 1, s. 40) &amp; O. Reg. 48/01, ss. 12.2.1–12.2.7. See the full breakdown below.</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox to confirm. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><a href="/on/notice-of-meeting-deadline">Notice of meeting deadline</a></li>
+      <li><span>Requisition threshold checker</span><span class="current">You're here</span></li>
+      <li><a href="/on/records-request-deadline">Records request deadline</a></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>Who can requisition, and how</h2>
+    <p>Section 46 of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> sets the bar at 15% of the units, held by owners who are already on the corporation's own owners' record and entitled to vote:</p>
+    <p class="quote">"A requisition for a meeting of owners may be made by those owners who at the time the board receives the requisition, own at least 15 per cent of the units, are listed in the record maintained by the corporation under section 46.1 and are entitled to vote."</p>
+    <p>The requisition itself is informal under current law — no prescribed form exists yet:</p>
+    <p class="quote">"The requisition shall, (a) be in writing and be signed by the requisitionists; (b) state the nature of the business to be presented at the meeting; and (c) be delivered personally or by registered mail to the president or secretary of the board or deposited at the address for service of the corporation."</p>
+
+    <h2 style="margin-top:32px">The current timeline: 35 days, or 45 if the board doesn't act</h2>
+    <p>Once the board receives a valid requisition, section 46(4) requires it to either add the business to the next AGM (if the requisitionists agree) or "call and hold a meeting of owners within 35 days." If the board misses that, section 46(5) is a self-help remedy: a requisitionist can call the meeting themselves, and it "shall be held within 45 days of the day on which the meeting is called."</p>
+
+    <h2 style="margin-top:32px" id="transition-detail">What changes on December 31, 2026 — and what doesn't</h2>
+    <p>The 2015 Protecting Condominium Owners Act rewrote section 46 entirely; those changes are scheduled to be proclaimed into force on this date. Reading the pending text directly, the threshold itself carries over unchanged:</p>
+    <p class="quote future">"...a requisition for a meeting of owners can only be made by those owners who, at the time the board receives the requisition, (a) own at least 15 per cent of the units..."</p>
+    <p>But two new conditions are added alongside it — appearing in the s. 46.1 owners' record (already required today) and, new, having no arrears of 30 days or more:</p>
+    <p class="quote future">"...(c) have no contributions to the common expenses payable for their units that have been in arrears for 30 days or more."</p>
+    <p>The requisition also stops being a plain written note: the pending law requires "the prescribed information" in "the prescribed form." And the timeline is restructured from a single deadline into a multi-step process:</p>
+    <ul class="plain">
+      <li><strong>Board response — 20 days, not 10.</strong> The pending Act text itself says the board has "10 days or such other time period, if any, that is prescribed" to respond in writing. O. Reg. 48/01 — amended in the same package — prescribes 20 days for this purpose, which is the figure that actually governs.</li>
+      <li><strong>Meeting deadline — 40 more days.</strong> If the board agrees, it must call and hold the meeting (or add it to the next AGM, on a defined schedule) within 40 days <em>after the end of that response period</em> — so roughly 60 days from requisition to meeting in the ordinary case, not 35.</li>
+      <li><strong>If the board declines — 10 days to revise.</strong> Requisitionists can fix and resubmit using the prescribed form.</li>
+      <li><strong>If that's declined too — 20 days to escalate.</strong> Requisitionists can apply to the Condominium Authority Tribunal (once it has jurisdiction here) or the Superior Court before the requisition is deemed abandoned. Today's simple "call the meeting yourself within 45 days" option does not carry over into this structure.</li>
+    </ul>
+    <p>One narrow addition: if the business involves removing or electing a director in a position reserved under s. 51(6), the pending law sets a separate 15%-of-non-leased-voting-units threshold for that specific purpose — a distinction that doesn't exist in current law.</p>
+
+    <dl class="faq">
+      <dt>Does the 15% threshold change on December 31, 2026?</dt>
+      <dd>No. We read the pending replacement text directly rather than assuming: the 15%-of-units figure in the new s. 46(1)(a) is identical to the current s. 46(1). What changes is everything around it — eligibility, form, and the timeline.</dd>
+      <dt>Is the 30-day arrears rule in effect right now?</dt>
+      <dd>No. It appears only in the pending replacement of s. 46(1), not in the current, in-force text. A requisition today isn't invalidated by arrears under section 46 itself.</dd>
+      <dt>The Act says the board gets 10 days to respond — why does this page say 20?</dt>
+      <dd>Because section 46(7) of the pending text explicitly defers to "such other time period, if any, that is prescribed," and O. Reg. 48/01 — amended in the same not-yet-in-force package — prescribes 20 days for that purpose. Both pieces come into force together, so 20 days is what will actually apply.</dd>
+      <dt>Is December 31, 2026 a guaranteed date?</dt>
+      <dd>It's the date currently stated on the official consolidation, tied to a proclamation order of the Lieutenant Governor in Council. Ontario condominium law has shifted proclamation dates before, so treat this as the best current information and confirm again as the date approaches.</dd>
+      <dt>Do a corporation's by-laws affect any of this?</dt>
+      <dd>We found no by-law power over the threshold or the timeline in either the current or pending text of section 46 — unlike quorum, where a registered by-law can hold quorum at 25% throughout.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For anything contested — especially once the new process is live — talk to a condominium lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 46 and s. 46.1 (current text, and the pending replacement enacted by 2015, c. 28, Sched. 1, s. 40), and O. Reg. 48/01, ss. 12.2.1 to 12.2.7. Last verified 20 August 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 12 August 2026.</p>
+    <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var units=document.getElementById('units'),
+      received=document.getElementById('received'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      unitsNeeded=document.getElementById('unitsNeeded'),
+      unitsSub=document.getElementById('unitsSub'),
+      meetByLine=document.getElementById('meetByLine'),
+      pastNote=document.getElementById('pastNote'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function addDays(d,n){
+    var c=new Date(d.getTime());
+    c.setDate(c.getDate()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+  function readInt(el){
+    var v=el.value.trim();
+    if(v==='')return null;
+    var n=parseInt(v,10);
+    return isNaN(n)?null:n;
+  }
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    var total=readInt(units);
+    if(total===null||total<1){show('Enter how many units the corporation has.');return;}
+    err.style.display='none';
+
+    // A fraction of a unit can't sign a requisition, so this rounds up --
+    // the same convention used on the quorum tool for the same reason.
+    var needed=Math.ceil(total*0.15);
+    unitsNeeded.textContent=needed+(needed===1?' unit':' units');
+    unitsSub.textContent='15% of '+total+(total===1?' unit':' units')+', rounded up';
+
+    var meetBy=null;
+    if(received.value){
+      var r=parseLocal(received.value);
+      meetBy=addDays(r,35);
+      meetByLine.innerHTML='<strong>Meeting deadline</strong> — the board must call and hold the meeting no later than '+fmt.format(meetBy)+', 35 days after receiving the requisition on '+fmt.format(r)+'. <span class="cite-tag">s. 46(4)</span>';
+      if(meetBy<today0()){
+        pastNote.style.display='block';
+        pastNote.textContent='That 35-day deadline has already passed. Check whether a requisitionist has since called the meeting themselves under s. 46(5) — if so, it must be held within 45 days of the day they called it.';
+      } else {
+        pastNote.style.display='none';
+      }
+    } else {
+      meetByLine.innerHTML='<strong>Meeting deadline</strong> — the board must call and hold the meeting within 35 days of receiving the requisition, or the business goes onto the next AGM agenda if the requisitionists agree. <span class="cite-tag">s. 46(4)</span>';
+      pastNote.style.display='none';
+    }
+
+    current={total:total,needed:needed,received:received.value?parseLocal(received.value):null,meetBy:meetBy};
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s='Corporation has '+current.total+(current.total===1?' unit':' units')+
+      '. Requisitioning owners must together own at least '+current.needed+
+      (current.needed===1?' unit':' units')+' (15%, rounded up) under Condominium Act, 1998 s. 46(1).';
+    if(current.meetBy){
+      s+=' Meeting must be held by '+fmt.format(current.meetBy)+' (35 days from receipt, s. 46(4)); if the board misses it, a requisitionist may call it themselves within 45 days (s. 46(5)).';
+    } else {
+      s+=' The board must call and hold the meeting within 35 days of receiving the requisition (s. 46(4)); if it doesn\'t, a requisitionist may call it themselves within 45 days (s. 46(5)).';
+    }
+    s+=' Note: this is current law. Ontario\'s pending December 31, 2026 amendments keep the 15% threshold but restructure the timeline and add a 30-day arrears eligibility bar.'+
+      ' Verified August 20, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
