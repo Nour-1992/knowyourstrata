@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Reserve Fund Study Deadline Tracker — Comprehensive, or Updated? | Condominium Act, 1998 s. 94</title>
+<meta name="description" content="Free calculator for Ontario condo boards: work out when the next reserve fund study is due and which class it must be — comprehensive or updated — under Condominium Act s. 94 and O. Reg. 48/01 s. 31.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/on/reserve-fund-study-deadline">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Reserve Fund Study Deadline Tracker — Comprehensive, or Updated? | Condominium Act, 1998 s. 94">
+<meta property="og:description" content="Free calculator for Ontario condo boards: work out when the next reserve fund study is due and which class it must be — comprehensive or updated — under Condominium Act s. 94 and O. Reg. 48/01 s. 31.">
+<meta property="og:url" content="https://knowyourstrata.com/on/reserve-fund-study-deadline">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontario Reserve Fund Study Deadline Tracker — Comprehensive, or Updated? | Condominium Act, 1998 s. 94">
+<meta name="twitter:description" content="Free calculator for Ontario condo boards: work out when the next reserve fund study is due and which class it must be — comprehensive or updated — under Condominium Act s. 94 and O. Reg. 48/01 s. 31.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "When is our next reserve fund study due, and what class must it be?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free calculator for Ontario condo boards: work out when the next reserve fund study is due and which class it must be — comprehensive or updated — under Condominium Act s. 94 and O. Reg. 48/01 s. 31."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="date"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .mode-block{display:none}
+  .mode-block.active{display:block}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .past{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .after{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .after h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .after .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .after ol{list-style:none;font-size:.9rem;counter-reset:steps}
+  .after li{
+    padding:6px 0 6px 30px;color:#3D4C47;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .after li:last-child{border-bottom:none}
+  .after li::before{
+    counter-increment:steps;content:counter(steps);
+    position:absolute;left:0;top:6px;
+    width:20px;height:20px;border-radius:50%;background:var(--spruce);color:#fff;
+    font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  .after .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .chain{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;
+    font-size:.85rem;font-family:var(--mono);
+  }
+  .chain span{
+    padding:6px 10px;border-radius:6px;background:#F1F4F2;color:var(--spruce-deep);
+    border:1px solid var(--line);
+  }
+  .chain span.comp{background:rgba(122,46,46,.06);border-color:var(--seal);color:var(--seal)}
+  .chain .arrow{color:#8A8577;font-family:var(--body)}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario · Condominium Act, 1998</p>
+    <h1>When is our next reserve fund study due, and what class must it be?</h1>
+    <p class="lede">Reserve fund studies run on a rolling 3-year clock from the last study's completion, not a fixed calendar date — and the class required alternates rather than looping back to a full study on any set cycle. Tell us where you are, and we'll work out both.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="mode">Has this corporation completed a reserve fund study before?</label>
+      <select id="mode">
+        <option value="new" selected>No — no study yet</option>
+        <option value="prior">Yes — we have a completed study</option>
+      </select>
+
+      <div class="mode-block active" id="newBlock">
+        <label for="registered">Date the declaration and description were registered</label>
+        <input type="date" id="registered">
+      </div>
+
+      <div class="mode-block" id="priorBlock">
+        <label for="completed">Completion date of the most recent study</label>
+        <input type="date" id="completed">
+
+        <label for="lastClass">Which class was that study?</label>
+        <select id="lastClass">
+          <option value="comprehensive">Comprehensive study</option>
+          <option value="site">Updated study, based on a site inspection</option>
+          <option value="nosite">Updated study, not based on a site inspection</option>
+        </select>
+      </div>
+
+      <button id="calc">Get the next study date</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Next reserve fund study due by</p>
+        <p class="date" id="dueDate">—</p>
+        <p class="sub" id="dueSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 20, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 94</span></p>
+
+      <p class="cite-line" id="citeLine1"></p>
+      <p class="cite-line" id="citeLine2" style="display:none"></p>
+      <p class="past" id="pastNote"></p>
+
+      <div class="after">
+        <h3>After the study lands</h3>
+        <p class="sub">Three deadlines run in sequence once the board actually has the study in hand.</p>
+        <ol>
+          <li><strong>120 days</strong> to review the study and propose a funding plan.</li>
+          <li><strong>15 more days</strong> to notify owners (a summary) and the auditor (the full study and plan).</li>
+          <li><strong>30 more days</strong> after that notice before the board must implement the plan.</li>
+        </ol>
+        <p class="cite">Condominium Act, 1998, s. 94(8)–(10).</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox to confirm. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><a href="/on/notice-of-meeting-deadline">Notice of meeting deadline</a></li>
+      <li><a href="/on/requisition-threshold">Requisition threshold checker</a></li>
+      <li><a href="/on/records-request-deadline">Records request deadline</a></li>
+      <li><span>Reserve fund study deadline</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>The obligation, and why the cycle lives in the regulation</h2>
+    <p>Section 94(1) of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> requires periodic studies to check the reserve fund is adequate:</p>
+    <p class="quote">"The corporation shall conduct periodic studies to determine whether the amount of money in the reserve fund and the amount of contributions collected by the corporation are adequate to provide for the expected costs of major repair and replacement of the common elements and assets of the corporation."</p>
+    <p>Section 94(4) sets the first deadline directly, then hands the ongoing cycle to the regulations — the same pattern as everything else on this site:</p>
+    <p class="quote">"A corporation created on or after the day this section comes into force shall conduct a reserve fund study within the year following the registration of the declaration and description and subsequently at the prescribed times."</p>
+
+    <h2 style="margin-top:32px">Three classes, and a rolling 3-year clock</h2>
+    <p>O. Reg. 48/01 s. 28 establishes three classes of study: a comprehensive study, an updated study based on a site inspection, and an updated study not based on one. The first study is always comprehensive:</p>
+    <p class="quote">"The reserve fund study that subsection 94 (4) of the Act requires a corporation... to conduct within the year following the registration of the declaration and description shall be a comprehensive study."</p>
+    <p>Every study after that runs on a clock measured from the <em>previous study's completion</em>, not a fixed calendar date:</p>
+    <p class="quote">"A corporation shall conduct a reserve fund study within three years of completing the reserve fund study that it is required to conduct under subsection (1) or (2)... and after that, within every three years after completing the immediately preceding reserve fund study."</p>
+
+    <h2 style="margin-top:32px">Which class — the alternation, spelled out</h2>
+    <p>This is the part worth walking through rather than just stating, because a claim we found during research — that a full comprehensive study is required every six years — doesn't hold up against the text. Section 31(4) sets three possible classes for each study after the first:</p>
+    <p class="quote">"(a) a comprehensive study; (b) an updated study not based on a site inspection, if the immediately preceding reserve fund study... was a comprehensive study or an updated study based on a site inspection; or (c) an updated study based on a site inspection, if the immediately preceding reserve fund study... was an updated study not based on a site inspection."</p>
+    <p>Clauses (b) and (c) between them cover every possible outcome of the previous study — comprehensive, site-based, or not-site-based — which leaves clause (a) with no case left to trigger in normal sequential use. Followed through, the pattern runs like this, indefinitely:</p>
+    <div class="chain">
+      <span class="comp">Comprehensive (year 1)</span>
+      <span class="arrow">→</span>
+      <span>Updated, no site visit (year 4)</span>
+      <span class="arrow">→</span>
+      <span>Updated, site visit (year 7)</span>
+      <span class="arrow">→</span>
+      <span>Updated, no site visit (year 10)</span>
+      <span class="arrow">→</span>
+      <span>...</span>
+    </div>
+    <p>Nothing in this section brings the corporation back to a full comprehensive study on any stated cycle. If a "comprehensive study every six years" rule exists anywhere, it isn't in s. 31 of O. Reg. 48/01 — we read it directly and it isn't there.</p>
+
+    <dl class="faq">
+      <dt>Is a full comprehensive study really required every six years?</dt>
+      <dd>Not under s. 31(4) as written. The clause that could require it, (a), has no case left to apply once (b) and (c) are read together — they already cover every possible class the immediately preceding study could have been. We couldn't find textual support for a six-year comprehensive cycle anywhere in this section.</dd>
+      <dt>What about corporations that existed before section 94 came into force?</dt>
+      <dd>Section 31(1) has a transitional rule for them — broadly, a comprehensive study within three years of that commencement date, with a narrow exception if they already had a compliant one. Section 94 has been in force for years at this point, so this is very unlikely to be live for any corporation checking this today; we're noting it rather than silently leaving it out.</dd>
+      <dt>Is the 120-day figure for reviewing the study a real rule, or guidance?</dt>
+      <dd>Real, and in the Act itself: s. 94(8) requires the board to review the study and propose a funding plan "within 120 days of receiving" it. It's not a CAO recommendation — it's a statutory deadline.</dd>
+      <dt>Does the reserve fund study relate to the CRF contribution amount?</dt>
+      <dd>Only indirectly, and only in BC's Strata Property Act, which uses similar language for a different concept. In Ontario, the study drives the board's funding plan under s. 94(8), which in turn shapes future reserve fund contributions — but this tool doesn't calculate a contribution figure.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For a study that's overdue, disputed, or tied to a declarant transition, talk to a condominium lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 94, and O. Reg. 48/01, ss. 27, 28 and 31. Last verified 20 August 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 18 August 2026.</p>
+    <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var modeSel=document.getElementById('mode'),
+      newBlock=document.getElementById('newBlock'),
+      priorBlock=document.getElementById('priorBlock'),
+      registered=document.getElementById('registered'),
+      completed=document.getElementById('completed'),
+      lastClass=document.getElementById('lastClass'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      dueDate=document.getElementById('dueDate'),
+      dueSub=document.getElementById('dueSub'),
+      citeLine1=document.getElementById('citeLine1'),
+      citeLine2=document.getElementById('citeLine2'),
+      pastNote=document.getElementById('pastNote'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  var CLASS_LABEL={
+    comprehensive:'a comprehensive study',
+    site:'an updated study based on a site inspection',
+    nosite:'an updated study not based on a site inspection'
+  };
+  /* Reg. s. 31(4): (b) and (c) between them cover every possible class the
+     immediately preceding study could have been, so the sequence alternates
+     between the two updated classes forever once past the first study --
+     it never has a case left to fall back to clause (a). */
+  var NEXT_CLASS={
+    comprehensive:'nosite',
+    site:'nosite',
+    nosite:'site'
+  };
+  var NEXT_CITE={
+    comprehensive:'Reg. s. 31(4)(b)',
+    site:'Reg. s. 31(4)(b)',
+    nosite:'Reg. s. 31(4)(c)'
+  };
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function addYears(d,n){
+    var c=new Date(d.getTime());
+    c.setFullYear(c.getFullYear()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+
+  function toggleMode(){
+    var isPrior=modeSel.value==='prior';
+    newBlock.classList.toggle('active',!isPrior);
+    priorBlock.classList.toggle('active',isPrior);
+    result.style.display='none';
+  }
+  modeSel.addEventListener('change',toggleMode);
+  toggleMode();
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    var isPrior=modeSel.value==='prior';
+
+    if(!isPrior){
+      if(!registered.value){show('Pick the date the declaration and description were registered.');return;}
+      err.style.display='none';
+
+      var r=parseLocal(registered.value);
+      var due=addYears(r,1);
+
+      dueDate.textContent=fmt.format(due);
+      dueSub.textContent='must be a comprehensive study — within one year of registration';
+      citeLine1.innerHTML='<strong>Condominium Act, 1998, s. 94(4)</strong> — the first study is due "within the year following the registration of the declaration and description."';
+      citeLine2.style.display='block';
+      citeLine2.innerHTML='<strong>O. Reg. 48/01, s. 31(2)</strong> — that first study "shall be a comprehensive study."';
+
+      if(due<today0()){
+        pastNote.style.display='block';
+        pastNote.textContent='That first-year deadline has already passed. If no study has been done yet, this is overdue — get one underway as soon as possible.';
+      } else {
+        pastNote.style.display='none';
+      }
+
+      current={isPrior:false,registered:r,due:due};
+    } else {
+      if(!completed.value){show('Pick the completion date of the most recent study.');return;}
+      err.style.display='none';
+
+      var c=parseLocal(completed.value);
+      var due2=addYears(c,3);
+      var lastKind=lastClass.value;
+      var nextKind=NEXT_CLASS[lastKind];
+      var nextCite=NEXT_CITE[lastKind];
+
+      dueDate.textContent=fmt.format(due2);
+      dueSub.textContent='must be '+CLASS_LABEL[nextKind]+' — three years after the last study was completed';
+      citeLine1.innerHTML='<strong>O. Reg. 48/01, s. 31(3)</strong> — due "within three years... after completing the immediately preceding reserve fund study."';
+      citeLine2.style.display='block';
+      citeLine2.innerHTML='<strong>'+nextCite+'</strong> — because the last study was '+CLASS_LABEL[lastKind]+', this one must be '+CLASS_LABEL[nextKind]+'.';
+
+      if(due2<today0()){
+        pastNote.style.display='block';
+        pastNote.textContent='That three-year deadline has already passed. Get the next study underway as soon as possible.';
+      } else {
+        pastNote.style.display='none';
+      }
+
+      current={isPrior:true,completed:c,due:due2,lastKind:lastKind,nextKind:nextKind,nextCite:nextCite};
+    }
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s;
+    if(!current.isPrior){
+      s='Declaration and description registered '+fmt.format(current.registered)+
+        '. First reserve fund study due by '+fmt.format(current.due)+
+        ', and must be a comprehensive study (Condominium Act, 1998 s. 94(4); O. Reg. 48/01 s. 31(2)).';
+    } else {
+      s='Most recent reserve fund study ('+CLASS_LABEL[current.lastKind]+') completed '+fmt.format(current.completed)+
+        '. Next study due by '+fmt.format(current.due)+
+        ', and must be '+CLASS_LABEL[current.nextKind]+' (O. Reg. 48/01 s. 31(3), '+current.nextCite+').';
+    }
+    s+=' Once received, the board has 120 days to review it and propose a funding plan, then 15 days to notify owners and the auditor, then 30 more days to implement the plan (Condominium Act, 1998 s. 94(8)-(10)).'+
+      ' Verified August 20, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
