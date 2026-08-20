@@ -122,6 +122,16 @@ body{
 }
 .stamp-verified .tick{font-size:.85rem;line-height:1}
 
+/* Low-pressure contextual link to the paid BC Starter Pack, shown after a
+   tool's result/explanation and before the email capture box. Deliberately
+   understated -- a text nudge, not a competing CTA -- reusing the same
+   left-border/tint recipe as .buy-msg rather than inventing new styling. */
+.pack-nudge{
+  margin-top:28px;padding:14px 18px;border-left:3px solid var(--sage);
+  background:#F1F4F2;color:#3D4C47;font-size:.9rem;border-radius:0 8px 8px 0;
+}
+.pack-nudge a{color:var(--spruce);font-weight:700}
+
 /* ── Shared page furniture ─────────────────────────────────────────── */
 .kys-foot{
   border-top:1px solid var(--rule);
