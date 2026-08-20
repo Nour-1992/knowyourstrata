@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Insurance Deductible — Who Pays? | Strata Property Act s. 158</title>
+<meta name="description" content="Free walkthrough for BC strata owners and councils: a few questions to work out who pays an insurance deductible and how — the corporation, or the owner directly — under Strata Property Act s. 158, with the case law that decides it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/bc/insurance-deductible">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BC Strata Insurance Deductible — Who Pays? | Strata Property Act s. 158">
+<meta property="og:description" content="Free walkthrough for BC strata owners and councils: a few questions to work out who pays an insurance deductible and how — the corporation, or the owner directly — under Strata Property Act s. 158, with the case law that decides it.">
+<meta property="og:url" content="https://knowyourstrata.com/bc/insurance-deductible">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BC Strata Insurance Deductible — Who Pays? | Strata Property Act s. 158">
+<meta name="twitter:description" content="Free walkthrough for BC strata owners and councils: a few questions to work out who pays an insurance deductible and how — the corporation, or the owner directly — under Strata Property Act s. 158, with the case law that decides it.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Who pays the insurance deductible, and how?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free walkthrough for BC strata owners and councils: a few questions to work out who pays an insurance deductible and how — the corporation, or the owner directly — under Strata Property Act s. 158, with the case law that decides it."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+
+  /* ── Wizard ─────────────────────────────────────────────────────── */
+  .progress{
+    display:flex;gap:6px;margin-bottom:22px;
+  }
+  .progress span{flex:1;height:4px;border-radius:2px;background:var(--line)}
+  .progress span.done{background:var(--sage)}
+  .progress span.active{background:var(--spruce)}
+
+  .step{display:none}
+  .step.active{display:block}
+  .step .q-num{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--spruce);margin-bottom:8px;
+  }
+  .step h2{
+    font-family:var(--display);font-size:1.25rem;font-weight:600;
+    color:var(--spruce-deep);margin-bottom:18px;line-height:1.3;
+  }
+  .opt{
+    display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;
+    font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;
+  }
+  .opt:hover{border-color:var(--spruce);background:#F6F8F6}
+  .opt:focus-visible{outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce)}
+  .opt .opt-sub{display:block;font-weight:400;font-size:.85rem;color:#5E6E68;margin-top:3px}
+
+  .back-link{
+    display:inline-block;margin-top:4px;font-size:.85rem;color:var(--spruce);
+    background:none;border:none;cursor:pointer;font-family:inherit;padding:0;
+  }
+  .back-link:hover{text-decoration:underline}
+
+  /* ── Result ─────────────────────────────────────────────────────── */
+  .result{display:none}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .verdict-text{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.2rem,4.2vw,1.55rem);margin-top:8px;line-height:1.3;
+  }
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:14px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+  }
+  .flag strong{color:var(--spruce-deep)}
+  .confidence{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--seal);
+    background:rgba(122,46,46,.04);font-size:.86rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .confidence strong{color:var(--seal)}
+
+  .cross{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;font-size:.9rem;color:#3D4C47;
+  }
+  .cross a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .cross a:hover{text-decoration:underline}
+
+  .restart-btn{
+    width:100%;padding:12px;font-size:.95rem;font-weight:700;margin-top:20px;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .restart-btn:hover{background:#EEF3F0}
+
+  .copybar{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .pack-nudge{margin-top:28px}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .case-box{
+    margin:0 0 16px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;
+    background:#fff;
+  }
+  .case-box .case-name{font-family:var(--display);font-weight:600;color:var(--spruce-deep);font-size:1.02rem}
+  .case-box .case-cite{font-family:var(--mono);font-size:.76rem;color:#5E6E68;margin-bottom:8px}
+  .case-box p{font-size:.92rem;margin-bottom:8px;max-width:none}
+  .case-box p:last-child{margin-bottom:0}
+  .case-box .confidence-tag{
+    display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;
+    text-transform:uppercase;padding:3px 8px;border-radius:3px;margin-bottom:8px;
+  }
+  .confidence-tag.high{background:#EAF3EE;color:#1E4A43}
+  .confidence-tag.medium{background:#FBF6EA;color:var(--amber)}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All British Columbia tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>Who pays the insurance deductible?</h1>
+    <p class="lede">Not a fixed amount — a question of mechanism. Answer a few questions about what happened and where, and we'll route you to the rule that actually applies, with the case law behind it.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print" id="wizard">
+      <div class="progress" id="progress">
+        <span class="active" data-step="0"></span>
+        <span data-step="1"></span>
+        <span data-step="2"></span>
+      </div>
+
+      <div class="step active" id="step0">
+        <p class="q-num">Question 1 of 3</p>
+        <h2>What's the situation?</h2>
+        <button class="opt" type="button" data-goto="unitOrCommon">
+          There was a claim on the strata's own insurance policy
+          <span class="opt-sub">Water damage, fire, or similar — the corporation's insurer is involved</span>
+        </button>
+        <button class="opt" type="button" data-result="bylawChargeback">
+          An owner's action damaged common property, but no insurance claim is involved
+          <span class="opt-sub">E.g. a renovation done without permission damaged a common wall or pipe</span>
+        </button>
+        <button class="opt" type="button" data-result="notCoveredPeril">
+          It's damage or repairs needed inside my unit, not from a sudden covered loss
+          <span class="opt-sub">Ordinary wear, a pre-existing issue, or something that was never an insurance claim</span>
+        </button>
+        <button class="opt" type="button" data-result="personalLiability">
+          One owner's negligence damaged another owner's property or person
+          <span class="opt-sub">This is about fault between owners, not the strata's own deductible</span>
+        </button>
+      </div>
+
+      <div class="step" id="unitOrCommon">
+        <p class="q-num">Question 2 of 3</p>
+        <h2>Did the loss originate inside a specific unit, or on common property?</h2>
+        <button class="opt" type="button" data-goto="containedOrSpread">Inside a specific strata lot (unit)</button>
+        <button class="opt" type="button" data-result="corpPaysMaySue">
+          Common property — not traceable to a single unit's origin
+        </button>
+        <button class="back-link" type="button" data-back="step0">&larr; Back</button>
+      </div>
+
+      <div class="step" id="containedOrSpread">
+        <p class="q-num">Question 3 of 3</p>
+        <h2>Did the damage stay inside that unit, or spread to common property or other units?</h2>
+        <button class="opt" type="button" data-result="ownerMayPayDirect">
+          Stayed entirely inside that one unit
+        </button>
+        <button class="opt" type="button" data-result="corpPaysMaySue">
+          Spread to common property or other units
+        </button>
+        <button class="back-link" type="button" data-back="unitOrCommon">&larr; Back</button>
+      </div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k" id="resultLabel">The mechanism that applies</p>
+        <p class="verdict-text" id="resultVerdict">—</p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 20, 2026 · <span id="badgeCite">Strata Property Act s. 158</span></p>
+
+      <div id="resultBody"></div>
+
+      <div class="cross">
+        <strong>Related, not duplicated here:</strong> a deductible covered by a special levy or the CRF needs no ownership vote (s. 158(3)) — see the <a href="/bc/crf-contribution">CRF contribution checker</a> for the fund's own minimum, and the <a href="/bc/voting-threshold">voting threshold checker</a> for votes on spending from it under s. 96.
+      </div>
+
+      <button type="button" class="restart-btn no-print" id="restartBtn">Start over</button>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this — and the AGM notice, special levy, budget, records, and depreciation-report deadlines — all in one printable calendar with checklists and templates? <a href="/bc/starter-pack">Get the BC Board Starter Pack &rarr; $39 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/bc/agm-notice">AGM / SGM notice calculator</a></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
+      <li><a href="/bc/quorum">Quorum calculator</a></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
+      <li><a href="/bc/records-deadline">Records request deadline</a></li>
+      <li><a href="/bc/strata-fees">Strata fee / budget calculator</a></li>
+      <li><a href="/bc/crf-contribution">CRF contribution checker</a></li>
+      <li><span>Insurance deductible — who pays</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>The statute: who pays, in principle</h2>
+    <p>Section 158 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_09" rel="noopener">Strata Property Act</a> starts from a default that surprises a lot of owners: the corporation pays.</p>
+    <p class="quote">"Subject to the regulations, the payment of an insurance deductible in respect of a claim on the strata corporation's insurance is a common expense to be contributed to by means of strata fees..." <span style="color:#5E6E68">— s. 158(1)</span></p>
+    <p>Subsection (2) is what lets the corporation get some or all of that back from an individual owner — but read closely, it's a discretionary right to sue, not an automatic charge:</p>
+    <p class="quote">"Subsection (1) does not limit the capacity of the strata corporation to sue an owner in order to recover the deductible portion of an insurance claim if the owner is responsible for the loss or damage that gave rise to the claim." <span style="color:#5E6E68">— s. 158(2)</span></p>
+    <p>And subsection (3) removes a procedural hurdle that would otherwise slow this down — no ownership vote is needed to fund the deductible payment itself:</p>
+    <p class="quote">"...strata corporation approval is not required for a special levy or for an expenditure from the contingency reserve fund to cover an insurance deductible required to be paid by the strata corporation to repair or replace damaged property, unless the strata corporation has decided not to repair or replace..." <span style="color:#5E6E68">— s. 158(3)</span></p>
+
+    <h2 style="margin-top:32px">The part that surprises owners: "responsible" isn't "negligent"</h2>
+    <div class="case-box">
+      <span class="confidence-tag high">Well-corroborated</span>
+      <p class="case-name">Mari v. Strata Plan LMS 2835</p>
+      <p class="case-cite">2007 BCSC 740</p>
+      <p>A washer's faulty water-level switch overflowed and caused water damage. The owners argued they weren't negligent — they had no way of knowing the switch was faulty — so shouldn't owe the deductible. The court disagreed: the Legislature chose the word "responsible" in s. 158(2), not "liable," "negligent," or similar fault-based language, and that word choice was deliberate. Being responsible for a loss that originated in your unit doesn't require any showing of fault — it's closer to how a single-family homeowner bears their own deductible regardless of why a pipe failed.</p>
+      <p>This reading has held up, not just in Mari: <em>Wawanesa Mutual Ins. Co. v. Keiran</em>, 2007 BCSC 727, reached the same conclusion around the same time (relying on Black's Law Dictionary's definition of "responsible" as "liable; legally accountable or answerable"), and the BCSC affirmed the same interpretation again in <em>Yang v. Re/Max Commercial Realty Associates (482258 BC Ltd.)</em>, 2016 BCSC 2147.</p>
+    </div>
+    <p>Practically: if a loss originated in your unit, you can be on the hook for the deductible even if you did everything reasonably expected of you. That's the single fact about this section most worth knowing before an incident happens, not after.</p>
+
+    <h2 style="margin-top:32px">Bylaws can raise the bar — which can help the owner</h2>
+    <div class="case-box">
+      <span class="confidence-tag high">Well-corroborated</span>
+      <p class="case-name">The Owners, Strata Plan BCS 1589 v. Nacht</p>
+      <p class="case-cite">2019 BCSC 1785</p>
+      <p>A leak spread from one unit into others and common property, and the strata paid a $25,000 deductible. Its bylaw required a deductible chargeback only where the owner's "act, omission, negligence, or carelessness" caused the loss — a negligence standard, stricter than the bare s. 158(2) "responsible" test. The Civil Resolution Tribunal found the owners weren't negligent, so they didn't have to pay; the strata appealed, arguing bylaws can't narrow the Act. The BC Supreme Court disagreed and upheld the bylaw: requiring a more stringent standard doesn't contravene the Act, it "clarifies the basis" on which s. 158(2) is interpreted for that strata. The appeal was dismissed.</p>
+      <p><strong>The direction matters here.</strong> A bylaw like this doesn't take away the corporation's underlying right to sue under s. 158(2) — that capacity still exists. What it can do is raise what the corporation must prove, which — as it did for the Nachts — can work in the <em>owner's</em> favour by requiring negligence instead of the lower "responsible" bar. Check your own strata's bylaws for a deductible-chargeback clause before assuming the bare Act standard is what applies to you.</p>
+    </div>
+
+    <h2 style="margin-top:32px">Where the damage stays confined — a real, less-settled wrinkle</h2>
+    <div class="case-box">
+      <span class="confidence-tag medium">Lower confidence — see note</span>
+      <p class="case-name">Louie v. The Owners, Strata Plan VR-1323</p>
+      <p class="case-cite">2015 BCSC 1832</p>
+      <p>Case-law commentary on this decision describes a fire confined to a single unit, with damage below the strata's deductible — and the court finding the strata corporation had no obligation to pay the deductible and then pursue the owner for it under s. 158(2); the owner was on the hook to pay directly. That's a materially different mechanism from "corporation pays first, sues to recover" — it changes who writes the cheque and when.</p>
+      <p><strong>Why this gets a lower confidence tag on this site:</strong> CanLII blocks the automated access this site otherwise uses to read primary judgments directly, so this section rests on secondary case-law summaries rather than the judgment text itself — a real gap given our usual standard. We also found that a separate holding in this same case, about how "limited common property" gets classified, was later not followed by another court, which is a reason for general caution about over-reading this decision, even though that specific critique doesn't appear to touch the deductible-payment point directly. Treat the routing below as a genuine, plausible legal path worth raising with your strata manager or a lawyer — not a settled rule with the same footing as the Mari line above.</p>
+    </div>
+
+    <h2 style="margin-top:32px">What section 158 does not cover</h2>
+    <p>Keeping this tool honestly scoped matters as much as the branches themselves. Section 158 only governs deductible recovery on the strata corporation's <em>own</em> insurance claim. A few adjacent situations that look similar but run on different rules entirely:</p>
+    <p><strong>Damage to common property from a bylaw or rule contravention, no insurance claim involved</strong> — that's s. 133, not s. 158, and it requires an actual contravention as the trigger, not just any owner action that happens to cause damage:</p>
+    <p class="quote">"The strata corporation may require that the reasonable costs of remedying the contravention be paid by the person who may be fined for the contravention under section 130." <span style="color:#5E6E68">— s. 133(2)</span></p>
+    <p><strong>Repairs inside a unit that were never a covered peril</strong> — ordinary wear, deferred maintenance, anything that wouldn't trigger an insurance claim in the first place — is just ordinary owner responsibility, not a s. 158 question at all.</p>
+    <p><strong>Upgrades or improvements destroyed in an otherwise-covered claim</strong> — generally the owner's own risk to insure separately, unless a bylaw says otherwise, since the strata's policy and s. 158 are built around the standard building, not betterments an owner added.</p>
+    <p><strong>Negligence damaging another owner directly</strong> — a claim between owners, not a strata-corporation deductible question. This is personal liability territory, the reason personal liability coverage exists, and it runs on ordinary negligence law rather than s. 158's "responsible" standard.</p>
+
+    <dl class="faq">
+      <dt>Does "responsible" really mean no fault is needed at all?</dt>
+      <dd>Under the bare Act, yes — Mari, Wawanesa v. Keiran, and Yang all read s. 158(2) that way. But check your strata's bylaws first: a bylaw can validly impose a stricter negligence standard instead (Nacht), which would work in your favour.</dd>
+      <dt>If the damage never left my unit, am I automatically off the hook for the corporation's deductible?</dt>
+      <dd>Not necessarily off the hook — but the mechanism may be different. Case-law commentary on Louie suggests the corporation may have no obligation to pay the deductible at all in that scenario, meaning the owner could be asked to pay directly rather than reimburse the corporation after the fact. We flag this with lower confidence than the rest of this page — confirm your specific situation with your strata manager or a lawyer.</dd>
+      <dt>Can our strata's bylaws make owners pay the deductible for absolutely anything?</dt>
+      <dd>No further than s. 158(2) allows without a bylaw, and case law confirms a bylaw can raise the bar (require negligence) but the underlying statutory right to sue isn't something a bylaw can take away either. What we haven't found is case law testing a bylaw that tries to go the other direction — imposing liability in situations even broader than "responsible." Treat that as untested rather than assume it would hold up.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation and reported case law, verified against the sources cited above — with the Louie section explicitly flagged as resting on secondary sources rather than the judgment text. For an actual dispute, talk to a strata lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 133 and 158, and reported BC case law: Mari v. Strata Plan LMS 2835, 2007 BCSC 740; Wawanesa Mutual Ins. Co. v. Keiran, 2007 BCSC 727; Yang v. Re/Max Commercial Realty Associates (482258 BC Ltd.), 2016 BCSC 2147; The Owners, Strata Plan BCS 1589 v. Nacht, 2019 BCSC 1785; and Louie v. The Owners, Strata Plan VR-1323, 2015 BCSC 1832 (this last one via secondary sources — see note above). Last verified August 20, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 18, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var wizard=document.getElementById('wizard'),
+      progress=document.getElementById('progress'),
+      result=document.getElementById('result'),
+      resultVerdict=document.getElementById('resultVerdict'),
+      resultBody=document.getElementById('resultBody'),
+      restartBtn=document.getElementById('restartBtn'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var STEP_INDEX={step0:0,unitOrCommon:1,containedOrSpread:2};
+
+  var OUTCOMES={
+    corpPaysMaySue:{
+      verdict:'The corporation pays — and may sue the responsible owner to recover it',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">This is the standard s. 158 path. The strata corporation pays the deductible as a common expense, and separately has a discretionary right to sue whichever owner is "responsible" for the loss to recover it — a lower bar than negligence.</p>'+
+        '<p class="cite-line"><strong>s. 158(1)</strong> — the deductible is "a common expense to be contributed to by means of strata fees."</p>'+
+        '<p class="cite-line"><strong>s. 158(2)</strong> — the corporation may sue "if the owner is responsible for the loss or damage that gave rise to the claim." Case law (<em>Mari</em>, <em>Wawanesa v. Keiran</em>, <em>Yang</em>) reads "responsible" as not requiring negligence.</p>'+
+        '<p class="flag"><strong>Check your bylaws.</strong> A bylaw can validly require the corporation to prove negligence instead of the bare "responsible" standard (<em>Nacht</em>, 2019 BCSC 1785) — which can work in the owner\'s favour. It can\'t, however, take away the corporation\'s underlying right to sue under s. 158(2) itself.</p>',
+      badge:'Strata Property Act s. 158(1)–(2)'
+    },
+    ownerMayPayDirect:{
+      verdict:'The corporation may have no obligation to pay at all — the owner may pay directly',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">Because the damage stayed entirely inside the responsible owner\'s own unit, this may not follow the usual "corporation pays, then sues" path at all.</p>'+
+        '<p class="cite-line"><strong>Louie v. Strata Plan VR-1323</strong>, 2015 BCSC 1832 — case-law commentary on this decision describes the strata corporation having no obligation to pay the deductible where the loss was confined to the responsible owner\'s own unit; the owner may be required to pay it directly.</p>'+
+        '<div class="confidence"><strong>Lower confidence than the rest of this tool.</strong> We could not read this judgment\'s primary text directly — CanLII blocks the automated access this site otherwise relies on — so this rests on secondary summaries. Treat it as a real, worth-raising possibility, not a settled rule, and confirm with your strata manager or a lawyer before relying on it.</div>',
+      badge:'Case law, s. 158'
+    },
+    bylawChargeback:{
+      verdict:'This is a section 133 bylaw chargeback, not a section 158 insurance question',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">No insurance claim, no deductible — so s. 158 doesn\'t apply here at all. If the damage came from an actual contravention of a bylaw or rule, the corporation can do the work and require the person who could be fined for that contravention to pay the reasonable cost.</p>'+
+        '<p class="cite-line"><strong>s. 133(1)–(2)</strong> — the corporation "may require that the reasonable costs of remedying the contravention be paid by the person who may be fined for the contravention under section 130."</p>'+
+        '<p class="flag">This only works if there was an actual bylaw or rule <strong>contravention</strong> — not just any owner action that happened to cause damage. If nothing was contravened, s. 133 doesn\'t apply either, and the strata generally bears its own common-property repair costs.</p>',
+      badge:'Strata Property Act s. 133'
+    },
+    notCoveredPeril:{
+      verdict:'This is outside section 158 — ordinary owner responsibility',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">Section 158 is about deductibles on an insurance claim. If what you\'re describing was never going to trigger a claim in the first place — ordinary wear, a pre-existing issue, routine maintenance — there\'s no deductible to allocate, and no s. 158 question to answer. This is simply the owner\'s own repair responsibility inside their unit, the same as any homeowner\'s.</p>',
+      badge:'Not a s. 158 question'
+    },
+    personalLiability:{
+      verdict:'This is personal liability between owners, not a strata deductible question',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">Section 158 governs the strata corporation\'s own insurance deductible. Direct negligence by one owner damaging another owner\'s property or person is a different legal track entirely — ordinary negligence law between the two people involved, the kind of claim personal liability insurance exists for.</p>'+
+        '<p class="flag">The strata corporation isn\'t the right party to sort this out, and s. 158 isn\'t the right section. If the strata\'s own insurance was also engaged (e.g. the damage reached common property), see the other branches of this tool for that separate question.</p>',
+      badge:'Not a s. 158 question'
+    }
+  };
+
+  function showStep(id){
+    document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+    document.getElementById(id).classList.add('active');
+    var idx=STEP_INDEX[id];
+    document.querySelectorAll('#progress span').forEach(function(s,i){
+      s.classList.remove('active','done');
+      if(i<idx)s.classList.add('done');
+      else if(i===idx)s.classList.add('active');
+    });
+  }
+
+  document.querySelectorAll('[data-goto]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      showStep(btn.getAttribute('data-goto'));
+    });
+  });
+  document.querySelectorAll('[data-back]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      showStep(btn.getAttribute('data-back'));
+    });
+  });
+
+  var currentOutcome=null;
+
+  document.querySelectorAll('[data-result]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var key=btn.getAttribute('data-result');
+      var o=OUTCOMES[key];
+      currentOutcome=key;
+      resultVerdict.textContent=o.verdict;
+      resultBody.innerHTML=o.body;
+      document.getElementById('badgeCite').textContent=o.badge;
+      wizard.style.display='none';
+      result.style.display='block';
+      result.scrollIntoView({block:'start',behavior:'smooth'});
+    });
+  });
+
+  restartBtn.addEventListener('click',function(){
+    result.style.display='none';
+    wizard.style.display='block';
+    showStep('step0');
+    wizard.scrollIntoView({block:'start'});
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!currentOutcome)return;
+    var paras=Array.prototype.map.call(
+      resultBody.querySelectorAll('p, .confidence'),
+      function(p){return p.textContent.replace(/\s+/g,' ').trim();}
+    ).join(' ');
+    var text=resultVerdict.textContent+'. '+paras+
+      ' Verified August 20, 2026 against the Strata Property Act and reported BC case law on bclaws.gov.bc.ca and secondary case-law sources.';
+    copyToClipboard(text);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
