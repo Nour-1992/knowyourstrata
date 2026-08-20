@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Records Request Deadline Calculator — Board's Response &amp; Delivery | Condominium Act, 1998 s. 55</title>
+<meta name="description" content="Free calculator for Ontario condo boards: enter the date a records request arrived and get the board's-response deadline and, once the record type is known, the delivery deadline that follows — under Condominium Act s. 55 and O. Reg. 48/01 s. 13.3.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  .hint a{color:var(--spruce)}
+  input[type="date"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:8px;
+  }
+  input[type="date"]:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .field{margin-bottom:16px}
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;margin-top:6px;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .countdown{
+    margin-top:12px;padding:14px 18px;border-radius:8px;
+    font-weight:700;font-size:1rem;display:none;
+  }
+  .countdown.ok{background:#EAF3EE;color:#1E4A43;border-left:3px solid #2C6B60}
+  .countdown.due{background:#FBF6EA;color:var(--amber);border-left:3px solid var(--amber)}
+  .countdown.late{background:#FAEFEC;color:#8F2D1E;border-left:3px solid #8F2D1E}
+  .countdown .detail{display:block;font-weight:400;font-size:.9rem;margin-top:4px}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+  }
+  /* A cite-tag ending a long paragraph reads as glued to the last word once it
+     wraps to its own line (the trailing space collapses at the line break), so
+     give it a clean break instead of relying on inline wrapping. */
+  .cite-line .cite-tag,.flag .cite-tag{display:block;margin-top:6px}
+  .past{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .stage2{margin-top:30px;padding-top:22px;border-top:1px dashed var(--line)}
+  .stage2 h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:4px}
+  .stage2 .sub{font-size:.88rem;color:#5E6E68;margin-bottom:16px;max-width:54ch}
+
+  .who{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .who h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .who .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .who ul{list-style:none;font-size:.9rem}
+  .who li{
+    display:flex;gap:9px;align-items:baseline;
+    padding:4px 0;color:#3D4C47;
+  }
+  .who li::before{content:"•";color:var(--spruce);flex:none;font-weight:700}
+  .who .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;margin-top:0;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  section.explain ol,section.explain ul.plain{margin:0 0 14px 20px;max-width:60ch;color:#3D4C47;font-size:.95rem}
+  section.explain ol li,section.explain ul.plain li{margin-bottom:6px}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario · Condominium Act, 1998</p>
+    <h1>When do we have to answer this records request?</h1>
+    <p class="lede">Enter the date the request arrived. This runs in two stages — the board's response first, then delivery of the record itself — and the second stage depends on what kind of record was asked for.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <div class="field">
+        <label for="received">Date the request was received</label>
+        <input type="date" id="received">
+      </div>
+
+      <div class="field">
+        <label for="recordType">Once the board agrees to share it — what kind of record is it?</label>
+        <select id="recordType">
+          <option value="" selected>Not sure yet — just show the board's-response deadline</option>
+          <option value="core-electronic">Core record, to be delivered or examined electronically</option>
+          <option value="core-paper">Core record, on paper or examined in person</option>
+          <option value="noncore">Not a core record</option>
+        </select>
+        <p class="hint">Core records are the short statutory list — declaration, by-laws, budget, recent financials and a few others. <a href="#core-list">See the full list below.</a></p>
+      </div>
+
+      <div class="field">
+        <label for="responseSent">Date you sent back your completed response and paid the fee <span class="hint">(optional — leave blank if you haven't yet)</span></label>
+        <input type="date" id="responseSent">
+      </div>
+
+      <button id="calc">Get the deadline(s)</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Board's response due by</p>
+        <p class="date" id="deadline1">—</p>
+        <p class="sub">the board must tell you yes, no, and the fee — s. 13.3(6), O. Reg. 48/01</p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 19, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 55 &amp; O. Reg. 48/01, s. 13.3</span></p>
+
+      <p class="countdown" id="countdown"></p>
+      <p class="cite-line" id="citeLine1"><strong>O. Reg. 48/01, s. 13.3(6)</strong> — "the board shall determine whether the corporation will allow the requester to examine or obtain a copy of the record that the requester has requested and shall respond to the requester within 30 days."</p>
+
+      <div class="stage2" id="stage2">
+        <h2>Then: when must the record actually be delivered?</h2>
+        <p class="sub" id="stage2Sub">This only applies once the board agrees to share the record. Choose a record type above to see this deadline.</p>
+        <div id="stage2Result" style="display:none">
+          <p class="cite-line" id="citeLine2"></p>
+          <p class="past" id="pastNote2"></p>
+        </div>
+        <p class="flag">The delivery clock does not start on its own — every one of these periods runs from the corporation <strong>receiving your completed response and the fee</strong>, not from the board's response date. If you never send those back, this second deadline never starts. <span class="cite-tag">O. Reg. 48/01 ss. 13.3(11), 13.4–13.7</span></p>
+      </div>
+
+      <div class="who">
+        <h3>Who can ask</h3>
+        <p class="sub">The Act extends this right to a specific list — check before treating anyone else's request as covered.</p>
+        <ul>
+          <li>An <strong>owner</strong> of a unit.</li>
+          <li>A <strong>purchaser</strong> of a unit.</li>
+          <li>A <strong>mortgagee</strong> of a unit.</li>
+          <li>An <strong>agent</strong> of any of the above, authorized in writing.</li>
+        </ul>
+        <p class="cite">Condominium Act, 1998, s. 55(3).</p>
+      </div>
+
+      <div class="who">
+        <h3>What's off-limits, even to them</h3>
+        <p class="sub" id="core-list">Four categories are excluded outright under s. 55(4) — see the explanation below for what each one actually covers.</p>
+        <ul>
+          <li>Employee records <span class="hint">(except an employment contract itself)</span></li>
+          <li>Actual or contemplated litigation, or insurance investigation records</li>
+          <li>Records about specific units or owners <span class="hint">(with an exception for your own unit)</span></li>
+          <li>A short list of prescribed records — mainly legal opinions about specific units and contact-address records</li>
+        </ul>
+        <p class="cite">Condominium Act, 1998, s. 55(4); O. Reg. 48/01 s. 13.11.</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox to confirm. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><a href="/on/notice-of-meeting-deadline">Notice of meeting deadline</a></li>
+      <li><span>Requisition threshold checker</span><span class="soon">Coming soon</span></li>
+      <li><span>Records request deadline</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>Two clocks: the board's response, then delivery</h2>
+    <p>Section 55(3) of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> gives an owner, purchaser or mortgagee — or their authorized agent — the right to examine or copy the corporation's records, "except those records described in subsection (4)." The mechanics live in O. Reg. 48/01. The first deadline is exact and applies to every request:</p>
+    <p class="quote">"When the corporation receives a request for records in accordance with this section, the board shall determine whether the corporation will allow the requester to examine or obtain a copy of the record that the requester has requested and shall respond to the requester within 30 days in a form specified in the Table to section 16.1." — s. 13.3(6)</p>
+    <p>That response tells the requester whether the board will allow access, what the fee is, and where the record can be examined or picked up. It is not the end of the process — it is the board's answer, not the record itself.</p>
+
+    <h2 style="margin-top:32px">Delivery is a second, separate clock — and it branches</h2>
+    <p>If the board agrees to share the record, the requester completes and returns the board's response form together with payment of the fee (s. 13.3(11)). Only once the corporation receives <em>that</em> does the delivery clock start — and how long it runs depends on whether the record is a "core record":</p>
+    <ul class="plain">
+      <li><strong>Core record, delivered or examined electronically:</strong> no separate clock — it must go out within the same 30-day window the board's response was due in (ss. 13.4(1), 13.6(1)).</li>
+      <li><strong>Core record, paper or in person:</strong> within 7 days of the corporation receiving the requester's response and the fee (ss. 13.4(2)–(3), 13.6(2), 13.6(4)).</li>
+      <li><strong>Not a core record</strong> (any format): within 30 days of the corporation receiving the requester's response and the fee (ss. 13.5, 13.7).</li>
+    </ul>
+    <p>Whether a request is to <em>examine</em> a record or to <em>obtain a copy</em> of it doesn't change these counts — only the core/non-core status and the delivery format do.</p>
+
+    <h2 style="margin-top:32px" id="core-list-full">What counts as a "core record"</h2>
+    <p>O. Reg. 48/01 defines "core record" as a fixed, short list — everything else is a non-core record, on the slower 30-day-after-payment clock:</p>
+    <ol>
+      <li>The declaration, by-laws and rules of the corporation.</li>
+      <li>Certain agreements under s. 113 or s. 154(5) of the Act.</li>
+      <li>The current fiscal year's budget, and any amendments to it.</li>
+      <li>The most recent board-approved financial statements.</li>
+      <li>The most recent auditor's report.</li>
+      <li>The board's current reserve fund plan.</li>
+      <li>Records the corporation must maintain under s. 46.1(3) or s. 83(3) of the Act.</li>
+      <li>Periodic information certificates sent in the past 12 months.</li>
+      <li>Minutes of owners' or board meetings held in the past 12 months.</li>
+    </ol>
+    <p>A ten-year-old set of minutes, an individual service contract, or most correspondence would not make this list — those are non-core records.</p>
+
+    <h2 style="margin-top:32px">What the board can withhold</h2>
+    <p>Section 55(4) excludes four categories from the right of access entirely:</p>
+    <p class="quote">"(a) records relating to employees of the corporation, except for contracts of employment…; (b) records relating to actual or contemplated litigation, as determined by the regulations, or insurance investigations…; (c) subject to subsection (5), records relating to specific units or owners; or (d) any prescribed records."</p>
+    <p>Clause (c) has a built-in carve-back: it does not stop an owner, purchaser or mortgagee from getting records about <em>their own</em> unit, or the s. 46.1 owners' record (s. 55(5)). "Actual or contemplated litigation" is itself defined in the regulation — contemplated litigation means "any matter that might reasonably be expected to become actual litigation" based on what the corporation already knows, not merely a request the board would rather not deal with. The "prescribed records" in clause (d) are a short, specific list under s. 13.11(2): mainly a lawyer's or paralegal's opinion about specific units or owners (and communications about it), owners' electronic-communication addresses, and the parts of ballots or proxies that identify specific units.</p>
+
+    <dl class="faq">
+      <dt>Is 30 days really the exact figure, or is that rounded?</dt>
+      <dd>It's exact. Section 13.3(6) of O. Reg. 48/01 says the board "shall respond to the requester within 30 days" — no rounding involved, unlike the "5 days" figure on our notice-of-meeting tool, which turned out to be guidance rather than a stated deadline.</dd>
+      <dt>Does the fee delay the board's 30-day response?</dt>
+      <dd>No — the board's response, including what the fee will be, is due within the same 30 days regardless. It's the <em>delivery</em> clock (stage two) that depends on the fee: it doesn't start until the corporation actually receives your completed response form and payment.</dd>
+      <dt>What if the board says no?</dt>
+      <dd>Then there's no delivery stage to calculate — the board's response itself, with its stated reason and the s. 55(4) provision it relies on, is the end of this tool's job. Section 55(8) sets a penalty for a corporation that, without reasonable excuse, doesn't permit access, and a dispute can be brought to the Condominium Authority Tribunal.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. Whether a particular record is "core," exempt, or about "specific units" can be genuinely contestable — for anything disputed, talk to a condominium lawyer or bring it to the Condominium Authority Tribunal.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 55, and O. Reg. 48/01, ss. 1, 13.3 to 13.7 and 13.11. Last verified 19 August 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 12 August 2026.</p>
+    <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var received=document.getElementById('received'),
+      recordType=document.getElementById('recordType'),
+      responseSent=document.getElementById('responseSent'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      deadline1=document.getElementById('deadline1'),
+      countdown=document.getElementById('countdown'),
+      citeLine1=document.getElementById('citeLine1'),
+      stage2Sub=document.getElementById('stage2Sub'),
+      stage2Result=document.getElementById('stage2Result'),
+      citeLine2=document.getElementById('citeLine2'),
+      pastNote2=document.getElementById('pastNote2'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function addDays(d,n){
+    var c=new Date(d.getTime());
+    c.setDate(c.getDate()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+  function dayDiff(a,b){
+    return Math.round((a.getTime()-b.getTime())/86400000);
+  }
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    if(!received.value){show('Enter the date the request was received.');return;}
+    err.style.display='none';
+
+    var start=parseLocal(received.value);
+    var due1=addDays(start,30);
+    deadline1.textContent=fmt.format(due1);
+
+    var left=dayDiff(due1,today0());
+    countdown.style.display='block';
+    if(left>3){
+      countdown.className='countdown ok';
+      countdown.innerHTML='On track<span class="detail">'+left+' days left for the board\'s response. Responding early costs nothing.</span>';
+    } else if(left>=0){
+      countdown.className='countdown due';
+      countdown.innerHTML=(left===0?'Due today':'Due in '+left+(left===1?' day':' days'))+
+        '<span class="detail">This one is tight — get the response out now rather than on the last day.</span>';
+    } else {
+      countdown.className='countdown late';
+      countdown.innerHTML='Overdue by '+Math.abs(left)+(Math.abs(left)===1?' day':' days')+
+        '<span class="detail">The 30-day deadline under s. 13.3(6) has passed. Respond as soon as possible.</span>';
+    }
+
+    var kind=recordType.value;
+    var due2=null, cite2='', label2='';
+
+    if(!kind){
+      stage2Sub.textContent='This only applies once the board agrees to share the record. Choose a record type above to see this deadline.';
+      stage2Result.style.display='none';
+    } else {
+      stage2Sub.textContent='Based on the record type selected above:';
+      stage2Result.style.display='block';
+
+      if(kind==='core-electronic'){
+        cite2='O. Reg. 48/01, ss. 13.4(1), 13.6(1)';
+        label2='core record, delivered or examined electronically';
+        citeLine2.innerHTML='<strong>No separate clock.</strong> A core record delivered or examined electronically must go out within the <em>same 30 days</em> the board\'s response was due in — by '+fmt.format(due1)+'. <span class="cite-tag">'+cite2+'</span>';
+        due2=due1;
+      } else if(kind==='core-paper'){
+        cite2='O. Reg. 48/01, ss. 13.4(2)–(3), 13.6(2), 13.6(4)';
+        label2='core record, paper or in person';
+        if(responseSent.value){
+          var rs=parseLocal(responseSent.value);
+          due2=addDays(rs,7);
+          citeLine2.innerHTML='<strong>Delivery due '+fmt.format(due2)+'</strong> — 7 days after the corporation received your completed response and fee on '+fmt.format(rs)+'. <span class="cite-tag">'+cite2+'</span>';
+        } else {
+          citeLine2.innerHTML='<strong>7 days</strong> after the corporation receives your completed response and the fee — enter that date above once you have it to see the exact day. <span class="cite-tag">'+cite2+'</span>';
+        }
+      } else if(kind==='noncore'){
+        cite2='O. Reg. 48/01, ss. 13.5, 13.7';
+        label2='not a core record';
+        if(responseSent.value){
+          var rs2=parseLocal(responseSent.value);
+          due2=addDays(rs2,30);
+          citeLine2.innerHTML='<strong>Delivery due '+fmt.format(due2)+'</strong> — 30 days after the corporation received your completed response and fee on '+fmt.format(rs2)+'. <span class="cite-tag">'+cite2+'</span>';
+        } else {
+          citeLine2.innerHTML='<strong>30 days</strong> after the corporation receives your completed response and the fee — enter that date above once you have it to see the exact day. <span class="cite-tag">'+cite2+'</span>';
+        }
+      }
+
+      if(due2 && due2<today0()){
+        pastNote2.style.display='block';
+        pastNote2.textContent='That delivery date has already passed.';
+      } else {
+        pastNote2.style.display='none';
+      }
+    }
+
+    current={start:start,due1:due1,kind:kind,label2:label2,cite2:cite2,due2:due2,responseSentVal:responseSent.value?parseLocal(responseSent.value):null};
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s='Records request received '+fmt.format(current.start)+
+      '. Board\'s response due by '+fmt.format(current.due1)+' (O. Reg. 48/01 s. 13.3(6)).';
+    if(current.kind){
+      if(current.due2){
+        s+=' If shared, delivery ('+current.label2+') due by '+fmt.format(current.due2)+' ('+current.cite2+').';
+      } else {
+        s+=' If shared, delivery ('+current.label2+') is due a fixed number of days after the corporation receives the requester\'s completed response and fee ('+current.cite2+') — that date isn\'t set yet.';
+      }
+    }
+    s+=' Verified August 19, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
