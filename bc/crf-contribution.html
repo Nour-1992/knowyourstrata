@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Contingency Reserve Fund Contribution Checker — Is Your Budget Line Legal? | Strata Property Act</title>
+<meta name="description" content="Free calculator for BC strata treasurers: enter your operating fund budget and planned CRF contribution to check it clears the 10% statutory minimum — plus what actually changes, and doesn't, as your CRF balance grows.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/bc/crf-contribution">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BC Contingency Reserve Fund Contribution Checker — Is Your Budget Line Legal? | Strata Property Act">
+<meta property="og:description" content="Free calculator for BC strata treasurers: enter your operating fund budget and planned CRF contribution to check it clears the 10% statutory minimum — plus what actually changes, and doesn't, as your CRF balance grows.">
+<meta property="og:url" content="https://knowyourstrata.com/bc/crf-contribution">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BC Contingency Reserve Fund Contribution Checker — Is Your Budget Line Legal? | Strata Property Act">
+<meta name="twitter:description" content="Free calculator for BC strata treasurers: enter your operating fund budget and planned CRF contribution to check it clears the 10% statutory minimum — plus what actually changes, and doesn't, as your CRF balance grows.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Does our CRF contribution meet the legal minimum?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free calculator for BC strata treasurers: enter your operating fund budget and planned CRF contribution to check it clears the 10% statutory minimum — plus what actually changes, and doesn't, as your CRF balance grows."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="number"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .verdict{
+    margin-top:12px;padding:14px 18px;border-radius:8px;
+    font-weight:700;font-size:1rem;
+  }
+  .verdict.met{background:#EAF3EE;color:#1E4A43;border-left:3px solid #2C6B60}
+  .verdict.notmet{background:#FAEFEC;color:#8F2D1E;border-left:3px solid #8F2D1E}
+  .verdict .detail{display:block;font-weight:400;font-size:.9rem;margin-top:4px}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:14px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+  }
+  .flag h3{font-family:var(--display);color:var(--spruce-deep);font-size:.98rem;margin-bottom:6px}
+  .flag p{color:#3D4C47;margin-bottom:0}
+  .flag p+p{margin-top:8px}
+
+  .who{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .who h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:8px;
+  }
+  .who ul{list-style:none;font-size:.9rem}
+  .who li{padding:5px 0;color:#3D4C47}
+  .who a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .who a:hover{text-decoration:underline}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .pack-nudge{margin-top:28px}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All British Columbia tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>Does our CRF contribution meet the legal minimum?</h1>
+    <p class="lede">Enter the operating fund budget and what you're planning to put into the contingency reserve fund. We'll check it against the statutory floor — and clear up a real disagreement between sources on whether a large CRF balance changes that floor.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="opFund">Budgeted operating fund contribution for the coming year</label>
+      <input type="number" id="opFund" min="0" step="0.01" placeholder="180000">
+
+      <label for="crfPlanned">Planned CRF contribution for the same year</label>
+      <input type="number" id="crfPlanned" min="0" step="0.01" placeholder="15000">
+
+      <label for="firstYear">Is this the strata's first annual budget?</label>
+      <select id="firstYear">
+        <option value="no" selected>No — a later year</option>
+        <option value="yes">Yes — the fiscal year following our first AGM</option>
+      </select>
+
+      <button id="calc">Check the minimum</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Minimum CRF contribution required</p>
+        <p class="date" id="floorAmount">—</p>
+        <p class="sub" id="floorSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 20, 2026 · <span id="badgeCite">Strata Property Act s. 93</span></p>
+
+      <p class="verdict" id="verdict"></p>
+      <p class="cite-line" id="citeLine"></p>
+      <p class="cite-line" id="depRepLine" style="display:none"></p>
+
+      <div class="flag">
+        <h3>Does a large CRF balance change this floor?</h3>
+        <p id="mythText">No. We read Strata Property Regulation s. 6.1 directly — the current text sets a flat 10% floor every year, with no exception for a large existing balance.</p>
+        <p>You may see this stated differently elsewhere. One description has the 10% floor easing once the CRF reaches 25% of the budget and becoming fully discretionary after that; another says it waives entirely once the CRF equals the previous year's operating budget. Neither is what the regulation currently says — both sections here were rewritten by <strong>B.C. Reg. 7/2023</strong>, which is almost certainly why: the older, tiered description likely describes the rule <em>before</em> that 2023 rewrite, and we could find no textual basis at all for a 100%-balance waiver in the current regulation.</p>
+      </div>
+
+      <div class="who">
+        <h3>Where the rest of this comes from</h3>
+        <ul>
+          <li>The operating fund budget itself — unit entitlement, apportionment, the works — is on the <a href="/bc/strata-fees">strata fee / budget calculator</a>.</li>
+          <li>The vote needed to <em>spend</em> from the CRF (majority for depreciation-report and EV items, 3/4 for everything else, s. 96) is on the <a href="/bc/voting-threshold">voting threshold checker</a>. This tool covers contributing to the fund, not spending from it.</li>
+        </ul>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this — and the AGM notice, special levy, records, and depreciation-report deadlines — all in one printable calendar with checklists and templates? <a href="/bc/starter-pack">Get the BC Board Starter Pack &rarr; $39 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/bc/agm-notice">AGM / SGM notice calculator</a></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
+      <li><a href="/bc/quorum">Quorum calculator</a></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
+      <li><a href="/bc/records-deadline">Records request deadline</a></li>
+      <li><span>Depreciation report deadline</span><span class="soon">Coming soon</span></li>
+      <li><a href="/bc/strata-fees">Strata fee / budget calculator</a></li>
+      <li><span>CRF contribution checker</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>Why the minimum lives in the regulation, not the Act</h2>
+    <p>Section 92 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_06" rel="noopener">Strata Property Act</a> requires every strata corporation to run two funds: an operating fund for expenses that recur at least yearly, and a contingency reserve fund for expenses that recur less often or not at all. Section 93 sets who decides the CRF amount, and where the floor actually lives:</p>
+    <p class="quote">"Subject to the requirements set out in the regulations, the strata corporation must determine the amount of the annual contribution to the contingency reserve fund."</p>
+    <p>That's the same pattern as the depreciation-report dates elsewhere on this site: the Act creates the obligation, the Strata Property Regulation supplies the number.</p>
+
+    <h2 style="margin-top:32px">10%, in the first year and every year after</h2>
+    <p>Two regulation sections cover it, both rewritten by the same 2023 amendment:</p>
+    <p class="quote">"For the purposes of section 93 of the Act, the amount of the annual contribution to the contingency reserve fund for the fiscal year following the first annual general meeting must be at least 10% of the total amount budgeted for the contribution to the operating fund for the 12-month period covered by that budget." <span style="color:#5E6E68">— Reg. 3.4</span></p>
+    <p class="quote">"...the amount of the annual contribution to the contingency reserve fund for a fiscal year, other than the fiscal year following the first annual general meeting, must be determined after consideration of the most recent depreciation report, if any... The amount of the annual contribution must be at least 10% of the total amount budgeted for the contribution to the operating fund for the current fiscal year." <span style="color:#5E6E68">— Reg. 6.1</span></p>
+    <p>The number is identical either way — 10% of the operating fund budget. What differs is process, not amount: from the second year on, the board must have considered the most recent depreciation report (if the strata has one) when setting that figure. Reg. 6.1 doesn't say what "consideration" has to look like, and this tool can't check whether it happened — only whether the dollar amount clears the floor.</p>
+
+    <h2 style="margin-top:32px">Does a large CRF balance change the floor?</h2>
+    <p>This is the question this tool exists to settle. We read Strata Property Regulation s. 6.1 directly, in full, rather than relying on summaries — and found no balance-based exception anywhere in it. The 10% figure in subsection (2) applies without qualification. No mention of 25%, no mention of 100%, no waiver clause.</p>
+    <p>Two different claims circulate. An older description has the 10% floor easing once the CRF reaches 25% of the annual budget, becoming fully discretionary from there, with a 3/4 vote required to draw the fund down from above 100%. A newer one says the minimum "waives entirely" once the CRF balance equals or exceeds the previous year's operating budget. Both sections we quoted above carry the enactment note <strong>[en. B.C. Reg. 7/2023]</strong> — the same 2023 reform. The tiered description is very likely accurate for the regulation as it stood before that rewrite; the flat-waiver claim, we could not source anywhere in the current text. Current law, read directly, is the flat 10% figure with no balance-based exception.</p>
+
+    <dl class="faq">
+      <dt>Does a bigger CRF balance let us contribute less this year?</dt>
+      <dd>Not under the current regulation. The 10% floor in Reg. 6.1(2) doesn't reference the fund's existing balance at all — only the operating fund budget for the year in question.</dd>
+      <dt>We have fewer than 5 strata lots — does the 10% floor still apply to us?</dt>
+      <dd>Yes. The small-strata exemption in this Act family applies to a different obligation — a strata plan with fewer than 5 strata lots doesn't have to obtain a depreciation report at all (Reg. s. 6.22, for the purposes of Act s. 94(2)). That's not the same as the CRF contribution floor: Reg. 6.1(2)'s 10% minimum has no lot-count exemption. A small strata without a depreciation report simply has nothing to "consider" under Reg. 6.1(1) — the dollar floor still applies.</dd>
+      <dt>Can we contribute more than 10%?</dt>
+      <dd>Yes — 10% is a floor, not a cap. Nothing in s. 93 or the regulation sections above limits the maximum.</dd>
+      <dt>What vote do we need to approve the budget itself?</dt>
+      <dd>That's covered on the <a href="/bc/voting-threshold">voting threshold checker</a> — budget approval and CRF spending are both there, cited to their own sections rather than repeated here.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For a disputed budget or an unusual fund structure, talk to a strata lawyer or your strata manager.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 92, 93 and 96, and the Strata Property Regulation, B.C. Reg. 43/2000, ss. 3.4, 6.1 and 6.22. Last verified August 20, 2026 against the official consolidations at bclaws.gov.bc.ca, current to August 18, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var opFund=document.getElementById('opFund'),
+      crfPlanned=document.getElementById('crfPlanned'),
+      firstYear=document.getElementById('firstYear'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      floorAmount=document.getElementById('floorAmount'),
+      floorSub=document.getElementById('floorSub'),
+      badgeCite=document.getElementById('badgeCite'),
+      verdict=document.getElementById('verdict'),
+      citeLine=document.getElementById('citeLine'),
+      depRepLine=document.getElementById('depRepLine'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmtMoney=new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD'});
+
+  function readNum(el){
+    var v=el.value.trim();
+    if(v==='')return null;
+    var n=parseFloat(v);
+    return isNaN(n)?null:n;
+  }
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    var op=readNum(opFund);
+    var planned=readNum(crfPlanned);
+    if(op===null||op<0){show('Enter the budgeted operating fund contribution.');return;}
+    if(planned===null||planned<0){show('Enter the planned CRF contribution.');return;}
+    err.style.display='none';
+
+    var isFirst=firstYear.value==='yes';
+    var floor=Math.round(op*0.10*100)/100;
+    var met=planned>=floor;
+    var cite=isFirst?'Strata Property Regulation, s. 3.4':'Strata Property Regulation, s. 6.1(2)';
+
+    floorAmount.textContent=fmtMoney.format(floor);
+    floorSub.textContent='10% of '+fmtMoney.format(op)+' budgeted for the operating fund';
+    badgeCite.textContent='Strata Property Act s. 93';
+
+    verdict.className='verdict '+(met?'met':'notmet');
+    verdict.innerHTML=(met?'Meets the minimum ✓':'Below the minimum ✗')+
+      '<span class="detail">Planned contribution '+fmtMoney.format(planned)+' against a floor of '+fmtMoney.format(floor)+
+      (met?'.':' — short by '+fmtMoney.format(floor-planned)+'.')+'</span>';
+
+    if(isFirst){
+      citeLine.innerHTML='<strong>'+cite+'</strong> — "the amount of the annual contribution to the contingency reserve fund for the fiscal year following the first annual general meeting must be at least 10% of the total amount budgeted for the contribution to the operating fund."';
+      depRepLine.style.display='none';
+    } else {
+      citeLine.innerHTML='<strong>'+cite+'</strong> — "the amount of the annual contribution must be at least 10% of the total amount budgeted for the contribution to the operating fund for the current fiscal year."';
+      depRepLine.style.display='block';
+      depRepLine.innerHTML='<strong>Also required — Reg. s. 6.1(1)</strong>: this amount must be "determined after consideration of the most recent depreciation report, if any." A process requirement this tool can\'t verify, separate from the dollar floor above.';
+    }
+
+    current={op:op,planned:planned,floor:floor,met:met,isFirst:isFirst,cite:cite};
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var c=current;
+    var s='Operating fund budget '+fmtMoney.format(c.op)+'. Minimum CRF contribution required: '+
+      fmtMoney.format(c.floor)+' (10%, '+c.cite+'). Planned contribution: '+fmtMoney.format(c.planned)+
+      ' — '+(c.met?'meets the minimum.':'short by '+fmtMoney.format(c.floor-c.planned)+'.');
+    if(!c.isFirst){
+      s+=' This amount must also be determined after considering the most recent depreciation report, if any (Reg. s. 6.1(1)).';
+    }
+    s+=' A large existing CRF balance does not reduce this floor under the current regulation — no balance-based exception is stated in Reg. s. 6.1.'+
+      ' Verified August 20, 2026 against the Strata Property Act and Strata Property Regulation on bclaws.gov.bc.ca.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
