@@ -24,7 +24,9 @@
 /agm-notice         /bc/agm-notice         301
 /bc/agm             /bc/agm-notice         301
 
-# The starter pack's paid content is gated by functions/bc/starter-pack-full.js,
-# which only intercepts the clean URL. Without this, the .html form would
-# still serve the static file directly and skip the payment check entirely.
+# The starter packs' paid content is gated by functions/bc/starter-pack-full.js
+# and functions/on/starter-pack-full.js, which only intercept the clean URL.
+# Without these, the .html form would still serve the static file directly
+# and skip the payment check entirely.
 /bc/starter-pack-full.html   /bc/starter-pack-full   301
+/on/starter-pack-full.html   /on/starter-pack-full   301
