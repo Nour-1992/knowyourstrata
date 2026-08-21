@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Condo Board Starter Pack — Calendar, Checklists &amp; Templates | Know Your Strata</title>
+<meta name="description" content="The Ontario condo board starter pack: a compliance calendar, three checklists and four templates, every legal claim cited to the Condominium Act, 1998 and traced to a verified tool.">
+<meta name="robots" content="noindex, nofollow">
+<!-- This is the actual paid product content, not the sales page. It is not in
+     sitemap.xml and carries noindex so search engines don't surface it ahead of
+     /on/starter-pack. Payment gating (a Cloudflare Pages Function mirroring
+     functions/bc/starter-pack-full.js) is a separate follow-up session -- this
+     file is not yet gated and reachable directly, same pre-gate state the BC
+     pack shipped in before its own gate was wired. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 20px 60px}
+
+  header.cover{padding:40px 0 6px}
+  .eyebrow{
+    font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,4.8vw,2.3rem);
+    line-height:1.15;margin:9px 0 8px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:62ch;font-size:.98rem}
+  .toolbar{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    padding:9px 16px;font-size:.88rem;font-weight:700;font-family:inherit;
+    color:var(--spruce);background:#fff;border:1.5px solid var(--spruce);
+    border-radius:8px;cursor:pointer;text-decoration:none;display:inline-block;
+  }
+  .btn:hover{background:#EEF3F0}
+  .btn:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+
+  section.part{margin-top:40px}
+  section.part>.part-head{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:6px;
+    padding-bottom:10px;border-bottom:2px solid var(--spruce);
+  }
+  section.part>.part-head .pnum{
+    font-family:var(--mono);font-size:.78rem;color:var(--seal);font-weight:600;
+  }
+  section.part>.part-head h2{
+    font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--spruce-deep);
+  }
+  .part-sub{color:#4A5A55;font-size:.92rem;max-width:64ch;margin-bottom:18px}
+
+  .rule{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:20px 22px;margin-top:16px;
+    break-inside:avoid;page-break-inside:avoid;
+  }
+  .rule-head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+  .rule-head h3{
+    font-family:var(--display);font-size:1.08rem;font-weight:600;
+    color:var(--spruce-deep);line-height:1.25;
+  }
+  .rule-when{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--seal);border:1px solid var(--seal);border-radius:3px;
+    padding:2px 8px;margin-left:auto;white-space:nowrap;
+  }
+  @media (max-width:520px){
+    .rule-head{flex-direction:column;align-items:flex-start;gap:4px}
+    .rule-when{margin-left:0}
+  }
+  .rule p{font-size:.9rem;color:#3D4C47;margin-bottom:8px;max-width:66ch}
+  .rule .cite-rail{margin-top:8px}
+  .rule .src{font-size:.76rem;color:#7E8C85;margin-top:6px;font-family:var(--mono)}
+  .rule .flag-note{
+    margin-top:8px;padding:10px 14px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.83rem;border-radius:0 8px 8px 0;
+  }
+
+  .clist{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:20px 22px;margin-top:16px;break-inside:avoid;page-break-inside:avoid;
+  }
+  .clist h3{font-family:var(--display);font-size:1.08rem;font-weight:600;color:var(--spruce-deep);margin-bottom:4px}
+  .clist .csub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .clist ul{list-style:none;font-size:.92rem}
+  .clist li{
+    display:flex;gap:9px;align-items:baseline;padding:6px 0;color:#3D4C47;
+    border-bottom:1px solid #EEEBE2;
+  }
+  .clist li:last-child{border-bottom:none}
+  .clist li::before{content:"☐";color:var(--spruce);flex:none;font-size:.95rem}
+  .clist .item-cite{font-family:var(--mono);font-size:.72rem;color:var(--seal);white-space:nowrap;margin-left:auto}
+  @media (max-width:520px){
+    .clist li{flex-direction:column;align-items:flex-start;gap:2px}
+    .clist .item-cite{margin-left:0}
+  }
+  .clist li.transition-item{border-left:3px solid var(--seal);background:rgba(122,46,46,.04);padding-left:10px;margin-top:6px}
+  .clist li.transition-item::before{color:var(--seal)}
+
+  .tmpl{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:22px;margin-top:16px;break-inside:avoid;page-break-inside:avoid;
+  }
+  .tmpl h3{font-family:var(--display);font-size:1.1rem;font-weight:600;color:var(--spruce-deep);margin-bottom:4px}
+  .tmpl .tmpl-flag{
+    display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);
+    border-radius:3px;padding:2px 8px;margin-bottom:12px;
+  }
+  .field{margin-bottom:12px}
+  .field .flabel{
+    font-family:var(--mono);font-size:.74rem;color:var(--spruce);font-weight:600;
+    text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px;display:block;
+  }
+  .field .fline{
+    border-bottom:1px solid var(--line);min-height:22px;padding:2px 0;
+  }
+  .field .fhint{font-size:.78rem;color:#8A8577;margin-top:2px}
+  .tmpl-cite{font-family:var(--mono);font-size:.74rem;color:var(--seal);margin-top:4px}
+  .tmpl-note{
+    margin-top:14px;padding:10px 14px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.83rem;border-radius:0 8px 8px 0;
+  }
+
+  .guide p{font-size:.92rem;color:#3D4C47;margin-bottom:12px;max-width:66ch}
+  .guide h3{font-family:var(--display);font-size:1.02rem;font-weight:600;color:var(--spruce-deep);margin:16px 0 6px}
+  .guide .toollink{font-size:.85rem}
+  .guide .toollink a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .guide .toollink a:hover{text-decoration:underline}
+
+  .vtable-wrap{overflow-x:auto;margin-top:10px}
+  .vtable{width:100%;min-width:640px;border-collapse:collapse;font-size:.82rem}
+  .vtable th{
+    text-align:left;font-family:var(--mono);font-size:.7rem;text-transform:uppercase;
+    letter-spacing:.04em;color:var(--spruce);padding:6px 8px;border-bottom:2px solid var(--line);
+  }
+  .vtable td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top;color:#3D4C47;max-width:260px}
+  .vtable td.cite{font-family:var(--mono);font-size:.76rem;color:var(--seal);white-space:nowrap;max-width:none}
+  .vtable td.src{font-size:.76rem;color:#7E8C85}
+
+  footer{
+    margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:.79rem;color:#5E6E68;break-inside:avoid;page-break-inside:avoid;
+  }
+  footer p{margin-bottom:7px;max-width:76ch}
+  footer a{color:var(--spruce)}
+  .brandline{
+    font-family:var(--display);font-size:.95rem;
+    color:var(--spruce-deep);font-weight:700;margin-bottom:6px;
+  }
+
+  @media print{
+    @page{margin:11mm}
+    html{font-size:9.6pt}
+    body{background:#fff;line-height:1.42}
+    .no-print{display:none !important}
+    .wrap{max-width:none;padding:0}
+    header.cover{padding:0 0 2px}
+    h1{font-size:1.55rem;margin:5px 0 5px}
+    .lede{font-size:.85rem;max-width:none}
+    section.part{margin-top:14px}
+    section.part.page-start{break-before:page;page-break-before:always;padding-top:2mm}
+    .part-sub{font-size:.82rem;margin-bottom:10px}
+    .rule,.clist,.tmpl{border:1px solid #C9C4B6;border-radius:6px;padding:10px 13px;margin-top:8px}
+    .rule-head h3,.clist h3,.tmpl h3{font-size:1rem}
+    .rule p,.clist ul,.tmpl .field{font-size:.83rem}
+    .clist li{padding:3px 0}
+    footer{margin-top:12px;padding-top:9px;font-size:.74rem}
+    footer p{margin-bottom:5px}
+    a{text-decoration:none}
+    .vtable{font-size:.72rem}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav no-print">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/starter-pack">&larr; Back to the Starter Pack page</a></p>
+
+<div class="wrap">
+  <header class="cover">
+    <p class="eyebrow">Ontario · Condominium Act, 1998</p>
+    <h1>Ontario Condo Board Starter Pack</h1>
+    <p class="lede">The compliance calendar, checklists and templates a new board needs — every deadline cited to the section it comes from, verified against the official statute and regulation.</p>
+    <p><span class="stamp-verified"><span class="tick">✓</span> Current as of August 21, 2026 · Condominium Act, 1998, drawn from tools verified 16–20 August 2026</span></p>
+    <div class="toolbar no-print">
+      <button type="button" class="btn" id="printBtn">Print / save as PDF</button>
+      <a class="btn" href="/on/starter-pack">Back to overview</a>
+    </div>
+  </header>
+
+  <!-- ============ PART 1 — THE COMPLIANCE CALENDAR ============ -->
+  <section class="part">
+    <div class="part-head">
+      <span class="pnum">Part 1</span>
+      <h2>The Compliance Calendar</h2>
+    </div>
+    <p class="part-sub">The recurring obligations a board has to hit, in one place. Each one cites the section it rests on and the free tool that does the math.</p>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Preliminary Notice &amp; Notice of Meeting</h3>
+        <span class="rule-when">35 days, combined</span>
+      </div>
+      <p>The Notice of Meeting must be given at least 15 days before the day of the meeting. Before that notice can go out, a Preliminary Notice must be given at least 20 days before it. For any board-called meeting — an AGM, a turn-over meeting, or a meeting called for other business — that means the Preliminary Notice needs to go out at least 35 days ahead of the meeting date. Neither figure changes by meeting type.</p>
+      <p class="cite-rail">Condominium Act, 1998, ss. 47(1)(b)–(c)</p>
+      <p class="src">Source: knowyourstrata.com/on/notice-of-meeting-deadline — verified 19 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Owner-requisitioned meeting</h3>
+        <span class="rule-when">35 days, or 45 as fallback</span>
+      </div>
+      <p>Owners holding at least 15% of the units may requisition a meeting. Once the board receives a valid requisition, it must call and hold the meeting within 35 days (or add the business to the next AGM, if the requisitionists agree). If the board doesn't act, a requisitionist may call the meeting themselves, to be held within 45 days of doing so. The 15-day/20-day notice minimums above still apply to this meeting too.</p>
+      <p class="cite-rail">Condominium Act, 1998, ss. 46(1), 46(4)(b), 46(5)</p>
+      <p class="flag-note"><strong>Changing December 31, 2026:</strong> the 15% threshold stays the same, but the process around it doesn't — a new arrears eligibility bar, a prescribed form, and a restructured timeline running to roughly 60 days total rather than 35. See Part 2's requisition checklist and Part 3's tracker for the detail.</p>
+      <p class="src">Source: knowyourstrata.com/on/requisition-threshold and /on/notice-of-meeting-deadline — verified 20 &amp; 19 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Records request — board's response</h3>
+        <span class="rule-when">30 days</span>
+      </div>
+      <p>The board must determine whether to allow access and respond to the requester in writing within 30 days of receiving a request for records. That response is the board's answer, not the record itself — delivery of the record runs on a separate clock, depending on whether it's a core record and how it's being delivered: the same 30 days if it's a core record delivered electronically, 7 days after payment if a core record on paper, or 30 days after payment for anything else.</p>
+      <p class="cite-rail">O. Reg. 48/01, s. 13.3(6); ss. 13.4–13.7</p>
+      <p class="src">Source: knowyourstrata.com/on/records-request-deadline — verified 19 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>Reserve fund study</h3>
+        <span class="rule-when">1 year, then every 3</span>
+      </div>
+      <p>The first reserve fund study is due within a year of registering the declaration and description, and must be a comprehensive study. Every study after that is due within 3 years of the previous study's completion — a rolling clock measured from the last study, not a fixed calendar date. The class required alternates between an updated study with and without a site inspection; it does not loop back to a full comprehensive study on any set cycle.</p>
+      <p class="cite-rail">Condominium Act, 1998, s. 94(4) · O. Reg. 48/01, ss. 31(2)–(4)</p>
+      <p class="src">Source: knowyourstrata.com/on/reserve-fund-study-deadline — verified 20 August 2026</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-head">
+        <h3>After the reserve fund study lands</h3>
+        <span class="rule-when">120 → 15 → 30 days</span>
+      </div>
+      <p>Once the board receives the study, it has 120 days to review it and propose a funding plan. From there, 15 more days to notify owners (a summary) and the auditor (the full study and plan). Then 30 more days after that notice before the board must implement the plan.</p>
+      <p class="cite-rail">Condominium Act, 1998, s. 94(8)–(10)</p>
+      <p class="src">Source: knowyourstrata.com/on/reserve-fund-study-deadline — verified 20 August 2026</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 2 — CHECKLISTS ============ -->
+  <section class="part page-start">
+    <div class="part-head">
+      <span class="pnum">Part 2</span>
+      <h2>Checklists</h2>
+    </div>
+    <p class="part-sub">Three checklists for the situations that generate the most disputes. Each line cites the section behind it.</p>
+
+    <div class="clist">
+      <h3>Calling a meeting</h3>
+      <p class="csub">Work through this before the Preliminary Notice goes out.</p>
+      <ul>
+        <li><span>Preliminary Notice will go out at least 20 days before the Notice of Meeting</span><span class="item-cite">s. 47(1)(c)</span></li>
+        <li><span>Notice of Meeting will go out at least 15 days before the meeting itself</span><span class="item-cite">s. 47(1)(b)</span></li>
+        <li><span>Quorum confirmed: 25% of units for most meetings; for an AGM or turn-over meeting, 25% on the first two attempts, dropping to 15% only on the third</span><span class="item-cite">s. 50(1), s. 50(1.1)</span></li>
+        <li><span>If this is an owner-requisitioned meeting: quorum stays a flat 25% — the reduced-quorum ladder doesn't apply to it</span><span class="item-cite">s. 50(1)</span></li>
+        <li><span>Registered by-laws checked for a 25%-throughout override of the reduced-quorum ladder</span><span class="item-cite">s. 50(1.2)</span></li>
+      </ul>
+    </div>
+
+    <div class="clist">
+      <h3>Responding to a records request</h3>
+      <p class="csub">Identify the clock and the requester's standing before you do anything else.</p>
+      <ul>
+        <li><span>Requester's standing confirmed: owner, purchaser, mortgagee, or an agent of one of them authorized in writing</span><span class="item-cite">s. 55(3)</span></li>
+        <li><span>Board's written response sent within 30 days, stating access decision and fee</span><span class="item-cite">O. Reg. s. 13.3(6)</span></li>
+        <li><span>Record classified as core or non-core against the fixed core-record list</span><span class="item-cite">O. Reg. s. 1 def.</span></li>
+        <li><span>Delivery clock identified: core+electronic (same 30 days) vs. core+paper (7 days after payment) vs. non-core (30 days after payment)</span><span class="item-cite">O. Reg. ss. 13.4–13.7</span></li>
+        <li><span>If declining, exemption category identified and stated in writing (employee records, litigation/insurance, unit-specific, or prescribed)</span><span class="item-cite">s. 55(4)</span></li>
+      </ul>
+    </div>
+
+    <div class="clist">
+      <h3>Handling an owner requisition</h3>
+      <p class="csub">Confirm eligibility first, then the timeline.</p>
+      <ul>
+        <li><span>Requisitionists together own at least 15% of the units</span><span class="item-cite">s. 46(1)</span></li>
+        <li><span>Requisition is in writing, signed, states the business, and was properly delivered</span><span class="item-cite">s. 46(2)</span></li>
+        <li><span>Meet-by date calculated: 35 days from receiving the requisition</span><span class="item-cite">s. 46(4)(b)</span></li>
+        <li><span>Fallback noted: if the board misses it, a requisitionist may call the meeting within 45 days of doing so</span><span class="item-cite">s. 46(5)</span></li>
+        <li class="transition-item"><span><strong>Date checked against December 31, 2026</strong> — if this requisition lands after that date, the process changes substantially (new arrears eligibility bar, prescribed form, ~60-day timeline). Don't run the current-law checklist on a post-transition requisition.</span><span class="item-cite">—</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ PART 3 — TEMPLATES ============ -->
+  <section class="part page-start">
+    <div class="part-head">
+      <span class="pnum">Part 3</span>
+      <h2>Templates</h2>
+    </div>
+    <p class="part-sub">Starting points, not legal advice. None of the five free Ontario tools verified specific mandated wording for a notice, response letter, or resolution the way some BC sections do — what they verified is deadlines and eligibility. These templates are built around exactly that: scheduling and tracking tools with the verified figures built in, not claimed content mandates.</p>
+
+    <div class="tmpl">
+      <h3>Preliminary Notice &amp; Notice of Meeting Tracker</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <div class="field"><span class="flabel">Meeting type</span><div class="fline">☐ AGM &nbsp; ☐ Turn-over &nbsp; ☐ Other business &nbsp; ☐ Owner-requisitioned</div></div>
+      <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Preliminary Notice sent</span><div class="fline">&nbsp;</div><p class="fhint">Must be at least 20 days before the Notice of Meeting below.</p></div>
+      <div class="field"><span class="flabel">Notice of Meeting sent</span><div class="fline">&nbsp;</div><p class="fhint">Must be at least 15 days before the meeting date above. Confirm both gaps with the Notice of Meeting Deadline calculator before relying on this line.</p></div>
+      <div class="field"><span class="flabel">If owner-requisitioned: date requisition received</span><div class="fline">&nbsp;</div><p class="fhint">Meet-by date is 35 days from this date — see the requisition tracker.</p></div>
+      <p class="tmpl-cite">Notice timing: Condominium Act, 1998, ss. 47(1)(b)–(c). Requisitioned meetings: ss. 46(1), 46(4)(b).</p>
+    </div>
+
+    <div class="tmpl">
+      <h3>Records Request Log</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <div class="field"><span class="flabel">Date request received</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline">☐ Owner &nbsp; ☐ Purchaser &nbsp; ☐ Mortgagee &nbsp; ☐ Authorized agent</div></div>
+      <div class="field"><span class="flabel">Board's response due</span><div class="fline">&nbsp;</div><p class="fhint">30 days from the date received. Calculate with the Records Request Deadline tool.</p></div>
+      <div class="field"><span class="flabel">Record type</span><div class="fline">☐ Core record &nbsp; ☐ Not a core record</div></div>
+      <div class="field"><span class="flabel">Delivery method &amp; deadline</span><div class="fline">☐ Core, electronic — same 30 days &nbsp; ☐ Core, paper — 7 days after payment &nbsp; ☐ Non-core — 30 days after payment</div></div>
+      <div class="field"><span class="flabel">If declined, exemption relied on</span><div class="fline">☐ Employee records &nbsp; ☐ Litigation/insurance &nbsp; ☐ Unit-specific &nbsp; ☐ Prescribed</div></div>
+      <p class="tmpl-cite">Standing: s. 55(3). Response window: O. Reg. s. 13.3(6). Delivery: O. Reg. ss. 13.4–13.7. Exemptions: s. 55(4).</p>
+    </div>
+
+    <div class="tmpl">
+      <h3>Reserve Fund Study Tracker</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <div class="field"><span class="flabel">Declaration &amp; description registered</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">First study due</span><div class="fline">&nbsp;</div><p class="fhint">1 year from registration above. Must be comprehensive.</p></div>
+      <div class="field"><span class="flabel">Most recent study — completion date &amp; class</span><div class="fline">☐ Comprehensive &nbsp; ☐ Updated, site inspection &nbsp; ☐ Updated, no site inspection</div></div>
+      <div class="field"><span class="flabel">Next study due</span><div class="fline">&nbsp;</div><p class="fhint">3 years from the completion date above. Confirm required class with the Reserve Fund Study Deadline tool — it alternates, and doesn't return to comprehensive on its own.</p></div>
+      <div class="field"><span class="flabel">Post-study chain, once received</span><div class="fline">☐ Reviewed &amp; funding plan proposed (120 days) &nbsp; ☐ Owners &amp; auditor notified (+15 days) &nbsp; ☐ Plan implemented (+30 days)</div></div>
+      <p class="tmpl-cite">Study timing: Condominium Act, 1998, s. 94(4); O. Reg. ss. 31(2)–(4). Post-study chain: s. 94(8)–(10).</p>
+    </div>
+
+    <div class="tmpl">
+      <h3>Owner Requisition Tracker</h3>
+      <span class="tmpl-flag">Starting point — not legal advice</span>
+      <div class="field"><span class="flabel">Date requisition received</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">15% threshold check</span><div class="fline">Total units: _____ × 15% = _____ units needed</div><p class="fhint">Confirm with the Requisition Threshold Checker.</p></div>
+      <div class="field"><span class="flabel">Form confirmed</span><div class="fline">☐ In writing &amp; signed &nbsp; ☐ States the business &nbsp; ☐ Properly delivered</div></div>
+      <div class="field"><span class="flabel">Meet-by date</span><div class="fline">&nbsp;</div><p class="fhint">35 days from the date received above.</p></div>
+      <div class="field"><span class="flabel">If missed: requisitionist self-help fallback</span><div class="fline">Called by requisitionist on: _____ → must be held by: _____ (45 days later)</div></div>
+      <div class="tmpl-note">Check this date against December 31, 2026 before relying on any figure above — the process changes substantially after that date. See the Requisition Threshold Checker for the pending replacement.</div>
+      <p class="tmpl-cite">Threshold &amp; form: ss. 46(1)–(2). Timeline: ss. 46(4)(b), 46(5).</p>
+    </div>
+  </section>
+
+  <!-- ============ PART 4 — NEW BOARD MEMBER GUIDE ============ -->
+  <section class="part page-start guide">
+    <div class="part-head">
+      <span class="pnum">Part 4</span>
+      <h2>New Board Member Orientation</h2>
+    </div>
+    <p class="part-sub">A plain-English walk-through of the job's recurring obligations. Every specific figure here is the same one cited in Part 1 — this section doesn't introduce anything new, it just explains it.</p>
+
+    <p>Serving on an Ontario condo board mostly means running the same few obligations on repeat, on time, in the right order. The Compliance Calendar in Part 1 is the actual reference; this section is the plain-English version of why each entry matters.</p>
+
+    <h3>Notice comes in two parts, not one</h3>
+    <p>Before the board can send the Notice of Meeting itself, it has to send a Preliminary Notice first — and that Preliminary Notice needs its own 20-day runway before the Notice of Meeting goes out, which then needs another 15 days before the meeting. Miss the sequencing and the whole 35-day chain slips.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/on/notice-of-meeting-deadline">knowyourstrata.com/on/notice-of-meeting-deadline</a></p>
+
+    <h3>Quorum is a share of units, and the reduced number is narrower than it sounds</h3>
+    <p>Quorum is 25% of the units by default. Only an AGM or a turn-over meeting gets the reduced 15% figure, and only on the third attempt — a requisitioned meeting or anything else stays at a flat 25% no matter how many times it's tried. It's easy to assume the 15% number is more general than it actually is.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/on/quorum">knowyourstrata.com/on/quorum</a></p>
+
+    <h3>An owner requisition has its own threshold and its own clock — and that clock is about to change</h3>
+    <p>Owners holding 15% of the units can force a meeting; the board then has 35 days to hold it, or a requisitionist can step in and call it themselves within 45 more days. That 15% figure is confirmed to survive Ontario's pending December 31, 2026 amendments unchanged — but almost everything else about the process doesn't. Check the date before running this one on autopilot.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/on/requisition-threshold">knowyourstrata.com/on/requisition-threshold</a></p>
+
+    <h3>Records requests run on two clocks, not one</h3>
+    <p>The board's 30-day response is just the first step — it says yes or no and states the fee. Actually delivering the record runs on a second clock that depends on whether it's a "core record" (a short, fixed list) and how it's delivered. Treating the 30 days as the whole obligation is the most common way this one gets missed.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/on/records-request-deadline">knowyourstrata.com/on/records-request-deadline</a></p>
+
+    <h3>The reserve fund study cycle rolls forward from the last study, and alternates in class</h3>
+    <p>After the first (always comprehensive) study, each later one is due 3 years after the <em>previous study's completion</em> — not a fixed date on the calendar. The class alternates between two types of "updated" study and never cycles back to a full comprehensive study on its own. A "comprehensive study every six years" rule doesn't actually exist in the text.</p>
+    <p class="toollink">Do the math: <a href="https://knowyourstrata.com/on/reserve-fund-study-deadline">knowyourstrata.com/on/reserve-fund-study-deadline</a></p>
+
+    <h3>Ontario condominium law changes in stages — always check the date</h3>
+    <p>More than one figure in this pack is confirmed current as of the dates in Part 1, with a known future change already on the books (the December 31, 2026 requisition amendments). This pack gives you the law as verified on those dates; confirm anything time-sensitive against the current text before relying on it for something that matters.</p>
+  </section>
+
+  <!-- ============ VERIFICATION APPENDIX ============ -->
+  <section class="part page-start no-print">
+    <div class="part-head">
+      <span class="pnum">Appendix</span>
+      <h2>Verification handshake</h2>
+    </div>
+    <p class="part-sub">Every legal claim in this pack, next to the section it rests on and the tool it was traced from. For Nour's review — this section is marked no-print and won't appear in the printed/PDF pack.</p>
+    <div class="vtable-wrap">
+    <table class="vtable">
+      <tr><th>Claim</th><th>Cite</th><th>Source</th></tr>
+      <tr><td>Notice of Meeting ≥15 days before the meeting</td><td class="cite">s. 47(1)(b)</td><td class="src">/on/notice-of-meeting-deadline (19 Aug)</td></tr>
+      <tr><td>Preliminary Notice ≥20 days before Notice of Meeting</td><td class="cite">s. 47(1)(c)</td><td class="src">/on/notice-of-meeting-deadline (19 Aug)</td></tr>
+      <tr><td>Owner-requisitioned meeting: 35-day meet-by cap</td><td class="cite">s. 46(4)(b)</td><td class="src">/on/notice-of-meeting-deadline (19 Aug), /on/requisition-threshold (20 Aug)</td></tr>
+      <tr><td>Requisitionist self-help fallback: 45 days</td><td class="cite">s. 46(5)</td><td class="src">/on/notice-of-meeting-deadline (19 Aug), /on/requisition-threshold (20 Aug)</td></tr>
+      <tr><td>CAO's 5-day preliminary-notice guidance is not a statutory deadline</td><td class="cite">n/a — CAO guidance</td><td class="src">/on/notice-of-meeting-deadline (19 Aug)</td></tr>
+      <tr><td>Requisition threshold: 15% of units</td><td class="cite">s. 46(1)</td><td class="src">/on/requisition-threshold (20 Aug)</td></tr>
+      <tr><td>Requisition form: writing, signed, states business, delivered</td><td class="cite">s. 46(2)</td><td class="src">/on/requisition-threshold (20 Aug)</td></tr>
+      <tr><td>15% threshold confirmed unchanged by pending Dec 31, 2026 amendments; process otherwise restructured (~60-day timeline, prescribed form, arrears bar, tribunal escalation)</td><td class="cite">Pending s. 46 replacement, 2015, c. 28, Sched. 1, s. 40</td><td class="src">/on/requisition-threshold (20 Aug)</td></tr>
+      <tr><td>Quorum default: 25% of units</td><td class="cite">s. 50(1)</td><td class="src">/on/quorum (16 Aug)</td></tr>
+      <tr><td>AGM/turn-over reduced-quorum ladder: 25% → 25% → 15% on 3rd attempt</td><td class="cite">s. 50(1.1)</td><td class="src">/on/quorum (16 Aug)</td></tr>
+      <tr><td>Requisitioned meetings excluded from the reduced-quorum ladder (stay flat 25%)</td><td class="cite">s. 50(1)</td><td class="src">/on/quorum (16 Aug)</td></tr>
+      <tr><td>By-law may hold quorum at 25% throughout, overriding the ladder</td><td class="cite">s. 50(1.2)</td><td class="src">/on/quorum (16 Aug)</td></tr>
+      <tr><td>Board's response to a records request: 30 days</td><td class="cite">O. Reg. 48/01 s. 13.3(6)</td><td class="src">/on/records-request-deadline (19 Aug)</td></tr>
+      <tr><td>Who may request records: owner, purchaser, mortgagee, authorized agent</td><td class="cite">s. 55(3)</td><td class="src">/on/records-request-deadline (19 Aug)</td></tr>
+      <tr><td>Delivery clock — core, electronic: same 30 days</td><td class="cite">O. Reg. ss. 13.4(1), 13.6(1)</td><td class="src">/on/records-request-deadline (19 Aug)</td></tr>
+      <tr><td>Delivery clock — core, paper: 7 days after payment</td><td class="cite">O. Reg. ss. 13.4(2)–(3), 13.6(2),(4)</td><td class="src">/on/records-request-deadline (19 Aug)</td></tr>
+      <tr><td>Delivery clock — non-core: 30 days after payment</td><td class="cite">O. Reg. ss. 13.5, 13.7</td><td class="src">/on/records-request-deadline (19 Aug)</td></tr>
+      <tr><td>Exemption categories: employee, litigation/insurance, unit-specific, prescribed</td><td class="cite">s. 55(4)</td><td class="src">/on/records-request-deadline (19 Aug)</td></tr>
+      <tr><td>First reserve fund study: within 1 year of registration, comprehensive</td><td class="cite">s. 94(4); O. Reg. s. 31(2)</td><td class="src">/on/reserve-fund-study-deadline (20 Aug)</td></tr>
+      <tr><td>Subsequent studies: within 3 years of prior completion</td><td class="cite">O. Reg. s. 31(3)</td><td class="src">/on/reserve-fund-study-deadline (20 Aug)</td></tr>
+      <tr><td>Study class alternates; no fixed comprehensive-study cycle exists in the text</td><td class="cite">O. Reg. s. 31(4)</td><td class="src">/on/reserve-fund-study-deadline (20 Aug)</td></tr>
+      <tr><td>Post-study chain: 120 days review/plan, +15 days notice, +30 days implementation</td><td class="cite">s. 94(8)–(10)</td><td class="src">/on/reserve-fund-study-deadline (20 Aug)</td></tr>
+    </table>
+    </div>
+  </section>
+
+  <footer>
+    <p class="brandline">Know Your Strata — knowyourstrata.com</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 45.1, 46, 46.1, 47, 50, 51, 55 and 94, and O. Reg. 48/01, ss. 12.2.1–12.2.7, 13.3–13.7, 13.11, 27, 28 and 31. Pack current as of August 21, 2026, drawing on the five Ontario tools last verified between 16 and 20 August 2026 against the official statute and regulation on ontario.ca. Every calendar entry, checklist item and template field traces to a section actually read against that consolidation — see the verification appendix for the full list. Ontario condominium law has been amended in stages and continues to change — most notably the pending December 31, 2026 requisition amendments — so confirm anything time-sensitive before relying on it. For anything contested, talk to a condominium lawyer.</p>
+    <p>Calculators: <a href="https://knowyourstrata.com/on/quorum">Quorum</a> · <a href="https://knowyourstrata.com/on/notice-of-meeting-deadline">Notice of meeting</a> · <a href="https://knowyourstrata.com/on/requisition-threshold">Requisition threshold</a> · <a href="https://knowyourstrata.com/on/records-request-deadline">Records request</a> · <a href="https://knowyourstrata.com/on/reserve-fund-study-deadline">Reserve fund study</a></p>
+    <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById('printBtn');
+  if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+</body>
+</html>

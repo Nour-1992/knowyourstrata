@@ -76,6 +76,29 @@
     .tool-cite{margin-left:0}
   }
 
+  /* Distinct from .tool cards on purpose -- this is a paid product, not one
+     of the free calculators, and the oxblood border signals that difference
+     the same way the verified stamp signals "official reference" elsewhere. */
+  .pack-promo{
+    margin-top:34px;padding:22px;background:var(--surface);
+    border:1px solid var(--seal);border-radius:6px;
+  }
+  .pack-eyebrow{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--seal);font-weight:600;margin-bottom:6px;
+  }
+  .pack-promo h2{
+    font-family:var(--display);font-size:1.2rem;font-weight:600;
+    color:var(--spruce-deep);margin-bottom:8px;
+  }
+  .pack-promo p{font-size:.93rem;color:var(--ink-soft);max-width:58ch;margin-bottom:14px}
+  .pack-btn{
+    display:inline-block;font-weight:700;font-size:.92rem;color:#fff;
+    background:var(--spruce);padding:10px 18px;border-radius:6px;text-decoration:none;
+  }
+  .pack-btn:hover{background:var(--spruce-deep)}
+  .pack-btn:focus-visible{outline:3px solid var(--sage);outline-offset:2px}
+
   .assurance{
     margin-top:34px;padding:20px 22px;background:var(--surface);
     border:1px solid var(--rule);border-radius:4px;
@@ -178,6 +201,13 @@
       <span class="tool-desc">When the next study is due on a rolling 3-year clock, and which of the three study classes it must be.</span>
     </a>
   </div>
+
+  <section class="pack-promo">
+    <p class="pack-eyebrow">$39 one-time</p>
+    <h2>Want it all in one binder?</h2>
+    <p>The Ontario Condo Board Starter Pack bundles a compliance calendar, three checklists and four templates — every claim cited the same way as the five free tools above.</p>
+    <a class="pack-btn" href="/on/starter-pack">See what's in it &rarr;</a>
+  </section>
 
   <section class="assurance">
     <h2>Ontario law is mid-transition — so the date matters</h2>
