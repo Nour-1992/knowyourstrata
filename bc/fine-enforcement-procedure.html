@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Fine &amp; Enforcement Procedure Checker | Strata Property Act s. 135</title>
+<meta name="description" content="Free step-through checklist for BC strata councils: confirm the section 135 fine procedure was followed correctly — complaint, written particulars, hearing if requested, and decision notice — before a fine gets struck down for a procedural mistake.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/bc/fine-enforcement-procedure">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BC Strata Fine & Enforcement Procedure Checker | Strata Property Act s. 135">
+<meta property="og:description" content="Free step-through checklist for BC strata councils: confirm the section 135 fine procedure was followed correctly — complaint, written particulars, hearing if requested, and decision notice — before a fine gets struck down for a procedural mistake.">
+<meta property="og:url" content="https://knowyourstrata.com/bc/fine-enforcement-procedure">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BC Strata Fine & Enforcement Procedure Checker | Strata Property Act s. 135">
+<meta name="twitter:description" content="Free step-through checklist for BC strata councils: confirm the section 135 fine procedure was followed correctly — complaint, written particulars, hearing if requested, and decision notice — before a fine gets struck down for a procedural mistake.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Was the fine procedure followed correctly?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free step-through checklist for BC strata councils: confirm the section 135 fine procedure was followed correctly — complaint, written particulars, hearing if requested, and decision notice — before a fine gets struck down for a procedural mistake."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+
+  /* ── Wizard ─────────────────────────────────────────────────────── */
+  .progress{display:flex;gap:6px;margin-bottom:22px}
+  .progress span{flex:1;height:4px;border-radius:2px;background:var(--line)}
+  .progress span.done{background:var(--sage)}
+  .progress span.active{background:var(--spruce)}
+
+  .step{display:none}
+  .step.active{display:block}
+  .step .q-num{
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--spruce);margin-bottom:8px;
+  }
+  .step h2{
+    font-family:var(--display);font-size:1.25rem;font-weight:600;
+    color:var(--spruce-deep);margin-bottom:18px;line-height:1.3;
+  }
+  .opt{
+    display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;
+    font-family:inherit;font-size:.98rem;font-weight:600;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;
+  }
+  .opt:hover{border-color:var(--spruce);background:#F6F8F6}
+  .opt:focus-visible{outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce)}
+  .opt .opt-sub{display:block;font-weight:400;font-size:.85rem;color:#5E6E68;margin-top:3px}
+
+  .back-link{
+    display:inline-block;margin-top:4px;font-size:.85rem;color:var(--spruce);
+    background:none;border:none;cursor:pointer;font-family:inherit;padding:0;
+  }
+  .back-link:hover{text-decoration:underline}
+
+  /* ── Result ─────────────────────────────────────────────────────── */
+  .result{display:none}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp.stop{background:#8F2D1E}
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .verdict-text{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.2rem,4.2vw,1.55rem);margin-top:8px;line-height:1.3;
+  }
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .flag{
+    margin-top:12px;padding:14px 16px;border-left:3px solid var(--amber);
+    background:#FBF6EA;color:var(--amber);font-size:.9rem;border-radius:0 8px 8px 0;
+  }
+  .flag strong{color:var(--spruce-deep)}
+  .consequence{
+    margin-top:12px;padding:14px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;font-size:.9rem;color:#8F2D1E;border-radius:0 8px 8px 0;
+  }
+  .consequence strong{color:#6B1E14}
+
+  .stepbox{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .stepbox h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:8px;
+  }
+  .stepbox p{font-size:.9rem;color:#3D4C47;margin-bottom:8px}
+  .stepbox p:last-child{margin-bottom:0}
+  .stepbox .cite{font-size:.8rem;color:#5E6E68;margin-top:2px}
+
+  .restart-btn{
+    width:100%;padding:12px;font-size:.95rem;font-weight:700;margin-top:20px;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .restart-btn:hover{background:#EEF3F0}
+
+  .copybar{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .pack-nudge{margin-top:28px}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .amount-table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.9rem}
+  .amount-table th{
+    text-align:left;font-family:var(--display);font-weight:600;color:var(--spruce-deep);
+    padding:8px 10px;border-bottom:2px solid var(--line);
+  }
+  .amount-table td{padding:9px 10px;border-bottom:1px solid var(--line);color:#3D4C47}
+  .amount-table tr:last-child td{border-bottom:none}
+  .amount-wrap{overflow-x:auto;margin-bottom:16px}
+  .case-box{
+    margin:0 0 16px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;
+    background:#fff;
+  }
+  .case-box .case-name{font-family:var(--display);font-weight:600;color:var(--spruce-deep);font-size:1.02rem}
+  .case-box .case-cite{font-family:var(--mono);font-size:.76rem;color:#5E6E68;margin-bottom:8px}
+  .case-box p{font-size:.92rem;margin-bottom:0;max-width:none}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All British Columbia tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>Was the fine procedure followed correctly?</h1>
+    <p class="lede">Courts and the CRT strike down BC strata fines for procedural mistakes here more than almost anywhere else in the Act. A couple of questions to check where you are in section 135's sequence, and what's still required.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print" id="wizard">
+      <div class="progress" id="progress">
+        <span class="active" data-step="0"></span>
+        <span data-step="1"></span>
+      </div>
+
+      <div class="step active" id="step0">
+        <p class="q-num">Question 1 of 2</p>
+        <h2>Where are things at with this complaint?</h2>
+        <button class="opt" type="button" data-goto="step1">
+          A complaint was received, and the owner or tenant has been given written particulars of it
+          <span class="opt-sub">The specific bylaw or rule, and the date and nature of the alleged conduct</span>
+        </button>
+        <button class="opt" type="button" data-result="noParticulars">
+          A complaint was received, but written particulars haven't been given yet
+        </button>
+        <button class="opt" type="button" data-result="noComplaint">
+          No complaint has actually been received about this
+        </button>
+      </div>
+
+      <div class="step" id="step1">
+        <p class="q-num">Question 2 of 2</p>
+        <h2>Did the owner or tenant request a hearing?</h2>
+        <button class="opt" type="button" data-result="hearingRequired">
+          Yes, a hearing was requested
+        </button>
+        <button class="opt" type="button" data-result="writtenRecord">
+          No — they responded in writing, or didn't respond at all
+        </button>
+        <button class="back-link" type="button" data-back="step0">&larr; Back</button>
+      </div>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp" id="resultStamp">
+        <p class="k" id="resultLabel">Where this stands</p>
+        <p class="verdict-text" id="resultVerdict">—</p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 20, 2026 · <span id="badgeCite">Strata Property Act s. 135</span></p>
+
+      <div id="resultBody"></div>
+
+      <button type="button" class="restart-btn no-print" id="restartBtn">Start over</button>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this — and the AGM notice, special levy, budget, records, and depreciation-report deadlines — all in one printable calendar with checklists and templates? <a href="/bc/starter-pack">Get the BC Board Starter Pack &rarr; $39 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/bc/agm-notice">AGM / SGM notice calculator</a></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
+      <li><a href="/bc/quorum">Quorum calculator</a></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
+      <li><a href="/bc/records-deadline">Records request deadline</a></li>
+      <li><a href="/bc/strata-fees">Strata fee / budget calculator</a></li>
+      <li><a href="/bc/crf-contribution">CRF contribution checker</a></li>
+      <li><a href="/bc/insurance-deductible">Insurance deductible — who pays</a></li>
+      <li><span>Fine &amp; enforcement procedure</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>The sequence, in the Act's own words</h2>
+    <p>Section 135 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_07" rel="noopener">Strata Property Act</a> is written as a precondition, not a suggestion — the strata "must not" fine, charge back costs, or deny recreational facility use unless every step below has happened:</p>
+    <p class="quote">"...unless the strata corporation has (d) received a complaint about the contravention, (e) given the owner or tenant the particulars of the complaint, in writing, and a reasonable opportunity to answer the complaint, including a hearing if requested by the owner or tenant, and (f) if the person is a tenant, given notice of the complaint to the person's landlord and to the owner." <span style="color:#5E6E68">— s. 135(1)</span></p>
+    <p>Decision and notice come next, in its own subsection — and this is the one place a specific number could plausibly live, but doesn't:</p>
+    <p class="quote">"The strata corporation must, as soon as feasible, give notice in writing of a decision..." <span style="color:#5E6E68">— s. 135(2)</span></p>
+
+    <h2 style="margin-top:32px">The "4 weeks" claim — checked directly, not found</h2>
+    <p>One secondary source states the hearing "must be before the council within four weeks of the request," presented as a hard rule. We searched the full text of both the Act and the Strata Property Regulation directly for "four weeks" and "4 weeks" — zero matches, anywhere. What the Act actually says is narrower and vaguer than that: a "reasonable opportunity to answer," with a hearing included in that opportunity if one is requested. No specific week count is stated for requesting a hearing, holding it, or deciding afterward. Treat any firm "four weeks" figure you see elsewhere as that source's practice guidance, not a quotation of the statute.</p>
+    <p>The one number that <em>is</em> defined is what a hearing has to look like once granted:</p>
+    <p class="quote">"For the purposes of section 135 (1) (e) of the Act, 'hearing' means an opportunity to be heard in person at a council meeting." <span style="color:#5E6E68">— Strata Property Regulation s. 7.2</span></p>
+
+    <h2 style="margin-top:32px">Two different fine-amount numbers — don't mix them up</h2>
+    <p>These serve different purposes and come from different places in the legislation. One is a default that applies only if a strata hasn't changed it; the other is a ceiling that no strata's own bylaw can exceed.</p>
+    <div class="amount-wrap">
+      <table class="amount-table">
+        <tr><th></th><th>Per bylaw contravention</th><th>Per rule contravention</th><th>Continuing contravention</th></tr>
+        <tr><td><strong>Standard Bylaw 23 default</strong><br><span style="font-size:.82rem;color:#5E6E68">Applies unless your strata registered a different figure</span></td><td>$50</td><td>$10</td><td>Every 7 days (Standard Bylaw 24)</td></tr>
+        <tr><td><strong>Regulatory ceiling</strong><br><span style="font-size:.82rem;color:#5E6E68">The most any strata's own bylaw can set, s. 7.1</span></td><td>$200</td><td>$50</td><td>Every 7 days</td></tr>
+        <tr><td><strong>Short-term rental bylaws</strong><br><span style="font-size:.82rem;color:#5E6E68">A bylaw restricting rental as vacation/travel accommodation, s. 7.1(1)(c)</span></td><td>$1,000</td><td>—</td><td>Daily, not every 7 days</td></tr>
+      </table>
+    </div>
+    <p>Most established stratas have amended bylaw 23 upward at some point — check your strata's own registered bylaws before assuming either the $50/$10 default or the $200/$50 ceiling applies to you. The short-term rental figure is a real, separate exception: not only is the per-contravention cap higher ($1,000), a strata may fine it daily instead of the usual every-7-days floor for an ongoing breach — which is how that exception produces a practical "up to $1,000 a day" exposure for a continuing short-term rental contravention.</p>
+
+    <h2 style="margin-top:32px">The continuing-contravention exception — the part most often misread</h2>
+    <p>Section 135(3) is easy to misread in either direction. It does <strong>not</strong> mean every fine needs its own fresh notice-and-hearing cycle — and it does <strong>not</strong> mean one hearing clears the strata to fine anything, forever, without limit.</p>
+    <p class="quote">"Once a strata corporation has complied with this section in respect of a contravention of a bylaw or rule, it may impose a fine or other penalty for a continuing contravention of that bylaw or rule without further compliance with this section." <span style="color:#5E6E68">— s. 135(3)</span></p>
+    <p>Read precisely: once the full s. 135 process has been completed for a given bylaw or rule, a <em>continuing</em> contravention of that <em>same</em> bylaw or rule can keep being fined without repeating the process each time. A genuinely new, separate contravention — of a different bylaw, or a fresh instance rather than an ongoing one — still needs its own complaint, particulars, and opportunity to answer.</p>
+
+    <h2 style="margin-top:32px">Why the sequence matters — courts have struck fines down over exactly this</h2>
+    <div class="case-box">
+      <p class="case-name">Terry v. The Owners, Strata Plan NW 309</p>
+      <p class="case-cite">2016 BCCA 449</p>
+      <p>An owner had underpaid strata fees by about $5 a month for close to ten years; the strata fined her $7,210. The BC Court of Appeal confirmed that s. 135 requires strict compliance — particulars sufficient to actually identify the contravention to the owner — and that a procedural shortcut anywhere in the sequence can make the resulting fines unenforceable, regardless of whether the underlying contravention was real.</p>
+    </div>
+    <div class="case-box">
+      <p class="case-name">Schoffield v. Strata Corp. NW 73</p>
+      <p class="case-cite">[1983] B.C.J. No. 2471 (B.C.C.A.)</p>
+      <p>Continuing fines over a pet kept in violation of a no-pets bylaw were struck down because they were imposed without giving the owner an opportunity to be heard — an early, still-cited confirmation that skipping the hearing step is fatal to the fine.</p>
+    </div>
+    <div class="case-box">
+      <p class="case-name">Dimitrov v. Summit Square Strata Corp.</p>
+      <p class="case-cite">2006 BCSC 967</p>
+      <p>A strata imposed a $50 fine over a pet-bylaw contravention through a notice that also invited the owner to a later meeting to discuss it — after the fine was already imposed. The court held that a procedural defect isn't cured after the fact by offering to talk about it once the decision is already made; the opportunity to be heard has to come first.</p>
+    </div>
+
+    <dl class="faq">
+      <dt>Is there really no deadline for holding the hearing once it's requested?</dt>
+      <dd>None stated in the Act or the Strata Property Regulation — we checked both directly. The standard is "reasonable," which is genuinely open-ended and fact-dependent, not a hidden fixed number.</dd>
+      <dt>Is "as soon as feasible" for the decision notice roughly a week in practice?</dt>
+      <dd>We looked for a common practical interpretation and didn't find one worth stating as settled — what we did find was unrelated guidance about mail delivery time for deemed receipt, not about how quickly council must decide. Treat "as soon as feasible" as exactly that: prompt, but not tied to a specific day count anywhere we could verify.</dd>
+      <dt>Which fine amount actually applies to my strata?</dt>
+      <dd>Check your strata's own registered bylaws first. If bylaw 23 was never amended, the Standard Bylaw figures ($50/$10) apply by default. If it was amended, any figure up to the regulatory ceiling ($200/$50, or $1,000 for a short-term rental bylaw) is valid.</dd>
+      <dt>Does a hearing request pause the fine, or just delay when it can be imposed?</dt>
+      <dd>Under s. 135(1), the strata "must not" impose the fine until the complaint, particulars, and opportunity to answer (including a requested hearing) have all happened — so a validly requested hearing has to happen before any fine for that contravention, not after.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation and reported case law, verified against the sources cited above. Given how strictly courts read this section, talk to a strata lawyer before relying on this for an actual dispute.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, s. 135 and the Schedule of Standard Bylaws (bylaws 23-24), and the Strata Property Regulation, B.C. Reg. 43/2000, ss. 7.1-7.2. Case law: Terry v. The Owners, Strata Plan NW 309, 2016 BCCA 449; Schoffield v. Strata Corp. NW 73, [1983] B.C.J. No. 2471 (B.C.C.A.); Dimitrov v. Summit Square Strata Corp., 2006 BCSC 967. Last verified August 20, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 18, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var wizard=document.getElementById('wizard'),
+      progress=document.getElementById('progress'),
+      result=document.getElementById('result'),
+      resultStamp=document.getElementById('resultStamp'),
+      resultVerdict=document.getElementById('resultVerdict'),
+      resultBody=document.getElementById('resultBody'),
+      restartBtn=document.getElementById('restartBtn'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var STEP_INDEX={step0:0,step1:1};
+
+  var DECISION_BLOCK=
+    '<div class="stepbox">'+
+      '<h3>Then: decision and written notice</h3>'+
+      '<p>After considering the response — written, or from a hearing — council decides whether to impose the fine. The strata must then give written notice of that decision to the owner or tenant (and, if a tenant, the landlord too).</p>'+
+      '<p class="cite">s. 135(2) — notice must go out "as soon as feasible." No specific day count is stated anywhere in the Act or Regulation; treat this as a genuinely open, prompt standard, not a hidden deadline.</p>'+
+    '</div>';
+
+  var CONTINUING_BLOCK=
+    '<div class="stepbox">'+
+      '<h3>If this becomes ongoing: the continuing-contravention exception</h3>'+
+      '<p>Once this full process has been completed once for this bylaw or rule, a <em>continuing</em> contravention of that <em>same</em> bylaw or rule can be fined again without repeating the whole process each time. A genuinely new contravention still needs its own cycle.</p>'+
+      '<p class="cite">s. 135(3)</p>'+
+    '</div>';
+
+  var OUTCOMES={
+    noComplaint:{
+      stop:true,
+      verdict:'Nothing else in this process can happen yet',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">Section 135 starts with a complaint. Until the strata corporation has actually received one about this specific contravention, it has no basis to give particulars, hold a hearing, or impose a fine.</p>'+
+        '<p class="cite-line"><strong>s. 135(1)(d)</strong> — the strata "must not" fine, charge back costs, or deny recreational facility access unless it has "received a complaint about the contravention."</p>',
+      badge:'Strata Property Act s. 135(1)(d)'
+    },
+    noParticulars:{
+      stop:true,
+      verdict:'Stop here — written particulars have to come before anything else',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">This is the step courts strike fines down over most often. The owner or tenant is entitled to written particulars — the specific bylaw or rule, and the date and nature of the alleged conduct — before the strata can move any further, including offering a hearing.</p>'+
+        '<p class="cite-line"><strong>s. 135(1)(e)</strong> — the strata must give "the particulars of the complaint, in writing, and a reasonable opportunity to answer the complaint, including a hearing if requested."</p>'+
+        '<p class="consequence"><strong>What happens if this is skipped:</strong> in <em>Terry v. Strata Plan NW 309</em>, 2016 BCCA 449, the BC Court of Appeal held that s. 135 requires strict compliance — particulars have to be sufficient to actually identify the contravention to the owner. A shortcut here can make the resulting fine unenforceable even where the underlying contravention was real.</p>',
+      badge:'Strata Property Act s. 135(1)(e)'
+    },
+    hearingRequired:{
+      stop:false,
+      verdict:'A hearing is required before any fine — in person, at a council meeting',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">Once requested, the hearing has a defined format but no defined deadline.</p>'+
+        '<p class="cite-line"><strong>Strata Property Regulation s. 7.2</strong> — "hearing" means "an opportunity to be heard in person at a council meeting."</p>'+
+        '<p class="flag"><strong>No "four weeks" rule exists.</strong> We checked the Act and Regulation directly for a specific timeframe — none is stated. The standard is a "reasonable opportunity to answer" (s. 135(1)(e)). Treat any specific week count you see elsewhere as guidance, not statute.</p>'+
+        '<p class="consequence"><strong>Skipping this step is fatal to the fine.</strong> In <em>Schoffield v. Strata Corp. NW 73</em>, continuing fines were struck down for exactly this — imposed without the opportunity to be heard the owner had asked for. In <em>Dimitrov v. Summit Square Strata Corp.</em>, 2006 BCSC 967, a strata that imposed the fine first and offered to discuss it after was found not to have cured the defect — the hearing has to come before the decision, not after.</p>'+
+        DECISION_BLOCK+CONTINUING_BLOCK,
+      badge:'Strata Property Regulation s. 7.2'
+    },
+    writtenRecord:{
+      stop:false,
+      verdict:'Council may proceed to a decision on the written record',
+      body:'<p style="font-size:.92rem;color:#3D4C47;margin-top:14px">Without a hearing request, the owner or tenant\'s written response (or the absence of one, if they were given a genuine opportunity and didn\'t use it) is what council considers before deciding.</p>'+
+        '<p class="cite-line"><strong>s. 135(1)(e)</strong> — the opportunity to answer can be satisfied in writing; a hearing is only required "if requested by the owner or tenant."</p>'+
+        DECISION_BLOCK+CONTINUING_BLOCK,
+      badge:'Strata Property Act s. 135(1)(e)'
+    }
+  };
+
+  function showStep(id){
+    document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+    document.getElementById(id).classList.add('active');
+    var idx=STEP_INDEX[id];
+    document.querySelectorAll('#progress span').forEach(function(s,i){
+      s.classList.remove('active','done');
+      if(i<idx)s.classList.add('done');
+      else if(i===idx)s.classList.add('active');
+    });
+  }
+
+  document.querySelectorAll('[data-goto]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      showStep(btn.getAttribute('data-goto'));
+    });
+  });
+  document.querySelectorAll('[data-back]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      showStep(btn.getAttribute('data-back'));
+    });
+  });
+
+  var currentOutcome=null;
+
+  document.querySelectorAll('[data-result]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var key=btn.getAttribute('data-result');
+      var o=OUTCOMES[key];
+      currentOutcome=key;
+      resultVerdict.textContent=o.verdict;
+      resultBody.innerHTML=o.body;
+      document.getElementById('badgeCite').textContent=o.badge;
+      resultStamp.classList.toggle('stop',!!o.stop);
+      document.getElementById('resultLabel').textContent=o.stop?'Stop — not yet valid':'Where this stands';
+      wizard.style.display='none';
+      result.style.display='block';
+      result.scrollIntoView({block:'start',behavior:'smooth'});
+    });
+  });
+
+  restartBtn.addEventListener('click',function(){
+    result.style.display='none';
+    wizard.style.display='block';
+    showStep('step0');
+    wizard.scrollIntoView({block:'start'});
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!currentOutcome)return;
+    var paras=Array.prototype.map.call(
+      resultBody.querySelectorAll('p, h3'),
+      function(p){return p.textContent.replace(/\s+/g,' ').trim();}
+    ).join(' ');
+    var text=resultVerdict.textContent+'. '+paras+
+      ' Verified August 20, 2026 against the Strata Property Act and Strata Property Regulation on bclaws.gov.bc.ca.';
+    copyToClipboard(text);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
