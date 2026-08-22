@@ -394,19 +394,36 @@
 </script>
 <script>
 (function(){
-  // Payment infrastructure (Stripe product, checkout link, and the
-  // Cloudflare Pages Function that gates /on/starter-pack-full) is a
-  // separate follow-up session, same sequencing as the BC pack. This is
-  // a placeholder until that's wired in -- no charge can happen from here.
+  // Live Stripe payment link for the $39 one-time Ontario Condo Board
+  // Starter Pack. After a successful payment, Stripe redirects to
+  // /api/verify-purchase, which confirms the charge server-side and
+  // unlocks /on/starter-pack-full.
+  var CHECKOUT_URL='https://buy.stripe.com/8x2dR856z8ybaYTdvF6Vq01';
+
   var buyBtn=document.getElementById('buyBtn'),
       buyMsg=document.getElementById('buyMsg');
   if(!buyBtn)return;
 
   buyBtn.addEventListener('click',function(){
-    buyMsg.innerHTML='Checkout isn’t live yet — the pack is built and verified, and payment is the next step. '+
-      '<a href="#subHead">Leave your email below</a> and you’ll be first to know when you can buy it.';
-    buyMsg.className='buy-msg show';
+    window.location.href=CHECKOUT_URL;
   });
+
+  // If Stripe (or the gate on /on/starter-pack-full) sent someone back here,
+  // explain why rather than leaving them wondering.
+  var params=new URLSearchParams(window.location.search);
+  var access=params.get('access'), checkout=params.get('checkout');
+  var text=null;
+  if(access==='required'){
+    text='That link needs a completed purchase first. Buy the pack below and you’ll be sent straight in.';
+  } else if(checkout==='incomplete'){
+    text='Looks like checkout didn’t finish — no charge was made. Please try again below.';
+  } else if(checkout){
+    text='Something didn’t check out right on our end — no charge went through. Please try again, or reach out if it keeps happening.';
+  }
+  if(text){
+    buyMsg.textContent=text;
+    buyMsg.className='buy-msg show';
+  }
 })();
 </script>
 </body>
