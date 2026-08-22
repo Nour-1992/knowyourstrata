@@ -11,11 +11,29 @@
  *
  * Required Cloudflare setup (dashboard, not this repo):
  *   - KV namespace bound as WATCHER_KV (see wrangler.toml for the id).
- *   - A secret WATCHER_STATUS_SECRET -- any long random string, used to
- *     gate /status and /run so this internal page isn't open to anyone
- *     who finds the workers.dev URL. Set via the Worker's Settings ->
- *     Variables and Secrets in the dashboard, same pattern as the Pages
- *     project's STRIPE_SECRET_KEY / ACCESS_TOKEN_SECRET.
+ *   - A Secrets Store secret bound as WATCHER_STATUS_SECRET -- any long
+ *     random string, used to gate /status and /run so this internal page
+ *     isn't open to anyone who finds the workers.dev URL.
+ *
+ *     This must be a Secrets Store binding, not a plain Settings ->
+ *     Variables and Secrets entry -- the plain panel does not reliably
+ *     bind into a script deployed via Workers Builds (confirmed across
+ *     five separate attempts with different values, one hand-typed; it
+ *     never once appeared on this Worker's own Bindings tab, unlike the
+ *     KV namespace, which always has). Set it up as:
+ *       1. Secrets Store (account level) -> create a secret, e.g. named
+ *          "watcher-status-secret", value = any long random string.
+ *       2. This Worker -> Bindings tab -> Add binding -> Secrets Store ->
+ *          binding name WATCHER_STATUS_SECRET, pointed at that secret.
+ *       3. Fill the real store_id/secret_name into wrangler.toml's
+ *          [[secrets_store_secrets]] block (see that file).
+ *     Confirm WATCHER_STATUS_SECRET actually appears on the Bindings tab
+ *     after redeploying -- that's the real signal it's bound, not just
+ *     "the dashboard says saved."
+ *
+ *   Accessing a Secrets Store binding is async: `await env.NAME.get()`
+ *   resolves to the string value, unlike a plain env var/secret which is
+ *   already a string on env. authorized() below is async for this reason.
  *
  * Routes (both require ?key=<WATCHER_STATUS_SECRET>):
  *   GET /status  -- human-readable status page: last checked, what
@@ -149,11 +167,21 @@ async function runCheck(env) {
   return { at: now, results };
 }
 
-function authorized(request, env) {
+async function authorized(request, env) {
   if (!env.WATCHER_STATUS_SECRET) return false;
   const url = new URL(request.url);
   const key = url.searchParams.get('key');
-  return typeof key === 'string' && key.length > 0 && key === env.WATCHER_STATUS_SECRET;
+  if (typeof key !== 'string' || key.length === 0) return false;
+
+  // Secrets Store bindings are read asynchronously -- unlike a plain env
+  // var/secret, the value isn't already sitting on env as a string.
+  let expected;
+  try {
+    expected = await env.WATCHER_STATUS_SECRET.get();
+  } catch (err) {
+    return false;
+  }
+  return typeof expected === 'string' && expected.length > 0 && key === expected;
 }
 
 function esc(s) {
@@ -226,13 +254,13 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === '/status') {
-      if (!authorized(request, env)) return new Response('Not found', { status: 404 });
+      if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
       const html = await renderStatusPage(env);
       return new Response(html, { headers: { 'Content-Type': 'text/html; charset=UTF-8' } });
     }
 
     if (url.pathname === '/run') {
-      if (!authorized(request, env)) return new Response('Not found', { status: 404 });
+      if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
       const result = await runCheck(env);
       return new Response(JSON.stringify(result, null, 2), {
         headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }

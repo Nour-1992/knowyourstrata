@@ -9,8 +9,19 @@
 #      the Pages project is connected ("Continue with GitHub" / Workers
 #      Builds), pointing the build at this "worker/" subdirectory so it
 #      finds this wrangler.toml.
-#   2. Settings -> Variables and Secrets -> add WATCHER_STATUS_SECRET
-#      (any long random string) as a secret. Never commit this value.
+#   2. WATCHER_STATUS_SECRET must be a Secrets Store binding, not a plain
+#      Settings -> Variables and Secrets entry -- the plain panel does not
+#      reliably bind into a script deployed via Workers Builds (confirmed
+#      across five separate attempts with different values, one hand-
+#      typed; it never once appeared on this Worker's own Bindings tab,
+#      unlike the KV namespace below, which always has):
+#        a. Secrets Store (account level) -> create a secret, e.g. named
+#           "watcher-status-secret", value = any long random string.
+#        b. Replace the store_id and secret_name placeholders below with
+#           the real values from what you created in (a).
+#        c. Redeploy, then confirm WATCHER_STATUS_SECRET actually appears
+#           on this Worker's Bindings tab -- that's the real signal it
+#           worked, not just "saved" in the dashboard.
 #   3. Confirm the KV binding below resolves to the existing
 #      "knowyourstrata-watcher" namespace (id already created).
 #
@@ -27,3 +38,8 @@ crons = ["0 8 * * 1"]  # Weekly, Monday 08:00 UTC
 [[kv_namespaces]]
 binding = "WATCHER_KV"
 id = "6359a8114b29408f8f6b729a0cb96508"
+
+[[secrets_store_secrets]]
+binding = "WATCHER_STATUS_SECRET"
+store_id = "REPLACE_WITH_YOUR_SECRETS_STORE_ID"
+secret_name = "watcher-status-secret"
