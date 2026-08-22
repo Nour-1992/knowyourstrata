@@ -41,5 +41,5 @@ id = "6359a8114b29408f8f6b729a0cb96508"
 
 [[secrets_store_secrets]]
 binding = "WATCHER_STATUS_SECRET"
-store_id = "REPLACE_WITH_YOUR_SECRETS_STORE_ID"
+store_id = "beaccdc53cc3460ca4969c04ccb55096"
 secret_name = "watcher-status-secret"
