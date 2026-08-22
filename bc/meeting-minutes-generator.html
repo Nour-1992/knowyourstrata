@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Council Meeting Minutes Generator — Free, Cited Template | Strata Property Act</title>
+<meta name="description" content="Free tool for BC strata councils: fill in a meeting's details, attendance, motions and votes, and get a properly-structured minutes document with the legally-required elements built in and cited — not just described nearby.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/bc/meeting-minutes-generator">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BC Strata Council Meeting Minutes Generator — Free, Cited Template | Strata Property Act">
+<meta property="og:description" content="Free tool for BC strata councils: fill in a meeting's details, attendance, motions and votes, and get a properly-structured minutes document with the legally-required elements built in and cited.">
+<meta property="og:url" content="https://knowyourstrata.com/bc/meeting-minutes-generator">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BC Strata Council Meeting Minutes Generator — Free, Cited Template | Strata Property Act">
+<meta name="twitter:description" content="Free tool for BC strata councils: fill in a meeting's details, attendance, motions and votes, and get a properly-structured minutes document with the legally-required elements built in and cited.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "BC Strata Council Meeting Minutes Generator",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free tool for BC strata councils: fill in a meeting's details, attendance, motions and votes, and get a properly-structured minutes document with the legally-required elements built in and cited."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:58ch}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  fieldset{border:none;margin-bottom:26px;padding:0}
+  fieldset:last-of-type{margin-bottom:0}
+  legend{
+    font-family:var(--display);font-size:1.02rem;font-weight:600;color:var(--spruce-deep);
+    padding-bottom:8px;margin-bottom:14px;border-bottom:1px solid var(--line);width:100%;
+  }
+  .flegend-sub{font-size:.83rem;font-weight:400;color:#5E6E68;display:block;margin-top:2px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  @media (max-width:520px){.row2{grid-template-columns:1fr}}
+  label{display:block;font-weight:600;font-size:.9rem;margin-bottom:5px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.82rem}
+  input[type="text"],input[type="date"],input[type="number"],select,textarea{
+    width:100%;padding:11px 13px;font-size:.98rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:16px;
+  }
+  textarea{resize:vertical;min-height:64px}
+  input:focus,select:focus,textarea:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+
+  .motion-row{
+    border:1px solid var(--line);border-radius:8px;padding:16px 16px 4px;
+    margin-bottom:14px;background:#fff;
+  }
+  .motion-row-head{
+    display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;
+  }
+  .motion-row-head .mnum{font-family:var(--mono);font-size:.76rem;color:var(--seal);font-weight:600}
+  .remove-motion{
+    background:none;border:none;color:#8F2D1E;font-size:.8rem;font-weight:600;
+    cursor:pointer;padding:2px 4px;width:auto;
+  }
+  .remove-motion:hover{text-decoration:underline}
+  .coi-check{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;font-size:.88rem}
+  .coi-check input{width:auto;margin:3px 0 0}
+  .coi-fields{display:none;padding:10px 12px;margin:-4px 0 14px;background:#FBF6EA;border-left:3px solid var(--amber);border-radius:0 8px 8px 0}
+  .coi-fields.show{display:block}
+  .coi-fields .hint2{font-size:.78rem;color:var(--amber);margin-bottom:8px;display:block}
+  .add-btn{
+    width:auto;padding:9px 16px;font-size:.88rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;margin-bottom:0;
+  }
+  .add-btn:hover{background:#EEF3F0}
+
+  button.generate{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button.generate:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  /* ── Generated document ─────────────────────────────────────────── */
+  .result{display:none;margin-top:30px}
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .doc{
+    background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:30px 28px;
+  }
+  .doc h2.doc-title{
+    font-family:var(--display);font-size:1.3rem;font-weight:700;
+    color:var(--spruce-deep);text-align:center;margin-bottom:4px;
+  }
+  .doc .doc-sub{text-align:center;font-size:.9rem;color:#5E6E68;margin-bottom:20px}
+  .doc-meta{font-size:.9rem;color:#3D4C47;margin-bottom:4px}
+  .doc-meta strong{color:var(--spruce-deep)}
+  .doc-section-title{
+    font-family:var(--display);font-size:.98rem;font-weight:600;
+    color:var(--spruce-deep);margin-top:22px;margin-bottom:8px;
+    padding-bottom:4px;border-bottom:1px solid var(--line);
+  }
+  .doc p{font-size:.92rem;color:#3D4C47;margin-bottom:8px}
+  .doc-motion{margin-bottom:14px}
+  .doc-motion .mtitle{font-size:.92rem;color:#3D4C47;font-weight:600}
+  .doc-motion .mmeta{font-size:.85rem;color:#5E6E68;margin-top:2px}
+  .doc-motion .mcoi{
+    font-size:.83rem;color:var(--amber);margin-top:4px;padding-left:10px;
+    border-left:2px solid var(--amber);
+  }
+  .req-tag{
+    font-family:var(--mono);font-size:.68rem;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;padding:1px 6px;
+    margin-left:6px;white-space:nowrap;
+  }
+  .doc-note{font-size:.85rem;color:#5E6E68;font-style:italic}
+
+  .legend-box{
+    margin-top:20px;padding:14px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.85rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .legend-box .req-tag{margin-left:0;margin-right:6px}
+
+  .copybar{margin-top:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .pack-nudge{margin-top:28px}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .myth{
+    margin:0 0 16px;padding:16px 18px;border:1px solid var(--amber);border-radius:8px;
+    background:#FBF6EA;
+  }
+  .myth .myth-tag{
+    display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);
+    border-radius:3px;padding:2px 8px;margin-bottom:8px;
+  }
+  .myth p{color:#3D4C47;margin-bottom:8px}
+  .myth p:last-child{margin-bottom:0}
+  .case-box{
+    margin:0 0 16px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;
+    background:#fff;
+  }
+  .case-box .case-name{font-family:var(--display);font-weight:600;color:var(--spruce-deep);font-size:1.02rem}
+  .case-box .case-cite{font-family:var(--mono);font-size:.76rem;color:#5E6E68;margin-bottom:8px}
+  .case-box p{font-size:.92rem;margin-bottom:0;max-width:none}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card,.doc{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All British Columbia tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>Strata Council Meeting Minutes Generator</h1>
+    <p class="lede">Fill in the meeting, who was there, and what was moved and decided — get back a properly-structured minutes document with every legally-required element already in place, cited, and distinguished from the parts that are just sensible formatting.</p>
+  </header>
+
+  <div class="card no-print">
+    <form id="minutesForm">
+      <fieldset>
+        <legend>Meeting details</legend>
+        <div class="row2">
+          <div>
+            <label for="mtgType">Meeting type</label>
+            <select id="mtgType">
+              <option value="council">Council meeting</option>
+              <option value="agm">Annual General Meeting (AGM)</option>
+              <option value="sgm">Special General Meeting (SGM)</option>
+            </select>
+          </div>
+          <div>
+            <label for="strataPlan">Strata plan number <span class="hint">(optional)</span></label>
+            <input type="text" id="strataPlan" placeholder="e.g. VR 1234">
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label for="mtgDate">Date</label>
+            <input type="date" id="mtgDate">
+          </div>
+          <div>
+            <label for="mtgTime">Time</label>
+            <input type="text" id="mtgTime" placeholder="e.g. 7:00 pm">
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label for="mtgLocation">Location / platform</label>
+            <input type="text" id="mtgLocation" placeholder="e.g. Amenity room, or Zoom">
+          </div>
+          <div>
+            <label for="mtgFormat">Format</label>
+            <select id="mtgFormat">
+              <option value="in person">In-person</option>
+              <option value="electronic">Electronic</option>
+              <option value="hybrid">Hybrid (in-person + electronic)</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Attendance<span class="flegend-sub">Council meeting quorum is a headcount of council members (Standard Bylaw 16) — a different rule from general-meeting quorum, which is a share of the strata's votes (s. 48).</span></legend>
+        <label for="councilSize">Total council members <span class="hint">(as elected — used only for council-meeting quorum)</span></label>
+        <input type="number" id="councilSize" min="1" step="1" placeholder="e.g. 5">
+        <label for="presentList">Council members present <span class="hint">(one per line)</span></label>
+        <textarea id="presentList" placeholder="Jane Smith, president&#10;John Lee, treasurer&#10;Pat Chan"></textarea>
+        <label for="regretsList">Regrets / absent <span class="hint">(optional, one per line)</span></label>
+        <textarea id="regretsList"></textarea>
+        <label for="othersList">Others present <span class="hint">(optional — e.g. property manager, guests)</span></label>
+        <textarea id="othersList"></textarea>
+        <div id="councilQuorumInfo" class="hint" style="margin-bottom:16px"></div>
+        <div id="genQuorumField" style="display:none">
+          <label for="quorumNote">Quorum confirmation <span class="hint">(check with the <a href="/bc/quorum">quorum calculator</a> first — general-meeting quorum isn't a council headcount)</span></label>
+          <input type="text" id="quorumNote" placeholder="e.g. 14 of 40 votes present or by proxy — quorum met">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Motions</legend>
+        <div id="motionsList"></div>
+        <button type="button" class="add-btn" id="addMotion">+ Add another motion</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>Reports &amp; business arising <span class="flegend-sub">Freeform — content varies too much to structure.</span></legend>
+        <textarea id="businessArising" style="min-height:100px" placeholder="e.g. Treasurer's report presented. Roof repair quotes still pending, follow up next meeting."></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Wrap-up</legend>
+        <div class="row2">
+          <div>
+            <label for="nextMeeting">Next meeting <span class="hint">(optional)</span></label>
+            <input type="text" id="nextMeeting" placeholder="e.g. TBD, or a date">
+          </div>
+          <div>
+            <label for="preparedBy">Minutes prepared by <span class="hint">(optional)</span></label>
+            <input type="text" id="preparedBy" placeholder="Name">
+          </div>
+        </div>
+      </fieldset>
+
+      <p class="error" id="err"></p>
+      <button type="button" class="generate" id="genBtn">Generate minutes</button>
+    </form>
+  </div>
+
+  <div class="result" id="result">
+    <p class="verified-badge"><span class="check">✓</span> Verified August 21, 2026 · Strata Property Act s. 35(1)(a), Standard Bylaws 16 &amp; 18</p>
+    <div class="doc" id="docOutput"></div>
+    <div class="legend-box">
+      <span class="req-tag">§</span> marks an element the Act or the Standard Bylaws actually require. Everything else — headings, layout, the call-to-order and adjournment lines — is this generator's own formatting, not a cited requirement.
+    </div>
+    <div class="copybar no-print">
+      <button type="button" class="copy-btn" id="copyBtn">Copy as text</button>
+      <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+      <span class="copied-note" id="copiedNote">Copied ✓</span>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this — and the AGM notice, special levy, CRF, records, and depreciation-report deadlines, a fine-enforcement checklist, and the insurance deductible guide — all in one printable pack with a calendar, checklists, templates, and reference guides? <a href="/bc/starter-pack">Get the BC Board Starter Pack &rarr; $39 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get the free BC Strata Compliance Cheat Sheet</h2>
+      <p class="sub">AGM notice, quorum, levies, records and more — the key BC rules on one page, each with its section citation. Free.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Send me the cheat sheet</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox — or get your cheat sheet now:
+         <a href="https://knowyourstrata.com/cheat-sheet">the BC Strata Compliance Cheat Sheet →</a></p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>More BC strata tools</h2>
+    <ul>
+      <li><a href="/bc/agm-notice">AGM / SGM notice calculator</a></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
+      <li><a href="/bc/quorum">Quorum calculator</a></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
+      <li><a href="/bc/records-deadline">Records request deadline</a></li>
+      <li><a href="/bc/strata-fees">Strata fee / budget calculator</a></li>
+      <li><a href="/bc/crf-contribution">CRF contribution checker</a></li>
+      <li><a href="/bc/insurance-deductible">Insurance deductible — who pays</a></li>
+      <li><a href="/bc/fine-enforcement-procedure">Fine &amp; enforcement procedure</a></li>
+      <li><span>Meeting minutes generator</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>What the Act actually requires in the minutes themselves</h2>
+    <p>Section 35(1)(a) of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_04" rel="noopener">Strata Property Act</a> is short, and it's the whole legal basis for this tool:</p>
+    <p class="quote">"The strata corporation must prepare... minutes of annual and special general meetings and council meetings, including the results of any votes." <span style="color:#5E6E68">— s. 35(1)(a)</span></p>
+    <p>Notice what that doesn't say: no required format, no mandated heading, no rule about how detailed the discussion needs to be. The one substantive requirement buried in that sentence is "including the results of any votes" — not just that a vote happened, but what it decided. Standard Bylaw 18(3) says the same thing from the council-meeting side:</p>
+    <p class="quote">"The results of all votes at a council meeting must be recorded in the council meeting minutes." <span style="color:#5E6E68">— Standard Bylaw 18(3)</span></p>
+    <p>Everything else this generator builds in — the attendance block, the numbered motions, the call-to-order and adjournment lines — is sensible structure, not a section citation. The legend under the generated document marks the difference.</p>
+
+    <h2 style="margin-top:32px">Two different "two weeks" — don't conflate them</h2>
+    <p>This tool exists partly because these get mixed up. They're genuinely separate rules that happen to share a figure:</p>
+    <p class="quote">"The council must inform owners of the minutes of all council meetings within 2 weeks of the meeting, whether or not the minutes have been approved." <span style="color:#5E6E68">— Standard Bylaw 19</span></p>
+    <p>That's a <strong>proactive duty</strong> — the council has to push council-meeting minutes out to owners within 2 weeks, unprompted, every time. Separately, and for any records at all (not just minutes):</p>
+    <p class="quote">"The strata corporation must comply with a request [for records]... within 2 weeks unless the request is in respect of bylaws or rules, in which case the strata corporation must comply with the request within one week." <span style="color:#5E6E68">— s. 36(3), already covered on the <a href="/bc/records-deadline">records request deadline</a> tool</span></p>
+    <p>That's a <strong>request-response</strong> window, not a distribution deadline — it only starts running once an owner actually asks. We read the full Schedule of Standard Bylaws directly and found no equivalent proactive-distribution bylaw for <strong>general meeting</strong> (AGM/SGM) minutes — for those, s. 36's request-based window is what applies, unless your strata's own registered bylaws say otherwise. Standard Bylaw 19's 2-week push is specifically a council-meeting rule.</p>
+
+    <div class="myth">
+      <span class="myth-tag">Myth, checked directly</span>
+      <p><strong>"Keep minutes forever" is not what the regulation says.</strong> One strata-management source states plainly that minutes should be kept indefinitely — "not 7 years, not for the duration of council terms. Forever." We read Strata Property Regulation s. 4.1 directly rather than relying on that summary, and it draws a real distinction the "forever" claim erases.</p>
+      <p>Minutes are s. 35(1)(a). Regulation s. 4.1(3) puts s. 35(1)(a) — together with s. 35(1)(d), the books of account — in a <strong>6-year minimum</strong> retention bucket, not a permanent one. What actually gets permanent retention, under s. 4.1(2), is a different, specific list: the registered strata plan and amendments (s. 35(2)(b)), resolutions changing common property (s. 35(2)(e)), arbitration/court/CRT decisions and legal opinions (s. 35(2)(h)), depreciation reports (s. 35(2)(n.1)), electrical planning reports (s. 35(2)(n.3)), and EV charging infrastructure reports (s. 35(2)(n.4)) — the strata's foundational structural and legal record, not its meeting-by-meeting minutes.</p>
+      <p>Six years is a floor, not a ceiling — plenty of stratas keep minutes longer as good practice, and there's nothing wrong with that. But it's a choice, not what s. 4.1 actually requires.</p>
+    </div>
+
+    <h2 style="margin-top:32px">A decision made outside a minuted meeting generally isn't valid yet</h2>
+    <p>This one holds up, and it's grounded in case law rather than a specific Act section — worth knowing the difference. Courts and the Civil Resolution Tribunal have repeatedly held that council decisions made informally — a hallway conversation, an email thread — don't take legal effect until they're ratified or decided at a properly called, minuted council meeting.</p>
+    <div class="case-box">
+      <p class="case-name">Kayne v. The Owners, Strata Plan LMS 2374</p>
+      <p class="case-cite">2007 BCSC 1610</p>
+      <p>An early, still-cited authority for the principle that decisions reached at an informal gathering of council members don't have validity unless and until they're ratified at a formal council meeting.</p>
+    </div>
+    <div class="case-box">
+      <p class="case-name">Cassey v. The Owners, Strata Plan VR-326</p>
+      <p class="case-cite">2023 BCCRT 645</p>
+      <p>A more recent CRT decision applying the same principle to email exchanges: matters decided by email aren't valid and can't be acted on until voted on at an actual meeting — with a narrow allowance recognized for genuine emergencies. If your council reaches consensus outside a meeting, that discussion still needs a vote recorded at a real, minuted meeting before it's acted on.</p>
+    </div>
+
+    <h2 style="margin-top:32px">Conflict of interest — a structural step, not a footnote</h2>
+    <p>Section 32 sets out exactly what a conflicted council member must do, in sequence — which is why this generator asks about it per motion, not once at the bottom of the form:</p>
+    <p class="quote">"A council member who has a direct or indirect interest in... a matter that is or is to be the subject of consideration by the council... must (c) disclose fully and promptly to the council the nature and extent of the interest, (d) abstain from voting on the... matter, and (e) leave the council meeting (i) while the... matter is discussed... and (ii) while the council votes." <span style="color:#5E6E68">— s. 32</span></p>
+
+    <h2 style="margin-top:32px">Tie votes and council quorum — Standard Bylaws, not the Act</h2>
+    <p>These live in the Schedule of Standard Bylaws, which a strata can amend — so confirm your own strata's registered bylaws haven't changed them before relying on the defaults below.</p>
+    <p class="quote">"Unless there are only 2 strata lots in the strata plan, if there is a tie vote at a council meeting, the president may break the tie by casting a second, deciding vote." <span style="color:#5E6E68">— Standard Bylaw 18(2)</span></p>
+    <p class="quote">"A quorum of the council is (a) 1, if the council consists of one member, (b) 2, if the council consists of 2, 3 or 4 members, (c) 3, if the council consists of 5 or 6 members, and (d) 4, if the council consists of 7 members." <span style="color:#5E6E68">— Standard Bylaw 16(1)</span></p>
+    <p>This is a headcount of the council, and it's a different rule from general-meeting quorum — the <a href="/bc/quorum">quorum calculator</a> covers the latter (a share of the strata's total votes under s. 48), not this one.</p>
+
+    <h2 style="margin-top:32px">In-camera and confidential items — practical guidance, not a cited rule</h2>
+    <p>Being honest about this one: we found no specific Act section that requires summarizing rather than transcribing sensitive content — a hearing, a legal matter, a complaint against a named owner — in the minutes. What we found is sound, widely-repeated practical advice for privacy and liability reasons, not a statutory mandate. This generator's freeform "reports &amp; business arising" field is deliberately unstructured for exactly this reason — use your judgment about how much detail belongs in a document owners can request a copy of.</p>
+
+    <dl class="faq">
+      <dt>Do we have to record how each individual council member voted?</dt>
+      <dd>The Act requires "the results of any votes," and Standard Bylaw 18(3) requires the results of council votes to be recorded — neither requires a member-by-member breakdown by name. Many councils record only the outcome (carried/defeated) unless someone specifically asks for their dissent noted.</dd>
+      <dt>Does seconding a motion matter legally?</dt>
+      <dd>Not under anything we found in the Act or the Standard Bylaws — it's common meeting-procedure convention, not a cited requirement. The generator includes an optional field for it because most stratas record it anyway, not because it's mandatory.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It's general information based on the current legislation, Standard Bylaws, and reported case law, verified against the sources cited above. For a disputed decision or an unusual situation, talk to a strata lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 32, 35 and 36, the Strata Property Regulation, B.C. Reg. 43/2000, s. 4.1, and the Schedule of Standard Bylaws (bylaws 16, 18 and 19). Case law: Kayne v. The Owners, Strata Plan LMS 2374, 2007 BCSC 1610; Cassey v. The Owners, Strata Plan VR-326, 2023 BCCRT 645. Last verified August 21, 2026 against the official consolidation at bclaws.gov.bc.ca, current to August 18, 2026.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var mtgType=document.getElementById('mtgType'),
+      councilSize=document.getElementById('councilSize'),
+      presentList=document.getElementById('presentList'),
+      regretsList=document.getElementById('regretsList'),
+      othersList=document.getElementById('othersList'),
+      councilQuorumInfo=document.getElementById('councilQuorumInfo'),
+      genQuorumField=document.getElementById('genQuorumField'),
+      quorumNote=document.getElementById('quorumNote'),
+      motionsList=document.getElementById('motionsList'),
+      addMotionBtn=document.getElementById('addMotion'),
+      businessArising=document.getElementById('businessArising'),
+      nextMeeting=document.getElementById('nextMeeting'),
+      preparedBy=document.getElementById('preparedBy'),
+      strataPlan=document.getElementById('strataPlan'),
+      mtgDate=document.getElementById('mtgDate'),
+      mtgTime=document.getElementById('mtgTime'),
+      mtgLocation=document.getElementById('mtgLocation'),
+      mtgFormat=document.getElementById('mtgFormat'),
+      genBtn=document.getElementById('genBtn'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      docOutput=document.getElementById('docOutput'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var motionCount=0;
+
+  function esc(s){
+    var d=document.createElement('div');
+    d.textContent=s==null?'':s;
+    return d.innerHTML;
+  }
+
+  function linesOf(el){
+    return (el.value||'').split('\n').map(function(s){return s.trim();}).filter(function(s){return s.length>0;});
+  }
+
+  function addMotionRow(){
+    motionCount++;
+    var row=document.createElement('div');
+    row.className='motion-row';
+    row.setAttribute('data-motion','1');
+    row.innerHTML=
+      '<div class="motion-row-head"><span class="mnum">Motion</span>'+
+      '<button type="button" class="remove-motion">Remove</button></div>'+
+      '<label>Motion text</label>'+
+      '<textarea class="m-text" placeholder="e.g. To approve the 2027 operating budget as presented."></textarea>'+
+      '<div class="row2">'+
+        '<div><label>Moved by</label><input type="text" class="m-moved"></div>'+
+        '<div><label>Seconded by <span class="hint">(optional)</span></label><input type="text" class="m-seconded"></div>'+
+      '</div>'+
+      '<div class="row2">'+
+        '<div><label>Result</label><select class="m-result">'+
+          '<option value="Carried">Carried</option>'+
+          '<option value="Carried as amended">Carried as amended</option>'+
+          '<option value="Defeated">Defeated</option>'+
+          '<option value="Tabled">Tabled</option>'+
+          '<option value="Withdrawn">Withdrawn</option>'+
+        '</select></div>'+
+        '<div><label>Vote detail <span class="hint">(optional)</span></label><input type="text" class="m-detail" placeholder="e.g. 4 for, 1 against"></div>'+
+      '</div>'+
+      '<label class="coi-check"><input type="checkbox" class="m-coi-toggle">'+
+        '<span>A council member disclosed a conflict of interest on this motion (s. 32)</span></label>'+
+      '<div class="coi-fields">'+
+        '<span class="hint2">Per s. 32: the member discloses, abstains from voting, and leaves the room for the discussion and the vote.</span>'+
+        '<label>Council member</label><input type="text" class="m-coi-name" placeholder="Name">'+
+      '</div>';
+    motionsList.appendChild(row);
+
+    row.querySelector('.remove-motion').addEventListener('click',function(){
+      motionsList.removeChild(row);
+    });
+    var toggle=row.querySelector('.m-coi-toggle'),
+        fields=row.querySelector('.coi-fields');
+    toggle.addEventListener('change',function(){
+      fields.classList.toggle('show',toggle.checked);
+    });
+  }
+  addMotionBtn.addEventListener('click',addMotionRow);
+  addMotionRow();
+
+  function councilQuorum(size){
+    if(size<=1)return 1;
+    if(size<=4)return 2;
+    if(size<=6)return 3;
+    return 4;
+  }
+
+  function updateQuorumUI(){
+    var isCouncil=mtgType.value==='council';
+    genQuorumField.style.display=isCouncil?'none':'block';
+    if(!isCouncil){
+      councilQuorumInfo.textContent='';
+      return;
+    }
+    var size=parseInt(councilSize.value,10);
+    var present=linesOf(presentList).length;
+    if(!size||size<1){
+      councilQuorumInfo.textContent='Enter the total number of council members to check quorum (Standard Bylaw 16).';
+      return;
+    }
+    var need=councilQuorum(size);
+    var met=present>=need;
+    councilQuorumInfo.textContent=present+' of '+size+' council members present — quorum requires '+need+' (Standard Bylaw 16) — '+(met?'quorum met.':'quorum NOT met.');
+    councilQuorumInfo.style.color=met?'#2C6B60':'#8F2D1E';
+  }
+  mtgType.addEventListener('change',updateQuorumUI);
+  councilSize.addEventListener('input',updateQuorumUI);
+  presentList.addEventListener('input',updateQuorumUI);
+  updateQuorumUI();
+
+  function meetingTypeLabel(v){
+    if(v==='agm')return 'an Annual General Meeting';
+    if(v==='sgm')return 'a Special General Meeting';
+    return 'a Council Meeting';
+  }
+
+  genBtn.addEventListener('click',function(){
+    var present=linesOf(presentList);
+    if(present.length===0){
+      err.textContent='Add at least one council member present.';
+      err.style.display='block';
+      result.style.display='none';
+      return;
+    }
+    err.style.display='none';
+
+    var typeVal=mtgType.value;
+    var typeLabel=meetingTypeLabel(typeVal);
+    var isCouncil=typeVal==='council';
+    var regrets=linesOf(regretsList);
+    var others=linesOf(othersList);
+
+    var html='';
+    html+='<h2 class="doc-title">Minutes of '+esc(typeLabel)+'</h2>';
+    html+='<p class="doc-sub">'+esc(strataPlan.value?('The Owners, Strata Plan '+strataPlan.value):'The Owners, Strata Plan [number]')+'</p>';
+
+    var dateStr=mtgDate.value?mtgDate.value:'[date]';
+    html+='<p class="doc-meta"><strong>Date:</strong> '+esc(dateStr)+(mtgTime.value?' at '+esc(mtgTime.value):'')+'</p>';
+    html+='<p class="doc-meta"><strong>Location:</strong> '+esc(mtgLocation.value||'[location]')+' ('+esc(mtgFormat.value)+')</p>';
+
+    html+='<div class="doc-section-title">Attendance <span class="req-tag">§ s. 35(1)(a)</span></div>';
+    html+='<p><strong>Present:</strong> '+esc(present.join(', '))+'</p>';
+    if(regrets.length)html+='<p><strong>Regrets:</strong> '+esc(regrets.join(', '))+'</p>';
+    if(others.length)html+='<p><strong>Also present:</strong> '+esc(others.join(', '))+'</p>';
+
+    html+='<div class="doc-section-title">Quorum</div>';
+    if(isCouncil){
+      var size=parseInt(councilSize.value,10)||present.length;
+      var need=councilQuorum(size);
+      var met=present.length>=need;
+      html+='<p>'+present.length+' of '+size+' council members present — quorum of '+need+' required <span class="req-tag">§ Std. Bylaw 16</span> — '+(met?'<strong>quorum met.</strong>':'<strong>quorum NOT met — decisions may be invalid.</strong>')+'</p>';
+    } else {
+      html+='<p>'+esc(quorumNote.value||'[confirm quorum using the quorum calculator before finalizing]')+' <span class="req-tag">§ s. 48</span></p>';
+    }
+
+    html+='<p class="doc-note">Meeting called to order.</p>';
+
+    var motionRows=motionsList.querySelectorAll('.motion-row');
+    if(motionRows.length){
+      html+='<div class="doc-section-title">Motions <span class="req-tag">§ s. 35(1)(a)</span></div>';
+      var n=0;
+      motionRows.forEach(function(row){
+        var text=row.querySelector('.m-text').value.trim();
+        if(!text)return;
+        n++;
+        var moved=row.querySelector('.m-moved').value.trim();
+        var seconded=row.querySelector('.m-seconded').value.trim();
+        var resultVal=row.querySelector('.m-result').value;
+        var detail=row.querySelector('.m-detail').value.trim();
+        var coiOn=row.querySelector('.m-coi-toggle').checked;
+        var coiName=row.querySelector('.m-coi-name').value.trim();
+
+        html+='<div class="doc-motion">';
+        html+='<p class="mtitle">'+n+'. '+esc(text)+'</p>';
+        var metaBits=[];
+        if(moved)metaBits.push('Moved by '+esc(moved));
+        if(seconded)metaBits.push('seconded by '+esc(seconded));
+        html+='<p class="mmeta">'+(metaBits.length?metaBits.join(', ')+'. ':'')+'<strong>Result: '+esc(resultVal)+'</strong>'+(detail?' ('+esc(detail)+')':'')+'</p>';
+        if(coiOn){
+          html+='<p class="mcoi">'+esc(coiName||'A council member')+' disclosed a conflict of interest, abstained from voting, and left the meeting for the discussion and the vote on this motion. <span class="req-tag">§ s. 32</span></p>';
+        }
+        html+='</div>';
+      });
+      if(n===0){
+        html=html.replace('<div class="doc-section-title">Motions <span class="req-tag">§ s. 35(1)(a)</span></div>','');
+      }
+    }
+
+    if(businessArising.value.trim()){
+      html+='<div class="doc-section-title">Reports &amp; business arising</div>';
+      html+='<p>'+esc(businessArising.value.trim()).replace(/\n/g,'<br>')+'</p>';
+    }
+
+    html+='<div class="doc-section-title">Wrap-up</div>';
+    html+='<p>Next meeting: '+esc(nextMeeting.value||'TBD')+'</p>';
+    html+='<p class="doc-note">Meeting adjourned.</p>';
+    if(preparedBy.value.trim()){
+      html+='<p style="margin-top:16px">Minutes prepared by: '+esc(preparedBy.value.trim())+'</p>';
+    }
+
+    docOutput.innerHTML=html;
+    result.style.display='block';
+    result.scrollIntoView({block:'start',behavior:'smooth'});
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    var text=docOutput.innerText||docOutput.textContent||'';
+    copyToClipboard(text.trim());
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
