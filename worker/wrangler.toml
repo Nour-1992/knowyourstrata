@@ -1,0 +1,29 @@
+# Legislative-Change Watcher (BC) -- standalone Cloudflare Worker.
+#
+# This is deliberately separate from the Pages project that serves the
+# rest of knowyourstrata.com: Cloudflare Pages Functions don't support
+# Cron Triggers, so a scheduled job needs its own Worker.
+#
+# One-time setup in the Cloudflare dashboard (not done by this repo):
+#   1. Workers & Pages -> Create -> connect this GitHub repo the same way
+#      the Pages project is connected ("Continue with GitHub" / Workers
+#      Builds), pointing the build at this "worker/" subdirectory so it
+#      finds this wrangler.toml.
+#   2. Settings -> Variables and Secrets -> add WATCHER_STATUS_SECRET
+#      (any long random string) as a secret. Never commit this value.
+#   3. Confirm the KV binding below resolves to the existing
+#      "knowyourstrata-watcher" namespace (id already created).
+#
+# After that, git push to this repo deploys the Worker automatically,
+# same as Pages already does for the rest of the site.
+
+name = "knowyourstrata-watcher"
+main = "src/index.js"
+compatibility_date = "2026-08-21"
+
+[triggers]
+crons = ["0 8 * * 1"]  # Weekly, Monday 08:00 UTC
+
+[[kv_namespaces]]
+binding = "WATCHER_KV"
+id = "6359a8114b29408f8f6b729a0cb96508"

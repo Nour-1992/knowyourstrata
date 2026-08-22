@@ -1,0 +1,5 @@
+# Cloudflare Pages serves everything in the repo root as a static asset by
+# default. worker/ is a separate, standalone Worker (its own deploy target,
+# its own wrangler.toml) -- it has no business being served as a static
+# file under knowyourstrata.com/worker/*.
+worker/
