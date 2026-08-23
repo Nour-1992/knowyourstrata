@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BC Strata Depreciation Report Deadline Calculator — When Is Yours Due? | Strata Property Act s. 94</title>
+<meta name="description" content="Free calculator for BC strata councils: work out the exact date your depreciation report is due under the 2024 rules — by region, by renewal cycle, or for a newly formed strata — with the Strata Property Act and Regulation section behind every date.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/bc/depreciation-report-deadline">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BC Strata Depreciation Report Deadline Calculator — When Is Yours Due? | Strata Property Act s. 94">
+<meta property="og:description" content="Free calculator for BC strata councils: work out the exact date your depreciation report is due under the 2024 rules — by region, by renewal cycle, or for a newly formed strata.">
+<meta property="og:url" content="https://knowyourstrata.com/bc/depreciation-report-deadline">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BC Strata Depreciation Report Deadline Calculator — When Is Yours Due? | Strata Property Act s. 94">
+<meta name="twitter:description" content="Free calculator for BC strata councils: work out the exact date your depreciation report is due under the 2024 rules.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "When is our strata's depreciation report due?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free calculator for BC strata councils: work out the exact date your depreciation report is due under the 2024 Strata Property Regulation rules — by region, by renewal cycle, or for a newly formed strata."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="date"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .mode-block{display:none}
+  .mode-block.active{display:block}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp.exempt{background:#5E6E68}
+  .stamp.overdue{background:#8F2D1E}
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .past{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .after{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .after h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .after .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .after ol{list-style:none;font-size:.9rem;counter-reset:steps}
+  .after li{
+    padding:6px 0 6px 30px;color:#3D4C47;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .after li:last-child{border-bottom:none}
+  .after li::before{
+    counter-increment:steps;content:counter(steps);
+    position:absolute;left:0;top:6px;
+    width:20px;height:20px;border-radius:50%;background:var(--spruce);color:#fff;
+    font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  .after .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+  .after a{color:var(--spruce);font-weight:600}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .soon{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+  .more-tools .current{color:#8A8577;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .chain{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px;
+    font-size:.85rem;font-family:var(--mono);
+  }
+  .chain span{
+    padding:6px 10px;border-radius:6px;background:#F1F4F2;color:var(--spruce-deep);
+    border:1px solid var(--line);
+  }
+  .chain span.comp{background:rgba(122,46,46,.06);border-color:var(--seal);color:var(--seal)}
+  .chain .arrow{color:#8A8577;font-family:var(--body)}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/" aria-current="true">British Columbia</a>
+      <a href="/on/">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/bc/">&larr; All BC tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">British Columbia · Strata Property Act</p>
+    <h1>When is our strata's depreciation report due?</h1>
+    <p class="lede">The 2024 changes replaced the old three-year review with a hard five-year cycle, phased in first deadlines by region, and removed the annual ¾ vote that used to let a strata defer a report indefinitely. Tell us where you stand and we'll work out your date — with the section behind it.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="lots">How many strata lots are in the strata plan?</label>
+      <select id="lots">
+        <option value="5plus" selected>5 or more lots</option>
+        <option value="4less">4 or fewer lots</option>
+      </select>
+
+      <div id="mainInputs">
+        <label for="mode">Which best describes your strata?</label>
+        <select id="mode">
+          <option value="existing" selected>Existing strata, no current depreciation report yet</option>
+          <option value="renew">We already have a depreciation report — when's the next one?</option>
+          <option value="new">Newly created strata (registered on or after July 1, 2024)</option>
+        </select>
+
+        <div class="mode-block active" id="existingBlock">
+          <label for="region">Where is the strata located?</label>
+          <select id="region">
+            <option value="metro">Metro Vancouver Regional District</option>
+            <option value="fvrd">Fraser Valley Regional District</option>
+            <option value="crd">Capital Regional District (Greater Victoria)</option>
+            <option value="other">Anywhere else in B.C.</option>
+          </select>
+        </div>
+
+        <div class="mode-block" id="renewBlock">
+          <label for="lastReport">Date of your most recent depreciation report</label>
+          <input type="date" id="lastReport">
+        </div>
+
+        <div class="mode-block" id="newBlock">
+          <label for="registered">Date the strata plan was deposited / registered
+            <span class="hint">— the date the strata legally came into existence</span></label>
+          <input type="date" id="registered">
+          <label for="firstAgm">Date of the first annual general meeting
+            <span class="hint">— if it hasn't happened yet, use the expected date</span></label>
+          <input type="date" id="firstAgm">
+        </div>
+      </div>
+
+      <button id="calc">Get our deadline</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp" id="stamp">
+        <p class="k" id="stampK">Depreciation report due by</p>
+        <p class="date" id="dueDate">—</p>
+        <p class="sub" id="dueSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">✓</span> Verified August 23, 2026 · <span id="badgeCite">Strata Property Act, s. 94; Strata Property Regulation, s. 6.2</span></p>
+
+      <p class="cite-line" id="citeLine1"></p>
+      <p class="cite-line" id="citeLine2" style="display:none"></p>
+      <p class="past" id="pastNote"></p>
+
+      <div class="after" id="afterBox">
+        <h3>Once the report is in hand</h3>
+        <p class="sub">A depreciation report isn't a filing you tick off — it feeds two things the council must actually do.</p>
+        <ol>
+          <li>It must be <strong>considered when setting the annual CRF contribution</strong> from the second year on. <a href="/bc/crf-contribution">Check your CRF contribution &rarr;</a></li>
+          <li>It becomes a strata record owners and buyers can request. <a href="/bc/records-deadline">Records request deadlines &rarr;</a></li>
+        </ol>
+        <p class="cite">Strata Property Regulation, s. 6.1(1) (CRF contribution "determined after consideration of the most recent depreciation report, if any"); Strata Property Act, s. 35–36 (records).</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this — and the AGM notice, special levy, CRF, records, and depreciation-report deadlines, a fine-enforcement checklist, and the insurance deductible guide — all in one printable pack with a calendar, checklists, templates, and reference guides? <a href="/bc/starter-pack">Get the BC Board Starter Pack &rarr; $39 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong — with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourstrata.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in ✓</h2>
+      <p>Check your inbox to confirm. New BC tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>BC strata tools</h2>
+    <ul>
+      <li><a href="/bc/agm-notice">AGM notice calculator</a></li>
+      <li><a href="/bc/special-levy">Special levy calculator</a></li>
+      <li><a href="/bc/crf-contribution">CRF contribution</a></li>
+      <li><a href="/bc/voting-threshold">Voting threshold checker</a></li>
+      <li><a href="/bc/records-deadline">Records deadline</a></li>
+      <li><span>Depreciation report deadline</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>The obligation, and why the dates live in the regulation</h2>
+    <p>Section 94 of the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_06" rel="noopener">Strata Property Act</a> is what requires a depreciation report at all — a report on the strata's common property and assets, what they'll cost to repair or replace, and how the contingency reserve fund measures up. As with everything else on this site, the Act creates the obligation and the <a href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/43_2000" rel="noopener">Strata Property Regulation</a> supplies the timing.</p>
+    <p>What changed in 2024 is the timing, not the existence of the duty. The Province's official guidance now states it plainly:</p>
+    <p class="quote">"All strata corporations with five or more lots must obtain depreciation reports on a five-year cycle. Strata corporations with four or fewer lots continue to be exempted and are not required to obtain depreciation reports." <span style="color:#5E6E68">— gov.bc.ca, depreciation report requirements</span></p>
+    <p>Three practical shifts sit inside that: a fixed five-year renewal cycle (not the old three-year-with-review pattern), staggered first deadlines by region so the whole province wasn't hitting the same date, and the end of the annual ¾ vote a strata could once use to keep putting a report off.</p>
+
+    <h2 style="margin-top:32px">The regional phase-in, for stratas that don't have a current report</h2>
+    <p>An existing strata of five or more lots that hasn't got a current depreciation report has a first deadline set by where it is:</p>
+    <div class="chain">
+      <span class="comp">Metro Vancouver · Fraser Valley · Capital Regional District</span>
+      <span class="arrow">by</span>
+      <span>July 1, 2026</span>
+    </div>
+    <div class="chain">
+      <span>Everywhere else in B.C.</span>
+      <span class="arrow">by</span>
+      <span>July 1, 2027</span>
+    </div>
+    <p>The July 1, 2026 date for the three high-density regions has already passed. A strata in one of them that still doesn't have a report isn't "coming up on a deadline" — it's past one, and the fix is to get a report underway now, not to wait for anything.</p>
+
+    <h2 style="margin-top:32px">Newly created stratas, and the developer's first report</h2>
+    <p>A strata registered on or after July 1, 2024 works off its first annual general meeting instead of the regional dates. Registered between July 1, 2024 and July 1, 2027, the first report is due within <strong>two years</strong> of the first AGM; registered on or after July 1, 2027, it tightens to within <strong>18 months</strong>. For the newest stratas the developer also has to fund that first report — a minimum of $5,000 plus $200 per lot, capped at $30,000 — with the money due by the first AGM.</p>
+
+    <dl class="faq">
+      <dt>We have four lots. Are we really off the hook entirely?</dt>
+      <dd>Yes, for the obligation to <em>obtain</em> a depreciation report. The exemption for strata plans with four or fewer lots (Strata Property Regulation s. 6.22, for the purposes of Act s. 94(2)) carried through the 2024 changes. Note it's a different thing from the CRF contribution floor, which has no lot-count exemption — a small strata still contributes to the reserve fund even with no report to consider.</dd>
+      <dt>Can we still vote to defer the report like we used to?</dt>
+      <dd>No. The annual ¾ vote that let a strata put off getting a report indefinitely was removed in the 2024 changes. A strata that relied on that vote in the past now falls under the regional deadline above.</dd>
+      <dt>Is the five years measured from the report date or from an AGM?</dt>
+      <dd>From the report. Once you have a depreciation report, the next one is due within five years of it — this tool's "renew" option measures exactly that. The regional July 2026 / July 2027 dates are one-time transition deadlines for stratas that don't yet have a current report, not the ongoing cycle.</dd>
+      <dt>Does getting the report change how much we put in the reserve fund?</dt>
+      <dd>Indirectly. From the second fiscal year after the first AGM, the annual CRF contribution must be "determined after consideration of the most recent depreciation report, if any" (Regulation s. 6.1(1)). That's a process requirement about considering the report — it doesn't set the dollar figure by itself. Our <a href="/bc/crf-contribution">CRF contribution tool</a> covers the amount.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No — general information based on the current legislation and the Province's published guidance, verified against gov.bc.ca on the date shown. For a report that's already overdue, a disputed exemption, or a developer-transition question, talk to a strata lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, S.B.C. 1998, c. 43, s. 94, and the Strata Property Regulation, B.C. Reg. 43/2000 (depreciation-report provisions, ss. 6.2–6.6 and 6.22, as amended effective July 1, 2024). Regional phase-in and new-strata timelines verified 23 August 2026 against the Province of B.C.'s official depreciation-report guidance on gov.bc.ca.</p>
+    <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var lotsSel=document.getElementById('lots'),
+      mainInputs=document.getElementById('mainInputs'),
+      modeSel=document.getElementById('mode'),
+      existingBlock=document.getElementById('existingBlock'),
+      renewBlock=document.getElementById('renewBlock'),
+      newBlock=document.getElementById('newBlock'),
+      region=document.getElementById('region'),
+      lastReport=document.getElementById('lastReport'),
+      registered=document.getElementById('registered'),
+      firstAgm=document.getElementById('firstAgm'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      stamp=document.getElementById('stamp'),
+      stampK=document.getElementById('stampK'),
+      dueDate=document.getElementById('dueDate'),
+      dueSub=document.getElementById('dueSub'),
+      badgeCite=document.getElementById('badgeCite'),
+      citeLine1=document.getElementById('citeLine1'),
+      citeLine2=document.getElementById('citeLine2'),
+      pastNote=document.getElementById('pastNote'),
+      afterBox=document.getElementById('afterBox'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  // Regional first-deadline dates for existing stratas without a current
+  // report (Strata Property Regulation phase-in, in force July 1, 2024).
+  var REGION_DATE={
+    metro:new Date(2026,6,1),
+    fvrd:new Date(2026,6,1),
+    crd:new Date(2026,6,1),
+    other:new Date(2027,6,1)
+  };
+  var REGION_LABEL={
+    metro:'Metro Vancouver Regional District',
+    fvrd:'Fraser Valley Regional District',
+    crd:'Capital Regional District',
+    other:'your area of B.C. (outside the three phase-one regions)'
+  };
+  var NEW_STRATA_CUTOFF=new Date(2027,6,1); // July 1, 2027
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function addYears(d,n){
+    var c=new Date(d.getTime());
+    c.setFullYear(c.getFullYear()+n);
+    return c;
+  }
+  function addMonths(d,n){
+    var c=new Date(d.getTime());
+    c.setMonth(c.getMonth()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+
+  function syncLots(){
+    var exempt=lotsSel.value==='4less';
+    mainInputs.style.display=exempt?'none':'block';
+    result.style.display='none';
+  }
+  lotsSel.addEventListener('change',syncLots);
+
+  function toggleMode(){
+    var m=modeSel.value;
+    existingBlock.classList.toggle('active',m==='existing');
+    renewBlock.classList.toggle('active',m==='renew');
+    newBlock.classList.toggle('active',m==='new');
+    result.style.display='none';
+  }
+  modeSel.addEventListener('change',toggleMode);
+  toggleMode();
+  syncLots();
+
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  function resetStamp(){
+    stamp.className='stamp';
+    stampK.textContent='Depreciation report due by';
+    citeLine2.style.display='none';
+    pastNote.style.display='none';
+    afterBox.style.display='block';
+  }
+
+  function markPast(text){
+    pastNote.style.display='block';
+    pastNote.textContent=text;
+    stamp.className='stamp overdue';
+  }
+
+  calcBtn.addEventListener('click',function(){
+    err.style.display='none';
+    resetStamp();
+
+    // ---- Exempt: 4 or fewer lots ----
+    if(lotsSel.value==='4less'){
+      stamp.className='stamp exempt';
+      stampK.textContent='No depreciation report required';
+      dueDate.textContent='Exempt';
+      dueSub.textContent='Strata plans with four or fewer lots are not required to obtain a depreciation report.';
+      badgeCite.textContent='Strata Property Regulation, s. 6.22';
+      citeLine1.innerHTML='<strong>Strata Property Regulation, s. 6.22</strong> (for the purposes of Act s. 94(2)) — a strata plan with fewer than five lots is exempt from the requirement to obtain a depreciation report.';
+      afterBox.style.display='none';
+      current={kind:'exempt'};
+      reveal();
+      return;
+    }
+
+    var m=modeSel.value;
+
+    // ---- Existing strata, regional phase-in ----
+    if(m==='existing'){
+      var due=REGION_DATE[region.value];
+      dueDate.textContent=fmt.format(due);
+      dueSub.textContent='first deadline under the regional phase-in, for a strata that doesn’t yet have a current report';
+      badgeCite.textContent='Strata Property Act, s. 94; Strata Property Regulation, s. 6.2';
+      citeLine1.innerHTML='<strong>Regional phase-in (Reg. s. 6.2, in force July 1, 2024)</strong> — '+REGION_LABEL[region.value]+': a current depreciation report is required by '+fmt.format(due)+'.';
+      citeLine2.style.display='block';
+      citeLine2.innerHTML='<strong>Strata Property Act, s. 94</strong> — the underlying obligation to obtain the report; after this one, the next is due within five years.';
+      if(due<today0()){
+        markPast('This deadline has already passed. If your strata still has no current depreciation report, it is overdue — get one underway as soon as possible rather than waiting.');
+      }
+      current={kind:'existing',region:region.value,due:due};
+      reveal();
+      return;
+    }
+
+    // ---- Renewal from last report ----
+    if(m==='renew'){
+      if(!lastReport.value){show('Pick the date of your most recent depreciation report.');return;}
+      var r=parseLocal(lastReport.value);
+      var due2=addYears(r,5);
+      dueDate.textContent=fmt.format(due2);
+      dueSub.textContent='five years after your most recent report';
+      badgeCite.textContent='Strata Property Regulation, s. 6.2';
+      citeLine1.innerHTML='<strong>Five-year cycle (Reg. s. 6.2)</strong> — a strata of five or more lots must obtain an updated depreciation report at least every five years; measured from your last report on '+fmt.format(r)+'.';
+      if(due2<today0()){
+        markPast('The five-year point has already passed. Your strata is due for an updated depreciation report now.');
+      }
+      current={kind:'renew',last:r,due:due2};
+      reveal();
+      return;
+    }
+
+    // ---- Newly created strata ----
+    if(m==='new'){
+      if(!registered.value){show('Pick the date the strata plan was registered.');return;}
+      if(!firstAgm.value){show('Pick the date of the first annual general meeting (or the expected date).');return;}
+      var reg=parseLocal(registered.value);
+      var agm=parseLocal(firstAgm.value);
+      if(agm<reg){show('The first AGM can’t be before the strata was registered — please check the dates.');return;}
+      var within18=reg>=NEW_STRATA_CUTOFF;
+      var due3=within18?addMonths(agm,18):addYears(agm,2);
+      var windowLabel=within18?'18 months':'two years';
+      dueDate.textContent=fmt.format(due3);
+      dueSub.textContent='within '+windowLabel+' of the first AGM';
+      badgeCite.textContent='Strata Property Act, s. 94; Strata Property Regulation, s. 6.2';
+      citeLine1.innerHTML='<strong>New-strata timeline (Reg. s. 6.2)</strong> — registered '+fmt.format(reg)+', so the first report is due within '+windowLabel+' of the first AGM ('+fmt.format(agm)+').';
+      citeLine2.style.display='block';
+      citeLine2.innerHTML=within18
+        ? '<strong>Registered on or after July 1, 2027</strong>, so the tighter 18-month window applies. After this first report, the ongoing five-year cycle begins.'
+        : '<strong>Registered between July 1, 2024 and July 1, 2027</strong>, so the two-year window applies. After this first report, the ongoing five-year cycle begins.';
+      if(due3<today0()){
+        markPast('This first-report deadline has already passed. If no report has been obtained, it is overdue.');
+      }
+      current={kind:'new',reg:reg,agm:agm,due:due3,window:windowLabel};
+      reveal();
+      return;
+    }
+  });
+
+  function reveal(){
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  }
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS (denied permission, document not
+     focused), so neither path is assumed and neither fails silently. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied ✓',false);
+    else flashNote('Copy not supported — please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied ✓',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s;
+    if(current.kind==='exempt'){
+      s='This strata plan has four or fewer lots and is exempt from the requirement to obtain a depreciation report (Strata Property Regulation s. 6.22, for the purposes of Strata Property Act s. 94(2)).';
+    } else if(current.kind==='existing'){
+      s='Depreciation report due by '+fmt.format(current.due)+' under the regional phase-in for a strata without a current report (Strata Property Act s. 94; Strata Property Regulation s. 6.2). After this, the next report is due within five years.';
+    } else if(current.kind==='renew'){
+      s='Most recent depreciation report dated '+fmt.format(current.last)+'. Next report due by '+fmt.format(current.due)+' — within five years (Strata Property Regulation s. 6.2).';
+    } else if(current.kind==='new'){
+      s='Strata registered '+fmt.format(current.reg)+', first AGM '+fmt.format(current.agm)+'. First depreciation report due by '+fmt.format(current.due)+' — within '+current.window+' of the first AGM (Strata Property Act s. 94; Strata Property Regulation s. 6.2). The five-year cycle runs from there.';
+    }
+    s+=' Verified August 23, 2026 against the Province of B.C.’s depreciation-report guidance on gov.bc.ca. General information, not legal advice.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+</body>
+</html>
