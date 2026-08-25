@@ -28,10 +28,27 @@
  *                           access tokens. Not a Stripe value -- generate
  *                           one and keep it out of this repository.
  *
- * Neither value belongs in this repository.
+ * Optional, for emailing the buyer their access link (see _lib/pack-email.js):
+ *
+ *   RESEND_API_KEY        - Resend API key. If unset, the purchase still
+ *                           completes and the buyer is still redirected into
+ *                           the pack; they simply get no email. Delivery is
+ *                           never allowed to break checkout.
+ *   PACK_EMAIL_FROM       - sending address. Defaults to
+ *                           "Know Your Strata <packs@send.knowyourstrata.com>".
+ *                           Sending is on the send. subdomain, not the root:
+ *                           the root already carries an SPF record for the
+ *                           registrar's email forwarding, and a subdomain gets
+ *                           its own SPF without touching it. The domain must be
+ *                           verified in Resend or every send returns 403.
+ *   PACK_EMAIL_REPLY_TO   - where buyer replies land. Defaults to the from
+ *                           address if unset.
+ *
+ * None of these values belong in this repository.
  */
 
 import { signAccessToken } from '../_lib/access-token.js';
+import { sendPackEmail } from '../_lib/pack-email.js';
 
 const PACK_PRICE_CENTS = 4900;
 const PACK_CURRENCY = 'cad';
@@ -67,7 +84,7 @@ function redirect(url) {
   });
 }
 
-export async function onRequestGet({ request, env }) {
+export async function onRequestGet({ request, env, waitUntil }) {
   const url = new URL(request.url);
   const sessionId = url.searchParams.get('session_id');
 
@@ -153,6 +170,35 @@ export async function onRequestGet({ request, env }) {
   // support/debugging breadcrumb -- never enough to look up the purchase
   // in Stripe on its own.
   const token = await signAccessToken(tokenSecret, { product: matched.key, ref: sessionId.slice(-12) });
+
+  // Email the buyer their own copy of the link.
+  //
+  // waitUntil keeps this alive after the 302 has already been returned, so a
+  // slow or failing mail provider never delays the buyer getting into the pack
+  // -- and sendPackEmail never throws, so it can never turn a completed
+  // purchase into an error page. If RESEND_API_KEY is unset the whole step is
+  // skipped silently and the flow is exactly what it was before.
+  //
+  // Note: re-opening this verify URL sends the email again. That is a
+  // deliberate trade -- a duplicate email is harmless, whereas de-duplicating
+  // would mean storing per-session state purely to avoid one.
+  const buyerEmail = session.customer_details && session.customer_details.email;
+  if (env.RESEND_API_KEY && buyerEmail) {
+    const from = env.PACK_EMAIL_FROM || 'Know Your Strata <packs@send.knowyourstrata.com>';
+    const deliver = sendPackEmail({
+      apiKey: env.RESEND_API_KEY,
+      from,
+      replyTo: env.PACK_EMAIL_REPLY_TO || undefined,
+      to: buyerEmail,
+      product: matched.key,
+      link: `${url.origin}${matched.redeemDestination}?t=${token}`
+    }).then((result) => {
+      if (!result.ok) {
+        console.error('verify-purchase: pack email not sent', matched.key, result.error, result.detail || '');
+      }
+    });
+    if (typeof waitUntil === 'function') waitUntil(deliver);
+  }
 
   const headers = new Headers();
   headers.set('Location', `${matched.redeemDestination}?t=${token}`);
