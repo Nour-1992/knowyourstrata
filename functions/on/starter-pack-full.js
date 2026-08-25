@@ -72,5 +72,17 @@ export async function onRequestGet({ request, env }) {
     `kys_access=${token}; Path=/on/starter-pack-full; Max-Age=${ONE_DECADE_SECONDS}; HttpOnly; Secure; SameSite=Lax`
   );
 
-  return new Response(asset.body, { status: asset.status, headers });
+  // Stamp the token onto <body> so the page can show the buyer their own
+  // permanent link. This matters most on a RETURN visit: the cookie alone
+  // gets them in, but the URL then carries no token, so without this the
+  // page has no way to tell them what link to save. The cookie is HttpOnly
+  // and deliberately stays that way -- this attribute is the token the
+  // buyer already has, surfaced deliberately, not a second credential.
+  const stamped = new HTMLRewriter()
+    .on('body', {
+      element(el) { el.setAttribute('data-access-token', token); }
+    })
+    .transform(new Response(asset.body, { status: asset.status, headers }));
+
+  return stamped;
 }

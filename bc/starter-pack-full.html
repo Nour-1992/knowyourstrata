@@ -99,7 +99,69 @@
     border-bottom:1px solid #EEEBE2;
   }
   .clist li:last-child{border-bottom:none}
-  .clist li::before{content:"☐";color:var(--spruce);flex:none;font-size:.95rem}
+  /* Real, tickable checkboxes. appearance:none + a glyph keeps them printing
+     reliably (native controls print inconsistently across browsers) and lets
+     a ticked box survive "Print / save as PDF" the way a paper checklist would. */
+  .clist li input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;margin:0;flex:none;
+    width:1.05em;height:1.05em;font-size:.95rem;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:none;border:0;cursor:pointer;color:var(--spruce);
+    print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  }
+  .clist li input[type=checkbox]::before{content:"☐"}
+  .clist li input[type=checkbox]:checked::before{content:"☑"}
+  .clist li input[type=checkbox]:focus-visible{outline:2px solid var(--spruce);outline-offset:2px;border-radius:3px}
+  .clist li label{cursor:pointer}
+  .clist li:has(input:checked) label{color:#7C8A84;text-decoration:line-through;text-decoration-thickness:1px}
+
+  .clist-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .clist-head h3{margin-bottom:0}
+  .clist-prog{
+    margin-left:auto;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;
+    color:#7C8A84;white-space:nowrap;
+  }
+  .clist-reset{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    background:none;border:1px solid var(--line);border-radius:5px;padding:3px 8px;
+    color:#7C8A84;cursor:pointer;
+  }
+  .clist-reset:hover{color:var(--spruce);border-color:var(--spruce)}
+  .clist-reset:focus-visible{outline:2px solid var(--spruce);outline-offset:2px}
+
+  .packnav{
+    display:flex;flex-wrap:wrap;gap:6px 8px;margin:18px 0 0;
+    padding-bottom:16px;border-bottom:1px solid var(--line);
+  }
+  .packnav a{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;
+    color:#5E6E68;text-decoration:none;border:1px solid var(--line);border-radius:5px;
+    padding:5px 10px;
+  }
+  .packnav a:hover{color:var(--spruce);border-color:var(--spruce)}
+  .packnav a:focus-visible{outline:2px solid var(--spruce);outline-offset:2px}
+  .src a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}
+  .src a:hover{color:var(--spruce);text-decoration-color:var(--spruce)}
+
+  /* Access link banner */
+  .savelink{
+    background:#FFF9E8;border:1px solid #E4D9B4;border-left:3px solid var(--seal);
+    border-radius:8px;padding:16px 18px;margin:18px 0 4px;
+  }
+  .savelink p{font-size:.9rem;color:#5A5340;margin-bottom:11px}
+  .savelink p strong{color:#463F2C}
+  .savelink-row{display:flex;gap:8px;flex-wrap:wrap}
+  .savelink input{
+    flex:1 1 260px;min-width:0;font-family:var(--mono);font-size:.74rem;
+    padding:7px 9px;border:1px solid #E4D9B4;border-radius:5px;
+    background:#fff;color:#5A5340;
+  }
+  .savelink button{
+    font-family:var(--body);font-size:.82rem;font-weight:600;
+    padding:7px 14px;border-radius:5px;border:1px solid var(--spruce);
+    background:var(--spruce);color:#fff;cursor:pointer;white-space:nowrap;
+  }
+  .savelink button:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
   .clist .item-cite{font-family:var(--mono);font-size:.72rem;color:var(--seal);white-space:nowrap;margin-left:auto}
   @media (max-width:520px){
     .clist li{flex-direction:column;align-items:flex-start;gap:2px}
@@ -195,7 +257,7 @@
   }
 </style>
 </head>
-<body>
+<body data-pack="bc">
 
 <nav class="kys-nav no-print">
   <div class="kys-nav-inner">
@@ -210,6 +272,23 @@
 <p class="kys-back no-print"><a href="/bc/starter-pack">&larr; Back to the Starter Pack page</a></p>
 
 <div class="wrap">
+  <nav class="packnav no-print" aria-label="Sections of this pack">
+    <a href="#calendar">The Compliance Calendar</a>
+    <a href="#checklists">Checklists</a>
+    <a href="#templates">Templates</a>
+    <a href="#orientation">New Treasurer Orientation</a>
+    <a href="#insurance">Insurance Deductible</a>
+  </nav>
+  <div class="savelink no-print" id="saveLink" hidden>
+    <p><strong>Save this link — it is your access to the pack.</strong>
+       There is no login and no expiry, but if you clear your cookies without
+       saving it you will have to ask us to re-issue it. Bookmark it, or paste
+       it into an email to yourself.</p>
+    <div class="savelink-row">
+      <input type="text" id="accessLinkField" readonly aria-label="Your permanent access link">
+      <button type="button" id="copyAccessLink">Copy link</button>
+    </div>
+  </div>
   <header class="cover">
     <p class="eyebrow">British Columbia · Strata Property Act</p>
     <h1>BC Strata Board Starter Pack</h1>
@@ -226,7 +305,7 @@
   <section class="part">
     <div class="part-head">
       <span class="pnum">Part 1</span>
-      <h2>The Compliance Calendar</h2>
+      <h2 id="calendar">The Compliance Calendar</h2>
     </div>
     <p class="part-sub">The recurring obligations a board has to hit, in one place. Each one cites the section it rests on and the free tool that does the math.</p>
 
@@ -237,7 +316,7 @@
       </div>
       <p>Notice must go out at least 20 days before the meeting when sent by mail, email, fax, or left at the door — 16 days if handed directly to the person. That figure is 14 days of statutory notice, plus 2 for the "at least" counting rule, plus 4 for deemed receipt where notice isn't hand-delivered.</p>
       <p class="cite-rail">Strata Property Act ss. 45(1), 61(3) · Interpretation Act s. 25</p>
-      <p class="src">Source: knowyourstrata.com/bc/agm-notice — verified 12 August 2026</p>
+      <p class="src">Source: <a href="/bc/agm-notice">knowyourstrata.com/bc/agm-notice</a> — verified 12 August 2026</p>
     </div>
 
     <div class="rule">
@@ -247,7 +326,7 @@
       </div>
       <p>The strata's budget for the coming fiscal year is approved by a resolution passed by majority vote at the annual general meeting. If it's voted down, a replacement budget goes to a special general meeting, also decided by majority vote.</p>
       <p class="cite-rail">Strata Property Act s. 103</p>
-      <p class="src">Source: knowyourstrata.com/bc/voting-threshold — verified 15 August 2026</p>
+      <p class="src">Source: <a href="/bc/voting-threshold">knowyourstrata.com/bc/voting-threshold</a> — verified 15 August 2026</p>
     </div>
 
     <div class="rule">
@@ -257,7 +336,7 @@
       </div>
       <p>The annual contribution to the contingency reserve fund must be at least 10% of the amount budgeted for the operating fund that year — a flat floor, with no exception for a large existing CRF balance. In the fiscal year following the strata's first AGM the figure comes from Regulation s. 3.4; every year after that, from s. 6.1, which also requires the board to have considered the most recent depreciation report, if any, when setting the amount.</p>
       <p class="cite-rail">Strata Property Regulation ss. 3.4, 6.1</p>
-      <p class="src">Source: knowyourstrata.com/bc/crf-contribution — verified 20 August 2026</p>
+      <p class="src">Source: <a href="/bc/crf-contribution">knowyourstrata.com/bc/crf-contribution</a> — verified 20 August 2026</p>
     </div>
 
     <div class="rule">
@@ -267,7 +346,7 @@
       </div>
       <p>A request for records or documents must be answered within 2 weeks. A request limited to the bylaws or rules, or a request for an Information Certificate (Form B), must be answered within 1 week. The clock runs from the date the request is received — a straight calendar count, with no deemed-receipt or clear-day adjustment.</p>
       <p class="cite-rail">Strata Property Act ss. 36(3), 59(1)</p>
-      <p class="src">Source: knowyourstrata.com/bc/records-deadline — verified 15 August 2026</p>
+      <p class="src">Source: <a href="/bc/records-deadline">knowyourstrata.com/bc/records-deadline</a> — verified 15 August 2026</p>
     </div>
 
     <div class="rule">
@@ -287,7 +366,7 @@
       </div>
       <p>A special levy split by unit entitlement needs a 3/4 vote; splitting it any other way — including equally — needs a unanimous vote. Spending from the contingency reserve fund needs only a majority vote for a short list of specific purposes (a depreciation report, EV charging infrastructure, an electrical planning report, or repairs the current depreciation report recommends); everything else needs a 3/4 vote.</p>
       <p class="cite-rail">Strata Property Act ss. 108(2)(a)–(b), 96(b)(i)(A)–(B)</p>
-      <p class="src">Source: knowyourstrata.com/bc/voting-threshold and /bc/special-levy — verified 15 &amp; 13 August 2026</p>
+      <p class="src">Source: <a href="/bc/voting-threshold">knowyourstrata.com/bc/voting-threshold</a> and <a href="/bc/special-levy">/bc/special-levy</a> — verified 15 &amp; 13 August 2026</p>
     </div>
   </section>
 
@@ -295,52 +374,52 @@
   <section class="part page-start">
     <div class="part-head">
       <span class="pnum">Part 2</span>
-      <h2>Checklists</h2>
+      <h2 id="checklists">Checklists</h2>
     </div>
     <p class="part-sub">Four checklists for the situations that generate the most disputes. Each line cites the section behind it.</p>
 
     <div class="clist">
-      <h3>Calling an AGM</h3>
+      <div class="clist-head"><h3>Calling an AGM</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Work through this before notice goes out.</p>
       <ul>
-        <li><span>Notice will go out at least 20 days before the meeting (16 if hand-delivered)</span><span class="item-cite">ss. 45(1), 61(3)</span></li>
-        <li><span>Quorum confirmed: 1/3 of the strata's votes, or 2/3 if fewer than 4 lots or owners</span><span class="item-cite">s. 48(2)</span></li>
-        <li><span>Proxy collection under way — proxies count the same as bodies in the room toward quorum</span><span class="item-cite">s. 48(2)</span></li>
-        <li><span>Proposed budget is ready to present for majority-vote approval</span><span class="item-cite">s. 103</span></li>
-        <li><span>Registered bylaws checked for a different quorum or notice rule — the Act applies "subject to the bylaws"</span><span class="item-cite">s. 48(2)–(3)</span></li>
+        <li><input type="checkbox"><label>Notice will go out at least 20 days before the meeting (16 if hand-delivered)</label><span class="item-cite">ss. 45(1), 61(3)</span></li>
+        <li><input type="checkbox"><label>Quorum confirmed: 1/3 of the strata's votes, or 2/3 if fewer than 4 lots or owners</label><span class="item-cite">s. 48(2)</span></li>
+        <li><input type="checkbox"><label>Proxy collection under way — proxies count the same as bodies in the room toward quorum</label><span class="item-cite">s. 48(2)</span></li>
+        <li><input type="checkbox"><label>Proposed budget is ready to present for majority-vote approval</label><span class="item-cite">s. 103</span></li>
+        <li><input type="checkbox"><label>Registered bylaws checked for a different quorum or notice rule — the Act applies "subject to the bylaws"</label><span class="item-cite">s. 48(2)–(3)</span></li>
       </ul>
     </div>
 
     <div class="clist">
-      <h3>Running a special levy</h3>
+      <div class="clist-head"><h3>Running a special levy</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Confirm each of these before the resolution goes to a vote.</p>
       <ul>
-        <li><span>Apportionment method decided: unit entitlement (3/4 vote) or another fair division (unanimous vote)</span><span class="item-cite">s. 108(2)(a)–(b)</span></li>
-        <li><span>Entitlement figures pulled from the Schedule of Unit Entitlement, not estimated</span><span class="item-cite">s. 246</span></li>
-        <li><span>Resolution states all five required items: purpose, total amount, method, each lot's share, payment or instalment dates</span><span class="item-cite">s. 108(3)</span></li>
-        <li><span>Per-unit amounts reconcile exactly to the approved total, to the cent</span><span class="item-cite">—</span></li>
+        <li><input type="checkbox"><label>Apportionment method decided: unit entitlement (3/4 vote) or another fair division (unanimous vote)</label><span class="item-cite">s. 108(2)(a)–(b)</span></li>
+        <li><input type="checkbox"><label>Entitlement figures pulled from the Schedule of Unit Entitlement, not estimated</label><span class="item-cite">s. 246</span></li>
+        <li><input type="checkbox"><label>Resolution states all five required items: purpose, total amount, method, each lot's share, payment or instalment dates</label><span class="item-cite">s. 108(3)</span></li>
+        <li><input type="checkbox"><label>Per-unit amounts reconcile exactly to the approved total, to the cent</label><span class="item-cite">—</span></li>
       </ul>
     </div>
 
     <div class="clist">
-      <h3>Responding to a records request</h3>
+      <div class="clist-head"><h3>Responding to a records request</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Identify the clock before you do anything else.</p>
       <ul>
-        <li><span>Clock identified: general records (2 weeks) vs. bylaws/rules (1 week) vs. Form B (1 week)</span><span class="item-cite">s. 36(3), s. 59(1)</span></li>
-        <li><span>Requester's standing confirmed: owner, assigned tenant, written-authorized person, or (for their own period) a former owner or tenant</span><span class="item-cite">ss. 36(1), 36(1.1), 36(2)</span></li>
-        <li><span>Any fee charged is within the regulation cap, and copies aren't withheld for anything beyond that fee</span><span class="item-cite">s. 36(4), s. 59(7)</span></li>
+        <li><input type="checkbox"><label>Clock identified: general records (2 weeks) vs. bylaws/rules (1 week) vs. Form B (1 week)</label><span class="item-cite">s. 36(3), s. 59(1)</span></li>
+        <li><input type="checkbox"><label>Requester's standing confirmed: owner, assigned tenant, written-authorized person, or (for their own period) a former owner or tenant</label><span class="item-cite">ss. 36(1), 36(1.1), 36(2)</span></li>
+        <li><input type="checkbox"><label>Any fee charged is within the regulation cap, and copies aren't withheld for anything beyond that fee</label><span class="item-cite">s. 36(4), s. 59(7)</span></li>
       </ul>
     </div>
 
     <div class="clist">
-      <h3>Enforcing a bylaw fine</h3>
+      <div class="clist-head"><h3>Enforcing a bylaw fine</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Work through this in order — this is the part of the Act courts and the CRT strike fines down over most often.</p>
       <ul>
-        <li><span>A complaint about the contravention has actually been received</span><span class="item-cite">s. 135(1)(d)</span></li>
-        <li><span>Written particulars given: the specific bylaw or rule, and the date and nature of the alleged conduct</span><span class="item-cite">s. 135(1)(e)</span></li>
-        <li><span>A hearing held in person at a council meeting, if one was requested — no fixed deadline applies, only "reasonable"</span><span class="item-cite">s. 135(1)(e); Reg. s. 7.2</span></li>
-        <li><span>Written decision notice sent as soon as feasible, to the owner and — if a tenant — the landlord too</span><span class="item-cite">s. 135(2)</span></li>
-        <li><span>For an ongoing breach: confirm whether this is a continuing contravention of a bylaw already fined once (no new cycle needed) or a new contravention (starts the process over)</span><span class="item-cite">s. 135(3)</span></li>
+        <li><input type="checkbox"><label>A complaint about the contravention has actually been received</label><span class="item-cite">s. 135(1)(d)</span></li>
+        <li><input type="checkbox"><label>Written particulars given: the specific bylaw or rule, and the date and nature of the alleged conduct</label><span class="item-cite">s. 135(1)(e)</span></li>
+        <li><input type="checkbox"><label>A hearing held in person at a council meeting, if one was requested — no fixed deadline applies, only "reasonable"</label><span class="item-cite">s. 135(1)(e); Reg. s. 7.2</span></li>
+        <li><input type="checkbox"><label>Written decision notice sent as soon as feasible, to the owner and — if a tenant — the landlord too</label><span class="item-cite">s. 135(2)</span></li>
+        <li><input type="checkbox"><label>For an ongoing breach: confirm whether this is a continuing contravention of a bylaw already fined once (no new cycle needed) or a new contravention (starts the process over)</label><span class="item-cite">s. 135(3)</span></li>
       </ul>
     </div>
 
@@ -358,7 +437,7 @@
         </table>
       </div>
       <p class="cite-rail">Strata Property Regulation s. 7.1 · Schedule of Standard Bylaws 23–24</p>
-      <p class="src">Source: knowyourstrata.com/bc/fine-enforcement-procedure — verified 20 August 2026</p>
+      <p class="src">Source: <a href="/bc/fine-enforcement-procedure">knowyourstrata.com/bc/fine-enforcement-procedure</a> — verified 20 August 2026</p>
     </div>
   </section>
 
@@ -366,7 +445,7 @@
   <section class="part page-start">
     <div class="part-head">
       <span class="pnum">Part 3</span>
-      <h2>Templates</h2>
+      <h2 id="templates">Templates</h2>
     </div>
     <p class="part-sub">Starting points, not legal advice. Where the Act sets a required structure, the template follows it and cites the section — everything else is a fill-in-the-blank starting point your council should adapt.</p>
 
@@ -428,7 +507,7 @@
   <section class="part page-start guide">
     <div class="part-head">
       <span class="pnum">Part 4</span>
-      <h2>New Treasurer Orientation</h2>
+      <h2 id="orientation">New Treasurer Orientation</h2>
     </div>
     <p class="part-sub">A plain-English walk-through of the job's recurring obligations. Every specific figure here is the same one cited in Part 1 — this section doesn't introduce anything new, it just explains it.</p>
 
@@ -466,7 +545,7 @@
   <section class="part page-start guide">
     <div class="part-head">
       <span class="pnum">Part 5</span>
-      <h2>Insurance Deductible — Who Pays</h2>
+      <h2 id="insurance">Insurance Deductible — Who Pays</h2>
     </div>
     <p class="part-sub">A plain-English summary of the framework, not the full branching walkthrough — the live tool below asks a few questions and routes you to the answer for your specific situation.</p>
 
@@ -533,6 +612,82 @@
 (function(){
   var b=document.getElementById('printBtn');
   if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+<script>
+(function(){
+  /* ---- permanent access link -------------------------------------------
+     The gate function stamps the signed token onto <body data-access-token>,
+     so this works whether the visitor arrived with ?t= in the URL or came
+     back later on the cookie alone (where the URL carries no token at all). */
+  var token = document.body.getAttribute('data-access-token');
+  var box = document.getElementById('saveLink');
+  if (token && box) {
+    var link = location.origin + location.pathname + '?t=' + encodeURIComponent(token);
+    var field = document.getElementById('accessLinkField');
+    var btn = document.getElementById('copyAccessLink');
+    field.value = link;
+    box.hidden = false;
+    field.addEventListener('focus', function(){ field.select(); });
+    btn.addEventListener('click', function(){
+      function done(){ btn.textContent = 'Copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy link'; }, 2200); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(done, function(){ field.select(); });
+      } else { field.select(); try { document.execCommand('copy'); done(); } catch(e){} }
+    });
+  }
+
+  /* ---- tickable checklists ---------------------------------------------
+     State is keyed by a hash of the item's own text, not its position, so
+     re-ordering the pack keeps ticks attached to the right item -- and
+     rewording an item deliberately clears its tick, because a changed rule
+     is one you should read again. */
+  function hash(s){
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return (h >>> 0).toString(36);
+  }
+  var PACK = document.body.getAttribute('data-pack') || 'pack';
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem('kys-checks-' + PACK) || '{}') || {}; } catch(e) { store = {}; }
+  function save(){ try { localStorage.setItem('kys-checks-' + PACK, JSON.stringify(store)); } catch(e){} }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.clist'), function(list, li){
+    var boxes = list.querySelectorAll('input[type=checkbox]');
+    var prog = list.querySelector('.clist-prog');
+    var reset = list.querySelector('.clist-reset');
+
+    function paint(){
+      var done = 0;
+      Array.prototype.forEach.call(boxes, function(b){ if (b.checked) done++; });
+      if (prog) prog.textContent = done + ' of ' + boxes.length;
+      if (reset) reset.hidden = done === 0;
+    }
+
+    Array.prototype.forEach.call(boxes, function(b, i){
+      var label = b.nextElementSibling;
+      var key = hash((label ? label.textContent : '') + '|' + li);
+      var id = 'ck-' + PACK + '-' + key;
+      b.id = id;
+      if (label) label.setAttribute('for', id);
+      b.checked = store[key] === 1;
+      b.addEventListener('change', function(){
+        if (b.checked) store[key] = 1; else delete store[key];
+        save(); paint();
+      });
+    });
+
+    if (reset) reset.addEventListener('click', function(){
+      Array.prototype.forEach.call(boxes, function(b){
+        var label = b.nextElementSibling;
+        var key = hash((label ? label.textContent : '') + '|' + li);
+        b.checked = false; delete store[key];
+      });
+      save(); paint();
+    });
+
+    paint();
+  });
 })();
 </script>
 </body>

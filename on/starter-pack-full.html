@@ -99,7 +99,69 @@
     border-bottom:1px solid #EEEBE2;
   }
   .clist li:last-child{border-bottom:none}
-  .clist li::before{content:"☐";color:var(--spruce);flex:none;font-size:.95rem}
+  /* Real, tickable checkboxes. appearance:none + a glyph keeps them printing
+     reliably (native controls print inconsistently across browsers) and lets
+     a ticked box survive "Print / save as PDF" the way a paper checklist would. */
+  .clist li input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;margin:0;flex:none;
+    width:1.05em;height:1.05em;font-size:.95rem;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:none;border:0;cursor:pointer;color:var(--spruce);
+    print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  }
+  .clist li input[type=checkbox]::before{content:"☐"}
+  .clist li input[type=checkbox]:checked::before{content:"☑"}
+  .clist li input[type=checkbox]:focus-visible{outline:2px solid var(--spruce);outline-offset:2px;border-radius:3px}
+  .clist li label{cursor:pointer}
+  .clist li:has(input:checked) label{color:#7C8A84;text-decoration:line-through;text-decoration-thickness:1px}
+
+  .clist-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .clist-head h3{margin-bottom:0}
+  .clist-prog{
+    margin-left:auto;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;
+    color:#7C8A84;white-space:nowrap;
+  }
+  .clist-reset{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    background:none;border:1px solid var(--line);border-radius:5px;padding:3px 8px;
+    color:#7C8A84;cursor:pointer;
+  }
+  .clist-reset:hover{color:var(--spruce);border-color:var(--spruce)}
+  .clist-reset:focus-visible{outline:2px solid var(--spruce);outline-offset:2px}
+
+  .packnav{
+    display:flex;flex-wrap:wrap;gap:6px 8px;margin:18px 0 0;
+    padding-bottom:16px;border-bottom:1px solid var(--line);
+  }
+  .packnav a{
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;
+    color:#5E6E68;text-decoration:none;border:1px solid var(--line);border-radius:5px;
+    padding:5px 10px;
+  }
+  .packnav a:hover{color:var(--spruce);border-color:var(--spruce)}
+  .packnav a:focus-visible{outline:2px solid var(--spruce);outline-offset:2px}
+  .src a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}
+  .src a:hover{color:var(--spruce);text-decoration-color:var(--spruce)}
+
+  /* Access link banner */
+  .savelink{
+    background:#FFF9E8;border:1px solid #E4D9B4;border-left:3px solid var(--seal);
+    border-radius:8px;padding:16px 18px;margin:18px 0 4px;
+  }
+  .savelink p{font-size:.9rem;color:#5A5340;margin-bottom:11px}
+  .savelink p strong{color:#463F2C}
+  .savelink-row{display:flex;gap:8px;flex-wrap:wrap}
+  .savelink input{
+    flex:1 1 260px;min-width:0;font-family:var(--mono);font-size:.74rem;
+    padding:7px 9px;border:1px solid #E4D9B4;border-radius:5px;
+    background:#fff;color:#5A5340;
+  }
+  .savelink button{
+    font-family:var(--body);font-size:.82rem;font-weight:600;
+    padding:7px 14px;border-radius:5px;border:1px solid var(--spruce);
+    background:var(--spruce);color:#fff;cursor:pointer;white-space:nowrap;
+  }
+  .savelink button:focus-visible{outline:2px solid var(--seal);outline-offset:2px}
   .clist .item-cite{font-family:var(--mono);font-size:.72rem;color:var(--seal);white-space:nowrap;margin-left:auto}
   @media (max-width:520px){
     .clist li{flex-direction:column;align-items:flex-start;gap:2px}
@@ -183,7 +245,7 @@
   }
 </style>
 </head>
-<body>
+<body data-pack="on">
 
 <nav class="kys-nav no-print">
   <div class="kys-nav-inner">
@@ -198,6 +260,22 @@
 <p class="kys-back no-print"><a href="/on/starter-pack">&larr; Back to the Starter Pack page</a></p>
 
 <div class="wrap">
+  <nav class="packnav no-print" aria-label="Sections of this pack">
+    <a href="#calendar">The Compliance Calendar</a>
+    <a href="#checklists">Checklists</a>
+    <a href="#templates">Templates</a>
+    <a href="#orientation">New Board Member</a>
+  </nav>
+  <div class="savelink no-print" id="saveLink" hidden>
+    <p><strong>Save this link — it is your access to the pack.</strong>
+       There is no login and no expiry, but if you clear your cookies without
+       saving it you will have to ask us to re-issue it. Bookmark it, or paste
+       it into an email to yourself.</p>
+    <div class="savelink-row">
+      <input type="text" id="accessLinkField" readonly aria-label="Your permanent access link">
+      <button type="button" id="copyAccessLink">Copy link</button>
+    </div>
+  </div>
   <header class="cover">
     <p class="eyebrow">Ontario · Condominium Act, 1998</p>
     <h1>Ontario Condo Board Starter Pack</h1>
@@ -214,7 +292,7 @@
   <section class="part">
     <div class="part-head">
       <span class="pnum">Part 1</span>
-      <h2>The Compliance Calendar</h2>
+      <h2 id="calendar">The Compliance Calendar</h2>
     </div>
     <p class="part-sub">The recurring obligations a board has to hit, in one place. Each one cites the section it rests on and the free tool that does the math.</p>
 
@@ -225,7 +303,7 @@
       </div>
       <p>The Notice of Meeting must be given at least 15 days before the day of the meeting. Before that notice can go out, a Preliminary Notice must be given at least 20 days before it. For any board-called meeting — an AGM, a turn-over meeting, or a meeting called for other business — that means the Preliminary Notice needs to go out at least 35 days ahead of the meeting date. Neither figure changes by meeting type.</p>
       <p class="cite-rail">Condominium Act, 1998, ss. 47(1)(b)–(c)</p>
-      <p class="src">Source: knowyourstrata.com/on/notice-of-meeting-deadline — verified 19 August 2026</p>
+      <p class="src">Source: <a href="/on/notice-of-meeting-deadline">knowyourstrata.com/on/notice-of-meeting-deadline</a> — verified 19 August 2026</p>
     </div>
 
     <div class="rule">
@@ -236,7 +314,7 @@
       <p>Owners holding at least 15% of the units may requisition a meeting. Once the board receives a valid requisition, it must call and hold the meeting within 35 days (or add the business to the next AGM, if the requisitionists agree). If the board doesn't act, a requisitionist may call the meeting themselves, to be held within 45 days of doing so. The 15-day/20-day notice minimums above still apply to this meeting too.</p>
       <p class="cite-rail">Condominium Act, 1998, ss. 46(1), 46(4)(b), 46(5)</p>
       <p class="flag-note"><strong>Changing December 31, 2026:</strong> the 15% threshold stays the same, but the process around it doesn't — a new arrears eligibility bar, a prescribed form, and a restructured timeline running to roughly 60 days total rather than 35. See Part 2's requisition checklist and Part 3's tracker for the detail.</p>
-      <p class="src">Source: knowyourstrata.com/on/requisition-threshold and /on/notice-of-meeting-deadline — verified 20 &amp; 19 August 2026</p>
+      <p class="src">Source: <a href="/on/requisition-threshold">knowyourstrata.com/on/requisition-threshold</a> and <a href="/on/notice-of-meeting-deadline">/on/notice-of-meeting-deadline</a> — verified 20 &amp; 19 August 2026</p>
     </div>
 
     <div class="rule">
@@ -246,7 +324,7 @@
       </div>
       <p>The board must determine whether to allow access and respond to the requester in writing within 30 days of receiving a request for records. That response is the board's answer, not the record itself — delivery of the record runs on a separate clock, depending on whether it's a core record and how it's being delivered: the same 30 days if it's a core record delivered electronically, 7 days after payment if a core record on paper, or 30 days after payment for anything else.</p>
       <p class="cite-rail">O. Reg. 48/01, s. 13.3(6); ss. 13.4–13.7</p>
-      <p class="src">Source: knowyourstrata.com/on/records-request-deadline — verified 19 August 2026</p>
+      <p class="src">Source: <a href="/on/records-request-deadline">knowyourstrata.com/on/records-request-deadline</a> — verified 19 August 2026</p>
     </div>
 
     <div class="rule">
@@ -256,7 +334,7 @@
       </div>
       <p>The first reserve fund study is due within a year of registering the declaration and description, and must be a comprehensive study. Every study after that is due within 3 years of the previous study's completion — a rolling clock measured from the last study, not a fixed calendar date. The class required alternates between an updated study with and without a site inspection; it does not loop back to a full comprehensive study on any set cycle.</p>
       <p class="cite-rail">Condominium Act, 1998, s. 94(4) · O. Reg. 48/01, ss. 31(2)–(4)</p>
-      <p class="src">Source: knowyourstrata.com/on/reserve-fund-study-deadline — verified 20 August 2026</p>
+      <p class="src">Source: <a href="/on/reserve-fund-study-deadline">knowyourstrata.com/on/reserve-fund-study-deadline</a> — verified 20 August 2026</p>
     </div>
 
     <div class="rule">
@@ -266,7 +344,7 @@
       </div>
       <p>Once the board receives the study, it has 120 days to review it and propose a funding plan. From there, 15 more days to notify owners (a summary) and the auditor (the full study and plan). Then 30 more days after that notice before the board must implement the plan.</p>
       <p class="cite-rail">Condominium Act, 1998, s. 94(8)–(10)</p>
-      <p class="src">Source: knowyourstrata.com/on/reserve-fund-study-deadline — verified 20 August 2026</p>
+      <p class="src">Source: <a href="/on/reserve-fund-study-deadline">knowyourstrata.com/on/reserve-fund-study-deadline</a> — verified 20 August 2026</p>
     </div>
   </section>
 
@@ -274,42 +352,42 @@
   <section class="part page-start">
     <div class="part-head">
       <span class="pnum">Part 2</span>
-      <h2>Checklists</h2>
+      <h2 id="checklists">Checklists</h2>
     </div>
     <p class="part-sub">Three checklists for the situations that generate the most disputes. Each line cites the section behind it.</p>
 
     <div class="clist">
-      <h3>Calling a meeting</h3>
+      <div class="clist-head"><h3>Calling a meeting</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Work through this before the Preliminary Notice goes out.</p>
       <ul>
-        <li><span>Preliminary Notice will go out at least 20 days before the Notice of Meeting</span><span class="item-cite">s. 47(1)(c)</span></li>
-        <li><span>Notice of Meeting will go out at least 15 days before the meeting itself</span><span class="item-cite">s. 47(1)(b)</span></li>
-        <li><span>Quorum confirmed: 25% of units for most meetings; for an AGM or turn-over meeting, 25% on the first two attempts, dropping to 15% only on the third</span><span class="item-cite">s. 50(1), s. 50(1.1)</span></li>
-        <li><span>If this is an owner-requisitioned meeting: quorum stays a flat 25% — the reduced-quorum ladder doesn't apply to it</span><span class="item-cite">s. 50(1)</span></li>
-        <li><span>Registered by-laws checked for a 25%-throughout override of the reduced-quorum ladder</span><span class="item-cite">s. 50(1.2)</span></li>
+        <li><input type="checkbox"><label>Preliminary Notice will go out at least 20 days before the Notice of Meeting</label><span class="item-cite">s. 47(1)(c)</span></li>
+        <li><input type="checkbox"><label>Notice of Meeting will go out at least 15 days before the meeting itself</label><span class="item-cite">s. 47(1)(b)</span></li>
+        <li><input type="checkbox"><label>Quorum confirmed: 25% of units for most meetings; for an AGM or turn-over meeting, 25% on the first two attempts, dropping to 15% only on the third</label><span class="item-cite">s. 50(1), s. 50(1.1)</span></li>
+        <li><input type="checkbox"><label>If this is an owner-requisitioned meeting: quorum stays a flat 25% — the reduced-quorum ladder doesn't apply to it</label><span class="item-cite">s. 50(1)</span></li>
+        <li><input type="checkbox"><label>Registered by-laws checked for a 25%-throughout override of the reduced-quorum ladder</label><span class="item-cite">s. 50(1.2)</span></li>
       </ul>
     </div>
 
     <div class="clist">
-      <h3>Responding to a records request</h3>
+      <div class="clist-head"><h3>Responding to a records request</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Identify the clock and the requester's standing before you do anything else.</p>
       <ul>
-        <li><span>Requester's standing confirmed: owner, purchaser, mortgagee, or an agent of one of them authorized in writing</span><span class="item-cite">s. 55(3)</span></li>
-        <li><span>Board's written response sent within 30 days, stating access decision and fee</span><span class="item-cite">O. Reg. s. 13.3(6)</span></li>
-        <li><span>Record classified as core or non-core against the fixed core-record list</span><span class="item-cite">O. Reg. s. 1 def.</span></li>
-        <li><span>Delivery clock identified: core+electronic (same 30 days) vs. core+paper (7 days after payment) vs. non-core (30 days after payment)</span><span class="item-cite">O. Reg. ss. 13.4–13.7</span></li>
-        <li><span>If declining, exemption category identified and stated in writing (employee records, litigation/insurance, unit-specific, or prescribed)</span><span class="item-cite">s. 55(4)</span></li>
+        <li><input type="checkbox"><label>Requester's standing confirmed: owner, purchaser, mortgagee, or an agent of one of them authorized in writing</label><span class="item-cite">s. 55(3)</span></li>
+        <li><input type="checkbox"><label>Board's written response sent within 30 days, stating access decision and fee</label><span class="item-cite">O. Reg. s. 13.3(6)</span></li>
+        <li><input type="checkbox"><label>Record classified as core or non-core against the fixed core-record list</label><span class="item-cite">O. Reg. s. 1 def.</span></li>
+        <li><input type="checkbox"><label>Delivery clock identified: core+electronic (same 30 days) vs. core+paper (7 days after payment) vs. non-core (30 days after payment)</label><span class="item-cite">O. Reg. ss. 13.4–13.7</span></li>
+        <li><input type="checkbox"><label>If declining, exemption category identified and stated in writing (employee records, litigation/insurance, unit-specific, or prescribed)</label><span class="item-cite">s. 55(4)</span></li>
       </ul>
     </div>
 
     <div class="clist">
-      <h3>Handling an owner requisition</h3>
+      <div class="clist-head"><h3>Handling an owner requisition</h3><span class="clist-prog" aria-live="polite"></span><button type="button" class="clist-reset no-print">Reset</button></div>
       <p class="csub">Confirm eligibility first, then the timeline.</p>
       <ul>
-        <li><span>Requisitionists together own at least 15% of the units</span><span class="item-cite">s. 46(1)</span></li>
-        <li><span>Requisition is in writing, signed, states the business, and was properly delivered</span><span class="item-cite">s. 46(2)</span></li>
-        <li><span>Meet-by date calculated: 35 days from receiving the requisition</span><span class="item-cite">s. 46(4)(b)</span></li>
-        <li><span>Fallback noted: if the board misses it, a requisitionist may call the meeting within 45 days of doing so</span><span class="item-cite">s. 46(5)</span></li>
+        <li><input type="checkbox"><label>Requisitionists together own at least 15% of the units</label><span class="item-cite">s. 46(1)</span></li>
+        <li><input type="checkbox"><label>Requisition is in writing, signed, states the business, and was properly delivered</label><span class="item-cite">s. 46(2)</span></li>
+        <li><input type="checkbox"><label>Meet-by date calculated: 35 days from receiving the requisition</label><span class="item-cite">s. 46(4)(b)</span></li>
+        <li><input type="checkbox"><label>Fallback noted: if the board misses it, a requisitionist may call the meeting within 45 days of doing so</label><span class="item-cite">s. 46(5)</span></li>
         <li class="transition-item"><span><strong>Date checked against December 31, 2026</strong> — if this requisition lands after that date, the process changes substantially (new arrears eligibility bar, prescribed form, ~60-day timeline). Don't run the current-law checklist on a post-transition requisition.</span><span class="item-cite">—</span></li>
       </ul>
     </div>
@@ -319,7 +397,7 @@
   <section class="part page-start">
     <div class="part-head">
       <span class="pnum">Part 3</span>
-      <h2>Templates</h2>
+      <h2 id="templates">Templates</h2>
     </div>
     <p class="part-sub">Starting points, not legal advice. None of the five free Ontario tools verified specific mandated wording for a notice, response letter, or resolution the way some BC sections do — what they verified is deadlines and eligibility. These templates are built around exactly that: scheduling and tracking tools with the verified figures built in, not claimed content mandates.</p>
 
@@ -374,7 +452,7 @@
   <section class="part page-start guide">
     <div class="part-head">
       <span class="pnum">Part 4</span>
-      <h2>New Board Member Orientation</h2>
+      <h2 id="orientation">New Board Member Orientation</h2>
     </div>
     <p class="part-sub">A plain-English walk-through of the job's recurring obligations. Every specific figure here is the same one cited in Part 1 — this section doesn't introduce anything new, it just explains it.</p>
 
@@ -452,6 +530,82 @@
 (function(){
   var b=document.getElementById('printBtn');
   if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+<script>
+(function(){
+  /* ---- permanent access link -------------------------------------------
+     The gate function stamps the signed token onto <body data-access-token>,
+     so this works whether the visitor arrived with ?t= in the URL or came
+     back later on the cookie alone (where the URL carries no token at all). */
+  var token = document.body.getAttribute('data-access-token');
+  var box = document.getElementById('saveLink');
+  if (token && box) {
+    var link = location.origin + location.pathname + '?t=' + encodeURIComponent(token);
+    var field = document.getElementById('accessLinkField');
+    var btn = document.getElementById('copyAccessLink');
+    field.value = link;
+    box.hidden = false;
+    field.addEventListener('focus', function(){ field.select(); });
+    btn.addEventListener('click', function(){
+      function done(){ btn.textContent = 'Copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy link'; }, 2200); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(done, function(){ field.select(); });
+      } else { field.select(); try { document.execCommand('copy'); done(); } catch(e){} }
+    });
+  }
+
+  /* ---- tickable checklists ---------------------------------------------
+     State is keyed by a hash of the item's own text, not its position, so
+     re-ordering the pack keeps ticks attached to the right item -- and
+     rewording an item deliberately clears its tick, because a changed rule
+     is one you should read again. */
+  function hash(s){
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return (h >>> 0).toString(36);
+  }
+  var PACK = document.body.getAttribute('data-pack') || 'pack';
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem('kys-checks-' + PACK) || '{}') || {}; } catch(e) { store = {}; }
+  function save(){ try { localStorage.setItem('kys-checks-' + PACK, JSON.stringify(store)); } catch(e){} }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.clist'), function(list, li){
+    var boxes = list.querySelectorAll('input[type=checkbox]');
+    var prog = list.querySelector('.clist-prog');
+    var reset = list.querySelector('.clist-reset');
+
+    function paint(){
+      var done = 0;
+      Array.prototype.forEach.call(boxes, function(b){ if (b.checked) done++; });
+      if (prog) prog.textContent = done + ' of ' + boxes.length;
+      if (reset) reset.hidden = done === 0;
+    }
+
+    Array.prototype.forEach.call(boxes, function(b, i){
+      var label = b.nextElementSibling;
+      var key = hash((label ? label.textContent : '') + '|' + li);
+      var id = 'ck-' + PACK + '-' + key;
+      b.id = id;
+      if (label) label.setAttribute('for', id);
+      b.checked = store[key] === 1;
+      b.addEventListener('change', function(){
+        if (b.checked) store[key] = 1; else delete store[key];
+        save(); paint();
+      });
+    });
+
+    if (reset) reset.addEventListener('click', function(){
+      Array.prototype.forEach.call(boxes, function(b){
+        var label = b.nextElementSibling;
+        var key = hash((label ? label.textContent : '') + '|' + li);
+        b.checked = false; delete store[key];
+      });
+      save(); paint();
+    });
+
+    paint();
+  });
 })();
 </script>
 </body>
