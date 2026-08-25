@@ -143,6 +143,25 @@
   .src a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}
   .src a:hover{color:var(--spruce);text-decoration-color:var(--spruce)}
 
+  /* Template option boxes. Tickable like the checklists, but deliberately NOT
+     persisted: a checklist is a process you work through over days, whereas a
+     template is a document you fill in once per event. Restoring last quarter's
+     records-request answers onto this quarter's acknowledgment would be worse
+     than useless -- it would be wrong on a document sent to an owner. */
+  .field .fopts{display:flex;flex-wrap:wrap;gap:6px 18px}
+  .fopt{display:inline-flex;align-items:baseline;gap:7px;cursor:pointer}
+  .fopt input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;margin:0;flex:none;
+    width:1.05em;height:1.05em;font-size:.95rem;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:none;border:0;cursor:pointer;color:var(--spruce);
+    print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  }
+  .fopt input[type=checkbox]::before{content:"☐"}
+  .fopt input[type=checkbox]:checked::before{content:"☑"}
+  .fopt input[type=checkbox]:focus-visible{outline:2px solid var(--spruce);outline-offset:2px;border-radius:3px}
+  .fopt:has(input:checked) span{color:var(--spruce-deep);font-weight:600}
+
   /* Access link banner */
   .savelink{
     background:#FFF9E8;border:1px solid #E4D9B4;border-left:3px solid var(--seal);
@@ -356,7 +375,7 @@
       </div>
       <p>The Act itself requires a strata corporation to obtain both a depreciation report and an electrical planning report from a qualified person, "on or before the dates determined in accordance with the regulations." The Act does not state a fixed interval in its own text — the actual due dates and cycle are set by the Strata Property Regulation, which has been amended before and can be again.</p>
       <p class="cite-rail">Strata Property Act ss. 94, 94.1</p>
-      <p class="src">This entry was verified fresh for this pack on 18 August 2026 — it is the one item here without a prior live tool behind it. Confirm the current regulation dates directly (a dedicated depreciation-report tool is planned) rather than treating any specific calendar year as fixed.</p>
+      <p class="src">Verified fresh for this pack on 18 August 2026. The <a href="/bc/depreciation-report-deadline">depreciation report deadline tool</a> is now live — use it for your building's dates rather than treating any specific calendar year as fixed, since the regulation has been amended before and can be again.</p>
     </div>
 
     <div class="rule">
@@ -461,7 +480,7 @@
         <p class="fhint">Confirm the actual gap between the date this notice is sent and the meeting date using the AGM notice calculator before relying on this line.</p>
       </div>
       <div class="field"><span class="flabel">Agenda items</span><div class="fline">&nbsp;</div><div class="fline">&nbsp;</div><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">Attachments</span><div class="fline">☐ Proposed budget &nbsp; ☐ Proxy form &nbsp; ☐ Prior AGM minutes</div></div>
+      <div class="field"><span class="flabel">Attachments</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Proposed budget</span></label><label class="fopt"><input type="checkbox"><span>Proxy form</span></label><label class="fopt"><input type="checkbox"><span>Prior AGM minutes</span></label></div></div>
       <p class="tmpl-cite">Notice timing: Strata Property Act ss. 45(1), 61(3)</p>
     </div>
 
@@ -485,7 +504,7 @@
       <p style="font-size:.85rem;color:#5E6E68;margin-bottom:10px">Structured around the five items section 108(3) requires the resolution to state.</p>
       <div class="field"><span class="flabel">1. Purpose of the levy — s. 108(3)(a)</span><div class="fline">&nbsp;</div></div>
       <div class="field"><span class="flabel">2. Total amount of the levy — s. 108(3)(b)</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">3. Method used to determine each lot's share — s. 108(3)(c)</span><div class="fline">☐ Unit entitlement (s. 99) — 3/4 vote &nbsp; ☐ Other fair division — unanimous vote (s. 108(2)(b))</div></div>
+      <div class="field"><span class="flabel">3. Method used to determine each lot's share — s. 108(3)(c)</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Unit entitlement (s. 99) — 3/4 vote</span></label><label class="fopt"><input type="checkbox"><span>Other fair division — unanimous vote (s. 108(2)(b))</span></label></div></div>
       <div class="field"><span class="flabel">4. Each lot's share — s. 108(3)(d)</span><div class="fline">[Attach the per-unit table from the Special Levy Calculator]</div></div>
       <div class="field"><span class="flabel">5. Payment date, or instalment dates — s. 108(3)(e)</span><div class="fline">&nbsp;</div></div>
       <p class="tmpl-cite">Required contents: Strata Property Act s. 108(3). Vote threshold: s. 108(2)(a)–(b).</p>
@@ -495,8 +514,8 @@
       <h3>Records-Request Acknowledgment</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
       <div class="field"><span class="flabel">Date request received</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline">☐ Owner &nbsp; ☐ Assigned tenant &nbsp; ☐ Authorized in writing &nbsp; ☐ Former owner/tenant (own period only)</div></div>
-      <div class="field"><span class="flabel">What was requested</span><div class="fline">☐ General records/documents (2-week clock) &nbsp; ☐ Bylaws or rules only (1-week clock) &nbsp; ☐ Information Certificate / Form B (1-week clock)</div></div>
+      <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Owner</span></label><label class="fopt"><input type="checkbox"><span>Assigned tenant</span></label><label class="fopt"><input type="checkbox"><span>Authorized in writing</span></label><label class="fopt"><input type="checkbox"><span>Former owner/tenant (own period only)</span></label></div></div>
+      <div class="field"><span class="flabel">What was requested</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>General records/documents (2-week clock)</span></label><label class="fopt"><input type="checkbox"><span>Bylaws or rules only (1-week clock)</span></label><label class="fopt"><input type="checkbox"><span>Information Certificate / Form B (1-week clock)</span></label></div></div>
       <div class="field"><span class="flabel">Deadline to comply</span><div class="fline">&nbsp;</div><p class="fhint">Calculate this with the Records Request Deadline tool rather than counting by hand.</p></div>
       <div class="field"><span class="flabel">Fee, if any (capped by regulation)</span><div class="fline">&nbsp;</div></div>
       <p class="tmpl-cite">Who may request: ss. 36(1), 36(1.1), 36(2). Deadlines: s. 36(3), s. 59(1). Fee cap: s. 36(4), s. 59(7).</p>
@@ -564,7 +583,7 @@
       <span class="pnum">Appendix</span>
       <h2>Verification handshake</h2>
     </div>
-    <p class="part-sub">Every legal claim in this pack, next to the section it rests on and the tool it was traced from. For Nour's review — this section is marked no-print and won't appear in the printed/PDF pack.</p>
+    <p class="part-sub">Every legal claim in this pack, next to the section it rests on and the tool it was traced from.</p>
     <div class="vtable-wrap">
     <table class="vtable">
       <tr><th>Claim</th><th>Cite</th><th>Source</th></tr>
@@ -576,7 +595,7 @@
       <tr><td>Form B (Information Certificate): 1-week response</td><td class="cite">s. 59(1)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
       <tr><td>Who may request records (owner/tenant/authorized/former)</td><td class="cite">ss. 36(1), 36(1.1), 36(2)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
       <tr><td>Fee for copies capped by regulation; copies (not the request) may be withheld until paid</td><td class="cite">s. 36(4), s. 59(7)</td><td class="src">/bc/records-deadline (15 Aug)</td></tr>
-      <tr><td>Depreciation report / electrical planning report obligation, dates set by regulation</td><td class="cite">ss. 94, 94.1</td><td class="src"><strong>New for this pack</strong> — verified 18 Aug directly against bclaws, not previously on a live tool. No cycle/interval asserted since the Act defers that to the regulation, which was not separately verified.</td></tr>
+      <tr><td>Depreciation report / electrical planning report obligation, dates set by regulation</td><td class="cite">ss. 94, 94.1</td><td class="src">Verified 18 Aug directly against bclaws; now also backed by the live <a href="/bc/depreciation-report-deadline">depreciation report deadline tool</a>. No cycle/interval asserted here since the Act defers that to the regulation.</td></tr>
       <tr><td>Special levy by unit entitlement: 3/4 vote</td><td class="cite">s. 108(2)(a)</td><td class="src">/bc/special-levy (13 Aug), /bc/voting-threshold (15 Aug)</td></tr>
       <tr><td>Special levy by other division: unanimous vote</td><td class="cite">s. 108(2)(b)</td><td class="src">/bc/special-levy (13 Aug), /bc/voting-threshold (15 Aug)</td></tr>
       <tr><td>Levy resolution must state 5 specific items</td><td class="cite">s. 108(3)</td><td class="src">/bc/special-levy (13 Aug)</td></tr>

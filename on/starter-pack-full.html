@@ -143,6 +143,25 @@
   .src a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:2px}
   .src a:hover{color:var(--spruce);text-decoration-color:var(--spruce)}
 
+  /* Template option boxes. Tickable like the checklists, but deliberately NOT
+     persisted: a checklist is a process you work through over days, whereas a
+     template is a document you fill in once per event. Restoring last quarter's
+     records-request answers onto this quarter's acknowledgment would be worse
+     than useless -- it would be wrong on a document sent to an owner. */
+  .field .fopts{display:flex;flex-wrap:wrap;gap:6px 18px}
+  .fopt{display:inline-flex;align-items:baseline;gap:7px;cursor:pointer}
+  .fopt input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;margin:0;flex:none;
+    width:1.05em;height:1.05em;font-size:.95rem;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:none;border:0;cursor:pointer;color:var(--spruce);
+    print-color-adjust:exact;-webkit-print-color-adjust:exact;
+  }
+  .fopt input[type=checkbox]::before{content:"☐"}
+  .fopt input[type=checkbox]:checked::before{content:"☑"}
+  .fopt input[type=checkbox]:focus-visible{outline:2px solid var(--spruce);outline-offset:2px;border-radius:3px}
+  .fopt:has(input:checked) span{color:var(--spruce-deep);font-weight:600}
+
   /* Access link banner */
   .savelink{
     background:#FFF9E8;border:1px solid #E4D9B4;border-left:3px solid var(--seal);
@@ -404,7 +423,7 @@
     <div class="tmpl">
       <h3>Preliminary Notice &amp; Notice of Meeting Tracker</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
-      <div class="field"><span class="flabel">Meeting type</span><div class="fline">☐ AGM &nbsp; ☐ Turn-over &nbsp; ☐ Other business &nbsp; ☐ Owner-requisitioned</div></div>
+      <div class="field"><span class="flabel">Meeting type</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>AGM</span></label><label class="fopt"><input type="checkbox"><span>Turn-over</span></label><label class="fopt"><input type="checkbox"><span>Other business</span></label><label class="fopt"><input type="checkbox"><span>Owner-requisitioned</span></label></div></div>
       <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline">&nbsp;</div></div>
       <div class="field"><span class="flabel">Preliminary Notice sent</span><div class="fline">&nbsp;</div><p class="fhint">Must be at least 20 days before the Notice of Meeting below.</p></div>
       <div class="field"><span class="flabel">Notice of Meeting sent</span><div class="fline">&nbsp;</div><p class="fhint">Must be at least 15 days before the meeting date above. Confirm both gaps with the Notice of Meeting Deadline calculator before relying on this line.</p></div>
@@ -416,11 +435,11 @@
       <h3>Records Request Log</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
       <div class="field"><span class="flabel">Date request received</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline">☐ Owner &nbsp; ☐ Purchaser &nbsp; ☐ Mortgagee &nbsp; ☐ Authorized agent</div></div>
+      <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Owner</span></label><label class="fopt"><input type="checkbox"><span>Purchaser</span></label><label class="fopt"><input type="checkbox"><span>Mortgagee</span></label><label class="fopt"><input type="checkbox"><span>Authorized agent</span></label></div></div>
       <div class="field"><span class="flabel">Board's response due</span><div class="fline">&nbsp;</div><p class="fhint">30 days from the date received. Calculate with the Records Request Deadline tool.</p></div>
-      <div class="field"><span class="flabel">Record type</span><div class="fline">☐ Core record &nbsp; ☐ Not a core record</div></div>
-      <div class="field"><span class="flabel">Delivery method &amp; deadline</span><div class="fline">☐ Core, electronic — same 30 days &nbsp; ☐ Core, paper — 7 days after payment &nbsp; ☐ Non-core — 30 days after payment</div></div>
-      <div class="field"><span class="flabel">If declined, exemption relied on</span><div class="fline">☐ Employee records &nbsp; ☐ Litigation/insurance &nbsp; ☐ Unit-specific &nbsp; ☐ Prescribed</div></div>
+      <div class="field"><span class="flabel">Record type</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Core record</span></label><label class="fopt"><input type="checkbox"><span>Not a core record</span></label></div></div>
+      <div class="field"><span class="flabel">Delivery method &amp; deadline</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Core, electronic — same 30 days</span></label><label class="fopt"><input type="checkbox"><span>Core, paper — 7 days after payment</span></label><label class="fopt"><input type="checkbox"><span>Non-core — 30 days after payment</span></label></div></div>
+      <div class="field"><span class="flabel">If declined, exemption relied on</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Employee records</span></label><label class="fopt"><input type="checkbox"><span>Litigation/insurance</span></label><label class="fopt"><input type="checkbox"><span>Unit-specific</span></label><label class="fopt"><input type="checkbox"><span>Prescribed</span></label></div></div>
       <p class="tmpl-cite">Standing: s. 55(3). Response window: O. Reg. s. 13.3(6). Delivery: O. Reg. ss. 13.4–13.7. Exemptions: s. 55(4).</p>
     </div>
 
@@ -429,9 +448,9 @@
       <span class="tmpl-flag">Starting point — not legal advice</span>
       <div class="field"><span class="flabel">Declaration &amp; description registered</span><div class="fline">&nbsp;</div></div>
       <div class="field"><span class="flabel">First study due</span><div class="fline">&nbsp;</div><p class="fhint">1 year from registration above. Must be comprehensive.</p></div>
-      <div class="field"><span class="flabel">Most recent study — completion date &amp; class</span><div class="fline">☐ Comprehensive &nbsp; ☐ Updated, site inspection &nbsp; ☐ Updated, no site inspection</div></div>
+      <div class="field"><span class="flabel">Most recent study — completion date &amp; class</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Comprehensive</span></label><label class="fopt"><input type="checkbox"><span>Updated, site inspection</span></label><label class="fopt"><input type="checkbox"><span>Updated, no site inspection</span></label></div></div>
       <div class="field"><span class="flabel">Next study due</span><div class="fline">&nbsp;</div><p class="fhint">3 years from the completion date above. Confirm required class with the Reserve Fund Study Deadline tool — it alternates, and doesn't return to comprehensive on its own.</p></div>
-      <div class="field"><span class="flabel">Post-study chain, once received</span><div class="fline">☐ Reviewed &amp; funding plan proposed (120 days) &nbsp; ☐ Owners &amp; auditor notified (+15 days) &nbsp; ☐ Plan implemented (+30 days)</div></div>
+      <div class="field"><span class="flabel">Post-study chain, once received</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Reviewed &amp; funding plan proposed (120 days)</span></label><label class="fopt"><input type="checkbox"><span>Owners &amp; auditor notified (+15 days)</span></label><label class="fopt"><input type="checkbox"><span>Plan implemented (+30 days)</span></label></div></div>
       <p class="tmpl-cite">Study timing: Condominium Act, 1998, s. 94(4); O. Reg. ss. 31(2)–(4). Post-study chain: s. 94(8)–(10).</p>
     </div>
 
@@ -440,7 +459,7 @@
       <span class="tmpl-flag">Starting point — not legal advice</span>
       <div class="field"><span class="flabel">Date requisition received</span><div class="fline">&nbsp;</div></div>
       <div class="field"><span class="flabel">15% threshold check</span><div class="fline">Total units: _____ × 15% = _____ units needed</div><p class="fhint">Confirm with the Requisition Threshold Checker.</p></div>
-      <div class="field"><span class="flabel">Form confirmed</span><div class="fline">☐ In writing &amp; signed &nbsp; ☐ States the business &nbsp; ☐ Properly delivered</div></div>
+      <div class="field"><span class="flabel">Form confirmed</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>In writing &amp; signed</span></label><label class="fopt"><input type="checkbox"><span>States the business</span></label><label class="fopt"><input type="checkbox"><span>Properly delivered</span></label></div></div>
       <div class="field"><span class="flabel">Meet-by date</span><div class="fline">&nbsp;</div><p class="fhint">35 days from the date received above.</p></div>
       <div class="field"><span class="flabel">If missed: requisitionist self-help fallback</span><div class="fline">Called by requisitionist on: _____ → must be held by: _____ (45 days later)</div></div>
       <div class="tmpl-note">Check this date against December 31, 2026 before relying on any figure above — the process changes substantially after that date. See the Requisition Threshold Checker for the pending replacement.</div>
@@ -488,7 +507,7 @@
       <span class="pnum">Appendix</span>
       <h2>Verification handshake</h2>
     </div>
-    <p class="part-sub">Every legal claim in this pack, next to the section it rests on and the tool it was traced from. For Nour's review — this section is marked no-print and won't appear in the printed/PDF pack.</p>
+    <p class="part-sub">Every legal claim in this pack, next to the section it rests on and the tool it was traced from.</p>
     <div class="vtable-wrap">
     <table class="vtable">
       <tr><th>Claim</th><th>Cite</th><th>Source</th></tr>
