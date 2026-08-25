@@ -33,11 +33,11 @@
 
 import { signAccessToken } from '../_lib/access-token.js';
 
-const PACK_PRICE_CENTS = 3900;
-const PACK_CURRENCY = 'usd';
+const PACK_PRICE_CENTS = 4900;
+const PACK_CURRENCY = 'cad';
 const ONE_DECADE_SECONDS = 315360000; // ~10 years; see access-token.js on why there's no real expiry
 
-// Both packs cost the same $39, so a purchase is identified by Stripe
+// Both packs cost the same CAD $49, so a purchase is identified by Stripe
 // product ID, not amount. These IDs come from the Stripe dashboard and are
 // the source of truth if a product is ever recreated.
 const PRODUCTS = {
@@ -135,7 +135,16 @@ export async function onRequestGet({ request, env }) {
   // Defense in depth: confirm the matched line item actually charged the
   // pack's price, in case a price or discount ever changes without this
   // constant being updated to match.
-  if (matchedItem.amount_total !== PACK_PRICE_CENTS || session.currency !== PACK_CURRENCY) {
+  //
+  // Compare amount_SUBTOTAL, not amount_total. The payment links have
+  // "collect tax automatically" switched on, and amount_total is defined as
+  // the figure AFTER tax. Stripe Tax currently calculates zero because the
+  // account has no tax registrations, so the two happen to be equal today --
+  // but the day a GST/HST registration is added, every amount_total arrives
+  // as price + tax, fails this check, and bounces a paying customer to
+  // ?checkout=mismatch. amount_subtotal is the pre-tax figure and is what
+  // this comparison actually means.
+  if (matchedItem.amount_subtotal !== PACK_PRICE_CENTS || session.currency !== PACK_CURRENCY) {
     console.error('verify-purchase: matched product but amount does not match the pack price', sessionId, matched.key);
     return redirect(`${matched.salesPage}?checkout=mismatch`);
   }
