@@ -48,6 +48,7 @@
  */
 
 import { signAccessToken } from '../_lib/access-token.js';
+import { count } from '../_lib/count.js';
 import { sendPackEmail } from '../_lib/pack-email.js';
 
 const PACK_PRICE_CENTS = 4900;
@@ -199,6 +200,11 @@ export async function onRequestGet({ request, env, waitUntil }) {
     });
     if (typeof waitUntil === 'function') waitUntil(deliver);
   }
+
+  // Counted server-side, where an ad blocker cannot hide it and a prober
+  // cannot fake it. This is the only purchase number worth trusting.
+  const counted = count(env, 'purchased', matched.key);
+  if (typeof waitUntil === 'function') waitUntil(counted); else await counted;
 
   const headers = new Headers();
   headers.set('Location', `${matched.redeemDestination}?t=${token}`);

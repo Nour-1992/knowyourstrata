@@ -47,3 +47,26 @@ whether a failure is a bug or a stale expectation.
 Not yet covered: `on/notice-of-meeting-deadline`,
 `on/reserve-fund-study-deadline`, `bc/depreciation-report-deadline`. These take
 more inputs and branch more; they are the obvious next additions.
+
+## `events_test.py`
+
+Asserts the funnel counter actually fires. Analytics that quietly stops working
+is worse than none, because you keep making decisions from a number that has
+stopped moving.
+
+Checks that running a calculator sends `tool_used` with the right tool, that
+each pack page sends `pack_view` with the right province, and that clicking
+checkout sends `pack_click` — plus that the payload contains **nothing but**
+`name` and `detail`, so nothing identifying can creep in unnoticed.
+
+It also asserts the two things the counter must *not* do: fire on a page with no
+calculator, and fire at all when the browser sends Global Privacy Control.
+
+This suite paid for itself on the first run. `pack_click` had been bound to
+`a[href*="buy.stripe.com"]`, but checkout is a `<button id="buyBtn">` that sets
+`location.href` — so the selector matched nothing and the most important step in
+the funnel would have silently recorded zero for ever. Both are bound now.
+
+```bash
+python3 tests/events_test.py
+```

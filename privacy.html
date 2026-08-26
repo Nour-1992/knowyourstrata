@@ -87,6 +87,32 @@
 
   <p>The site uses <strong>Cloudflare Web Analytics</strong>, which is privacy-first by design: it uses no cookies, does not fingerprint visitors, does not track people across sites, and reports only aggregate figures such as how many times a page was viewed. I use it to see which tools are actually used. It cannot tell me who you are.</p>
 
+  <h3>Counting how the site is used</h3>
+
+  <p>Alongside that, the site keeps its own small count of five things: a calculator
+    being run (and which one), a Starter Pack page being opened, the checkout link
+    being clicked, an address joining the list, and a pack being bought. I use it to
+    see which tools are worth building more of, and whether anyone who opens the pack
+    page actually buys it.</p>
+
+  <p>It is worth being precise about what that does and does not involve, because it
+    would be easy to write "we use analytics" and leave you guessing:</p>
+
+  <ul>
+    <li>It is <strong>first party</strong>. The counts go to this site, not to any
+      analytics company. Nothing about you leaves knowyourstrata.com.</li>
+    <li>It stores <strong>a running total per day, and nothing else</strong> &mdash;
+      no visitor identifier, no session, no cookie, no IP address, no user agent, no
+      referrer. There is no column in the table for any of those, so none can be
+      added later by accident.</li>
+    <li>Because of that, <strong>it cannot tell one person from another.</strong> Two
+      people running the same calculator and one person running it twice are the same
+      number. That is a real accuracy cost, and it is the price of the paragraph above.</li>
+    <li>If your browser sends <strong>Global Privacy Control</strong> or
+      <strong>Do Not Track</strong>, nothing is counted at all. Nothing identifying
+      would have been sent either way; honouring the signal is the point.</li>
+  </ul>
+
   <h2>Server logs</h2>
 
   <p>The site is hosted on <a href="https://www.cloudflare.com/" rel="noopener">Cloudflare Pages</a>. Like any web host, Cloudflare processes standard request data &mdash; IP address, user agent, the URL requested, timestamps &mdash; in order to serve pages, block attacks and keep the site up. That processing is Cloudflare's, under its own terms, and is not used by me to build any profile of visitors.</p>
@@ -127,5 +153,6 @@
   </div>
 </footer>
 
+<script src="/assets/kys-events.js" defer></script>
 </body>
 </html>

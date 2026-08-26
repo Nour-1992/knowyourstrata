@@ -14,6 +14,8 @@
  * Neither value belongs in this repository.
  */
 
+import { count } from '../_lib/count.js';
+
 const BEEHIIV_API = 'https://api.beehiiv.com/v2';
 
 // Deliberately permissive: the goal is to reject obvious typos and junk, not to
@@ -89,6 +91,8 @@ export async function onRequestPost({ request, env }) {
   }
 
   if (upstream.ok) {
+    // Counted server-side: the signup that matters is the one beehiiv accepted.
+    await count(env, 'subscribed');
     return json({ ok: true }, 200);
   }
 

@@ -107,6 +107,20 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return fs + '.html'
         return fs
 
+    def do_POST(self):
+        # Emulate the /api/event Pages Function so the counter beacon behaves
+        # here the way it does in production. Anything else stays a 501, so a
+        # real unexpected POST is still visible.
+        from urllib.parse import urlparse as _u
+        if _u(self.path).path == '/api/event':
+            try:
+                n = int(self.headers.get('content-length') or 0)
+                if n: self.rfile.read(n)
+            except Exception:
+                pass
+            self.send_response(204); self.end_headers(); return
+        self.send_error(501, "Unsupported method ('POST')")
+
     def log_message(self, *a):
         pass
 
