@@ -730,11 +730,15 @@
 
     var printBtn = document.createElement('button');
     printBtn.type = 'button';
-    /* Named for what people actually want. The browser print dialog offers
+    /* Scoped wording on purpose. The page-level button at the top of the pack
+       already reads 'Print / save as PDF' and prints all 3,800 words; naming
+       these the same thing made five identical buttons that do two different
+       things. 'this template' is the whole point of the button.
+       The browser print dialog offers
        'Save as PDF' as a destination on every current browser and OS, and the
        inputs print their typed values -- so this IS PDF export, with no
        library and no server. Calling it 'Print' hid that. */
-    printBtn.textContent = 'Print / save as PDF';
+    printBtn.textContent = 'Save this template as PDF';
     printBtn.addEventListener('click', function(){
       tmpl.classList.add('print-target');
       document.body.classList.add('print-single');
