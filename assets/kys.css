@@ -147,6 +147,57 @@ body{
   @keyframes kysRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 }
 @media print{
-  .kys-nav,.kys-back,.no-print{display:none !important}
+  .kys-nav,.kys-back,.no-print,.kys-sitelinks{display:none !important}
   body{background:#fff}
 }
+
+/* ── Prose pages ───────────────────────────────────────────────────
+   About, Contact, Privacy and Terms. These are read, not used, so they
+   get a narrower measure and serif headings rather than the mono
+   section markers the tool pages use. */
+.kys-prose{max-width:680px;margin:0 auto;padding:0 20px 40px}
+.kys-prose header.page{padding:56px 0 6px}
+.kys-prose .eyebrow{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--spruce);margin:0 0 10px;
+}
+.kys-prose h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.7rem,5.5vw,2.4rem);line-height:1.15;
+  color:var(--spruce-deep);margin:0 0 14px;
+}
+.kys-prose .lede{font-size:1.04rem;line-height:1.65;color:var(--ink-soft);max-width:58ch}
+.kys-prose h2{
+  font-family:var(--display);font-weight:600;font-size:1.3rem;
+  color:var(--spruce-deep);margin:40px 0 10px;
+}
+.kys-prose h3{font-size:1rem;font-weight:700;color:var(--ink);margin:24px 0 6px}
+.kys-prose p{margin:0 0 12px;max-width:66ch}
+.kys-prose ul,.kys-prose ol{margin:0 0 14px 22px;max-width:64ch}
+.kys-prose li{margin:0 0 7px}
+.kys-prose a{color:var(--spruce)}
+.kys-prose dl{margin:0 0 14px;max-width:64ch}
+.kys-prose dt{font-weight:700;margin-top:16px}
+.kys-prose dd{margin:3px 0 0;color:var(--ink-soft)}
+.kys-prose .updated{
+  font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;
+  color:#6C7A73;margin:0 0 4px;
+}
+.kys-prose .note{
+  border-left:3px solid var(--sage);background:#F1F4F2;
+  padding:14px 18px;border-radius:0 8px 8px 0;margin:0 0 18px;
+  color:#3D4C47;font-size:.94rem;
+}
+.kys-prose .note p:last-child{margin-bottom:0}
+.kys-prose .contact-line{
+  font-family:var(--mono);font-size:1rem;letter-spacing:.02em;
+  color:var(--spruce-deep);margin:0 0 14px;
+}
+
+/* ── Site links row, shared by every footer on the site ─────────── */
+.kys-sitelinks{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;
+  color:#6C7A73;margin-top:10px;
+}
+.kys-sitelinks a{color:var(--spruce);text-decoration:none}
+.kys-sitelinks a:hover{text-decoration:underline}
