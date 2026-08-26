@@ -812,7 +812,11 @@
 
     var printBtn = document.createElement('button');
     printBtn.type = 'button';
-    printBtn.textContent = 'Print this template';
+    /* Named for what people actually want. The browser print dialog offers
+       'Save as PDF' as a destination on every current browser and OS, and the
+       inputs print their typed values -- so this IS PDF export, with no
+       library and no server. Calling it 'Print' hid that. */
+    printBtn.textContent = 'Print / save as PDF';
     printBtn.addEventListener('click', function(){
       tmpl.classList.add('print-target');
       document.body.classList.add('print-single');
