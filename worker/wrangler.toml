@@ -1,4 +1,4 @@
-# Legislative-Change Watcher (BC) -- standalone Cloudflare Worker.
+# Legislative-Change Watcher (BC + Ontario) -- standalone Cloudflare Worker.
 #
 # This is deliberately separate from the Pages project that serves the
 # rest of knowyourstrata.com: Cloudflare Pages Functions don't support

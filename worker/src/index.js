@@ -1,9 +1,11 @@
 /**
- * Legislative-Change Watcher (BC) -- detect & alert only.
+ * Legislative-Change Watcher (BC + Ontario) -- detect & alert only.
  *
- * Weekly, this Worker fetches the specific BC Act/Regulation/Standard
- * Bylaws pages the live tools on knowyourstrata.com actually cite (see
- * sources.js), compares each against the text it saw last time, and
+ * Weekly, this Worker fetches the specific sources the live tools on
+ * knowyourstrata.com actually cite (see sources.js) -- the BC Act,
+ * Regulation and Standard Bylaws pages, and the Ontario e-Laws currency
+ * date plus the consolidation-version lists for the Condominium Act, 1998
+ * and O. Reg. 48/01 -- compares each against what it saw last time, and
  * records what changed. It never edits any tool page, pack, or site copy
  * -- a detected change is a signal that a normal brief -> build ->
  * primary-source-verify -> ship pass is due, not something this Worker
@@ -48,7 +50,7 @@
 
 import { SOURCES } from './sources.js';
 
-const USER_AGENT = 'KnowYourStrataWatcher/1.0 (+https://knowyourstrata.com; legislative source monitor, detect-only, no scraping beyond these 7 pages)';
+const USER_AGENT = 'KnowYourStrataWatcher/1.0 (+https://knowyourstrata.com; legislative source monitor, detect-only, no scraping beyond the sources in sources.js)';
 
 function normalize(text) {
   return text
@@ -102,13 +104,31 @@ async function checkSource(env, source, now) {
   try {
     const res = await fetch(source.url, { headers: { 'User-Agent': USER_AGENT } });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const text = normalize(await res.text());
-    if (text.length < 500) {
-      // Real bclaws pages are tens of thousands of characters. A tiny
-      // response almost certainly means a block page, redirect, or
-      // structural change this Worker can't parse -- fail loudly rather
-      // than silently treating an empty page as "no change."
-      throw new Error(`Response suspiciously short (${text.length} chars) -- likely blocked or restructured, not a real fetch`);
+
+    const raw = await res.text();
+
+    // A source may reduce its response to just the meaningful part before
+    // it is compared. The Ontario endpoints need this: e-Laws proxies
+    // Elasticsearch, whose `took` timing and `_shards` block differ on
+    // every call, so the raw body would report a change every week and
+    // mean nothing. An extractor that throws is a real failure -- a
+    // restructured API -- and is reported as an error, not as no change.
+    let text;
+    try {
+      text = normalize(source.extract ? source.extract(raw) : raw);
+    } catch (err) {
+      throw new Error(`Could not read this source's shape (${err.message}) -- the upstream format probably changed`);
+    }
+
+    // bclaws pages are tens of thousands of characters; an extracted
+    // currency date is fifteen. Each source sets its own floor. A response
+    // under it almost certainly means a block page, a redirect, or an
+    // upstream shard failure -- fail loudly rather than silently treating
+    // an empty response as "no change", or worse, as "everything was
+    // removed."
+    const minLength = source.minLength || 500;
+    if (text.length < minLength) {
+      throw new Error(`Response suspiciously short (${text.length} chars, expected at least ${minLength}) -- likely blocked or restructured, not a real fetch`);
     }
 
     const prevText = await env.WATCHER_KV.get(`snapshot:${source.id}`);
