@@ -162,6 +162,38 @@
   .fopt input[type=checkbox]:focus-visible{outline:2px solid var(--spruce);outline-offset:2px;border-radius:3px}
   .fopt:has(input:checked) span{color:var(--spruce-deep);font-weight:600}
 
+  /* Typeable template lines. Styled to sit on the existing rule so a filled
+     form and a blank printed one look like the same document. */
+  .field .fin{
+    width:100%;border:0;background:none;padding:2px 0;margin:0;
+    font-family:var(--body);font-size:.95rem;color:var(--ink);
+    line-height:1.5;min-height:1.6em;
+  }
+  .field .fin:focus{outline:0;background:#FFFDF5;box-shadow:inset 0 -2px 0 var(--spruce)}
+  .field .fin::placeholder{color:#B6B0A2}
+
+  /* Per-template toolbar, built in JS so the markup stays clean. */
+  .tmpl-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tmpl-tools button{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    background:none;border:1px solid var(--line);border-radius:5px;padding:6px 11px;
+    color:#5E6E68;cursor:pointer;
+  }
+  .tmpl-tools button:hover{color:var(--spruce);border-color:var(--spruce)}
+  .tmpl-tools button:focus-visible{outline:2px solid var(--spruce);outline-offset:2px}
+
+  /* Printing one template on its own. visibility rather than display so the
+     element keeps its box while every ancestor is blanked -- the reliable way
+     to print a single nested node. */
+  @media print{
+    body.print-single *{visibility:hidden}
+    body.print-single .print-target,
+    body.print-single .print-target *{visibility:visible}
+    body.print-single .print-target{position:absolute;left:0;top:0;width:100%;border:0;padding:0}
+    body.print-single .print-target .tmpl-tools{display:none}
+    .fin{border-bottom:1px solid #C9C3B4 !important}
+  }
+
   /* Access link banner */
   .savelink{
     background:#FFF9E8;border:1px solid #E4D9B4;border-left:3px solid var(--seal);
@@ -471,15 +503,15 @@
     <div class="tmpl">
       <h3>AGM Notice</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
-      <div class="field"><span class="flabel">Strata plan</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">Date this notice is given</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Strata plan</span><div class="fline"><input type="text" class="fin"></div></div>
+      <div class="field"><span class="flabel">Date this notice is given</span><div class="fline"><input type="text" class="fin"></div></div>
+      <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline"><input type="text" class="fin"></div></div>
       <div class="field">
         <span class="flabel">Notice statement</span>
         <div class="fline">This notice is given at least 20 days before the meeting date, in accordance with section 45 of the Strata Property Act.</div>
         <p class="fhint">Confirm the actual gap between the date this notice is sent and the meeting date using the AGM notice calculator before relying on this line.</p>
       </div>
-      <div class="field"><span class="flabel">Agenda items</span><div class="fline">&nbsp;</div><div class="fline">&nbsp;</div><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Agenda items</span><div class="fline"><input type="text" class="fin"></div><div class="fline"><input type="text" class="fin"></div><div class="fline"><input type="text" class="fin"></div></div>
       <div class="field"><span class="flabel">Attachments</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Proposed budget</span></label><label class="fopt"><input type="checkbox"><span>Proxy form</span></label><label class="fopt"><input type="checkbox"><span>Prior AGM minutes</span></label></div></div>
       <p class="tmpl-cite">Notice timing: Strata Property Act ss. 45(1), 61(3)</p>
     </div>
@@ -502,22 +534,22 @@
       <h3>Special Levy Resolution</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
       <p style="font-size:.85rem;color:#5E6E68;margin-bottom:10px">Structured around the five items section 108(3) requires the resolution to state.</p>
-      <div class="field"><span class="flabel">1. Purpose of the levy — s. 108(3)(a)</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">2. Total amount of the levy — s. 108(3)(b)</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">1. Purpose of the levy — s. 108(3)(a)</span><div class="fline"><input type="text" class="fin"></div></div>
+      <div class="field"><span class="flabel">2. Total amount of the levy — s. 108(3)(b)</span><div class="fline"><input type="text" class="fin"></div></div>
       <div class="field"><span class="flabel">3. Method used to determine each lot's share — s. 108(3)(c)</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Unit entitlement (s. 99) — 3/4 vote</span></label><label class="fopt"><input type="checkbox"><span>Other fair division — unanimous vote (s. 108(2)(b))</span></label></div></div>
       <div class="field"><span class="flabel">4. Each lot's share — s. 108(3)(d)</span><div class="fline">[Attach the per-unit table from the Special Levy Calculator]</div></div>
-      <div class="field"><span class="flabel">5. Payment date, or instalment dates — s. 108(3)(e)</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">5. Payment date, or instalment dates — s. 108(3)(e)</span><div class="fline"><input type="text" class="fin"></div></div>
       <p class="tmpl-cite">Required contents: Strata Property Act s. 108(3). Vote threshold: s. 108(2)(a)–(b).</p>
     </div>
 
     <div class="tmpl">
       <h3>Records-Request Acknowledgment</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
-      <div class="field"><span class="flabel">Date request received</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Date request received</span><div class="fline"><input type="text" class="fin"></div></div>
       <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Owner</span></label><label class="fopt"><input type="checkbox"><span>Assigned tenant</span></label><label class="fopt"><input type="checkbox"><span>Authorized in writing</span></label><label class="fopt"><input type="checkbox"><span>Former owner/tenant (own period only)</span></label></div></div>
       <div class="field"><span class="flabel">What was requested</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>General records/documents (2-week clock)</span></label><label class="fopt"><input type="checkbox"><span>Bylaws or rules only (1-week clock)</span></label><label class="fopt"><input type="checkbox"><span>Information Certificate / Form B (1-week clock)</span></label></div></div>
-      <div class="field"><span class="flabel">Deadline to comply</span><div class="fline">&nbsp;</div><p class="fhint">Calculate this with the Records Request Deadline tool rather than counting by hand.</p></div>
-      <div class="field"><span class="flabel">Fee, if any (capped by regulation)</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Deadline to comply</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">Calculate this with the Records Request Deadline tool rather than counting by hand.</p></div>
+      <div class="field"><span class="flabel">Fee, if any (capped by regulation)</span><div class="fline"><input type="text" class="fin"></div></div>
       <p class="tmpl-cite">Who may request: ss. 36(1), 36(1.1), 36(2). Deadlines: s. 36(3), s. 59(1). Fee cap: s. 36(4), s. 59(7).</p>
     </div>
   </section>
@@ -631,6 +663,132 @@
 (function(){
   var b=document.getElementById('printBtn');
   if(b)b.addEventListener('click',function(){window.print();});
+  /* ---- template forms: fill in, keep for this sitting, print or copy ------
+     Templates persist in sessionStorage, NOT localStorage. A checklist is a
+     process worked through over days and should survive a closed tab. A
+     template is a document filled in once per event -- surviving a reload or a
+     stray back-button is useful, but restoring last quarter's meeting date
+     onto this quarter's notice would be wrong on a document sent to owners.
+     sessionStorage is exactly that lifetime: this tab, this sitting. */
+  var TKEY = 'kys-tmpl-' + PACK;
+  var tstore = {};
+  try { tstore = JSON.parse(sessionStorage.getItem(TKEY) || '{}') || {}; } catch(e) { tstore = {}; }
+  function tsave(){ try { sessionStorage.setItem(TKEY, JSON.stringify(tstore)); } catch(e){} }
+
+  function tmplTitle(tmpl){
+    var h = tmpl.querySelector('h3');
+    return h ? h.textContent.trim() : 'Template';
+  }
+
+  function tmplAsText(tmpl){
+    var out = [tmplTitle(tmpl)];
+    var flag = tmpl.querySelector('.tmpl-flag');
+    if (flag) out.push('(' + flag.textContent.trim() + ')');
+    out.push('');
+    Array.prototype.forEach.call(tmpl.querySelectorAll('.field'), function(f){
+      var lab = f.querySelector('.flabel');
+      var label = lab ? lab.textContent.trim() : '';
+      var opts = f.querySelectorAll('.fopt');
+      if (opts.length) {
+        var bits = [];
+        Array.prototype.forEach.call(opts, function(o){
+          var cb = o.querySelector('input[type=checkbox]');
+          var sp = o.querySelector('span');
+          bits.push((cb && cb.checked ? '[x] ' : '[ ] ') + (sp ? sp.textContent.trim() : ''));
+        });
+        out.push(label + ': ' + bits.join('   '));
+      } else {
+        var fin = f.querySelector('.fin');
+        out.push(label + ': ' + (fin && fin.value ? fin.value : '________________'));
+      }
+      var hint = f.querySelector('.fhint');
+      if (hint) out.push('    (' + hint.textContent.trim() + ')');
+    });
+    var cite = tmpl.querySelector('.tmpl-cite');
+    if (cite) { out.push(''); out.push(cite.textContent.trim()); }
+    out.push('');
+    out.push('From the ' + (document.querySelector('h1') ? document.querySelector('h1').textContent.trim() : 'Know Your Strata pack') + ' — knowyourstrata.com');
+    return out.join('\n');
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.tmpl'), function(tmpl, ti){
+    /* restore + remember every field in this template */
+    Array.prototype.forEach.call(tmpl.querySelectorAll('.fin'), function(inp, i){
+      var k = 't' + ti + 'f' + i;
+      if (typeof tstore[k] === 'string') inp.value = tstore[k];
+      inp.addEventListener('input', function(){
+        if (inp.value) tstore[k] = inp.value; else delete tstore[k];
+        tsave();
+      });
+    });
+    Array.prototype.forEach.call(tmpl.querySelectorAll('.fopt input[type=checkbox]'), function(cb, i){
+      var k = 't' + ti + 'c' + i;
+      cb.checked = tstore[k] === 1;
+      cb.addEventListener('change', function(){
+        if (cb.checked) tstore[k] = 1; else delete tstore[k];
+        tsave();
+      });
+    });
+
+    /* toolbar */
+    var tools = document.createElement('div');
+    tools.className = 'tmpl-tools no-print';
+
+    var printBtn = document.createElement('button');
+    printBtn.type = 'button';
+    printBtn.textContent = 'Print this template';
+    printBtn.addEventListener('click', function(){
+      tmpl.classList.add('print-target');
+      document.body.classList.add('print-single');
+      function cleanup(){
+        tmpl.classList.remove('print-target');
+        document.body.classList.remove('print-single');
+        window.removeEventListener('afterprint', cleanup);
+      }
+      window.addEventListener('afterprint', cleanup);
+      window.print();
+      /* Safari/iOS never fire afterprint reliably; clear anyway. */
+      setTimeout(cleanup, 1500);
+    });
+
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.textContent = 'Copy as text';
+    copyBtn.addEventListener('click', function(){
+      var text = tmplAsText(tmpl);
+      function done(){
+        copyBtn.textContent = 'Copied \u2713';
+        setTimeout(function(){ copyBtn.textContent = 'Copy as text'; }, 2200);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(e){}
+        document.body.removeChild(ta);
+      }
+    });
+
+    var clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.textContent = 'Clear';
+    clearBtn.addEventListener('click', function(){
+      Array.prototype.forEach.call(tmpl.querySelectorAll('.fin'), function(inp, i){
+        inp.value = ''; delete tstore['t' + ti + 'f' + i];
+      });
+      Array.prototype.forEach.call(tmpl.querySelectorAll('.fopt input[type=checkbox]'), function(cb, i){
+        cb.checked = false; delete tstore['t' + ti + 'c' + i];
+      });
+      tsave();
+    });
+
+    tools.appendChild(printBtn);
+    tools.appendChild(copyBtn);
+    tools.appendChild(clearBtn);
+    tmpl.appendChild(tools);
+  });
+
 })();
 </script>
 <script>

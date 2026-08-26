@@ -162,6 +162,38 @@
   .fopt input[type=checkbox]:focus-visible{outline:2px solid var(--spruce);outline-offset:2px;border-radius:3px}
   .fopt:has(input:checked) span{color:var(--spruce-deep);font-weight:600}
 
+  /* Typeable template lines. Styled to sit on the existing rule so a filled
+     form and a blank printed one look like the same document. */
+  .field .fin{
+    width:100%;border:0;background:none;padding:2px 0;margin:0;
+    font-family:var(--body);font-size:.95rem;color:var(--ink);
+    line-height:1.5;min-height:1.6em;
+  }
+  .field .fin:focus{outline:0;background:#FFFDF5;box-shadow:inset 0 -2px 0 var(--spruce)}
+  .field .fin::placeholder{color:#B6B0A2}
+
+  /* Per-template toolbar, built in JS so the markup stays clean. */
+  .tmpl-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tmpl-tools button{
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    background:none;border:1px solid var(--line);border-radius:5px;padding:6px 11px;
+    color:#5E6E68;cursor:pointer;
+  }
+  .tmpl-tools button:hover{color:var(--spruce);border-color:var(--spruce)}
+  .tmpl-tools button:focus-visible{outline:2px solid var(--spruce);outline-offset:2px}
+
+  /* Printing one template on its own. visibility rather than display so the
+     element keeps its box while every ancestor is blanked -- the reliable way
+     to print a single nested node. */
+  @media print{
+    body.print-single *{visibility:hidden}
+    body.print-single .print-target,
+    body.print-single .print-target *{visibility:visible}
+    body.print-single .print-target{position:absolute;left:0;top:0;width:100%;border:0;padding:0}
+    body.print-single .print-target .tmpl-tools{display:none}
+    .fin{border-bottom:1px solid #C9C3B4 !important}
+  }
+
   /* Access link banner */
   .savelink{
     background:#FFF9E8;border:1px solid #E4D9B4;border-left:3px solid var(--seal);
@@ -424,19 +456,19 @@
       <h3>Preliminary Notice &amp; Notice of Meeting Tracker</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
       <div class="field"><span class="flabel">Meeting type</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>AGM</span></label><label class="fopt"><input type="checkbox"><span>Turn-over</span></label><label class="fopt"><input type="checkbox"><span>Other business</span></label><label class="fopt"><input type="checkbox"><span>Owner-requisitioned</span></label></div></div>
-      <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">Preliminary Notice sent</span><div class="fline">&nbsp;</div><p class="fhint">Must be at least 20 days before the Notice of Meeting below.</p></div>
-      <div class="field"><span class="flabel">Notice of Meeting sent</span><div class="fline">&nbsp;</div><p class="fhint">Must be at least 15 days before the meeting date above. Confirm both gaps with the Notice of Meeting Deadline calculator before relying on this line.</p></div>
-      <div class="field"><span class="flabel">If owner-requisitioned: date requisition received</span><div class="fline">&nbsp;</div><p class="fhint">Meet-by date is 35 days from this date — see the requisition tracker.</p></div>
+      <div class="field"><span class="flabel">Meeting date, time &amp; location</span><div class="fline"><input type="text" class="fin"></div></div>
+      <div class="field"><span class="flabel">Preliminary Notice sent</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">Must be at least 20 days before the Notice of Meeting below.</p></div>
+      <div class="field"><span class="flabel">Notice of Meeting sent</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">Must be at least 15 days before the meeting date above. Confirm both gaps with the Notice of Meeting Deadline calculator before relying on this line.</p></div>
+      <div class="field"><span class="flabel">If owner-requisitioned: date requisition received</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">Meet-by date is 35 days from this date — see the requisition tracker.</p></div>
       <p class="tmpl-cite">Notice timing: Condominium Act, 1998, ss. 47(1)(b)–(c). Requisitioned meetings: ss. 46(1), 46(4)(b).</p>
     </div>
 
     <div class="tmpl">
       <h3>Records Request Log</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
-      <div class="field"><span class="flabel">Date request received</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Date request received</span><div class="fline"><input type="text" class="fin"></div></div>
       <div class="field"><span class="flabel">Requester name &amp; standing</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Owner</span></label><label class="fopt"><input type="checkbox"><span>Purchaser</span></label><label class="fopt"><input type="checkbox"><span>Mortgagee</span></label><label class="fopt"><input type="checkbox"><span>Authorized agent</span></label></div></div>
-      <div class="field"><span class="flabel">Board's response due</span><div class="fline">&nbsp;</div><p class="fhint">30 days from the date received. Calculate with the Records Request Deadline tool.</p></div>
+      <div class="field"><span class="flabel">Board's response due</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">30 days from the date received. Calculate with the Records Request Deadline tool.</p></div>
       <div class="field"><span class="flabel">Record type</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Core record</span></label><label class="fopt"><input type="checkbox"><span>Not a core record</span></label></div></div>
       <div class="field"><span class="flabel">Delivery method &amp; deadline</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Core, electronic — same 30 days</span></label><label class="fopt"><input type="checkbox"><span>Core, paper — 7 days after payment</span></label><label class="fopt"><input type="checkbox"><span>Non-core — 30 days after payment</span></label></div></div>
       <div class="field"><span class="flabel">If declined, exemption relied on</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Employee records</span></label><label class="fopt"><input type="checkbox"><span>Litigation/insurance</span></label><label class="fopt"><input type="checkbox"><span>Unit-specific</span></label><label class="fopt"><input type="checkbox"><span>Prescribed</span></label></div></div>
@@ -446,10 +478,10 @@
     <div class="tmpl">
       <h3>Reserve Fund Study Tracker</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
-      <div class="field"><span class="flabel">Declaration &amp; description registered</span><div class="fline">&nbsp;</div></div>
-      <div class="field"><span class="flabel">First study due</span><div class="fline">&nbsp;</div><p class="fhint">1 year from registration above. Must be comprehensive.</p></div>
+      <div class="field"><span class="flabel">Declaration &amp; description registered</span><div class="fline"><input type="text" class="fin"></div></div>
+      <div class="field"><span class="flabel">First study due</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">1 year from registration above. Must be comprehensive.</p></div>
       <div class="field"><span class="flabel">Most recent study — completion date &amp; class</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Comprehensive</span></label><label class="fopt"><input type="checkbox"><span>Updated, site inspection</span></label><label class="fopt"><input type="checkbox"><span>Updated, no site inspection</span></label></div></div>
-      <div class="field"><span class="flabel">Next study due</span><div class="fline">&nbsp;</div><p class="fhint">3 years from the completion date above. Confirm required class with the Reserve Fund Study Deadline tool — it alternates, and doesn't return to comprehensive on its own.</p></div>
+      <div class="field"><span class="flabel">Next study due</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">3 years from the completion date above. Confirm required class with the Reserve Fund Study Deadline tool — it alternates, and doesn't return to comprehensive on its own.</p></div>
       <div class="field"><span class="flabel">Post-study chain, once received</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>Reviewed &amp; funding plan proposed (120 days)</span></label><label class="fopt"><input type="checkbox"><span>Owners &amp; auditor notified (+15 days)</span></label><label class="fopt"><input type="checkbox"><span>Plan implemented (+30 days)</span></label></div></div>
       <p class="tmpl-cite">Study timing: Condominium Act, 1998, s. 94(4); O. Reg. ss. 31(2)–(4). Post-study chain: s. 94(8)–(10).</p>
     </div>
@@ -457,10 +489,10 @@
     <div class="tmpl">
       <h3>Owner Requisition Tracker</h3>
       <span class="tmpl-flag">Starting point — not legal advice</span>
-      <div class="field"><span class="flabel">Date requisition received</span><div class="fline">&nbsp;</div></div>
+      <div class="field"><span class="flabel">Date requisition received</span><div class="fline"><input type="text" class="fin"></div></div>
       <div class="field"><span class="flabel">15% threshold check</span><div class="fline">Total units: _____ × 15% = _____ units needed</div><p class="fhint">Confirm with the Requisition Threshold Checker.</p></div>
       <div class="field"><span class="flabel">Form confirmed</span><div class="fline fopts"><label class="fopt"><input type="checkbox"><span>In writing &amp; signed</span></label><label class="fopt"><input type="checkbox"><span>States the business</span></label><label class="fopt"><input type="checkbox"><span>Properly delivered</span></label></div></div>
-      <div class="field"><span class="flabel">Meet-by date</span><div class="fline">&nbsp;</div><p class="fhint">35 days from the date received above.</p></div>
+      <div class="field"><span class="flabel">Meet-by date</span><div class="fline"><input type="text" class="fin"></div><p class="fhint">35 days from the date received above.</p></div>
       <div class="field"><span class="flabel">If missed: requisitionist self-help fallback</span><div class="fline">Called by requisitionist on: _____ → must be held by: _____ (45 days later)</div></div>
       <div class="tmpl-note">Check this date against December 31, 2026 before relying on any figure above — the process changes substantially after that date. See the Requisition Threshold Checker for the pending replacement.</div>
       <p class="tmpl-cite">Threshold &amp; form: ss. 46(1)–(2). Timeline: ss. 46(4)(b), 46(5).</p>
@@ -549,6 +581,132 @@
 (function(){
   var b=document.getElementById('printBtn');
   if(b)b.addEventListener('click',function(){window.print();});
+  /* ---- template forms: fill in, keep for this sitting, print or copy ------
+     Templates persist in sessionStorage, NOT localStorage. A checklist is a
+     process worked through over days and should survive a closed tab. A
+     template is a document filled in once per event -- surviving a reload or a
+     stray back-button is useful, but restoring last quarter's meeting date
+     onto this quarter's notice would be wrong on a document sent to owners.
+     sessionStorage is exactly that lifetime: this tab, this sitting. */
+  var TKEY = 'kys-tmpl-' + PACK;
+  var tstore = {};
+  try { tstore = JSON.parse(sessionStorage.getItem(TKEY) || '{}') || {}; } catch(e) { tstore = {}; }
+  function tsave(){ try { sessionStorage.setItem(TKEY, JSON.stringify(tstore)); } catch(e){} }
+
+  function tmplTitle(tmpl){
+    var h = tmpl.querySelector('h3');
+    return h ? h.textContent.trim() : 'Template';
+  }
+
+  function tmplAsText(tmpl){
+    var out = [tmplTitle(tmpl)];
+    var flag = tmpl.querySelector('.tmpl-flag');
+    if (flag) out.push('(' + flag.textContent.trim() + ')');
+    out.push('');
+    Array.prototype.forEach.call(tmpl.querySelectorAll('.field'), function(f){
+      var lab = f.querySelector('.flabel');
+      var label = lab ? lab.textContent.trim() : '';
+      var opts = f.querySelectorAll('.fopt');
+      if (opts.length) {
+        var bits = [];
+        Array.prototype.forEach.call(opts, function(o){
+          var cb = o.querySelector('input[type=checkbox]');
+          var sp = o.querySelector('span');
+          bits.push((cb && cb.checked ? '[x] ' : '[ ] ') + (sp ? sp.textContent.trim() : ''));
+        });
+        out.push(label + ': ' + bits.join('   '));
+      } else {
+        var fin = f.querySelector('.fin');
+        out.push(label + ': ' + (fin && fin.value ? fin.value : '________________'));
+      }
+      var hint = f.querySelector('.fhint');
+      if (hint) out.push('    (' + hint.textContent.trim() + ')');
+    });
+    var cite = tmpl.querySelector('.tmpl-cite');
+    if (cite) { out.push(''); out.push(cite.textContent.trim()); }
+    out.push('');
+    out.push('From the ' + (document.querySelector('h1') ? document.querySelector('h1').textContent.trim() : 'Know Your Strata pack') + ' — knowyourstrata.com');
+    return out.join('\n');
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.tmpl'), function(tmpl, ti){
+    /* restore + remember every field in this template */
+    Array.prototype.forEach.call(tmpl.querySelectorAll('.fin'), function(inp, i){
+      var k = 't' + ti + 'f' + i;
+      if (typeof tstore[k] === 'string') inp.value = tstore[k];
+      inp.addEventListener('input', function(){
+        if (inp.value) tstore[k] = inp.value; else delete tstore[k];
+        tsave();
+      });
+    });
+    Array.prototype.forEach.call(tmpl.querySelectorAll('.fopt input[type=checkbox]'), function(cb, i){
+      var k = 't' + ti + 'c' + i;
+      cb.checked = tstore[k] === 1;
+      cb.addEventListener('change', function(){
+        if (cb.checked) tstore[k] = 1; else delete tstore[k];
+        tsave();
+      });
+    });
+
+    /* toolbar */
+    var tools = document.createElement('div');
+    tools.className = 'tmpl-tools no-print';
+
+    var printBtn = document.createElement('button');
+    printBtn.type = 'button';
+    printBtn.textContent = 'Print this template';
+    printBtn.addEventListener('click', function(){
+      tmpl.classList.add('print-target');
+      document.body.classList.add('print-single');
+      function cleanup(){
+        tmpl.classList.remove('print-target');
+        document.body.classList.remove('print-single');
+        window.removeEventListener('afterprint', cleanup);
+      }
+      window.addEventListener('afterprint', cleanup);
+      window.print();
+      /* Safari/iOS never fire afterprint reliably; clear anyway. */
+      setTimeout(cleanup, 1500);
+    });
+
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.textContent = 'Copy as text';
+    copyBtn.addEventListener('click', function(){
+      var text = tmplAsText(tmpl);
+      function done(){
+        copyBtn.textContent = 'Copied \u2713';
+        setTimeout(function(){ copyBtn.textContent = 'Copy as text'; }, 2200);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(e){}
+        document.body.removeChild(ta);
+      }
+    });
+
+    var clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.textContent = 'Clear';
+    clearBtn.addEventListener('click', function(){
+      Array.prototype.forEach.call(tmpl.querySelectorAll('.fin'), function(inp, i){
+        inp.value = ''; delete tstore['t' + ti + 'f' + i];
+      });
+      Array.prototype.forEach.call(tmpl.querySelectorAll('.fopt input[type=checkbox]'), function(cb, i){
+        cb.checked = false; delete tstore['t' + ti + 'c' + i];
+      });
+      tsave();
+    });
+
+    tools.appendChild(printBtn);
+    tools.appendChild(copyBtn);
+    tools.appendChild(clearBtn);
+    tmpl.appendChild(tools);
+  });
+
 })();
 </script>
 <script>
