@@ -174,6 +174,40 @@
   .sub-done{display:none}
   .sub-done h2{margin-bottom:6px}
   .sub-done p{font-size:.95rem;color:var(--ink-soft);max-width:54ch}
+  .packs{
+    margin-top:44px;padding:24px;background:var(--surface);
+    border:1px solid var(--rule);border-radius:4px;
+    border-top:3px solid var(--seal);
+  }
+  .packs h2{
+    font-family:var(--display);font-size:1.2rem;font-weight:600;
+    color:var(--spruce-deep);margin-bottom:8px;
+  }
+  .packs-sub{font-size:.94rem;color:var(--ink-soft);max-width:64ch}
+  .pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+  .pack{
+    display:block;text-decoration:none;color:inherit;background:var(--paper);
+    border:1px solid var(--rule);border-radius:4px;padding:18px 20px;
+  }
+  .pack:hover{border-color:var(--sage)}
+  .pack:focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+  .p-jur{
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--spruce);
+  }
+  .p-name{
+    font-family:var(--display);font-size:1.1rem;font-weight:600;line-height:1.25;
+    color:var(--spruce-deep);display:block;margin-top:4px;text-decoration:underline;
+  }
+  .p-what{display:block;margin-top:10px;font-size:.88rem;color:var(--ink-soft)}
+  .p-foot{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .p-price{
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;
+    color:var(--seal);font-weight:500;
+  }
+  .p-cta{font-weight:600;font-size:.9rem;color:var(--spruce);margin-left:auto}
+  .packs-note{margin-top:16px;font-size:.88rem;color:var(--ink-soft);max-width:64ch}
+  @media (max-width:640px){.pack-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -226,13 +260,13 @@
       <span class="jur-code">ON</span>
       <span class="jur-name">Ontario</span>
       <span class="jur-act">Condominium Act, 1998, S.O. 1998, c. 19</span>
-      <span class="jur-count">One tool so far — quorum for meetings of owners. More being read now.</span>
+      <span class="jur-count">Five tools — quorum, notice of meeting deadline, records request deadline, requisition threshold, reserve fund study deadline.</span>
     </a>
     <p class="jur-more"><strong>More provinces coming.</strong> Each one waits until its statute has actually been read, section by section, rather than adapted from a neighbouring province's rules. That is slower, and it is the whole point.</p>
   </div>
 
   <h2 class="sec-title">Straight to a tool</h2>
-  <p class="sec-sub">The five most-used, if you already know what you need.</p>
+  <p class="sec-sub">The most-used, if you already know what you need.</p>
 
   <div class="quick">
     <a href="/bc/agm-notice">
@@ -255,6 +289,14 @@
       <span class="q-jur">ON</span><span class="q-name">Quorum calculator</span>
       <span class="q-cite">Condo Act s. 50</span>
     </a>
+    <a href="/on/notice-of-meeting-deadline">
+      <span class="q-jur">ON</span><span class="q-name">Notice of meeting deadline</span>
+      <span class="q-cite">Condo Act ss. 45.1, 46, 47</span>
+    </a>
+    <a href="/on/records-request-deadline">
+      <span class="q-jur">ON</span><span class="q-name">Records request deadline</span>
+      <span class="q-cite">Condo Act s. 55</span>
+    </a>
   </div>
 
   <section class="trust">
@@ -266,6 +308,36 @@
       <li>Where the law is genuinely unsettled, the tool says so — the 20-versus-21-day notice count is shown as a real disagreement, not resolved quietly.</li>
       <li>Where your own bylaws can override the Act, the answer tells you which rule is which.</li>
     </ul>
+  </section>
+
+  <section class="packs" aria-labelledby="packHead">
+    <h2 id="packHead">The Board Starter Pack</h2>
+    <p class="packs-sub">What the calculators tell you, gathered into the documents a board actually
+      runs on: a compliance calendar, checklists for the procedures that go wrong most often, and
+      fill-in templates. Every legal claim traced to the section it rests on, and to the free tool
+      that verified it.</p>
+
+    <div class="pack-grid">
+      <a class="pack" href="/bc/starter-pack">
+        <span class="p-jur">BC</span>
+        <span class="p-name">BC Strata Board Starter Pack</span>
+        <span class="p-what">Compliance calendar &middot; four checklists &middot; four templates
+          &middot; new-treasurer orientation &middot; insurance deductible walkthrough &middot;
+          verification appendix</span>
+        <span class="p-foot"><span class="p-price">CAD $49 once</span><span class="p-cta">See what&rsquo;s inside &rarr;</span></span>
+      </a>
+      <a class="pack" href="/on/starter-pack">
+        <span class="p-jur">ON</span>
+        <span class="p-name">Ontario Condo Board Starter Pack</span>
+        <span class="p-what">Compliance calendar &middot; three checklists &middot; four templates
+          &middot; every claim cited to the Condominium Act, 1998 and O. Reg. 48/01</span>
+        <span class="p-foot"><span class="p-price">CAD $49 once</span><span class="p-cta">See what&rsquo;s inside &rarr;</span></span>
+      </a>
+    </div>
+
+    <p class="packs-note">One-time purchase, no subscription. Updates are included: when the
+      legislation moves the pack is updated and your access link keeps opening the current version.
+      Thirty days to change your mind, no questions asked.</p>
   </section>
 
   <section class="subscribe" aria-labelledby="subHead">
