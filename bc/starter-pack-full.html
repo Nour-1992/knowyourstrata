@@ -663,6 +663,82 @@
 (function(){
   var b=document.getElementById('printBtn');
   if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+<script>
+(function(){
+  /* ---- permanent access link -------------------------------------------
+     The gate function stamps the signed token onto <body data-access-token>,
+     so this works whether the visitor arrived with ?t= in the URL or came
+     back later on the cookie alone (where the URL carries no token at all). */
+  var token = document.body.getAttribute('data-access-token');
+  var box = document.getElementById('saveLink');
+  if (token && box) {
+    var link = location.origin + location.pathname + '?t=' + encodeURIComponent(token);
+    var field = document.getElementById('accessLinkField');
+    var btn = document.getElementById('copyAccessLink');
+    field.value = link;
+    box.hidden = false;
+    field.addEventListener('focus', function(){ field.select(); });
+    btn.addEventListener('click', function(){
+      function done(){ btn.textContent = 'Copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy link'; }, 2200); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(done, function(){ field.select(); });
+      } else { field.select(); try { document.execCommand('copy'); done(); } catch(e){} }
+    });
+  }
+
+  /* ---- tickable checklists ---------------------------------------------
+     State is keyed by a hash of the item's own text, not its position, so
+     re-ordering the pack keeps ticks attached to the right item -- and
+     rewording an item deliberately clears its tick, because a changed rule
+     is one you should read again. */
+  function hash(s){
+    var h = 5381;
+    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return (h >>> 0).toString(36);
+  }
+  var PACK = document.body.getAttribute('data-pack') || 'pack';
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem('kys-checks-' + PACK) || '{}') || {}; } catch(e) { store = {}; }
+  function save(){ try { localStorage.setItem('kys-checks-' + PACK, JSON.stringify(store)); } catch(e){} }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.clist'), function(list, li){
+    var boxes = list.querySelectorAll('input[type=checkbox]');
+    var prog = list.querySelector('.clist-prog');
+    var reset = list.querySelector('.clist-reset');
+
+    function paint(){
+      var done = 0;
+      Array.prototype.forEach.call(boxes, function(b){ if (b.checked) done++; });
+      if (prog) prog.textContent = done + ' of ' + boxes.length;
+      if (reset) reset.hidden = done === 0;
+    }
+
+    Array.prototype.forEach.call(boxes, function(b, i){
+      var label = b.nextElementSibling;
+      var key = hash((label ? label.textContent : '') + '|' + li);
+      var id = 'ck-' + PACK + '-' + key;
+      b.id = id;
+      if (label) label.setAttribute('for', id);
+      b.checked = store[key] === 1;
+      b.addEventListener('change', function(){
+        if (b.checked) store[key] = 1; else delete store[key];
+        save(); paint();
+      });
+    });
+
+    if (reset) reset.addEventListener('click', function(){
+      Array.prototype.forEach.call(boxes, function(b){
+        var label = b.nextElementSibling;
+        var key = hash((label ? label.textContent : '') + '|' + li);
+        b.checked = false; delete store[key];
+      });
+      save(); paint();
+    });
+
+    paint();
+  });
   /* ---- template forms: fill in, keep for this sitting, print or copy ------
      Templates persist in sessionStorage, NOT localStorage. A checklist is a
      process worked through over days and should survive a closed tab. A
@@ -789,82 +865,6 @@
     tmpl.appendChild(tools);
   });
 
-})();
-</script>
-<script>
-(function(){
-  /* ---- permanent access link -------------------------------------------
-     The gate function stamps the signed token onto <body data-access-token>,
-     so this works whether the visitor arrived with ?t= in the URL or came
-     back later on the cookie alone (where the URL carries no token at all). */
-  var token = document.body.getAttribute('data-access-token');
-  var box = document.getElementById('saveLink');
-  if (token && box) {
-    var link = location.origin + location.pathname + '?t=' + encodeURIComponent(token);
-    var field = document.getElementById('accessLinkField');
-    var btn = document.getElementById('copyAccessLink');
-    field.value = link;
-    box.hidden = false;
-    field.addEventListener('focus', function(){ field.select(); });
-    btn.addEventListener('click', function(){
-      function done(){ btn.textContent = 'Copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy link'; }, 2200); }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(link).then(done, function(){ field.select(); });
-      } else { field.select(); try { document.execCommand('copy'); done(); } catch(e){} }
-    });
-  }
-
-  /* ---- tickable checklists ---------------------------------------------
-     State is keyed by a hash of the item's own text, not its position, so
-     re-ordering the pack keeps ticks attached to the right item -- and
-     rewording an item deliberately clears its tick, because a changed rule
-     is one you should read again. */
-  function hash(s){
-    var h = 5381;
-    for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
-    return (h >>> 0).toString(36);
-  }
-  var PACK = document.body.getAttribute('data-pack') || 'pack';
-  var store = {};
-  try { store = JSON.parse(localStorage.getItem('kys-checks-' + PACK) || '{}') || {}; } catch(e) { store = {}; }
-  function save(){ try { localStorage.setItem('kys-checks-' + PACK, JSON.stringify(store)); } catch(e){} }
-
-  Array.prototype.forEach.call(document.querySelectorAll('.clist'), function(list, li){
-    var boxes = list.querySelectorAll('input[type=checkbox]');
-    var prog = list.querySelector('.clist-prog');
-    var reset = list.querySelector('.clist-reset');
-
-    function paint(){
-      var done = 0;
-      Array.prototype.forEach.call(boxes, function(b){ if (b.checked) done++; });
-      if (prog) prog.textContent = done + ' of ' + boxes.length;
-      if (reset) reset.hidden = done === 0;
-    }
-
-    Array.prototype.forEach.call(boxes, function(b, i){
-      var label = b.nextElementSibling;
-      var key = hash((label ? label.textContent : '') + '|' + li);
-      var id = 'ck-' + PACK + '-' + key;
-      b.id = id;
-      if (label) label.setAttribute('for', id);
-      b.checked = store[key] === 1;
-      b.addEventListener('change', function(){
-        if (b.checked) store[key] = 1; else delete store[key];
-        save(); paint();
-      });
-    });
-
-    if (reset) reset.addEventListener('click', function(){
-      Array.prototype.forEach.call(boxes, function(b){
-        var label = b.nextElementSibling;
-        var key = hash((label ? label.textContent : '') + '|' + li);
-        b.checked = false; delete store[key];
-      });
-      save(); paint();
-    });
-
-    paint();
-  });
 })();
 </script>
 </body>
