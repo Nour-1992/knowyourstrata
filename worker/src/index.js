@@ -100,6 +100,20 @@ async function putMeta(env, id, meta) {
   await env.WATCHER_KV.put(`meta:${id}`, JSON.stringify(meta));
 }
 
+/**
+ * Snapshots are keyed by source id AND snapshot version.
+ *
+ * Changing a source's extractor changes the shape of the text being
+ * compared, so the next run would diff the new format against the old one
+ * and report a meaningless page-sized change. Bumping snapshotVersion
+ * gives that source a clean baseline instead, while keeping its id -- and
+ * therefore its place in the source-to-tools map and the log -- stable.
+ */
+function snapshotKey(source) {
+  const v = source.snapshotVersion || 1;
+  return v === 1 ? `snapshot:${source.id}` : `snapshot:${source.id}:v${v}`;
+}
+
 async function checkSource(env, source, now) {
   try {
     const res = await fetch(source.url, { headers: { 'User-Agent': USER_AGENT } });
@@ -131,11 +145,11 @@ async function checkSource(env, source, now) {
       throw new Error(`Response suspiciously short (${text.length} chars, expected at least ${minLength}) -- likely blocked or restructured, not a real fetch`);
     }
 
-    const prevText = await env.WATCHER_KV.get(`snapshot:${source.id}`);
+    const prevText = await env.WATCHER_KV.get(snapshotKey(source));
     const prevMeta = await getMeta(env, source.id);
 
     if (prevText === null) {
-      await env.WATCHER_KV.put(`snapshot:${source.id}`, text);
+      await env.WATCHER_KV.put(snapshotKey(source), text);
       await putMeta(env, source.id, { lastChecked: now, lastChanged: null, lastStatus: 'baseline', lastError: null });
       return { id: source.id, status: 'baseline' };
     }
@@ -151,7 +165,7 @@ async function checkSource(env, source, now) {
     }
 
     const diff = diffLines(prevText, text);
-    await env.WATCHER_KV.put(`snapshot:${source.id}`, text);
+    await env.WATCHER_KV.put(snapshotKey(source), text);
     await env.WATCHER_KV.put(
       `diff:${source.id}`,
       JSON.stringify({
