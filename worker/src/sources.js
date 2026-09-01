@@ -151,6 +151,13 @@ export const SOURCES = [
     snapshotVersion: 2,
     url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_18'
   },
+  {
+    id: 'interpretation-act',
+    label: 'Interpretation Act (RSBC 1996, c. 238) — s. 25 calculation of time, the deadline-counting rule several tools and the packs rely on',
+    extract: bcText,
+    snapshotVersion: 2,
+    url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/96238_01'
+  },
 
   {
     id: 'bc-act-currency-date',

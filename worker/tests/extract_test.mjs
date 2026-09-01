@@ -162,8 +162,8 @@ for (const id of ['on-currency-date', 'on-condo-act', 'on-reg-48-01']) {
 check('every source declares an extractor',
       SOURCES.every((s) => typeof s.extract === 'function'),
       SOURCES.filter((s) => typeof s.extract !== 'function').map((s) => s.id).join(', '));
-check('the seven BC page sources all use the page extractor and re-baseline',
-      SOURCES.filter((s) => s.extract === part1.extract).length === 7);
+check('the eight BC page sources all use the page extractor and re-baseline',
+      SOURCES.filter((s) => s.extract === part1.extract).length === 8);
 check('the two BC currency sources share one extractor and a low floor',
       SOURCES.filter((s) => s.extract === bcCur.extract).length === 2 &&
       SOURCES.filter((s) => s.extract === bcCur.extract).every((s) => s.minLength <= 15));
