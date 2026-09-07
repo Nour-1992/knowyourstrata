@@ -595,26 +595,26 @@
       '<div class="motion-row-head"><span class="mnum">Motion</span>'+
       '<button type="button" class="remove-motion">Remove</button></div>'+
       '<label>Motion text</label>'+
-      '<textarea class="m-text" placeholder="e.g. To approve the 2027 operating budget as presented."></textarea>'+
+      '<textarea class="m-text" placeholder="e.g. To approve the 2027 operating budget as presented." aria-label="Motion text"></textarea>'+
       '<div class="row2">'+
-        '<div><label>Moved by</label><input type="text" class="m-moved"></div>'+
-        '<div><label>Seconded by <span class="hint">(optional)</span></label><input type="text" class="m-seconded"></div>'+
+        '<div><label>Moved by</label><input type="text" class="m-moved" aria-label="Moved by"></div>'+
+        '<div><label>Seconded by <span class="hint">(optional)</span></label><input type="text" class="m-seconded" aria-label="Seconded by"></div>'+
       '</div>'+
       '<div class="row2">'+
-        '<div><label>Result</label><select class="m-result">'+
+        '<div><label>Result</label><select class="m-result" aria-label="Motion result">'+
           '<option value="Carried">Carried</option>'+
           '<option value="Carried as amended">Carried as amended</option>'+
           '<option value="Defeated">Defeated</option>'+
           '<option value="Tabled">Tabled</option>'+
           '<option value="Withdrawn">Withdrawn</option>'+
         '</select></div>'+
-        '<div><label>Vote detail <span class="hint">(optional)</span></label><input type="text" class="m-detail" placeholder="e.g. 4 for, 1 against"></div>'+
+        '<div><label>Vote detail <span class="hint">(optional)</span></label><input type="text" class="m-detail" placeholder="e.g. 4 for, 1 against" aria-label="Vote detail"></div>'+
       '</div>'+
-      '<label class="coi-check"><input type="checkbox" class="m-coi-toggle">'+
+      '<label class="coi-check"><input type="checkbox" class="m-coi-toggle" aria-label="Declare a conflict of interest for this motion">'+
         '<span>A council member disclosed a conflict of interest on this motion (s. 32)</span></label>'+
       '<div class="coi-fields">'+
         '<span class="hint2">Per s. 32: the member discloses, abstains from voting, and leaves the room for the discussion and the vote.</span>'+
-        '<label>Council member</label><input type="text" class="m-coi-name" placeholder="Name">'+
+        '<label>Council member</label><input type="text" class="m-coi-name" placeholder="Name" aria-label="Council member with the conflict">'+
       '</div>';
     motionsList.appendChild(row);
 

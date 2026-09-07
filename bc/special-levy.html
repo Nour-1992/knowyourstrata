@@ -513,8 +513,8 @@
   function addUnitRow(label,ent){
     var row=document.createElement('div');
     row.className='unit-row';
-    row.innerHTML='<input type="text" class="u-label" placeholder="Unit label">'+
-      '<input type="number" class="u-ent" placeholder="Entitlement" step="any" min="0">'+
+    row.innerHTML='<input type="text" class="u-label" placeholder="Unit label" aria-label="Unit label">'+
+      '<input type="number" class="u-ent" placeholder="Entitlement" step="any" min="0" aria-label="Unit entitlement">'+
       '<button type="button" class="remove-row" aria-label="Remove unit">×</button>';
     if(label)row.querySelector('.u-label').value=label;
     if(ent!==undefined)row.querySelector('.u-ent').value=ent;
