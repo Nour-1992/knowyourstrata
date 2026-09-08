@@ -140,7 +140,7 @@ body{
 }
 .kys-foot-inner{max-width:960px;margin:0 auto}
 .kys-foot a{color:var(--spruce)}
-.kys-foot .kys-foot-note{font-family:var(--mono);font-size:.72rem;color:#6C7A73;margin-top:10px}
+.kys-foot .kys-foot-note{font-family:var(--mono);font-size:.72rem;color:#5A6A64;margin-top:10px}
 
 @media (prefers-reduced-motion:no-preference){
   .rise{animation:kysRise .35s ease}
@@ -181,7 +181,7 @@ body{
 .kys-prose dd{margin:3px 0 0;color:var(--ink-soft)}
 .kys-prose .updated{
   font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;
-  color:#6C7A73;margin:0 0 4px;
+  color:#5A6A64;margin:0 0 4px;
 }
 .kys-prose .note{
   border-left:3px solid var(--sage);background:#F1F4F2;
@@ -197,7 +197,7 @@ body{
 /* ── Site links row, shared by every footer on the site ─────────── */
 .kys-sitelinks{
   font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;
-  color:#6C7A73;margin-top:10px;
+  color:#5A6A64;margin-top:10px;
 }
 .kys-sitelinks a{color:var(--spruce);text-decoration:none}
 .kys-sitelinks a:hover{text-decoration:underline}
