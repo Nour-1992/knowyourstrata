@@ -94,7 +94,7 @@
   .badge-note a{color:var(--spruce)}
   .badge-note-more{white-space:nowrap}
   .badge-note{
-    margin-top:6px;font-family:var(--mono);font-size:.7rem;
+    margin-top:6px;font-family:var(--mono);font-size:.78rem;
     letter-spacing:.04em;color:#5A6A64;max-width:62ch;
   }
   .verified-badge{
@@ -279,7 +279,7 @@
       </div>
 
       <div class="field">
-        <label for="responseSent">Date you sent back your completed response and paid the fee <span class="hint">(optional — leave blank if you haven't yet)</span></label>
+        <label for="responseSent">Date the requester returned their completed response and paid the fee <span class="hint">(optional — leave blank if they haven't yet)</span></label>
         <input type="date" id="responseSent">
       </div>
 
@@ -291,7 +291,7 @@
       <div class="stamp">
         <p class="k">Board's response due by</p>
         <p class="date" id="deadline1">—</p>
-        <p class="sub">the board must tell you yes, no, and the fee — s. 13.3(6), O. Reg. 48/01</p>
+        <p class="sub">the board must tell the requester yes, no, and the fee — s. 13.3(6), O. Reg. 48/01</p>
       </div>
       <p class="verified-badge"><span class="check">✓</span> Verified August 27, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 55 &amp; O. Reg. 48/01, s. 13.3</span></p>
       <p class="badge-note">Sources checked automatically every Monday. Last check September 7, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
@@ -575,9 +575,9 @@
         if(responseSent.value){
           var rs=parseLocal(responseSent.value);
           due2=addDays(rs,7);
-          citeLine2.innerHTML='<strong>Delivery due '+fmt.format(due2)+'</strong> — 7 days after the corporation received your completed response and fee on '+fmt.format(rs)+'. <span class="cite-tag">'+cite2+'</span>';
+          citeLine2.innerHTML='<strong>Delivery due '+fmt.format(due2)+'</strong> — 7 days after the corporation received the completed response and fee from the requester on '+fmt.format(rs)+'. <span class="cite-tag">'+cite2+'</span>';
         } else {
-          citeLine2.innerHTML='<strong>7 days</strong> after the corporation receives your completed response and the fee — enter that date above once you have it to see the exact day. <span class="cite-tag">'+cite2+'</span>';
+          citeLine2.innerHTML='<strong>7 days</strong> after the corporation receives the completed response and the fee from the requester — enter that date above once you have it to see the exact day. <span class="cite-tag">'+cite2+'</span>';
         }
       } else if(kind==='noncore'){
         cite2='O. Reg. 48/01, ss. 13.5, 13.7';
@@ -585,9 +585,9 @@
         if(responseSent.value){
           var rs2=parseLocal(responseSent.value);
           due2=addDays(rs2,30);
-          citeLine2.innerHTML='<strong>Delivery due '+fmt.format(due2)+'</strong> — 30 days after the corporation received your completed response and fee on '+fmt.format(rs2)+'. <span class="cite-tag">'+cite2+'</span>';
+          citeLine2.innerHTML='<strong>Delivery due '+fmt.format(due2)+'</strong> — 30 days after the corporation received the completed response and fee from the requester on '+fmt.format(rs2)+'. <span class="cite-tag">'+cite2+'</span>';
         } else {
-          citeLine2.innerHTML='<strong>30 days</strong> after the corporation receives your completed response and the fee — enter that date above once you have it to see the exact day. <span class="cite-tag">'+cite2+'</span>';
+          citeLine2.innerHTML='<strong>30 days</strong> after the corporation receives the completed response and the fee from the requester — enter that date above once you have it to see the exact day. <span class="cite-tag">'+cite2+'</span>';
         }
       }
 
