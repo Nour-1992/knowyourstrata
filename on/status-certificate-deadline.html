@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Status Certificate Deadline Calculator (s. 76)</title>
+<meta name="description" content="Work out the exact day an Ontario condo status certificate is due, what the corporation is deemed to have certified if it is late, and the $100 fee cap, under s. 76 and O. Reg. 48/01 s. 18.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/on/status-certificate-deadline">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Status Certificate Deadline Calculator (s. 76)">
+<meta property="og:description" content="Work out the exact day an Ontario condo status certificate is due, what the corporation is deemed to have certified if it is late, and the $100 fee cap, under s. 76 and O. Reg. 48/01 s. 18.">
+<meta property="og:url" content="https://knowyourstrata.com/on/status-certificate-deadline">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontario Status Certificate Deadline Calculator (s. 76)">
+<meta name="twitter:description" content="Work out the exact day an Ontario condo status certificate is due, what the corporation is deemed to have certified if it is late, and the $100 fee cap, under s. 76 and O. Reg. 48/01 s. 18.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "When is our status certificate due, and what happens if we are late?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+  "description": "Work out the exact day an Ontario condo status certificate is due, what the corporation is deemed to have certified if it is late, and the $100 fee cap, under s. 76 and O. Reg. 48/01 s. 18."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="date"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .fee-block{display:none}
+  .fee-block.active{display:block}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .badge-note a{color:var(--spruce)}
+  .badge-note-more{white-space:nowrap}
+  .badge-note{
+    margin-top:6px;font-family:var(--mono);font-size:.78rem;
+    letter-spacing:.04em;color:#5A6A64;max-width:62ch;
+  }
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .past{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .after{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .after h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .after .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .after ul{list-style:none;font-size:.9rem}
+  .after li{
+    padding:6px 0 6px 18px;color:#3D4C47;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .after li:last-child{border-bottom:none}
+  .after li::before{
+    content:"";position:absolute;left:0;top:15px;
+    width:7px;height:7px;border-radius:50%;background:var(--seal);
+  }
+  .after .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .current{color:#5A6A64;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario &middot; Condominium Act, 1998</p>
+    <h1>When is our status certificate due, and what happens if we are late?</h1>
+    <p class="lede">The ten-day clock does not start when the request arrives. It starts when the corporation has both the request and the fee. Miss the deadline and the Act does not fine you, it does something worse: it deems a clean certificate to have been issued, and binds the corporation to it.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="requested">Date the request was received</label>
+      <input type="date" id="requested">
+
+      <label for="feeMode">Did the corporation charge a fee for the certificate?</label>
+      <select id="feeMode">
+        <option value="paid" selected>Yes, and it has been paid</option>
+        <option value="none">No fee was charged</option>
+        <option value="unpaid">Yes, but it has not been paid yet</option>
+      </select>
+
+      <div class="fee-block active" id="paidBlock">
+        <label for="feePaid">Date the fee was received <span class="hint">the clock runs from whichever came later</span></label>
+        <input type="date" id="feePaid">
+      </div>
+
+      <button id="calc">Get the deadline</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k">Status certificate must be given by</p>
+        <p class="date" id="dueDate">&mdash;</p>
+        <p class="sub" id="dueSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">&#10003;</span> Verified September 12, 2026 &middot; <span id="badgeCite">Condominium Act, 1998, s. 76</span></p>
+      <p class="badge-note">Sources checked automatically every Monday. Last check September 7, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
+
+      <p class="cite-line" id="citeLine1"></p>
+      <p class="cite-line" id="citeLine2"></p>
+      <p class="past" id="pastNote"></p>
+
+      <div class="after">
+        <h3>If the deadline is missed</h3>
+        <p class="sub">Section 76(5) does not impose a penalty. It writes the certificate for you, in the purchaser&rsquo;s favour, and s. 76(6) makes it binding.</p>
+        <ul>
+          <li>A certificate is deemed given on <strong id="deemedDate">&mdash;</strong>, the day immediately after the deadline expires.</li>
+          <li>It is deemed to state there has been <strong>no default</strong> in common expenses for the unit.</li>
+          <li>It is deemed to state the board has declared <strong>no increase</strong> in common expenses since the budget date.</li>
+          <li>It is deemed to state the board has levied <strong>no assessment</strong> against the unit since the budget date.</li>
+          <li>That deemed certificate <strong>binds the corporation</strong> against a purchaser or mortgagee who relies on it.</li>
+        </ul>
+        <p class="cite">Condominium Act, 1998, s. 76(5) and (6).</p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied &#10003;</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this &mdash; and the quorum, notice of meeting, requisition threshold, records request and reserve fund deadlines &mdash; all in one printable calendar with checklists and templates? <a href="/on/starter-pack">Get the Ontario Condo Board Starter Pack &rarr; CAD $49 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong &mdash; with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You&rsquo;re in &#10003;</h2>
+      <p>You&rsquo;re on the list. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><a href="/on/notice-of-meeting-deadline">Notice of meeting deadline</a></li>
+      <li><a href="/on/requisition-threshold">Requisition threshold checker</a></li>
+      <li><a href="/on/records-request-deadline">Records request deadline</a></li>
+      <li><a href="/on/reserve-fund-study-deadline">Reserve fund study deadline</a></li>
+      <li><span>Status certificate deadline</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>What the section actually says</h2>
+    <p>Section 76(3) of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> is one sentence, and the whole tool turns on when it starts running:</p>
+    <p class="quote">&ldquo;The corporation shall give the status certificate within 10 days after receiving a request for it and payment of the fee charged by the corporation for it.&rdquo;</p>
+    <p>Two conditions, joined by <em>and</em>. A request that arrives without the fee does not start the clock. Neither does a payment that arrives before the request. The ten days run from whichever of the two landed later, and if the corporation charged no fee at all, the request alone is enough.</p>
+
+    <h2 style="margin-top:32px">The consequence is a certificate, not a fine</h2>
+    <p>Boards tend to expect a penalty for a late certificate. The Act does something that costs a great deal more. Section 76(5) deems a certificate to have been given the day after the deadline expires, and writes its contents:</p>
+    <p class="quote">&ldquo;A corporation that does not give a status certificate within the required time shall be deemed to have given a certificate on the day immediately after the required time has expired stating that, (a) there has been no default in the payment of common expenses for the unit&hellip;&rdquo;</p>
+    <p>Section 76(6) then makes that deemed certificate binding on the corporation against a purchaser or mortgagee who relies on it. If the unit was in arrears, the corporation has just certified in writing that it was not, and the buyer takes the unit clean. The arrears do not disappear, but the corporation can no longer collect them from the new owner on the strength of a certificate it is deemed to have issued.</p>
+
+    <h2 style="margin-top:32px">The fee is capped at $100, tax included</h2>
+    <p>Section 76(2) lets the corporation charge &ldquo;the prescribed fee&rdquo;, and the prescription sits in O. Reg. 48/01 s. 18(4):</p>
+    <p class="quote">&ldquo;The fee that a corporation may charge for providing a status certificate, including all material that is required to be included in it, shall not exceed $100, inclusive of all applicable taxes.&rdquo;</p>
+    <p>Three things follow that get missed. It is $100 <em>including</em> HST, not $100 plus HST. It covers all the material the certificate is required to contain, so the attachments cannot be billed separately. And it is a ceiling, not a price, so a corporation may charge less.</p>
+
+    <h2 style="margin-top:32px">How the deadline is counted</h2>
+    <p>This tool adds ten calendar days to the later trigger date, then applies the Legislation Act, 2006. Section 89(1) says a time limit that would otherwise expire on a holiday is extended to the next day that is not a holiday, and s. 88(2) sets out the list.</p>
+    <p>That list is worth reading closely, because it contains Sunday and it does not contain Saturday. A deadline that lands on a Saturday stands. A deadline that lands on a Sunday moves to the Monday, and moves again if that Monday is itself a statutory holiday. This tool applies both rules and tells you when it has shifted a date and why.</p>
+
+    <dl class="faq">
+      <dt>The requester sent the request but has not paid. Are we on the clock?</dt>
+      <dd>No, provided a fee was actually charged. Section 76(3) requires the request <em>and</em> the payment before the ten days begin. Say so in writing when the request arrives, so there is a record of when the clock had not yet started.</dd>
+      <dt>Can we charge a rush fee for a certificate needed faster than ten days?</dt>
+      <dd>O. Reg. 48/01 s. 18(4) caps the fee for providing the certificate at $100 inclusive of taxes and does not carve out an expedited rate. Any rush premium would need to survive that cap, and this tool takes no position on arrangements outside the certificate itself.</dd>
+      <dt>Does the deemed certificate wipe out the arrears?</dt>
+      <dd>It does not erase the debt. What s. 76(6) does is bind the corporation, as against a purchaser or mortgagee who relied on the certificate, to the clean statements s. 76(5) deems it to contain. The practical effect on a sale is usually that the corporation cannot look to the new owner for the amount it was deemed to have certified as nil.</dd>
+      <dt>What if the certificate we sent left something out?</dt>
+      <dd>Section 76(4) treats an omission as a statement that there is nothing to report: if the certificate omits material information it was required to contain, it is deemed to include a statement that there is no such information. An incomplete certificate is therefore closer to a wrong certificate than to a partial one.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It is general information based on the current legislation, verified against the sources linked above. For a certificate already delivered late, or a sale that closed on a deemed certificate, talk to a condominium lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 76, O. Reg. 48/01, s. 18, and the Legislation Act, 2006, S.O. 2006, c. 21, Sched. F, ss. 88 and 89. Last verified 12 September 2026 against the official statute and regulations on ontario.ca, e-Laws currency date 9 September 2026; the consolidations in force are unchanged since 31 December 2025 for the Act, 20 July 2026 for O. Reg. 48/01 and 11 December 2025 for the Legislation Act, 2006. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p>Built for the volunteer boards who keep Ontario&rsquo;s condominiums running.</p>
+    <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right, please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending...';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right, please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var requested=document.getElementById('requested'),
+      feeMode=document.getElementById('feeMode'),
+      paidBlock=document.getElementById('paidBlock'),
+      feePaid=document.getElementById('feePaid'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      dueDate=document.getElementById('dueDate'),
+      dueSub=document.getElementById('dueSub'),
+      citeLine1=document.getElementById('citeLine1'),
+      citeLine2=document.getElementById('citeLine2'),
+      pastNote=document.getElementById('pastNote'),
+      deemedDate=document.getElementById('deemedDate'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  function parseLocal(v){
+    var p=v.split('-');
+    return new Date(+p[0], +p[1]-1, +p[2]);
+  }
+  function addDays(d,n){
+    var c=new Date(d.getTime());
+    c.setDate(c.getDate()+n);
+    return c;
+  }
+  function today0(){
+    var t=new Date();
+    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  }
+  function key(d){
+    return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+  }
+  /* Nth weekday of a month. weekday 1 = Monday. */
+  function nthWeekday(year,month,weekday,n){
+    var d=new Date(year,month,1);
+    var shift=(weekday-d.getDay()+7)%7;
+    return new Date(year,month,1+shift+(n-1)*7);
+  }
+  /* Monday on or before 24 May, which is the Monday preceding 25 May. */
+  function victoriaDay(year){
+    var d=new Date(year,4,24);
+    while(d.getDay()!==1){d.setDate(d.getDate()-1);}
+    return d;
+  }
+  /* Anonymous Gregorian computus. Returns Easter Sunday. */
+  function easterSunday(year){
+    var a=year%19, b=Math.floor(year/100), c=year%100,
+        d=Math.floor(b/4), e=b%4, f=Math.floor((b+8)/25),
+        g=Math.floor((b-f+1)/3), h=(19*a+b-d-g+15)%30,
+        i=Math.floor(c/4), k=c%4,
+        l=(32+2*e+2*i-h-k)%7,
+        m=Math.floor((a+11*h+22*l)/451),
+        month=Math.floor((h+l-7*m+114)/31),
+        day=((h+l-7*m+114)%31)+1;
+    return new Date(year,month-1,day);
+  }
+  /* Legislation Act, 2006 s. 88(2) to (5). Sunday is a holiday; Saturday is
+     not, except where s. 88(5) makes the Monday after a Saturday Christmas a
+     holiday in its own right. */
+  var holidayCache={};
+  function holidaySet(year){
+    if(holidayCache[year])return holidayCache[year];
+    var set={};
+    function add(d){set[key(d)]=true;}
+    var jan1=new Date(year,0,1);
+    add(jan1);
+    if(jan1.getDay()===0){add(new Date(year,0,2));}          /* s. 88(3) */
+    add(nthWeekday(year,1,1,3));                             /* Family Day */
+    var easter=easterSunday(year);
+    add(addDays(easter,-2));                                 /* Good Friday */
+    add(addDays(easter,1));                                  /* Easter Monday */
+    add(victoriaDay(year));
+    var jul1=new Date(year,6,1);
+    add(jul1.getDay()===0?new Date(year,6,2):jul1);           /* s. 88(4) */
+    add(nthWeekday(year,8,1,1));                             /* Labour Day */
+    add(nthWeekday(year,9,1,2));                             /* Thanksgiving */
+    add(new Date(year,10,11));                               /* Remembrance Day */
+    var dec25=new Date(year,11,25);
+    add(dec25);
+    add(new Date(year,11,26));                               /* Boxing Day */
+    if(dec25.getDay()===6){add(new Date(year,11,27));}        /* s. 88(5) */
+    if(dec25.getDay()===0){add(new Date(year,11,27));}        /* s. 88(5) */
+    holidayCache[year]=set;
+    return set;
+  }
+  function isHoliday(d){
+    if(d.getDay()===0)return true;                           /* s. 88(2) para 1 */
+    return !!holidaySet(d.getFullYear())[key(d)];
+  }
+  /* s. 89(1): a limit expiring on a holiday is extended to the next day that
+     is not a holiday. Bounded so a bad input can never spin. */
+  function shiftOffHoliday(d){
+    var c=new Date(d.getTime()), n=0;
+    while(isHoliday(c)&&n<14){c=addDays(c,1);n++;}
+    return {date:c,shifted:n>0};
+  }
+
+  function toggleFee(){
+    paidBlock.classList.toggle('active',feeMode.value==='paid');
+    result.style.display='none';
+  }
+  feeMode.addEventListener('change',toggleFee);
+  toggleFee();
+
+  function show(m){
+    err.textContent=m;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    if(!requested.value){show('Pick the date the request was received.');return;}
+    var req=parseLocal(requested.value);
+    var mode=feeMode.value;
+
+    if(mode==='unpaid'){
+      err.style.display='none';
+      dueDate.textContent='Not running yet';
+      dueSub.textContent='the ten days do not begin until the fee is received';
+      citeLine1.innerHTML='<strong>Condominium Act, 1998, s. 76(3)</strong> &mdash; the certificate is due &ldquo;within 10 days after receiving a request for it <em>and</em> payment of the fee charged by the corporation for it.&rdquo; Both conditions, not either.';
+      citeLine2.innerHTML='Tell the requester in writing that the fee is outstanding and that the ten days begin when it is received. That record is what protects the corporation from a later claim that the clock started on the day the request arrived.';
+      deemedDate.textContent='not yet determinable';
+      pastNote.style.display='none';
+      current={mode:mode,req:req};
+      result.style.display='block';
+      result.classList.remove('show');
+      void result.offsetWidth;
+      result.classList.add('show');
+      return;
+    }
+
+    var trigger=req, triggerLabel='the request was received';
+    if(mode==='paid'){
+      if(!feePaid.value){show('Pick the date the fee was received.');return;}
+      var pay=parseLocal(feePaid.value);
+      if(pay>req){trigger=pay;triggerLabel='the fee was received, which was later than the request';}
+      else {triggerLabel='the request was received, which was later than or same day as the fee';}
+    }
+    err.style.display='none';
+
+    var raw=addDays(trigger,10);
+    var res=shiftOffHoliday(raw);
+    var due=res.date;
+    var deemed=shiftOffHoliday(addDays(due,1)).date;
+
+    dueDate.textContent=fmt.format(due);
+    dueSub.textContent='ten days from the day '+triggerLabel;
+
+    citeLine1.innerHTML='<strong>Condominium Act, 1998, s. 76(3)</strong> &mdash; due &ldquo;within 10 days after receiving a request for it and payment of the fee charged by the corporation for it.&rdquo; The clock runs from '+fmt.format(trigger)+'.';
+
+    if(res.shifted){
+      citeLine2.innerHTML='<strong>Legislation Act, 2006, s. 89(1)</strong> &mdash; ten days landed on '+fmt.format(raw)+', which is a holiday under s. 88(2), so the limit is extended to the next day that is not one. Note that Saturday is not on that list; Sunday is.';
+    } else {
+      citeLine2.innerHTML='<strong>Legislation Act, 2006, ss. 88 and 89</strong> &mdash; ten days lands on a day that is not a holiday, so no extension applies. Saturday is not a holiday under s. 88(2); Sunday is.';
+    }
+
+    deemedDate.textContent=fmt.format(deemed);
+
+    if(due<today0()){
+      pastNote.style.display='block';
+      pastNote.textContent='That deadline has already passed. If the certificate has not gone out, read the deemed-certificate consequences below carefully and get advice before the transaction closes.';
+    } else {
+      pastNote.style.display='none';
+    }
+
+    current={mode:mode,req:req,trigger:trigger,due:due,deemed:deemed,shifted:res.shifted};
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS, so neither path is assumed. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied',false);
+    else flashNote('Copy not supported, please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s;
+    if(current.mode==='unpaid'){
+      s='Status certificate requested '+fmt.format(current.req)+
+        '. The fee has not been received, so the 10-day period in Condominium Act, 1998 s. 76(3) has not started.'+
+        ' It begins on the day the fee is received.';
+    } else {
+      s='Status certificate request and fee both in hand as of '+fmt.format(current.trigger)+
+        '. Certificate must be given by '+fmt.format(current.due)+
+        ' (Condominium Act, 1998 s. 76(3)'+(current.shifted?'; extended under Legislation Act, 2006 s. 89(1)':'')+').'+
+        ' If it is not, a clean certificate is deemed given on '+fmt.format(current.deemed)+
+        ' and binds the corporation against a purchaser or mortgagee who relies on it (s. 76(5) and (6)).';
+    }
+    s+=' Fee capped at $100 inclusive of all applicable taxes (O. Reg. 48/01 s. 18(4)).'+
+      ' Verified September 12, 2026 against the Condominium Act, 1998, O. Reg. 48/01 and the Legislation Act, 2006 on ontario.ca.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+<script src="/assets/kys-events.js" defer></script>
+</body>
+</html>
