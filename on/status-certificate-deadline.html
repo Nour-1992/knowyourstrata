@@ -578,7 +578,11 @@
     var raw=addDays(trigger,10);
     var res=shiftOffHoliday(raw);
     var due=res.date;
-    var deemed=shiftOffHoliday(addDays(due,1)).date;
+    /* s. 76(5) deems a certificate given on the day immediately after the
+       required time has expired. That is a plain next calendar day. The
+       s. 89(1) holiday extension applies to the expiry of the time limit
+       itself, which is already reflected in due, and not again here. */
+    var deemed=addDays(due,1);
 
     dueDate.textContent=fmt.format(due);
     dueSub.textContent='ten days from the day '+triggerLabel;
