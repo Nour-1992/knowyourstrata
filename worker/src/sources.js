@@ -117,6 +117,13 @@ export const SOURCES = [
     url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_04'
   },
   {
+    id: 'act-part5',
+    label: 'Strata Property Act, Part 5 (common property, ss. 66 to 90.3)',
+    extract: bcText,
+    snapshotVersion: 2,
+    url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_05'
+  },
+  {
     id: 'act-part6',
     label: 'Strata Property Act — Part 6 (fees, levies, contingency reserve fund)',
     extract: bcText,
@@ -131,11 +138,39 @@ export const SOURCES = [
     url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_07'
   },
   {
+    id: 'act-part8',
+    label: 'Strata Property Act, Part 8 (rentals, ss. 141 to 148)',
+    extract: bcText,
+    snapshotVersion: 2,
+    url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_08'
+  },
+  {
     id: 'act-part9',
     label: 'Strata Property Act — Part 9 (insurance)',
     extract: bcText,
     snapshotVersion: 2,
     url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_09'
+  },
+  {
+    id: 'act-part14',
+    label: 'Strata Property Act, Part 14 (land titles, ss. 239 to 256, incl. s. 246 unit entitlement)',
+    extract: bcText,
+    snapshotVersion: 2,
+    url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_14'
+  },
+  {
+    id: 'act-part15',
+    label: 'Strata Property Act, Part 15 (strata plan amendment and amalgamation, ss. 257 to 271, incl. the s. 261 unanimous vote)',
+    extract: bcText,
+    snapshotVersion: 2,
+    url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_15'
+  },
+  {
+    id: 'act-part16',
+    label: 'Strata Property Act, Part 16 (cancellation and winding up, ss. 272 to 289, incl. the s. 277 eighty per cent vote)',
+    extract: bcText,
+    snapshotVersion: 2,
+    url: 'https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/98043_16'
   },
   {
     id: 'regulation',
