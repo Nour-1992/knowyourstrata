@@ -267,16 +267,54 @@ async function renderStatusPage(env) {
   }
 
   return `<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>BC Legislative-Change Watcher</title>
+<html><head><meta charset="UTF-8"><title>Legislative-Change Watcher (BC and Ontario)</title>
 <meta name="robots" content="noindex, nofollow">
 <style>body{font-family:system-ui,sans-serif;max-width:780px;margin:40px auto;padding:0 20px;color:#222;line-height:1.5}</style>
 </head><body>
-<h1>BC Legislative-Change Watcher</h1>
+<h1>Legislative-Change Watcher</h1>
 <p style="color:#5E6E68">Detects changes only -- never edits site content. A "changed" source means a normal brief/build/verify pass is due, not that anything on the site is already wrong.</p>
 <p style="font-size:.85rem;color:#5E6E68">Runs weekly (Mondays, ~08:00 UTC). Last full run: ${esc(lastRun ? lastRun.at : 'never')}.</p>
 <hr style="margin:20px 0;border:none;border-top:1px solid #ddd">
 ${rows.join('')}
 </body></html>`;
+}
+
+/* Machine-readable twin of the status page. The HTML page is for a person;
+   this is what the weekly editorial workflow reads. Same auth, same data. */
+async function statusJson(env) {
+  const lastRunRaw = await env.WATCHER_KV.get('lastRun');
+  const lastRun = lastRunRaw ? JSON.parse(lastRunRaw) : null;
+
+  const sources = [];
+  for (const source of SOURCES) {
+    const meta = await getMeta(env, source.id);
+    const row = {
+      id: source.id,
+      label: source.label,
+      url: source.url,
+      status: meta ? meta.lastStatus : 'never run',
+      lastChecked: meta ? meta.lastChecked : null,
+      lastChanged: meta && meta.lastChanged ? meta.lastChanged : null
+    };
+    if (meta && meta.lastStatus === 'changed') {
+      const diffRaw = await env.WATCHER_KV.get(`diff:${source.id}`);
+      if (diffRaw) {
+        const diff = JSON.parse(diffRaw);
+        row.addedCount = diff.addedCount;
+        row.removedCount = diff.removedCount;
+        /* The currency extractors return just the date string, so for a
+           *-currency-date source these two carry the exact before and after
+           values. That is what makes an automated sweep possible without
+           guessing at what the site currently says. */
+        row.addedSample = diff.addedSample || [];
+        row.removedSample = diff.removedSample || [];
+      }
+    }
+    if (meta && meta.lastStatus === 'error') row.error = meta.lastError;
+    sources.push(row);
+  }
+
+  return { lastRun, sourceCount: SOURCES.length, sources };
 }
 
 export default {
@@ -291,6 +329,14 @@ export default {
       if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
       const html = await renderStatusPage(env);
       return new Response(html, { headers: { 'Content-Type': 'text/html; charset=UTF-8' } });
+    }
+
+    if (url.pathname === '/status.json') {
+      if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
+      const body = await statusJson(env);
+      return new Response(JSON.stringify(body, null, 2), {
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+      });
     }
 
     if (url.pathname === '/run') {

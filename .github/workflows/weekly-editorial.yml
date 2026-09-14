@@ -1,0 +1,134 @@
+# Weekly editorial pass.
+#
+# The watcher detects. This applies the one class of change that is provable
+# without a person reading the law, and opens a PULL REQUEST rather than
+# pushing to main.
+#
+# Why a pull request and not a direct push: main auto-deploys to a live paid
+# legal product. An unattended regex sweep landing straight in production is
+# the exact failure this project has repeatedly caught by hand. The change
+# still gets made automatically; merging it is one click instead of running a
+# script.
+#
+# On a LEGAL week it edits nothing but the badge, which it sets to "under
+# human review", and labels the PR so it cannot be mistaken for routine.
+#
+# ONE-TIME SETUP
+#   1. Repo Settings -> Secrets and variables -> Actions -> New secret
+#      Name:  WATCHER_STATUS_SECRET   Value: the same secret the Worker uses
+#   2. Repo Settings -> Actions -> General -> Workflow permissions
+#      tick "Allow GitHub Actions to create and approve pull requests"
+
+name: Weekly editorial pass
+
+on:
+  schedule:
+    # 08:30 UTC Monday, half an hour after the watcher cron. Also runs if the
+    # watcher fired the day before: the badge date is taken from the run
+    # itself, not from today, so a Sunday check still stamps Sunday.
+    - cron: '30 8 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  editorial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the watcher status
+        env:
+          KEY: ${{ secrets.WATCHER_STATUS_SECRET }}
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "WATCHER_STATUS_SECRET is not set. See the header of this workflow." >&2
+            exit 1
+          fi
+          curl -fsS --max-time 60 \
+            "https://knowyourstrata-watcher.n-atallah.workers.dev/status.json?key=$KEY" \
+            -o status.json
+          node -e "JSON.parse(require('fs').readFileSync('status.json','utf8'))"
+
+      - name: Apply the editorial pass
+        run: node scripts/weekly-editorial.mjs --repo . --status status.json | tee summary.json
+
+      - name: Stop early if nothing was applied
+        id: gate
+        run: |
+          if [ "$(node -p "require('./summary.json').edited === false")" = "true" ]; then
+            echo "reason=$(node -p "require('./summary.json').abort")" >> "$GITHUB_OUTPUT"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          elif [ -z "$(git status --porcelain)" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "reason=nothing to change" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Report a skipped run
+        if: steps.gate.outputs.skip == 'true'
+        run: |
+          echo "No pull request opened. Reason: ${{ steps.gate.outputs.reason }}"
+
+      - name: Syntax-check every inline script in every edited file
+        if: steps.gate.outputs.skip == 'false'
+        run: node scripts/check-inline-js.mjs $(git diff --name-only -- '*.html')
+
+      - name: Open the pull request
+        if: steps.gate.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rm -f status.json summary.json.tmp
+          LEGAL=$(node -p "require('./summary.json').legalReview")
+          RUNDATE=$(node -p "require('./summary.json').runDate")
+          BRANCH="editorial/$(date -u +%Y-%m-%d)-$GITHUB_RUN_NUMBER"
+
+          {
+            echo "Applied automatically from the watcher run of $RUNDATE."
+            echo
+            node -e '
+              const s = require("./summary.json");
+              if (s.legalReview) {
+                console.log("## A legal source moved. This is NOT a routine editorial pass.");
+                console.log();
+                for (const x of s.legalSources) console.log(`- \`${x.id}\` is **${x.status}**`);
+                console.log();
+                console.log("Only the badge was changed, to \"under human review\". No currency date was advanced and no tool logic was touched.");
+                console.log();
+                console.log("Before merging: re-read the affected sections on the official consolidation, check the pack content that depends on them, and correct the /monitoring headline claim, which is now false.");
+              } else {
+                console.log("## Editorial only. No legal text moved.");
+                console.log();
+                if (s.currency.length) { console.log("Consolidation stamps advanced:"); for (const c of s.currency) console.log(`- ${c}`); }
+                else console.log("Quiet week. Badge refresh only.");
+              }
+              console.log();
+              console.log(`Badge: ${s.badge.occurrences} occurrences across ${s.badge.files} pages.`);
+              console.log(`> ${s.badge.text}`);
+              console.log();
+              console.log("Guarded: no `verified` provenance date moved, `monitoring.html` untouched, and pages deliberately held at an older currency carry neither literal so they cannot be hit.");
+              if (s.errors.length) { console.log(); console.log("### Errors"); for (const e of s.errors) console.log(`- ${e}`); }
+            '
+          } > pr-body.md
+
+          git config user.name  "knowyourstrata-watcher"
+          git config user.email "watcher@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          printf '%s\n\n%s\n' \
+            "Weekly editorial pass, watcher run of $RUNDATE" \
+            "Applied automatically. See the pull request body for what moved." > commit-msg.txt
+          git add -A
+          git commit -F commit-msg.txt
+          rm -f commit-msg.txt pr-body.md
+          git push origin "$BRANCH"
+
+          if [ "$LEGAL" = "true" ]; then
+            TITLE="HUMAN REVIEW: a legal source moved, run of $RUNDATE"
+          else
+            TITLE="Weekly editorial pass, run of $RUNDATE"
+          fi
+          gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file pr-body.md
