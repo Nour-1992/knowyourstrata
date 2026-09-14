@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Condo Voting Threshold Checker (ss. 56, 58, 97, 107)</title>
+<meta name="description" content="Work out the exact vote an Ontario condo board needs, by-law, rule, common element change or declaration amendment, with the section behind each threshold and the number of units it takes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/on/voting-threshold">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Condo Voting Threshold Checker (ss. 56, 58, 97, 107)">
+<meta property="og:description" content="Work out the exact vote an Ontario condo board needs, by-law, rule, common element change or declaration amendment, with the section behind each threshold and the number of units it takes.">
+<meta property="og:url" content="https://knowyourstrata.com/on/voting-threshold">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontario Condo Voting Threshold Checker (ss. 56, 58, 97, 107)">
+<meta name="twitter:description" content="Work out the exact vote an Ontario condo board needs, by-law, rule, common element change or declaration amendment, with the section behind each threshold and the number of units it takes.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "What vote do we actually need?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+  "description": "Work out the exact vote an Ontario condo board needs, by-law, rule, common element change or declaration amendment, with the section behind each threshold and the number of units it takes."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="number"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .opt-block{display:none}
+  .opt-block.active{display:block}
+  .note-block{
+    font-size:.85rem;color:#5E6E68;margin:-12px 0 20px;
+    padding-left:12px;border-left:2px solid var(--line);max-width:56ch;
+  }
+  .check-row{
+    display:flex;align-items:flex-start;gap:10px;font-weight:400;
+    font-size:.92rem;margin-bottom:20px;
+  }
+  .check-row input{width:auto;margin:4px 0 0}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .badge-note a{color:var(--spruce)}
+  .badge-note-more{white-space:nowrap}
+  .badge-note{
+    margin-top:6px;font-family:var(--mono);font-size:.78rem;
+    letter-spacing:.04em;color:#5A6A64;max-width:62ch;
+  }
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .warn{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .after{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .after h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .after .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .after ul{list-style:none;font-size:.9rem}
+  .after li{
+    padding:6px 0 6px 18px;color:#3D4C47;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .after li:last-child{border-bottom:none}
+  .after li::before{
+    content:"";position:absolute;left:0;top:15px;
+    width:7px;height:7px;border-radius:50%;background:var(--seal);
+  }
+  .after .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .current{color:#5A6A64;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .thr-table{
+    width:100%;border-collapse:collapse;margin:0 0 18px;font-size:.9rem;
+  }
+  .thr-table th,.thr-table td{
+    text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  .thr-table th{color:var(--spruce-deep);font-weight:700}
+  .thr-table td.n{font-family:var(--mono);white-space:nowrap}
+  .table-scroll{overflow-x:auto}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario &middot; Condominium Act, 1998</p>
+    <h1>What vote do we actually need?</h1>
+    <p class="lede">Four different decisions, four different thresholds, and one of them is not a percentage of the units at all. The number that catches boards out is not the famous 66 2/3 per cent. It is the narrow list of by-laws that need only a majority of the owners who turned up.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="decision">What is the board deciding?</label>
+      <select id="decision">
+        <option value="bylaw" selected>Passing, amending or repealing a by-law</option>
+        <option value="rule">Making, amending or repealing a rule</option>
+        <option value="s97">An addition, alteration or improvement to the common elements</option>
+        <option value="declaration">Amending the declaration</option>
+      </select>
+
+      <div class="opt-block active" id="unitsBlock">
+        <label for="units">Total units in the corporation <span class="hint">turns the percentage into a number of owners</span></label>
+        <input type="number" id="units" min="1" step="1" inputmode="numeric">
+      </div>
+
+      <div class="opt-block active" id="bylawBlock">
+        <label for="bylawKind">Which kind of by-law?</label>
+        <select id="bylawKind">
+          <option value="general" selected>Any other by-law</option>
+          <option value="prescribed">One of the by-laws listed in O. Reg. 48/01 s. 14(2)</option>
+        </select>
+        <p class="note-block">The s. 14(2) list is short and specific: by-laws described in s. 45(7), s. 47(6), s. 52(1.1.1), paragraph 12 of s. 55(1) or paragraph 3 of s. 55(2) of the Act, or s. 14(0.1) of the regulation. If the by-law is not one of those, leave this on the first option.</p>
+      </div>
+
+      <div class="opt-block" id="s97Block">
+        <label for="budget">Annual budgeted common expenses, current fiscal year <span class="hint">in dollars</span></label>
+        <input type="number" id="budget" min="0" step="0.01" inputmode="decimal">
+        <label for="cost">Estimated total cost of the change <span class="hint">in dollars</span></label>
+        <input type="number" id="cost" min="0" step="0.01" inputmode="decimal">
+        <label class="check-row"><input type="checkbox" id="elect"> The board has elected to treat the change as substantial, whatever the cost (s. 97(6)(b))</label>
+      </div>
+
+      <div class="opt-block" id="declBlock">
+        <label for="declKind">What does the amendment change?</label>
+        <select id="declKind">
+          <option value="other" selected>Anything else</option>
+          <option value="listed">A matter described in s. 7(2)(c), (d) or (f), or s. 7(4)(e)</option>
+        </select>
+      </div>
+
+      <button id="calc">Get the threshold</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k" id="stampKey">The vote you need</p>
+        <p class="date" id="thrHead">&mdash;</p>
+        <p class="sub" id="thrSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">&#10003;</span> Verified September 12, 2026 &middot; <span id="badgeCite">Condominium Act, 1998, ss. 56, 58, 97 and 107</span></p>
+      <p class="badge-note">Sources checked automatically every Monday. Last check September 13, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
+
+      <p class="cite-line" id="citeLine1"></p>
+      <p class="cite-line" id="citeLine2"></p>
+      <p class="warn" id="warnNote"></p>
+
+      <div class="after">
+        <h3 id="afterTitle">What else has to happen</h3>
+        <p class="sub" id="afterSub"></p>
+        <ul id="steps"></ul>
+        <p class="cite" id="afterCite"></p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied &#10003;</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this &mdash; and the quorum, notice of meeting, requisition threshold, records request, reserve fund and status certificate deadlines &mdash; all in one printable calendar with checklists and templates? <a href="/on/starter-pack">Get the Ontario Condo Board Starter Pack &rarr; CAD $49 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong &mdash; with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You&rsquo;re in &#10003;</h2>
+      <p>You&rsquo;re on the list. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><a href="/on/notice-of-meeting-deadline">Notice of meeting deadline</a></li>
+      <li><a href="/on/requisition-threshold">Requisition threshold checker</a></li>
+      <li><a href="/on/records-request-deadline">Records request deadline</a></li>
+      <li><a href="/on/reserve-fund-study-deadline">Reserve fund study deadline</a></li>
+      <li><a href="/on/status-certificate-deadline">Status certificate deadline</a></li>
+      <li><span>Voting threshold checker</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>The four thresholds, side by side</h2>
+    <p>Ontario does not have one condominium voting threshold. It has a different answer for each kind of decision, and the sections sit a long way apart in the Act.</p>
+    <div class="table-scroll">
+      <table class="thr-table">
+        <thead>
+          <tr><th scope="col">Decision</th><th scope="col">Threshold</th><th scope="col">Section</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>By-law, general</td><td class="n">Majority of all units</td><td>s. 56(10)</td></tr>
+          <tr><td>By-law on the prescribed list</td><td class="n">Majority present or by proxy</td><td>O. Reg. 48/01 s. 14(2)</td></tr>
+          <tr><td>Rule</td><td class="n">No owner vote to make it</td><td>s. 58(6), (7)</td></tr>
+          <tr><td>Common element change, substantial</td><td class="n">66 2/3% of all units</td><td>s. 97(4), (5)</td></tr>
+          <tr><td>Common element change, not substantial</td><td class="n">Notice, then 30 days</td><td>s. 97(3)</td></tr>
+          <tr><td>Declaration, listed matter</td><td class="n">90% written consent</td><td>s. 107(2)(d)</td></tr>
+          <tr><td>Declaration, anything else</td><td class="n">80% written consent</td><td>s. 107(2)(e)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 style="margin-top:32px">The carve-out most boards have never read</h2>
+    <p>Section 56(10) of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> is the sentence everyone quotes, and the clause in the middle of it is the one everyone drops:</p>
+    <p class="quote">&ldquo;&hellip; the owners of a majority of the units in the corporation, <em>or such other number of owners that is prescribed</em>, vote in favour of confirming it&hellip;&rdquo;</p>
+    <p>That prescription exists. O. Reg. 48/01 s. 14(2) sets the other number at a majority of the owners present or represented by proxy at the meeting, and it applies to by-laws described in s. 45(7), s. 47(6), s. 52(1.1.1), paragraph 12 of s. 55(1) or paragraph 3 of s. 55(2) of the Act, or s. 14(0.1) of the regulation.</p>
+    <p>The difference is not academic. In a 200-unit corporation the general rule needs 101 owners to vote in favour, however many turn up. The prescribed rule needs a majority of the room. A board that applies the wrong one either fails a by-law it actually passed, or registers one it did not.</p>
+
+    <h2 style="margin-top:32px">Rules are not voted on at all</h2>
+    <p>A rule under s. 58 needs no owner vote to come into force. The board makes it, gives notice to the owners, and s. 58(6) and (7) do the rest: the rule takes effect 30 days after that notice unless owners requisition a meeting under s. 46 within those 30 days, in which case it is decided at the meeting instead.</p>
+    <p>Section 58(8) adds the trap. A rule that substantially repeats one the owners amended or repealed in the preceding two years cannot simply be made again; it needs owner approval first. Re-issuing a rejected rule with new wording is the failure mode that section exists to catch.</p>
+
+    <h2 style="margin-top:32px">Why the substantial test is calculable at all</h2>
+    <p>Section 97(6) defines a substantial change by cost. The estimated total must exceed:</p>
+    <p class="quote">&ldquo;&hellip; the lesser of, (i) 10 per cent of the annual budgeted common expenses for the current fiscal year, and (ii) the prescribed amount, if any&hellip;&rdquo;</p>
+    <p>A lesser-of test with an unknown second limb would not be computable. It is computable here for one reason: <strong>there is no prescribed amount.</strong> The phrase does not appear anywhere in O. Reg. 48/01. The test collapses to the 10 per cent figure alone, which is why this tool can give a straight answer from a budget and an estimate.</p>
+    <p>The board may also elect under s. 97(6)(b) to treat a change as substantial regardless of cost, which is sometimes the cheaper path when the alternative is arguing about the estimate.</p>
+
+    <h2 style="margin-top:32px">Declaration amendments are consents, not a show of hands</h2>
+    <p>Section 107 does not work by a vote at a meeting. It works by written consents from the owners of units at the time the board approved the amendment: 90 per cent where the amendment changes a matter described in s. 7(2)(c), (d) or (f) or s. 7(4)(e), and 80 per cent in every other case. A board resolution, a meeting under s. 107(3) and (4), and notice to mortgagees sit alongside the consents rather than replacing them.</p>
+
+    <dl class="faq">
+      <dt>Is it 66 2/3 per cent of the units, or of the owners who vote?</dt>
+      <dd>Of the units. Section 97(4) requires owners of at least 66 2/3 per cent of the units to vote in favour, at a meeting called for that purpose under s. 97(5). Attendance does not lower it. In a 100-unit corporation that is 67 units, whether 70 owners show up or 100 do.</dd>
+      <dt>Our by-law got a majority of everyone in the room but not of all units. Did it pass?</dt>
+      <dd>Only if it is one of the by-laws on the O. Reg. 48/01 s. 14(2) list. For any other by-law, s. 56(10) needs a majority of all units in the corporation, and a majority of those present is not enough. This is the single most common way an Ontario by-law fails after the fact.</dd>
+      <dt>Does a change to the common elements always need an owners vote?</dt>
+      <dd>No. Section 97(2) allows a board resolution with no notice for a listed set of cases, and s. 97(3) allows a non-substantial change to proceed on notice if no meeting is requisitioned within 30 days. Only a substantial change under s. 97(4) requires the 66 2/3 per cent vote.</dd>
+      <dt>We are installing electric vehicle charging. Does s. 97 apply?</dt>
+      <dd>It may not. O. Reg. 48/01 s. 24.3 exempts a corporation from s. 97 for certain electric vehicle charging system installations, and that exemption has its own procedure and conditions. Read s. 24.3 against your facts before running the substantial-change test, because the answer may be that the test never applies.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It is general information based on the current consolidation, verified against the sources linked above. Voting thresholds decide whether a by-law, a rule or an amendment is valid, so for anything already passed, or anything contested, talk to a condominium lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 56, 58, 97 and 107, and O. Reg. 48/01, ss. 14 and 24.3. Last verified 12 September 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 9 September 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p>Built for the volunteer boards who keep Ontario&rsquo;s condominiums running.</p>
+    <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right, please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending...';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right, please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var decision=document.getElementById('decision'),
+      unitsBlock=document.getElementById('unitsBlock'),
+      units=document.getElementById('units'),
+      bylawBlock=document.getElementById('bylawBlock'),
+      bylawKind=document.getElementById('bylawKind'),
+      s97Block=document.getElementById('s97Block'),
+      budget=document.getElementById('budget'),
+      cost=document.getElementById('cost'),
+      elect=document.getElementById('elect'),
+      declBlock=document.getElementById('declBlock'),
+      declKind=document.getElementById('declKind'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      stampKey=document.getElementById('stampKey'),
+      thrHead=document.getElementById('thrHead'),
+      thrSub=document.getElementById('thrSub'),
+      citeLine1=document.getElementById('citeLine1'),
+      citeLine2=document.getElementById('citeLine2'),
+      warnNote=document.getElementById('warnNote'),
+      afterTitle=document.getElementById('afterTitle'),
+      afterSub=document.getElementById('afterSub'),
+      steps=document.getElementById('steps'),
+      afterCite=document.getElementById('afterCite'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var money=new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:2});
+
+  /* Integer arithmetic throughout. A percentage of a unit count must never
+     depend on binary floating point, so each threshold is computed from an
+     integer numerator over an integer denominator. */
+  function majorityOfAll(n){return Math.floor(n/2)+1;}
+  function atLeastPct(n,num,den){return Math.ceil((n*num)/den);}
+
+  function setSteps(list){
+    steps.innerHTML='';
+    for(var i=0;i<list.length;i++){
+      var li=document.createElement('li');
+      li.innerHTML=list[i];
+      steps.appendChild(li);
+    }
+  }
+
+  function toggle(){
+    var d=decision.value;
+    unitsBlock.classList.toggle('active',d!=='rule');
+    bylawBlock.classList.toggle('active',d==='bylaw');
+    s97Block.classList.toggle('active',d==='s97');
+    declBlock.classList.toggle('active',d==='declaration');
+    result.style.display='none';
+    err.style.display='none';
+  }
+  decision.addEventListener('change',toggle);
+  toggle();
+
+  function show(m){
+    err.textContent=m;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    var d=decision.value;
+    var n=0;
+
+    if(d!=='rule'){
+      n=parseInt(units.value,10);
+      if(!(n>0)){show('Enter the total number of units in the corporation.');return;}
+      if(n>100000){show('That unit count looks wrong. Enter the number of units in this corporation.');return;}
+    }
+    err.style.display='none';
+    warnNote.style.display='none';
+
+    var head='', sub='', c1='', c2='', aTitle='', aSub='', aCite='', list=[], copy='';
+
+    if(d==='bylaw'){
+      if(bylawKind.value==='prescribed'){
+        head='Majority present or by proxy';
+        sub='a majority of the owners at the meeting, not a majority of all '+n+' units';
+        c1='<strong>O. Reg. 48/01, s. 14(2)</strong> &mdash; for this short list of by-laws the prescribed number is a majority of the owners present or represented by proxy at a meeting, which is the other number s. 56(10) allows for.';
+        c2='<strong>Condominium Act, 1998, s. 56(10)</strong> &mdash; a by-law is not effective until the required number of owners vote in favour of confirming it and a copy is registered. The prescribed number replaces the majority of all units only for the by-laws s. 14(2) lists.';
+        aTitle='What else has to happen';
+        aSub='Confirm the by-law is genuinely on the s. 14(2) list before relying on this threshold.';
+        list=[
+          'The by-law must be one described in s. 45(7), s. 47(6), s. 52(1.1.1), paragraph 12 of s. 55(1) or paragraph 3 of s. 55(2) of the Act, or s. 14(0.1) of the regulation.',
+          'The board passes the by-law first; the owners confirm it.',
+          'A copy of the confirmed by-law must be <strong>registered</strong> before it is effective.',
+          'Record the attendance and proxy count, because the threshold is measured against the room rather than the unit roll.'
+        ];
+        aCite='Condominium Act, 1998, s. 56(10); O. Reg. 48/01, s. 14(2).';
+        copy='By-law on the O. Reg. 48/01 s. 14(2) list: confirmation needs a majority of the owners present or represented by proxy at the meeting, not a majority of all units. A copy must be registered before the by-law is effective (Condominium Act, 1998 s. 56(10)).';
+      } else {
+        var need=majorityOfAll(n);
+        head=need+' of '+n+' units';
+        sub='a majority of all units in the corporation, however many owners attend';
+        c1='<strong>Condominium Act, 1998, s. 56(10)</strong> &mdash; a by-law is not effective until the owners of a majority of the units in the corporation vote in favour of confirming it, and a copy is registered.';
+        c2='<strong>O. Reg. 48/01, s. 14(2)</strong> &mdash; a short list of by-laws needs only a majority of those present or by proxy instead. If this by-law is described in s. 45(7), s. 47(6), s. 52(1.1.1), paragraph 12 of s. 55(1) or paragraph 3 of s. 55(2) of the Act, or s. 14(0.1) of the regulation, change the second field and read that answer instead.';
+        aTitle='What else has to happen';
+        aSub='The vote is a majority of the unit roll. Turnout does not lower it.';
+        list=[
+          'The board passes the by-law; the owners then confirm it at a meeting duly called for the purpose.',
+          '<strong>'+need+'</strong> of the '+n+' units must vote in favour, whatever the attendance.',
+          'A copy of the confirmed by-law must be <strong>registered</strong> before it is effective.',
+          'If the by-law is on the s. 14(2) list, this threshold does not apply to it.'
+        ];
+        aCite='Condominium Act, 1998, s. 56(10).';
+        copy='By-law confirmation: '+need+' of '+n+' units must vote in favour, a majority of all units, regardless of attendance (Condominium Act, 1998 s. 56(10)). A copy must be registered before the by-law is effective. Note the O. Reg. 48/01 s. 14(2) exception for a short prescribed list of by-laws.';
+      }
+    }
+
+    else if(d==='rule'){
+      stampKey.textContent='The vote you need';
+      head='No owner vote';
+      sub='the board makes the rule; it takes effect 30 days after notice unless a meeting is requisitioned';
+      c1='<strong>Condominium Act, 1998, s. 58(6) and (7)</strong> &mdash; a rule takes effect 30 days after notice to the owners if no meeting is requisitioned under s. 46 within those 30 days. If one is requisitioned, the rule is decided at that meeting instead.';
+      c2='<strong>Condominium Act, 1998, s. 58(8)</strong> &mdash; a rule that substantially repeats one the owners amended or repealed within the preceding two years needs owner approval before it can be made.';
+      aTitle='What else has to happen';
+      aSub='The risk in a rule is not the vote. It is the notice period and the two-year restriction.';
+      list=[
+        'The board makes the rule by resolution. No owner vote is required to make it.',
+        'Notice goes to the owners, and the 30-day requisition window opens.',
+        'Check s. 58(8) first: if the owners amended or repealed a substantially similar rule in the last two years, owner approval is required before the rule can be made.',
+        'If a meeting is requisitioned within the 30 days, the rule is determined at that meeting rather than taking effect automatically.'
+      ];
+      aCite='Condominium Act, 1998, s. 58(6), (7) and (8).';
+      copy='Rule under Condominium Act, 1998 s. 58: no owner vote is needed to make it. It takes effect 30 days after notice to owners unless a meeting is requisitioned under s. 46 within that period, in which case it is decided at the meeting (s. 58(6) and (7)). A rule that substantially repeats one the owners amended or repealed in the preceding two years needs owner approval first (s. 58(8)).';
+    }
+
+    else if(d==='s97'){
+      var b=parseFloat(budget.value);
+      var k=parseFloat(cost.value);
+      if(!(b>=0)||budget.value===''){show('Enter the annual budgeted common expenses for the current fiscal year.');return;}
+      if(!(k>=0)||cost.value===''){show('Enter the estimated total cost of the change.');return;}
+      var limit=b*0.1;
+      var substantial=elect.checked||(k>limit);
+
+      if(substantial){
+        var need97=atLeastPct(n,2,3);
+        head=need97+' of '+n+' units';
+        sub='at least 66 2/3 per cent of all units, at a meeting called for that purpose';
+        c1='<strong>Condominium Act, 1998, s. 97(4) and (5)</strong> &mdash; a substantial addition, alteration or improvement needs owners of at least 66 2/3 per cent of the units voting in favour, at a meeting called for the purpose.';
+        if(elect.checked&&!(k>limit)){
+          c2='<strong>Condominium Act, 1998, s. 97(6)(b)</strong> &mdash; the estimated cost of '+money.format(k)+' does not exceed 10 per cent of the budget ('+money.format(limit)+'), but the board has elected to treat the change as substantial, which it may do regardless of cost.';
+        } else {
+          c2='<strong>Condominium Act, 1998, s. 97(6)(a)</strong> &mdash; substantial because the estimated cost of '+money.format(k)+' exceeds 10 per cent of the annual budgeted common expenses, which is '+money.format(limit)+'. There is no prescribed amount under s. 97(6)(a)(ii), so the 10 per cent figure is the whole test.';
+        }
+        aTitle='What else has to happen';
+        aSub='A substantial change is the only common element decision that needs a supermajority.';
+        list=[
+          'Call a meeting <strong>for the purpose</strong> of the vote. A general meeting agenda item does not satisfy s. 97(5).',
+          '<strong>'+need97+'</strong> of the '+n+' units must vote in favour. Attendance does not lower the number.',
+          'The 66 2/3 per cent is measured against all units, not against those present or voting.',
+          'Keep the cost estimate and the budget figure on the record; they are what makes the change substantial.'
+        ];
+        aCite='Condominium Act, 1998, s. 97(4), (5) and (6).';
+        copy='Substantial addition, alteration or improvement to the common elements: '+need97+' of '+n+' units must vote in favour, at least 66 2/3 per cent of all units, at a meeting called for that purpose (Condominium Act, 1998 s. 97(4) and (5)). Estimated cost '+money.format(k)+' against a 10 per cent threshold of '+money.format(limit)+' (s. 97(6)).';
+      } else {
+        stampKey.textContent='The vote you need';
+        head='No owner vote, if nobody requisitions';
+        sub='not substantial: the estimated cost does not exceed 10 per cent of the budget';
+        c1='<strong>Condominium Act, 1998, s. 97(6)</strong> &mdash; the estimated cost of '+money.format(k)+' does not exceed 10 per cent of the annual budgeted common expenses, which is '+money.format(limit)+', so the change is not substantial. There is no prescribed amount under s. 97(6)(a)(ii), so the 10 per cent figure is the whole test.';
+        c2='<strong>Condominium Act, 1998, s. 97(3)</strong> &mdash; the board gives notice to the owners and may proceed if no meeting is requisitioned under s. 46 within 30 days. If one is requisitioned, the change is decided at that meeting.';
+        aTitle='What the notice must contain';
+        aSub='Section 97(3) prescribes the contents. A notice missing any of it does not start the 30 days cleanly.';
+        list=[
+          'A description of the proposed change, with the <strong>estimated cost</strong> and how it will be funded.',
+          'A statement of the owners right to requisition a meeting under s. 46.',
+          'A copy of <strong>s. 46</strong> and a copy of <strong>s. 97</strong>.',
+          'Then either 30 days pass with no requisition, or the requisitioned meeting decides the change.',
+          'Section 97(2) is separate: a listed set of cases allows a board resolution with no notice at all.'
+        ];
+        aCite='Condominium Act, 1998, s. 97(2), (3) and (6).';
+        copy='Addition, alteration or improvement to the common elements, not substantial: estimated cost '+money.format(k)+' does not exceed the 10 per cent threshold of '+money.format(limit)+' (Condominium Act, 1998 s. 97(6)). The board gives notice under s. 97(3) with the estimated cost, the funding, a statement of the s. 46 requisition right and copies of ss. 46 and 97, then may proceed if no meeting is requisitioned within 30 days.';
+      }
+      warnNote.style.display='block';
+      warnNote.innerHTML='<strong>Check O. Reg. 48/01 s. 24.3 first.</strong> It exempts a corporation from s. 97 for certain electric vehicle charging system installations, with its own procedure. If the change is an EV charging installation, the substantial-change test may not apply to it at all.';
+    }
+
+    else {
+      var listed=declKind.value==='listed';
+      var needD=listed?atLeastPct(n,9,10):atLeastPct(n,4,5);
+      var pct=listed?'90 per cent':'80 per cent';
+      stampKey.textContent='The written consents you need';
+      head=needD+' of '+n+' units';
+      sub=pct+' of the units must consent in writing, not vote at a meeting';
+      if(listed){
+        c1='<strong>Condominium Act, 1998, s. 107(2)(d)</strong> &mdash; 90 per cent of the units must consent in writing where the amendment changes a matter described in s. 7(2)(c), (d) or (f) or s. 7(4)(e).';
+      } else {
+        c1='<strong>Condominium Act, 1998, s. 107(2)(e)</strong> &mdash; 80 per cent of the units must consent in writing in every case other than those described in s. 7(2)(c), (d) or (f) or s. 7(4)(e). If the amendment touches one of those, the threshold is 90 per cent instead.';
+      }
+      c2='<strong>Condominium Act, 1998, s. 107(2)</strong> &mdash; the consents must come from the owners of units <em>at the time the board approved the amendment</em>, which is what fixes the roll the percentage is measured against.';
+      aTitle='What else has to happen';
+      aSub='The consents are only one of four requirements, and the others are easy to miss.';
+      list=[
+        'A <strong>board resolution</strong> approving the amendment.',
+        'Written consents from the owners of <strong>'+needD+'</strong> of the '+n+' units, measured on the roll as it stood when the board approved it.',
+        'A meeting held in accordance with s. 107(3) and (4).',
+        'Notice to the mortgagees.',
+        'The 90 per cent threshold applies only to the matters listed in s. 7(2)(c), (d) and (f) and s. 7(4)(e); everything else is 80 per cent.'
+      ];
+      aCite='Condominium Act, 1998, s. 107(2), (3) and (4).';
+      copy='Declaration amendment: written consents from the owners of '+needD+' of '+n+' units, being '+pct+' (Condominium Act, 1998 s. 107(2)'+(listed?'(d)':'(e)')+'). Consents must come from owners of units at the time the board approved the amendment, alongside a board resolution, a meeting under s. 107(3) and (4), and notice to mortgagees.';
+    }
+
+    if(d!=='rule'&&d!=='s97'){stampKey.textContent=(d==='declaration')?'The written consents you need':'The vote you need';}
+
+    thrHead.textContent=head;
+    thrSub.textContent=sub;
+    citeLine1.innerHTML=c1;
+    citeLine2.innerHTML=c2;
+    afterTitle.textContent=aTitle;
+    afterSub.textContent=aSub;
+    setSteps(list);
+    afterCite.textContent=aCite;
+
+    current={copy:copy};
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS, so neither path is assumed. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied',false);
+    else flashNote('Copy not supported, please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    var s=current.copy+' Verified September 12, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
+    copyToClipboard(s);
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+<script src="/assets/kys-events.js" defer></script>
+</body>
+</html>
