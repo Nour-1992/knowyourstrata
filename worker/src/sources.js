@@ -199,5 +199,26 @@ export const SOURCES = [
     url: 'https://www.ontario.ca/laws/api/v2/legislation/en/act-versions/regulation/010048',
     extract: elawsVersions,
     minLength: 200
+  },
+  {
+    id: 'on-legislation-act',
+    label: 'Legislation Act, 2006 (S.O. 2006, c. 21, Sched. F), ss. 88 and 89 holiday list and deadline extension, consolidation versions',
+    url: 'https://www.ontario.ca/laws/api/v2/legislation/en/act-versions/statute/06l21',
+    extract: elawsVersions,
+    // Verified against the live API on 2026-09-14: 15 versions, 1299
+    // characters once extracted. Versions are only ever added, so the
+    // payload only grows. A floor of 600 catches an empty or shard
+    // failed response, which must error loudly rather than diff to
+    // "every version was removed."
+    //
+    // Version list, not legal text, and that is deliberate. The worker
+    // is plain fetch only and has no Browser Rendering. It also would
+    // not close the one gap that exists: s. 88(2) paragraph 12 makes a
+    // holiday of any day fixed by proclamation, and a proclamation
+    // amends no Act, so it bumps no version and changes no section
+    // text. A rendered read of s. 88 would miss it exactly as this
+    // does. Accepted: proclaimed holidays are rare and the exposure is
+    // one day on a ten day clock.
+    minLength: 600
   }
 ];
