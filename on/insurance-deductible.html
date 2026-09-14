@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Insurance Deductible Chargeback Checker (s. 105)</title>
+<meta name="description" content="Work out whether an Ontario condo insurance deductible can be charged back to an owner, how much, and the one limit in s. 105(2) that boards most often get backwards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kys.css">
+<link rel="canonical" href="https://knowyourstrata.com/on/insurance-deductible">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ontario Insurance Deductible Chargeback Checker (s. 105)">
+<meta property="og:description" content="Work out whether an Ontario condo insurance deductible can be charged back to an owner, how much, and the one limit in s. 105(2) that boards most often get backwards.">
+<meta property="og:url" content="https://knowyourstrata.com/on/insurance-deductible">
+<meta property="og:site_name" content="Know Your Strata">
+<meta property="og:image" content="https://knowyourstrata.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ontario Insurance Deductible Chargeback Checker (s. 105)">
+<meta name="twitter:description" content="Work out whether an Ontario condo insurance deductible can be charged back to an owner, how much, and the one limit in s. 105(2) that boards most often get backwards.">
+<meta name="twitter:image" content="https://knowyourstrata.com/assets/og-image.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Can we charge the deductible back to the owner?",
+  "applicationCategory": "BusinessApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
+  "description": "Work out whether an Ontario condo insurance deductible can be charged back to an owner, how much, and the one limit in s. 105(2) that boards most often get backwards."
+}
+</script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:17px}
+  body{
+    font-family:var(--body);
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
+  header{padding:44px 0 8px}
+  .eyebrow{
+    font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--spruce);font-weight:700;
+  }
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.7rem,5.5vw,2.4rem);
+    line-height:1.15;margin:10px 0 12px;color:var(--spruce-deep);
+  }
+  .lede{color:#4A5A55;max-width:52ch}
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:26px 22px;margin-top:28px;
+  }
+  label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
+  .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
+  input[type="number"],select{
+    width:100%;padding:12px 14px;font-size:1.05rem;
+    font-family:inherit;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    margin-bottom:20px;
+  }
+  input:focus,select:focus,button:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  button{
+    width:100%;padding:14px;font-size:1.05rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;
+  }
+  button:hover{background:var(--spruce-deep)}
+  .error{color:#8F2D1E;font-weight:600;margin-top:14px;display:none}
+
+  .opt-block{display:none}
+  .opt-block.active{display:block}
+  .note-block{
+    font-size:.85rem;color:#5E6E68;margin:-12px 0 20px;
+    padding-left:12px;border-left:2px solid var(--line);max-width:56ch;
+  }
+  .check-row{
+    display:flex;align-items:flex-start;gap:10px;font-weight:400;
+    font-size:.92rem;margin-bottom:20px;
+  }
+  .check-row input{width:auto;margin:4px 0 0}
+
+  .result{display:none;margin-top:30px}
+  .stamp{
+    background:var(--spruce);color:var(--paper);
+    border-radius:10px;padding:22px;text-align:center;
+  }
+  .stamp .k{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .stamp .date{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(1.4rem,4.6vw,1.9rem);margin-top:6px;
+  }
+  .stamp .sub{font-size:.9rem;opacity:.9;margin-top:8px;max-width:46ch;margin-left:auto;margin-right:auto}
+
+  .badge-note a{color:var(--spruce)}
+  .badge-note-more{white-space:nowrap}
+  .badge-note{
+    margin-top:6px;font-family:var(--mono);font-size:.78rem;
+    letter-spacing:.04em;color:#5A6A64;max-width:62ch;
+  }
+  .verified-badge{
+    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--seal);
+    border:1px solid var(--seal);border-radius:3px;
+    padding:5px 11px;background:rgba(122,46,46,.045);
+  }
+  .verified-badge .check{font-weight:600}
+
+  .cite-line{
+    margin-top:12px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;border-radius:0 8px 8px 0;
+  }
+  .cite-line strong{color:var(--spruce-deep)}
+  .warn{
+    margin-top:12px;padding:12px 16px;border-left:3px solid #8F2D1E;
+    background:#FAEFEC;color:#8F2D1E;font-size:.92rem;border-radius:0 8px 8px 0;display:none;
+  }
+
+  .after{
+    margin-top:22px;padding:18px 20px;border:1px solid var(--line);
+    border-radius:10px;background:#F6F8F6;
+  }
+  .after h3{
+    font-family:var(--display);font-size:1rem;
+    color:var(--spruce-deep);margin-bottom:4px;
+  }
+  .after .sub{font-size:.85rem;color:#5E6E68;margin-bottom:12px}
+  .after ul{list-style:none;font-size:.9rem}
+  .after li{
+    padding:6px 0 6px 18px;color:#3D4C47;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .after li:last-child{border-bottom:none}
+  .after li::before{
+    content:"";position:absolute;left:0;top:15px;
+    width:7px;height:7px;border-radius:50%;background:var(--seal);
+  }
+  .after .cite{margin-top:11px;font-size:.8rem;color:#5E6E68}
+
+  .copybar{margin-top:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .copy-btn{
+    width:auto;padding:10px 18px;font-size:.92rem;font-weight:700;
+    font-family:inherit;color:var(--spruce);background:#fff;
+    border:1.5px solid var(--spruce);border-radius:8px;cursor:pointer;
+  }
+  .copy-btn:hover{background:#EEF3F0}
+  .copied-note{font-size:.85rem;color:var(--spruce);font-weight:600;opacity:0;transition:opacity .2s}
+  .copied-note.show{opacity:1}
+  .copied-note.err{color:#8F2D1E}
+
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{display:none;padding:4px 0}
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
+  .more-tools{margin-top:36px}
+  .more-tools h2{font-family:var(--display);font-size:1.1rem;color:var(--spruce-deep);margin-bottom:12px}
+  .more-tools ul{list-style:none}
+  .more-tools li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem;
+  }
+  .more-tools li:last-child{border-bottom:none}
+  .more-tools a{color:var(--spruce);font-weight:600;text-decoration:none}
+  .more-tools a:hover{text-decoration:underline}
+  .more-tools .current{color:#5A6A64;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+
+  section.explain{margin-top:44px}
+  section.explain h2{font-family:var(--display);font-size:1.25rem;color:var(--spruce-deep);margin-bottom:10px}
+  section.explain p{margin-bottom:14px;max-width:60ch}
+  section.explain a{color:var(--spruce)}
+  .quote{
+    margin:0 0 14px;padding:12px 16px;border-left:3px solid var(--sage);
+    background:#F1F4F2;font-size:.92rem;color:#3D4C47;max-width:60ch;
+    border-radius:0 8px 8px 0;
+  }
+  .thr-table{
+    width:100%;border-collapse:collapse;margin:0 0 18px;font-size:.9rem;
+  }
+  .thr-table th,.thr-table td{
+    text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  .thr-table th{color:var(--spruce-deep);font-weight:700}
+  .thr-table td.n{font-family:var(--mono);white-space:nowrap}
+  .table-scroll{overflow-x:auto}
+  .faq dt{font-weight:700;margin-top:18px}
+  .faq dd{margin-top:4px;color:#3D4C47;max-width:60ch}
+
+  footer{
+    margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:#5E6E68;
+  }
+  footer p{margin-bottom:8px;max-width:70ch}
+  @media (prefers-reduced-motion:no-preference){
+    .result.show{animation:rise .35s ease}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  }
+  @media print{
+    .no-print{display:none !important}
+    body{background:#fff}
+    .card{border:none;padding:0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="kys-nav">
+  <div class="kys-nav-inner">
+    <a class="kys-mark" href="/">Know Your Strata <span class="kys-mark-rule">cited compliance tools</span></a>
+    <div class="kys-jur">
+      <a href="/bc/">British Columbia</a>
+      <a href="/on/" aria-current="true">Ontario</a>
+      <span class="kys-soon">+ more soon</span>
+    </div>
+  </div>
+</nav>
+<p class="kys-back no-print"><a href="/on/">&larr; All Ontario tools</a></p>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ontario &middot; Condominium Act, 1998</p>
+    <h1>Can we charge the deductible back to the owner?</h1>
+    <p class="lede">Most boards remember that an owner who causes damage pays the deductible. Far fewer remember the words that follow, which confine that rule to damage to the owner&rsquo;s own unit. Damage to the common elements or to a neighbour is a common expense unless a by-law says otherwise.</p>
+  </header>
+
+  <div class="card">
+    <div class="no-print">
+      <label for="where">What was damaged?</label>
+      <select id="where">
+        <option value="own" selected>The unit of the owner who caused it</option>
+        <option value="common">The common elements</option>
+        <option value="other">Another unit</option>
+      </select>
+
+      <label for="who">Who caused the damage, by act or omission?</label>
+      <select id="who">
+        <option value="owner" selected>The owner of that unit</option>
+        <option value="lessee">A lessee of the owner</option>
+        <option value="resident">Someone residing in the unit with the permission or knowledge of the owner</option>
+        <option value="corp">The corporation, or a director, officer, agent or employee of it</option>
+        <option value="none">Nobody identified, or an insured peril with no act or omission</option>
+      </select>
+
+      <label for="bylaw">Is there a by-law under s. 105(3) extending the chargeback?</label>
+      <select id="bylaw">
+        <option value="no" selected>No</option>
+        <option value="yes">Yes, the corporation has passed one</option>
+      </select>
+
+      <label for="cost">Cost of repairing the damage <span class="hint">in dollars</span></label>
+      <input type="number" id="cost" min="0" step="0.01" inputmode="decimal">
+
+      <label for="ded">The deductible limit <span class="hint">in dollars</span></label>
+      <input type="number" id="ded" min="0" step="0.01" inputmode="decimal">
+
+      <button id="calc">Check the chargeback</button>
+      <p class="error" id="err"></p>
+    </div>
+
+    <div class="result" id="result">
+      <div class="stamp">
+        <p class="k" id="stampKey">Added to the common expenses for that unit</p>
+        <p class="date" id="amount">&mdash;</p>
+        <p class="sub" id="amountSub"></p>
+      </div>
+      <p class="verified-badge"><span class="check">&#10003;</span> Verified September 12, 2026 &middot; <span id="badgeCite">Condominium Act, 1998, s. 105</span></p>
+      <p class="badge-note">Sources checked automatically every Monday. Last check September 13, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
+
+      <p class="cite-line" id="citeLine1"></p>
+      <p class="cite-line" id="citeLine2"></p>
+      <p class="warn" id="warnNote"></p>
+
+      <div class="after">
+        <h3 id="afterTitle">What else has to happen</h3>
+        <p class="sub" id="afterSub"></p>
+        <ul id="steps"></ul>
+        <p class="cite" id="afterCite"></p>
+      </div>
+
+      <div class="copybar no-print">
+        <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
+        <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
+        <span class="copied-note" id="copiedNote">Copied &#10003;</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="pack-nudge no-print">Want this &mdash; and the quorum, notice of meeting, requisition threshold, records request, reserve fund, status certificate and voting threshold answers &mdash; all in one printable calendar with checklists and templates? <a href="/on/starter-pack">Get the Ontario Condo Board Starter Pack &rarr; CAD $49 one-time</a></p>
+
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get Canadian condo &amp; strata compliance updates</h2>
+      <p class="sub">New tools, deadline changes and the rules boards get wrong &mdash; with the section citation every time. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required
+               autocomplete="email" placeholder="you@yourcondo.ca"
+               aria-label="Your email address">
+        <button type="submit" id="subBtn">Subscribe</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You&rsquo;re in &#10003;</h2>
+      <p>You&rsquo;re on the list. New Ontario tools land here first.</p>
+    </div>
+  </section>
+
+  <section class="more-tools no-print">
+    <h2>Ontario condo tools</h2>
+    <ul>
+      <li><a href="/on/quorum">Quorum calculator</a></li>
+      <li><a href="/on/notice-of-meeting-deadline">Notice of meeting deadline</a></li>
+      <li><a href="/on/requisition-threshold">Requisition threshold checker</a></li>
+      <li><a href="/on/records-request-deadline">Records request deadline</a></li>
+      <li><a href="/on/reserve-fund-study-deadline">Reserve fund study deadline</a></li>
+      <li><a href="/on/status-certificate-deadline">Status certificate deadline</a></li>
+      <li><a href="/on/voting-threshold">Voting threshold checker</a></li>
+      <li><span>Insurance deductible chargeback</span><span class="current">You're here</span></li>
+    </ul>
+  </section>
+
+  <section class="explain">
+    <h2>The sentence everyone stops reading too early</h2>
+    <p>Section 105(1) of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> sets the default: the part of a loss that falls inside a deductible is a common expense. Everyone pays. Section 105(2) is the exception, and it is narrower than its reputation:</p>
+    <p class="quote">&ldquo;&hellip; if an owner, a lessee of an owner or a person residing in the owner&rsquo;s unit with the permission or knowledge of the owner through an act or omission causes damage <em>to the owner&rsquo;s unit</em>, the amount that is the lesser of the cost of repairing the damage and the deductible limit of the insurance policy obtained by the corporation shall be added to the common expenses payable for the owner&rsquo;s unit.&rdquo;</p>
+    <p>Read the four words in italics. The automatic chargeback reaches damage <strong>to that owner&rsquo;s own unit</strong>. A burst hose that soaks the corridor, or the unit downstairs, is not caught by s. 105(2) at all. That damage stays a common expense under s. 105(1) unless the corporation has passed a by-law under s. 105(3).</p>
+    <p>This is the point boards most often have backwards, and it is expensive in both directions. Charge an owner for corridor damage with no by-law in place and the corporation is levying something the Act does not authorise. Assume nothing can be charged and the corporation absorbs a cost a by-law could have placed where it belongs.</p>
+
+    <h2 style="margin-top:32px">What a s. 105(3) by-law can and cannot do</h2>
+    <p>Section 105(3) lets a by-law extend the circumstances in s. 105(2), which is how corridor and neighbouring-unit damage becomes chargeable. It has one hard limit, and the limit is not negotiable by by-law:</p>
+    <p class="quote">&ldquo;&hellip; but not where the damage was caused by an act or omission of the corporation or its directors, officers, agents or employees.&rdquo;</p>
+    <p>So a by-law can reach a tenant, a guest and a neighbour&rsquo;s unit. It can never reach back to the corporation itself. If the contractor the corporation hired flooded the building, no by-law makes that an owner&rsquo;s charge.</p>
+
+    <h2 style="margin-top:32px">The amount is a lesser-of, not the deductible</h2>
+    <p>Where the chargeback applies, the amount is <strong>the lesser of the cost of repairing the damage and the deductible limit</strong>. A $2,000 repair against a $25,000 deductible is a $2,000 charge, not $25,000. Boards that bill the full deductible regardless of the repair cost are overcharging, and the arithmetic is right there in the subsection.</p>
+    <p>Section 105(4) then makes that amount an insurable interest of the owner, which is the statutory basis for the deductible coverage that sits inside most condominium unit-owner policies. It is worth telling owners this exists.</p>
+
+    <dl class="faq">
+      <dt>The owner&rsquo;s tenant flooded the unit. Can we charge the owner?</dt>
+      <dd>Yes, for damage to that owner&rsquo;s own unit. Section 105(2) names a lessee of an owner expressly, and the charge goes to the owner as an addition to the common expenses for the unit, not to the tenant. The corporation collects from the owner in the ordinary way.</dd>
+      <dt>The damage was to the hallway, not the unit. Do we need a by-law?</dt>
+      <dd>Yes. Section 105(2) is confined to damage to the owner&rsquo;s own unit, so common element damage is a common expense under s. 105(1) unless a by-law made under s. 105(3) extends the chargeback to it. Check whether the corporation actually has such a by-law registered before billing anyone.</dd>
+      <dt>Do we charge the deductible or the repair cost?</dt>
+      <dd>Whichever is lower. Section 105(2) says the lesser of the cost of repairing the damage and the deductible limit. If the repair came in under the deductible, the charge is the repair cost.</dd>
+      <dt>Our contractor caused the damage. Can a by-law make an owner pay?</dt>
+      <dd>No. Section 105(3) expressly cannot extend the chargeback where the damage was caused by an act or omission of the corporation or its directors, officers, agents or employees. That exclusion survives any by-law.</dd>
+      <dt>Is this legal advice?</dt>
+      <dd>No. It is general information based on the current consolidation, verified against the source linked above. Whether a particular by-law validly extends s. 105(2), and whether a given act or omission caused the damage, are both fact-specific. For a contested chargeback, talk to a condominium lawyer.</dd>
+    </dl>
+  </section>
+
+  <footer>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 105. Last verified 12 September 2026 against the official statute on ontario.ca, e-Laws currency date 9 September 2026; the consolidation in force is unchanged since 31 December 2025. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p>Built for the volunteer boards who keep Ontario&rsquo;s condominiums running.</p>
+    <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Subscribe';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right, please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending...';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right, please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var where=document.getElementById('where'),
+      who=document.getElementById('who'),
+      bylaw=document.getElementById('bylaw'),
+      cost=document.getElementById('cost'),
+      ded=document.getElementById('ded'),
+      calcBtn=document.getElementById('calc'),
+      err=document.getElementById('err'),
+      result=document.getElementById('result'),
+      stampKey=document.getElementById('stampKey'),
+      amount=document.getElementById('amount'),
+      amountSub=document.getElementById('amountSub'),
+      citeLine1=document.getElementById('citeLine1'),
+      citeLine2=document.getElementById('citeLine2'),
+      warnNote=document.getElementById('warnNote'),
+      afterTitle=document.getElementById('afterTitle'),
+      afterSub=document.getElementById('afterSub'),
+      steps=document.getElementById('steps'),
+      afterCite=document.getElementById('afterCite'),
+      copyBtn=document.getElementById('copyBtn'),
+      printBtn=document.getElementById('printBtn'),
+      copiedNote=document.getElementById('copiedNote');
+
+  var money=new Intl.NumberFormat('en-CA',{style:'currency',currency:'CAD',maximumFractionDigits:2});
+
+  var CAUSER={
+    owner:'the owner of the unit',
+    lessee:'a lessee of the owner',
+    resident:'a person residing in the unit with the permission or knowledge of the owner',
+    corp:'the corporation or one of its directors, officers, agents or employees',
+    none:'nobody identified'
+  };
+  var PLACE={own:'the unit of the owner who caused it',common:'the common elements',other:'another unit'};
+
+  function setSteps(list){
+    steps.innerHTML='';
+    for(var i=0;i<list.length;i++){
+      var li=document.createElement('li');
+      li.innerHTML=list[i];
+      steps.appendChild(li);
+    }
+  }
+  function show(m){
+    err.textContent=m;
+    err.style.display='block';
+    result.style.display='none';
+  }
+
+  var current=null;
+
+  calcBtn.addEventListener('click',function(){
+    var w=where.value, c=who.value, b=bylaw.value==='yes';
+    var k=parseFloat(cost.value), dd=parseFloat(ded.value);
+    if(!(k>=0)||cost.value===''){show('Enter the cost of repairing the damage.');return;}
+    if(!(dd>=0)||ded.value===''){show('Enter the deductible limit on the corporation policy.');return;}
+    err.style.display='none';
+    warnNote.style.display='none';
+
+    var charge=Math.min(k,dd);
+    var chargeable=false, reason='', head='', sub='', c1='', c2='', aTitle='', aSub='', aCite='', list=[], copy='';
+
+    /* s. 105(3) can never reach the corporation. That exclusion is checked
+       first because no by-law and no fact pattern overrides it. */
+    if(c==='corp'){
+      chargeable=false;
+      head='Not chargeable';
+      sub='the exclusion in s. 105(3) survives any by-law';
+      c1='<strong>Condominium Act, 1998, s. 105(3)</strong> &mdash; a by-law may extend the chargeback, but not where the damage was caused by an act or omission of the corporation or its directors, officers, agents or employees.';
+      c2='<strong>Condominium Act, 1998, s. 105(1)</strong> &mdash; the portion of the loss excluded by the deductible is therefore a common expense, shared by all owners.';
+      aTitle='Why no by-law helps here';
+      aSub='This is the one outcome a by-law cannot change.';
+      list=[
+        'The damage was caused by <strong>'+CAUSER[c]+'</strong>.',
+        'Section 105(2) never applied, because it names an owner, a lessee of an owner, or a person residing in the unit.',
+        'Section 105(3) expressly <strong>cannot</strong> extend the chargeback to acts or omissions of the corporation or its people.',
+        'The deductible portion stays a <strong>common expense</strong> under s. 105(1).'
+      ];
+      aCite='Condominium Act, 1998, s. 105(1) and (3).';
+      copy='Insurance deductible, damage to '+PLACE[w]+' caused by '+CAUSER[c]+': NOT chargeable to an owner. Section 105(3) cannot extend the chargeback to an act or omission of the corporation or its directors, officers, agents or employees, so the deductible portion is a common expense under s. 105(1).';
+    }
+    else if(c==='none'){
+      chargeable=false;
+      head='Not chargeable';
+      sub='s. 105(2) needs an act or omission by a named person';
+      c1='<strong>Condominium Act, 1998, s. 105(1)</strong> &mdash; the portion of a loss excluded by the deductible is a common expense, subject only to s. 105(2) and (3).';
+      c2='<strong>Condominium Act, 1998, s. 105(2)</strong> &mdash; the chargeback requires damage caused through an act or omission by an owner, a lessee of an owner, or a person residing in the unit with the permission or knowledge of the owner. With nobody identified, the exception does not engage.';
+      aTitle='What this means in practice';
+      aSub='An insured peril with no responsible person is simply a common expense.';
+      list=[
+        'The deductible portion is shared by all owners as a <strong>common expense</strong>.',
+        'If someone is later identified, re-run this against the facts before billing.',
+        'Establishing the act or omission is the corporation burden, and it is fact-specific.'
+      ];
+      aCite='Condominium Act, 1998, s. 105(1) and (2).';
+      copy='Insurance deductible, damage to '+PLACE[w]+' with no responsible person identified: NOT chargeable. The deductible portion is a common expense under Condominium Act, 1998 s. 105(1).';
+    }
+    else if(w==='own'){
+      chargeable=true;
+      head=money.format(charge);
+      sub=(k<=dd?'the repair cost, which is the lesser of the two':'the deductible limit, which is the lesser of the two');
+      c1='<strong>Condominium Act, 1998, s. 105(2)</strong> &mdash; where '+CAUSER[c]+' causes damage <em>to the unit of that owner</em> by act or omission, the lesser of the cost of repairing the damage and the deductible limit is added to the common expenses payable for that unit. No by-law is needed.';
+      c2='<strong>The amount is a lesser-of.</strong> Repair cost '+money.format(k)+' against a deductible limit of '+money.format(dd)+', so the charge is '+money.format(charge)+'. Billing the full deductible regardless of repair cost is an overcharge.';
+      aTitle='What else has to happen';
+      aSub='The charge is added to the common expenses for the unit, not invoiced separately.';
+      list=[
+        'The amount is <strong>added to the common expenses payable for the unit</strong>, which is what gives it the same collection route as any other common expense.',
+        'The charge goes to the <strong>owner</strong>, even where a lessee or a resident caused the damage.',
+        'Record the act or omission and the repair cost. Both are the corporation to establish if the charge is disputed.',
+        'Section 105(4) makes this amount an <strong>insurable interest of the owner</strong>, so many unit-owner policies cover it. Worth telling owners.'
+      ];
+      aCite='Condominium Act, 1998, s. 105(2) and (4).';
+      copy='Insurance deductible chargeback: damage to the unit of the owner who caused it, by '+CAUSER[c]+'. Chargeable under Condominium Act, 1998 s. 105(2) with no by-law required. Amount is the lesser of the repair cost ('+money.format(k)+') and the deductible limit ('+money.format(dd)+'), so '+money.format(charge)+', added to the common expenses payable for that unit.';
+    }
+    else {
+      if(b){
+        chargeable=true;
+        head=money.format(charge)+', if the by-law reaches it';
+        sub='s. 105(2) does not apply here; the by-law is doing the work';
+        c1='<strong>Condominium Act, 1998, s. 105(2)</strong> &mdash; does <em>not</em> apply. It is confined to damage to the unit of the owner who caused it, and the damage here was to '+PLACE[w]+'.';
+        c2='<strong>Condominium Act, 1998, s. 105(3)</strong> &mdash; a by-law may extend the circumstances in s. 105(2), which is the only basis on which this can be charged. Read the by-law against these facts: it governs both whether the charge reaches this damage and how the amount is set.';
+        aTitle='Check the by-law before you bill';
+        aSub='The Act permits the extension. Whether your by-law achieves it is a question about your by-law.';
+        list=[
+          'Confirm a by-law made under <strong>s. 105(3)</strong> is actually registered, not merely a rule or a policy.',
+          'Confirm it covers damage to <strong>'+PLACE[w]+'</strong>, not only to the unit of the person responsible.',
+          'Confirm it covers <strong>'+CAUSER[c]+'</strong>.',
+          'The s. 105(2) measure is the lesser of repair cost and deductible, which here is '+money.format(charge)+'. Your by-law may set the amount differently; the by-law governs.',
+          'The by-law can never reach an act or omission of the corporation or its directors, officers, agents or employees.'
+        ];
+        aCite='Condominium Act, 1998, s. 105(2) and (3).';
+        copy='Insurance deductible, damage to '+PLACE[w]+' caused by '+CAUSER[c]+': s. 105(2) does NOT apply, because it is confined to damage to the unit of the owner who caused it. Chargeable only if a by-law made under s. 105(3) extends it to these circumstances. On the s. 105(2) measure the amount would be '+money.format(charge)+', the lesser of repair cost '+money.format(k)+' and deductible '+money.format(dd)+'.';
+      } else {
+        chargeable=false;
+        head='Not chargeable';
+        sub='a common expense, because s. 105(2) reaches only the unit of the owner who caused it';
+        c1='<strong>Condominium Act, 1998, s. 105(2)</strong> &mdash; the automatic chargeback applies where the damage is <em>to the unit of the owner</em>. The damage here was to '+PLACE[w]+', so the subsection does not engage, whoever caused it.';
+        c2='<strong>Condominium Act, 1998, s. 105(1) and (3)</strong> &mdash; the deductible portion is therefore a common expense. It becomes chargeable only if the corporation passes a by-law under s. 105(3) extending the circumstances, which it may do for the future.';
+        aTitle='This is the one boards get backwards';
+        aSub='Billing this owner without a by-law is levying a charge the Act does not authorise.';
+        list=[
+          'The deductible portion is a <strong>common expense</strong> under s. 105(1), shared by all owners.',
+          'It does not matter that '+CAUSER[c]+' caused it. The limit in s. 105(2) is about <strong>what was damaged</strong>, not who did it.',
+          'A by-law under <strong>s. 105(3)</strong> can extend the chargeback to damage like this, and many corporations pass one for exactly this reason.',
+          'Such a by-law needs owner confirmation like any other. Run it through the <a href="/on/voting-threshold">voting threshold checker</a> before you start.',
+          'It can never reach an act or omission of the corporation or its people.'
+        ];
+        aCite='Condominium Act, 1998, s. 105(1), (2) and (3).';
+        copy='Insurance deductible, damage to '+PLACE[w]+' caused by '+CAUSER[c]+': NOT chargeable to the owner. Condominium Act, 1998 s. 105(2) is confined to damage to the unit of the owner who caused it, so this is a common expense under s. 105(1) unless a by-law under s. 105(3) extends the chargeback.';
+        warnNote.style.display='block';
+        warnNote.innerHTML='<strong>Do not bill this without checking for a by-law.</strong> Section 105(2) is confined to damage to the unit of the owner who caused it. Charging an owner for common element or neighbouring-unit damage with no s. 105(3) by-law in place is a charge the Act does not authorise.';
+      }
+    }
+
+    stampKey.textContent=chargeable?'Added to the common expenses for that unit':'Not added to that unit';
+    amount.textContent=head;
+    amountSub.textContent=sub;
+    citeLine1.innerHTML=c1;
+    citeLine2.innerHTML=c2;
+    afterTitle.textContent=aTitle;
+    afterSub.textContent=aSub;
+    setSteps(list);
+    afterCite.textContent=aCite;
+    current={copy:copy};
+
+    result.style.display='block';
+    result.classList.remove('show');
+    void result.offsetWidth;
+    result.classList.add('show');
+  });
+
+  /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
+     contexts and can still reject on HTTPS, so neither path is assumed. */
+  function flashNote(text,isError){
+    copiedNote.textContent=text;
+    copiedNote.className='copied-note show'+(isError?' err':'');
+    setTimeout(function(){copiedNote.className='copied-note';},isError?5000:2000);
+  }
+  function legacyCopy(text){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.top='0';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0,text.length);
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){
+      return false;
+    }
+  }
+  function copyFallback(text){
+    if(legacyCopy(text))flashNote('Copied',false);
+    else flashNote('Copy not supported, please select the text and copy manually.',true);
+  }
+  function copyToClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      try{
+        navigator.clipboard.writeText(text).then(
+          function(){flashNote('Copied',false);},
+          function(){copyFallback(text);}
+        );
+        return;
+      }catch(e2){
+        copyFallback(text);
+        return;
+      }
+    }
+    copyFallback(text);
+  }
+
+  copyBtn.addEventListener('click',function(){
+    if(!current)return;
+    copyToClipboard(current.copy+' Verified September 12, 2026 against the Condominium Act, 1998 on ontario.ca.');
+  });
+
+  printBtn.addEventListener('click',function(){
+    window.print();
+  });
+})();
+</script>
+<script src="/assets/kys-events.js" defer></script>
+</body>
+</html>
