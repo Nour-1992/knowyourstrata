@@ -49,17 +49,19 @@ jobs:
           fi
           curl -fsS --max-time 60 \
             "https://knowyourstrata-watcher.n-atallah.workers.dev/status.json?key=$KEY" \
-            -o status.json
-          node -e "JSON.parse(require('fs').readFileSync('status.json','utf8'))"
+            -o "$RUNNER_TEMP/status.json"
+          node -e "JSON.parse(require('fs').readFileSync(process.env.RUNNER_TEMP + '/status.json','utf8'))"
 
       - name: Apply the editorial pass
-        run: node scripts/weekly-editorial.mjs --repo . --status status.json | tee summary.json
+        run: |
+          node scripts/weekly-editorial.mjs --repo . \
+            --status "$RUNNER_TEMP/status.json" | tee "$RUNNER_TEMP/summary.json"
 
       - name: Stop early if nothing was applied
         id: gate
         run: |
-          if [ "$(node -p "require('./summary.json').edited === false")" = "true" ]; then
-            echo "reason=$(node -p "require('./summary.json').abort")" >> "$GITHUB_OUTPUT"
+          if [ "$(node -p "require(process.env.RUNNER_TEMP + '/summary.json').edited === false")" = "true" ]; then
+            echo "reason=$(node -p "require(process.env.RUNNER_TEMP + '/summary.json').abort")" >> "$GITHUB_OUTPUT"
             echo "skip=true" >> "$GITHUB_OUTPUT"
           elif [ -z "$(git status --porcelain)" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
@@ -81,17 +83,21 @@ jobs:
         if: steps.gate.outputs.skip == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
+          SUMMARY: ${{ runner.temp }}/summary.json
         run: |
-          rm -f status.json summary.json.tmp
-          LEGAL=$(node -p "require('./summary.json').legalReview")
-          RUNDATE=$(node -p "require('./summary.json').runDate")
+          SUMMARY="$RUNNER_TEMP/summary.json"
+          BODY="$RUNNER_TEMP/pr-body.md"
+          MSG="$RUNNER_TEMP/commit-msg.txt"
+
+          LEGAL=$(node -p "require('$SUMMARY').legalReview")
+          RUNDATE=$(node -p "require('$SUMMARY').runDate")
           BRANCH="editorial/$(date -u +%Y-%m-%d)-$GITHUB_RUN_NUMBER"
 
           {
             echo "Applied automatically from the watcher run of $RUNDATE."
             echo
             node -e '
-              const s = require("./summary.json");
+              const s = require(process.env.SUMMARY);
               if (s.legalReview) {
                 console.log("## A legal source moved. This is NOT a routine editorial pass.");
                 console.log();
@@ -113,17 +119,20 @@ jobs:
               console.log("Guarded: no `verified` provenance date moved, `monitoring.html` untouched, and pages deliberately held at an older currency carry neither literal so they cannot be hit.");
               if (s.errors.length) { console.log(); console.log("### Errors"); for (const e of s.errors) console.log(`- ${e}`); }
             '
-          } > pr-body.md
+          } > "$BODY"
 
           git config user.name  "knowyourstrata-watcher"
           git config user.email "watcher@users.noreply.github.com"
           git checkout -b "$BRANCH"
           printf '%s\n\n%s\n' \
             "Weekly editorial pass, watcher run of $RUNDATE" \
-            "Applied automatically. See the pull request body for what moved." > commit-msg.txt
-          git add -A
-          git commit -F commit-msg.txt
-          rm -f commit-msg.txt pr-body.md
+            "Applied automatically. See the pull request body for what moved." > "$MSG"
+
+          # -u stages modifications to TRACKED files only. The editorial pass
+          # only ever edits pages that already exist, so a new file appearing
+          # here would be a bug, not something to commit.
+          git add -u
+          git commit -F "$MSG"
           git push origin "$BRANCH"
 
           if [ "$LEGAL" = "true" ]; then
@@ -131,4 +140,4 @@ jobs:
           else
             TITLE="Weekly editorial pass, run of $RUNDATE"
           fi
-          gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file pr-body.md
+          gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file "$BODY"
