@@ -33,7 +33,13 @@ main = "src/index.js"
 compatibility_date = "2026-08-21"
 
 [triggers]
-crons = ["0 8 * * 1"]  # Weekly, Monday 08:00 UTC
+# DAY-OF-WEEK GOTCHA, measured 2026-09-20, do not "correct" this back.
+# Cloudflare schedules this field as 1 = Sunday, 2 = Monday. It is NOT the
+# standard 0 = Sunday convention. "0 8 * * 1" ran every SUNDAY for four
+# consecutive weeks (23 Aug, 30 Aug, 6 Sep, 13 Sep) while this comment
+# claimed Monday, and the dashboard confirmed it: setting 2 displays as
+# "At 08:00 AM on Monday" with the next run on Mon 21 Sep 2026.
+crons = ["0 8 * * 2"]  # Weekly, MONDAY 08:00 UTC (2 = Monday here)
 
 [[kv_namespaces]]
 binding = "WATCHER_KV"
