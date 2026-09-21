@@ -169,6 +169,40 @@
     color:var(--spruce-deep);font-weight:700;margin-bottom:6px;
   }
 
+  .subscribe{
+    margin-top:28px;padding:24px 22px;border-radius:10px;
+    background:#EEF3F0;border:1px solid var(--line);
+  }
+  .subscribe h2{
+    font-family:var(--display);font-size:1.12rem;
+    color:var(--spruce-deep);margin-bottom:6px;
+  }
+  .subscribe .sub{font-size:.9rem;color:#3D4C47;margin-bottom:16px;max-width:52ch}
+  .sub-row{display:flex;gap:10px;flex-wrap:wrap}
+  .sub-row input[type="email"]{
+    flex:1;min-width:200px;padding:12px 14px;font-size:1rem;
+    font-family:inherit;color:var(--ink);background:#fff;
+    border:1.5px solid var(--line);border-radius:8px;margin-bottom:0;
+  }
+  .sub-row input[type="email"]:focus{
+    outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
+  }
+  .sub-row button{
+    width:auto;padding:12px 22px;font-size:.95rem;font-weight:700;
+    font-family:inherit;color:#fff;background:var(--spruce);
+    border:none;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .sub-row button:hover{background:var(--spruce-deep)}
+  .sub-row button[disabled]{opacity:.65;cursor:default}
+  .sub-msg{margin-top:12px;font-size:.92rem;display:none}
+  .sub-msg.err{color:#8F2D1E;font-weight:600;display:block}
+  .sub-done{
+    display:none;padding:4px 0;
+  }
+  .sub-done h2{margin-bottom:6px}
+  .sub-done p{font-size:.95rem;color:#3D4C47;max-width:54ch}
+  .sub-done a{color:var(--spruce);font-weight:700}
+
   @media print{
     @page{margin:11mm}
     html{font-size:9.8pt}
@@ -316,6 +350,24 @@
     <p class="domath">Do the math: <a href="https://knowyourstrata.com/on/voting-threshold">knowyourstrata.com/on/voting-threshold</a> — voting threshold checker</p>
   </section>
 
+  <section class="subscribe no-print" aria-labelledby="subHead">
+    <div id="subForm">
+      <h2 id="subHead">Get told when the law moves</h2>
+      <p class="sub">You have the sheet. The reason it can be trusted is that the Condominium Act and O. Reg. 48/01 version lists are re-checked against e-Laws each Monday. Subscribe and you hear when one of them changes, with the citation &mdash; including the amendments that land on 31 December 2026. Free, and no more than the occasional email.</p>
+      <form class="sub-row" id="subscribeForm" novalidate>
+        <input type="email" id="subEmail" name="email" required autocomplete="email"
+               placeholder="you@yourcondo.ca" aria-label="Your email address">
+        <button type="submit" id="subBtn">Tell me when it changes</button>
+      </form>
+      <p class="sub-msg" id="subMsg" role="status" aria-live="polite"></p>
+    </div>
+    <div class="sub-done" id="subDone">
+      <h2>You're in &#10003;</h2>
+      <p>You will hear from us when a section on this sheet moves &mdash;
+         <a href="/monitoring">see the monitoring record</a></p>
+    </div>
+  </section>
+
   <footer>
     <p class="brandline">Know Your Strata — <a href="https://knowyourstrata.com/">knowyourstrata.com</a></p>
     <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 43, 45, 45.1, 46, 47, 50, 56, 58, 97 and 107, and O. Reg. 48/01, s. 14. Every line above is drawn from the three Ontario calculators it cites, last verified 27 August and 12 September 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 9 September 2026; the consolidations in force are unchanged since 31 December 2025. The Act and regulation version lists are checked against e-Laws every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated. <strong>Your corporation's declaration, by-laws and rules govern if they differ.</strong> For anything contested, talk to a condominium lawyer.</p>
@@ -329,6 +381,66 @@
 (function(){
   var b=document.getElementById('printBtn');
   if(b)b.addEventListener('click',function(){window.print();});
+})();
+</script>
+<script>
+(function(){
+  var form=document.getElementById('subscribeForm');
+  if(!form)return;
+  var email=document.getElementById('subEmail'),
+      btn=document.getElementById('subBtn'),
+      msg=document.getElementById('subMsg'),
+      panel=document.getElementById('subForm'),
+      done=document.getElementById('subDone');
+
+  function fail(text){
+    msg.textContent=text;
+    msg.className='sub-msg err';
+    // Must be set inline: the reset below hides it with an inline style, which
+    // outranks the .err class rule, so the class alone can never re-show it.
+    msg.style.display='block';
+    btn.disabled=false;
+    btn.textContent='Send me the cheat sheet';
+  }
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var value=(email.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){
+      fail('That email address does not look right — please check it.');
+      email.focus();
+      return;
+    }
+    msg.style.display='none';
+    btn.disabled=true;
+    btn.textContent='Sending…';
+
+    fetch('/api/subscribe',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:value})
+    }).then(function(r){
+      return r.json().catch(function(){return {ok:false,error:'bad_response'};});
+    }).then(function(data){
+      if(data&&data.ok){
+        panel.style.display='none';
+        done.style.display='block';
+        done.scrollIntoView({block:'nearest'});
+        return;
+      }
+      if(data&&data.error==='invalid_email'){
+        fail('That email address does not look right — please check it.');
+      } else if(data&&data.error==='rate_limited'){
+        fail('Too many attempts just now. Please try again in a minute.');
+      } else if(data&&data.error==='not_configured'){
+        fail('The signup service is temporarily unavailable. Please try again later.');
+      } else {
+        fail('Something went wrong sending that. Please try again.');
+      }
+    }).catch(function(){
+      fail('Could not reach the signup service. Please check your connection and try again.');
+    });
+  });
 })();
 </script>
 <script src="/assets/kys-events.js" defer></script>
