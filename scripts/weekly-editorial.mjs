@@ -52,12 +52,31 @@ const RUN_DATE = arg('--date') || new Intl.DateTimeFormat('en-US', {
 /* Which sources are editorial. Everything else is legal text or a version
    list, and a change in any of them is a human pass, not this script. */
 const CURRENCY = {
-  'bc-act-currency-date': { dir: 'bc', label: 'BC Strata Property Act' },
-  'bc-reg-currency-date': { dir: 'bc', label: 'BC Strata Property Regulation' },
-  'on-currency-date':     { dir: 'on', label: 'Ontario e-Laws' }
+  /* `extra` carries files outside the province directory that still cite that
+     province's consolidation stamp. cheat-sheet.html sits at the repo root and
+     was invisible to this sweep until 2026-09-21. */
+  'bc-act-currency-date': { dir: 'bc', label: 'BC Strata Property Act', extra: ['cheat-sheet.html'] },
+  'bc-reg-currency-date': { dir: 'bc', label: 'BC Strata Property Regulation', extra: ['cheat-sheet.html'] },
+  'on-currency-date':     { dir: 'on', label: 'Ontario e-Laws', extra: [] }
 };
 
 const BADGE_RX = /Sources checked automatically every Monday\. Last check [^<]*/g;
+/* A consolidation stamp anywhere on a page, in either of the two date formats
+   the site uses, and behind any of the phrasings the site actually uses for
+   one. The leading context is NOT optional: without it this would also match
+   a Verified date, a case-law year, or a statutory date like "July 1, 2026"
+   or "December 31, 2020", of which the depreciation page alone has several.
+   Derived by grep from the repo on 2026-09-21; re-derive it if a new phrasing
+   is introduced. */
+const STAMP_RX = new RegExp(
+  '(current to(?: the)?(?: e-Laws consolidation of)?'
+  + '|e-Laws (?:currency date|consolidation)(?: of)?'
+  + '|consolidation of) '
+  + '([A-Z][a-z]+ \\d{1,2}, \\d{4}|\\d{1,2} [A-Z][a-z]+ \\d{4})',
+  'g'
+);
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
 const VERIFIED_RX = /(?:Verified|verified)[^<]{0,40}(?:\d{1,2}(?: &amp; \d{1,2})? [A-Z][a-z]+ \d{4}|[A-Z][a-z]+ \d{1,2}, \d{4})/g;
 
 const htmlIn = (dir) =>
@@ -72,6 +91,16 @@ function toDmy(us) {
   const m = /^([A-Z][a-z]+) (\d{1,2}), (\d{4})$/.exec(us);
   if (!m) throw new Error(`unparseable currency date: ${us}`);
   return `${m[2]} ${m[1]} ${m[3]}`;
+}
+
+/* A stamp in either format -> a comparable timestamp, plus which format it was
+   written in, so the sweep can put the replacement back the same way round. */
+function parseStamp(s) {
+  let m = /^([A-Z][a-z]+) (\d{1,2}), (\d{4})$/.exec(s);
+  if (m) return { ts: Date.UTC(Number(m[3]), MONTHS.indexOf(m[1]), Number(m[2])), dmy: false };
+  m = /^(\d{1,2}) ([A-Z][a-z]+) (\d{4})$/.exec(s);
+  if (m) return { ts: Date.UTC(Number(m[3]), MONTHS.indexOf(m[2]), Number(m[1])), dmy: true };
+  return null;
 }
 
 const sources = STATUS.sources || [];
@@ -129,17 +158,36 @@ if (!summary.legalReview) {
       summary.errors.push(`${s.id}: changed but the diff carried no before/after value`);
       continue;
     }
-    const pairs = [[oldUs, newUs], [toDmy(oldUs), toDmy(newUs)]];
+    /* SELF-HEALING, added 2026-09-21.
+       This used to swap the exact old value for the new one. That could only
+       ever fix a page already sitting on last week's stamp, so any page that
+       missed an earlier sweep stayed stale for good: on 2026-09-20 the BC
+       pages carried four different stamps at once, from 4 August to
+       8 September, while bclaws read 15 September.
+       Now every stamp at or BEHIND the old value is brought forward. A stamp
+       AHEAD of it is left alone, which is what keeps this safe when the Act
+       and the Regulation are republished on different days and legitimately
+       carry different dates: sweeping one source must never drag the other
+       one backwards or forwards. */
+    const oldStamp = parseStamp(oldUs);
+    if (!oldStamp) {
+      summary.errors.push(`${s.id}: unparseable previous stamp ${oldUs}`);
+      continue;
+    }
     let files = 0;
     let count = 0;
-    for (const rel of htmlIn(cfg.dir)) {
+    let healed = 0;
+    for (const rel of [...htmlIn(cfg.dir), ...(cfg.extra || [])]) {
       const before = read(rel);
-      let after = before;
       let n = 0;
-      for (const [o, nw] of pairs) {
-        const c = before.split(o).length - 1;
-        if (c) { after = after.split(o).join(nw); n += c; }
-      }
+      const after = before.replace(STAMP_RX, (full, lead, found) => {
+        const p = parseStamp(found);
+        if (!p || !Number.isFinite(p.ts)) return full;
+        if (p.ts > oldStamp.ts) return full;
+        n += 1;
+        if (p.ts < oldStamp.ts) healed += 1;
+        return `${lead} ${p.dmy ? toDmy(newUs) : newUs}`;
+      });
       if (!n) continue;
       /* A currency sweep must never move a provenance date. */
       if (after.match(VERIFIED_RX)?.join('|') !== before.match(VERIFIED_RX)?.join('|')) {
@@ -150,12 +198,13 @@ if (!summary.legalReview) {
       files += 1;
       count += n;
     }
-    summary.stamps.push({ id: s.id, label: cfg.label, from: oldUs, to: newUs, files, replacements: count });
+    summary.stamps.push({ id: s.id, label: cfg.label, from: oldUs, to: newUs, files, replacements: count, healed });
     /* Two sources can carry the same value -- the BC Act and Regulation move
        together most weeks -- so the second pass legitimately finds nothing
        left to do. Say that, rather than reporting a bare zero. */
     summary.currency.push(count
-      ? `${cfg.label}: ${oldUs} -> ${newUs} (${count} strings across ${files} files)`
+      ? `${cfg.label}: ${oldUs} -> ${newUs} (${count} strings across ${files} files`
+        + (healed ? `, ${healed} of them lagging further behind and caught up` : '') + ')'
       : `${cfg.label}: ${oldUs} -> ${newUs} (already applied, another source carries the same value)`);
   }
 }
