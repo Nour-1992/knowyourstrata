@@ -657,7 +657,10 @@
     if(!read.equal){
       var diff=alloc.sum-100;
       if(Math.abs(diff)>0.005){
-        reconcileNote.textContent='The proportions you entered total '+alloc.sum+', not 100. The split above still allocates the whole budget, because each share is divided by that total rather than by 100. Check the declaration schedule: if it really does total '+alloc.sum+', the ratio it sets is what governs.';
+        // alloc.sum is a float sum of user input: 30+30+39.99 is 99.99000000000001
+        // in IEEE-754. Never print it raw on a page that sells precision.
+        var shownSum=parseFloat(alloc.sum.toFixed(6));
+        reconcileNote.textContent='The proportions you entered total '+shownSum+', not 100. The split above still allocates the whole budget, because each share is divided by that total rather than by 100. Check the declaration schedule: if it really does total '+shownSum+', the ratio it sets is what governs.';
       }
     }
 
