@@ -296,67 +296,63 @@
     </div>
   </div>
 </nav>
-  <header>
-    <p class="eyebrow">Ontario &middot; Condominium Act, 1998</p>
-    <h1>What does each unit owe in common expenses?</h1>
-    <p class="lede">Enter the annual budget and the proportions your declaration assigns, and this splits it across the units to the cent. Ontario sets no default formula, so the declaration is the only place these proportions can come from.</p>
-  </header>
-
   <div class="card">
-    <div class="field">
-      <label for="annualBudget">Annual budget for common expenses (CAD)</label>
-      <input type="number" id="annualBudget" min="0" step="0.01" placeholder="480000">
-    </div>
+    <div class="inputs no-print">
+      <label for="annualBudget">Annual budget for common expenses <span class="hint">(the whole budget, including the reserve fund line)</span></label>
+      <div class="dollar-input">
+        <span class="prefix">$</span>
+        <input type="number" id="annualBudget" min="0" step="0.01" placeholder="480000">
+      </div>
 
-    <div class="field">
-      <label for="reserveLine">Of that, the reserve fund contribution (optional)</label>
-      <input type="number" id="reserveLine" min="0" step="0.01" placeholder="60000">
-      <p class="hint">Used for the section 93(5) floor check below. Leave blank to skip it.</p>
-    </div>
+      <label for="reserveLine">Reserve fund contribution inside that budget <span class="hint">(optional &mdash; used for the section 93(5) floor check)</span></label>
+      <div class="dollar-input">
+        <span class="prefix">$</span>
+        <input type="number" id="reserveLine" min="0" step="0.01" placeholder="60000">
+      </div>
 
-    <div class="field">
-      <label for="corpName">Corporation (optional, appears on the printout)</label>
+      <label for="corpName">Corporation number or name <span class="hint">(optional &mdash; for labelling only, never stored)</span></label>
       <input type="text" id="corpName" placeholder="e.g. TSCC 1234">
-    </div>
 
-    <div class="field">
-      <p class="field-label">How does your declaration divide the common expenses?</p>
-      <label class="radio"><input type="radio" name="mode" value="declared" id="modeDeclared" checked> Enter each unit proportion from the declaration</label>
-      <label class="radio"><input type="radio" name="mode" value="equal" id="modeEqual"> My declaration gives every unit the same proportion</label>
-      <p class="hint">The declaration mode is the default on purpose. Section 84(1) points at the declaration and supplies no fallback, so an equal split is a fact about your declaration, never an assumption this tool should make for you.</p>
-    </div>
+      <label>How does the declaration divide the common expenses?</label>
+      <div class="mode-toggle">
+        <label class="radio"><input type="radio" name="mode" value="declared" id="modeDeclared" checked> Enter each unit proportion from the declaration</label>
+        <label class="radio"><input type="radio" name="mode" value="equal" id="modeEqual"> Every unit has the same proportion</label>
+      </div>
 
-    <div id="declaredBlock" class="mode-block">
-      <p class="field-label">Unit proportions, as written in the declaration</p>
-      <div class="unit-rows" id="unitRows"></div>
-      <button type="button" class="add-row" id="addRow">+ Add unit</button>
-      <p class="hint">Percentages are easiest, but any consistent set of numbers works. The tool divides each unit share by the total, so raw proportions from a schedule are fine as they stand.</p>
-    </div>
+      <div id="declaredBlock" class="mode-block">
+        <label>Units and proportions <span class="hint">(from the schedule in your registered declaration &mdash; percentages or raw shares both work)</span></label>
+        <div class="unit-rows" id="unitRows"></div>
+        <button type="button" class="add-row" id="addRow">+ Add unit</button>
+      </div>
 
-    <div id="equalBlock" class="mode-block" style="display:none">
-      <label for="unitCount">How many units</label>
-      <input type="number" id="unitCount" min="2" step="1" placeholder="48">
+      <div id="equalBlock" class="mode-block" style="display:none">
+        <label for="unitCount">Number of units</label>
+        <input type="number" id="unitCount" min="2" step="1" placeholder="48">
+      </div>
+
+      <p class="flag">
+        <strong>There is no statutory default here.</strong> Section 84(1) says owners contribute in the proportions specified in the declaration, and unlike British Columbia the Act supplies no fallback formula at all. An equal split is common, but it is a fact about your declaration rather than a rule the Act provides, which is why this tool asks instead of assuming. <span class="ref">Condominium Act, 1998, s. 84(1)</span>
+      </p>
     </div>
 
     <button id="calc" class="no-print">Calculate each unit share</button>
     <p class="error no-print" id="err"></p>
 
     <div class="result" id="result">
-      <div class="headline">
-        <p class="label">Total allocated</p>
+      <div class="stamp">
+        <p class="k">Total allocated</p>
         <p class="date" id="totalStamp">&mdash;</p>
         <p class="sub" id="budgetSub"></p>
       </div>
-      <p class="verified-badge"><span class="check">&#10003;</span> Verified 22 September 2026 &middot; <span id="badgeCite">Condominium Act, 1998, ss. 84, 93</span></p>
+      <p class="verified-badge"><span class="check">&#10003;</span> Verified 22 September 2026 &middot; Condominium Act, 1998, ss. 84, 93</p>
       <p class="badge-note">Sources checked automatically every Monday. Last check September 21, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
-
       <p class="buffer" id="reconcileNote"></p>
-      <p class="flag" id="reserveFlag"></p>
+      <p class="flag" id="reserveFlag" style="display:none"></p>
 
       <div class="table-wrap">
         <table id="shareTable">
           <thead>
-            <tr><th scope="col">Unit</th><th scope="col" class="num">Proportion</th><th scope="col" class="num">Share</th><th scope="col" class="num">Annual</th><th scope="col" class="num">Monthly</th></tr>
+            <tr><th>Unit</th><th class="num">Proportion</th><th class="num">Share</th><th class="num">Annual</th><th class="num">Monthly</th></tr>
           </thead>
           <tbody id="shareBody"></tbody>
           <tfoot>
@@ -364,8 +360,9 @@
           </tfoot>
         </table>
       </div>
+      <p class="table-note">Annual amounts are allocated in whole cents by largest remainder, so the Annual column sums exactly to the budget with nothing lost to rounding. The monthly column is each annual amount divided by twelve and rounded to the cent, so twelve monthly payments can differ from the annual figure by a few cents. Treat it as indicative rather than a billing schedule.</p>
 
-      <div class="actions no-print">
+      <div class="copybar no-print">
         <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
         <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
         <span class="copied-note" id="copiedNote">Copied &#10003;</span>
@@ -548,14 +545,14 @@
     var row=document.createElement('div');
     row.className='unit-row';
     var a=document.createElement('input');
-    a.type='text'; a.placeholder='Unit label'; a.className='u-label';
+    a.type='text'; a.placeholder='Unit label'; a.className='u-label'; a.setAttribute('aria-label','Unit label');
     if(label) a.value=label;
     var b=document.createElement('input');
-    b.type='number'; b.step='0.0001'; b.min='0'; b.placeholder='Proportion'; b.className='u-prop';
+    b.type='number'; b.step='0.0001'; b.min='0'; b.placeholder='Proportion'; b.className='u-ent'; b.setAttribute('aria-label','Unit proportion');
     if(prop!==undefined&&prop!==null) b.value=prop;
     var x=document.createElement('button');
-    x.type='button'; x.className='rm-row'; x.textContent='Remove';
-    x.addEventListener('click',function(){ row.parentNode.removeChild(row); });
+    x.type='button'; x.className='remove-row'; x.innerHTML='&times;'; x.setAttribute('aria-label','Remove unit');
+    x.addEventListener('click',function(){ if(unitRows.children.length>2) row.parentNode.removeChild(row); });
     row.appendChild(a); row.appendChild(b); row.appendChild(x);
     unitRows.appendChild(row);
   }
@@ -586,7 +583,7 @@
     var rows=unitRows.querySelectorAll('.unit-row'), list=[];
     for(var j=0;j<rows.length;j++){
       var lab=rows[j].querySelector('.u-label').value.trim();
-      var raw=rows[j].querySelector('.u-prop').value.trim();
+      var raw=rows[j].querySelector('.u-ent').value.trim();
       if(raw==='') continue;
       var v=parseFloat(raw);
       if(isNaN(v)||v<0) return {error:'Every proportion must be a number that is zero or more. Check row '+(j+1)+'.'};
