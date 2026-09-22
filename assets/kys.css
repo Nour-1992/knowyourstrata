@@ -112,6 +112,15 @@ body{
   color:var(--seal);white-space:nowrap;
 }
 
+@media screen and (max-width:560px){
+  /* A compound citation such as "O. Reg. 48/01 ss. 13.3(11), 13.4-13.7" is
+     wider than a phone. Both .flag .cite-tag and .cite-line .cite-tag set
+     display:block, so nowrap does not widen the box, it makes the TEXT spill
+     past it, and the citation clips off the right edge. The citation is the
+     point of this site, so on a narrow screen it wraps instead. */
+  .cite-tag{white-space:normal}
+}
+
 /* ── Verified stamp ────────────────────────────────────────────────── */
 .stamp-verified{
   display:inline-flex;align-items:center;gap:8px;
