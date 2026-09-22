@@ -205,6 +205,10 @@
   }
 
   .table-wrap{margin-top:26px;overflow-x:auto}
+@media screen and (max-width:560px){
+.table-wrap table th:first-child,
+.table-wrap table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface);box-shadow:1px 0 0 var(--line)}
+}
   table{width:100%;border-collapse:collapse;font-size:.92rem}
   thead th{
     text-align:left;font-weight:700;color:var(--spruce-deep);

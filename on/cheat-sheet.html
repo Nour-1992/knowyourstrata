@@ -143,6 +143,17 @@
   .facts tr.total td{border-top:2px solid var(--line);border-bottom:none;padding-top:8px}
   .facts tr.total td.n{color:var(--spruce)}
 
+  @media screen and (max-width:560px){
+    .facts,.facts tbody,.facts tr,.facts td{display:block}
+    .facts tr{padding:9px 0;border-bottom:1px solid var(--line)}
+    .facts tr:last-child{border-bottom:none}
+    .facts td{padding:0;border-bottom:none;width:auto}
+    .facts td.n{white-space:normal;padding-right:0;margin-bottom:3px;width:auto}
+    .facts td.c{text-align:left;white-space:normal;padding-left:0;margin-top:4px;width:auto}
+    .facts tr.total{border-top:2px solid var(--line);padding-top:8px}
+    .facts tr.total td{border-top:none;padding-top:0}
+  }
+
   .watch{
     padding:10px 14px;border-left:3px solid var(--amber);
     background:#FBF6EA;color:var(--amber);font-size:.87rem;
