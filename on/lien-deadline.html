@@ -50,7 +50,7 @@
       "name": "What happens if the condo corporation does not notify the mortgagee of a lien?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The lien loses its priority over that encumbrance. Section 86(3) requires written notice to every encumbrancer registered against the title on or before the day the certificate of lien is registered, section 86(4) requires personal service or registered prepaid mail to the last known address, and section 86(5) says the lien loses priority over an encumbrance unless the required notice is given."
+        "text": "The lien loses its priority over that encumbrance, in whole or in part. Section 86(3) requires written notice to every encumbrancer registered against the title on or before the day the certificate of lien is registered, section 86(4) requires personal service or registered prepaid mail to the last known address, and section 86(5) says the lien loses priority over an encumbrance unless the required notice is given. Section 86(5) is subject to section 86(6): if the notice is given late, after registration, the lien keeps priority for the arrears that accrued in the three months before the notice and those that accrue after it, with interest and reasonable collection costs. Older arrears rank behind the encumbrance."
       }
     },
     {
@@ -401,7 +401,9 @@
 
     <p>Section 86(3) requires written notice of the lien to <strong>every encumbrancer whose encumbrance is registered against the title</strong>, on or before the day the certificate is registered. Section 86(4) says how: personal service, or registered prepaid mail to the encumbrancer's last known address.</p>
 
-    <p>Section 86(5) supplies the consequence, and it is the expensive one: <strong>the lien loses its priority over an encumbrance unless the corporation gives the required notice to that encumbrancer.</strong> The lien still exists. It simply ranks behind the mortgage. On a unit without much equity that is the difference between recovering the arrears and recovering nothing.</p>
+    <p>Section 86(5) supplies the consequence, and it is the expensive one: <strong>the lien loses its priority over an encumbrance unless the corporation gives the required notice to that encumbrancer.</strong> The lien still exists, but it ranks behind the mortgage. On a unit without much equity that is the difference between recovering the arrears and recovering nothing.</p>
+
+    <p>Section 86(5) is expressly subject to s. 86(6), which matters once the registration day has passed. <strong>A notice given late, after the certificate is registered, restores priority in part:</strong> for the arrears that accrued in the three months before the notice is given and those that keep accruing after it, together with interest and reasonable collection costs. Anything older stays behind the mortgage. So a missed encumbrancer notice should go out the day the gap is noticed, not be written off.</p>
 
     <p>Registering on time and telling nobody but the owner is the failure mode this section exists to punish.</p>
 
@@ -627,7 +629,7 @@
     var noticeBy=new Date(regFor.getTime()-10*86400000);
     noticeLine.innerHTML='<strong>Written notice to the owner by '+fmt.format(noticeBy)+'.</strong> Registering on '+fmt.format(regFor)+' requires at least 10 days of written notice first. Days between two events exclude the day of the first and include the day of the second, even where the Act says <em>at least</em>. Earlier is safer: this is the last date that works, not a target. <span class="cite-tag">Condominium Act, 1998, s. 85(4); Legislation Act, 2006, s. 89(3)</span>';
 
-    encumbLine.innerHTML='<strong>Notice to every registered encumbrancer, on or before '+fmt.format(regFor)+'.</strong> By personal service or registered prepaid mail to the last known address. Without it the lien loses its priority over that encumbrance, which usually means the mortgage is paid first and the corporation recovers less or nothing. <span class="cite-tag">Condominium Act, 1998, ss. 86(3), 86(4), 86(5)</span>';
+    encumbLine.innerHTML='<strong>Notice to every registered encumbrancer, on or before '+fmt.format(regFor)+'.</strong> By personal service or registered prepaid mail to the last known address. Without it the lien loses its priority over that encumbrance, which usually means the mortgage is paid first. If this date is missed, send the notice anyway: a late notice restores priority for the arrears from the three months before it onward. <span class="cite-tag">Condominium Act, 1998, ss. 86(3), 86(4), 86(5), 86(6)</span>';
 
     last={def:def,expiry:expiry,regFor:regFor,noticeBy:noticeBy,corp:corpName.value.trim(),moved:moved};
     result.style.display='block';
@@ -659,7 +661,7 @@
     s+=' The lien expires '+fmt.format(last.expiry)+' unless a certificate of lien is registered by then, s. 85(2).';
     if(last.moved) s+=' That date was moved to the next non-holiday day under Legislation Act s. 89(1).';
     s+=' Registering on '+fmt.format(last.regFor)+' requires written notice to the owner by '+fmt.format(last.noticeBy)+', s. 85(4).';
-    s+=' Written notice must also reach every registered encumbrancer on or before the registration day, or the lien loses priority over that encumbrance, s. 86(3) and s. 86(5).';
+    s+=' Written notice must also reach every registered encumbrancer on or before the registration day, or the lien loses priority over that encumbrance, s. 86(3) and s. 86(5). A late notice restores priority only for arrears from the three months before it onward, s. 86(6).';
     s+=' Verified 22 September 2026 against the official statutes on ontario.ca.';
     copyToClipboard(s);
   });
