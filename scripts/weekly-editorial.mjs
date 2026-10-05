@@ -149,8 +149,33 @@ for (const rel of [...htmlIn('bc'), ...htmlIn('on')]) {
 /* ------------------------------------------------------------- currency */
 /* Skipped entirely on a legal week: the currency stamp is not the point when
    the text in force may have moved, and the human pass owns that push. */
+/* BC DIVERGENCE HOLD, added 2026-10-05.
+   The BC Act and the BC Regulation share one stamp vocabulary on the site, and
+   STAMP_RX cannot tell which source a given "current to" belongs to. On
+   2026-10-05 only the Regulation moved (22 -> 29 September) while the Act stayed
+   at 22 September; the Regulation's sweep then dragged every Act stamp sitting
+   at 22 September forward to 29 September, a date bclaws did not show for the
+   Act. The watcher reports a value only when it changes, so this script cannot
+   know the unchanged source's date. When the two BC sources do not move to the
+   same new value in the same run, NO BC stamp is swept: a stamp a week behind
+   is still true, one a week ahead is false. The hold is reported so a person
+   can sweep by hand with both dates read from bclaws. */
+const bcMoved = stampsMoved.filter((s) => CURRENCY[s.id].dir === 'bc');
+const bcNew = new Set(bcMoved.map((s) => (s.addedSample || [])[0]));
+const bcBoth = ['bc-act-currency-date', 'bc-reg-currency-date']
+  .every((id) => bcMoved.some((s) => s.id === id));
+const holdBc = bcMoved.length > 0 && !(bcBoth && bcNew.size === 1);
+if (holdBc && !summary.legalReview) {
+  summary.errors.push(
+    'BC stamps HELD, not swept: the BC Act and Regulation did not move to the same date this run ('
+    + bcMoved.map((s) => `${s.id} ${(s.removedSample || [])[0]} -> ${(s.addedSample || [])[0]}`).join('; ')
+    + '; the other BC source unchanged). Read both dates on bclaws and sweep BC stamps by hand.'
+  );
+}
+
 if (!summary.legalReview) {
   for (const s of stampsMoved) {
+    if (holdBc && CURRENCY[s.id].dir === 'bc') continue;
     const cfg = CURRENCY[s.id];
     const oldUs = (s.removedSample || [])[0];
     const newUs = (s.addedSample || [])[0];
@@ -165,10 +190,11 @@ if (!summary.legalReview) {
        pages carried four different stamps at once, from 4 August to
        8 September, while bclaws read 15 September.
        Now every stamp at or BEHIND the old value is brought forward. A stamp
-       AHEAD of it is left alone, which is what keeps this safe when the Act
-       and the Regulation are republished on different days and legitimately
-       carry different dates: sweeping one source must never drag the other
-       one backwards or forwards. */
+       AHEAD of it is left alone. That alone does NOT keep the Act and the
+       Regulation apart: when both sit on the same old value and only one
+       moves, every stamp of the other is at the old value too and would be
+       dragged forward. That case is handled by the BC divergence hold above,
+       which skips this loop for BC entirely. */
     const oldStamp = parseStamp(oldUs);
     if (!oldStamp) {
       summary.errors.push(`${s.id}: unparseable previous stamp ${oldUs}`);
