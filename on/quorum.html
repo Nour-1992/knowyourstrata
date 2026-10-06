@@ -292,6 +292,9 @@
       <label for="units">Total units in the corporation</label>
       <input type="number" id="units" min="1" step="1" placeholder="120">
 
+      <label for="ancillary">How many of those are parking, storage or service units? <span class="hint">(optional; leave blank if none. They do not count toward the percentage, O. Reg. 48/01 s. 1.1)</span></label>
+      <input type="number" id="ancillary" min="0" step="1" placeholder="0">
+
       <label for="mtype">Which meeting is it?</label>
       <select id="mtype">
         <option value="" selected>Choose the meeting type…</option>
@@ -312,7 +315,7 @@
       <p class="subhead">Who turned up (optional)</p>
       <div class="pair">
         <div>
-          <label for="inPerson">Units present in person</label>
+          <label for="inPerson">Units present in person <span class="hint">(not counting parking, storage or service units)</span></label>
           <input type="number" id="inPerson" min="0" step="1" placeholder="0">
         </div>
         <div>
@@ -331,7 +334,7 @@
         <p class="date" id="quorumStamp">—</p>
         <p class="sub" id="quorumSub"></p>
       </div>
-      <p class="verified-badge"><span class="check">✓</span> Verified August 27, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 50</span></p>
+      <p class="verified-badge"><span class="check">✓</span> Verified October 6, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 50</span></p>
       <p class="badge-note">Sources checked automatically every Monday. Last check October 5, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
 
       <p class="verdict" id="verdict"></p>
@@ -421,6 +424,8 @@
     <p><strong>You cannot use a reduced-quorum meeting to slip business through.</strong> Subsection (1.3) says that at a second or third attempt no vote may be taken "on any matter other than routine procedure unless that matter was clearly disclosed in the notice of first attempt to hold the meeting". Reaching quorum at the third attempt does not let the meeting decide something that was not on the original notice.</p>
 
     <dl class="faq">
+      <dt>Do parking spaces and lockers count toward the 25 per cent?</dt>
+      <dd>Not if they are separate units. O. Reg. 48/01 s. 1.1 reads &ldquo;the units&rdquo; in s. 50 as the units that are not parking, storage or service units under s. 49(3) of the Act, because no one votes in respect of those. A corporation with 200 suites and 150 parking units takes 25 per cent of 200, which is 50, not 88. Only if every unit is a parking, storage or service unit do they all count. Enter them in the second box and the calculator does this for you.</dd>
       <dt>Is quorum a share of units or of owners?</dt>
       <dd>Units. Section 50 speaks of "those owners who own 25 per cent of the units in the corporation", and voting is one vote per unit under s. 51(2). An owner of several units brings all of those units toward quorum.</dd>
       <dt>Do proxies count?</dt>
@@ -435,7 +440,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 42, 43, 45, 46, 50 and 51. Last verified 27 August 2026 against the official statute on ontario.ca, consolidation period 31 December 2025 to the e-Laws currency date of 30 September 2026; the section 50 subsections applied here derive from 2015, c. 28, Sched. 1, s. 45 and read as in force. Ontario condominium law has been amended in stages, so confirm the current text before relying on it. Your corporation's registered by-laws may vary the quorum under s. 50(1.2). The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 42, 43, 45, 46, 50 and 51. Last verified 6 October 2026 against the official statute on ontario.ca, consolidation period 31 December 2025 to the e-Laws currency date of 30 September 2026; the section 50 subsections applied here derive from 2015, c. 28, Sched. 1, s. 45 and read as in force. Ontario condominium law has been amended in stages, so confirm the current text before relying on it. Your corporation's registered by-laws may vary the quorum under s. 50(1.2). The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
     <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
@@ -505,6 +510,7 @@
 <script>
 (function(){
   var units=document.getElementById('units'),
+      ancillary=document.getElementById('ancillary'),
       mtype=document.getElementById('mtype'),
       attemptBlock=document.getElementById('attemptBlock'),
       attempt=document.getElementById('attempt'),
@@ -600,6 +606,26 @@
     result.style.display='none';
   }
 
+
+  /* Which units the percentage is taken of. O. Reg. 48/01 s. 1.1(1)(b) reads
+     "a portion of the units" in this section as a portion of the units NOT
+     described in s. 49(3) of the Act (parking, storage, services, facilities,
+     mechanical installations), unless every unit is one of those (s. 1.1(1)(c)).
+     Returns null on bad input, after showing the error. */
+  function countingUnits(total){
+    var a=readInt(ancillary);
+    if(a===null||a===0)return {base:total,anc:0};
+    if(a<0){show('Parking, storage or service units cannot be negative.');return null;}
+    if(a>total){show('Parking, storage or service units ('+a+') cannot exceed the total units ('+total+').');return null;}
+    if(a===total)return {base:total,anc:a,all:true};
+    return {base:total-a,anc:a};
+  }
+  function baseNote(cu,total){
+    if(!cu.anc)return '';
+    if(cu.all)return ' (every unit is a parking, storage or service unit, so all '+total+' count, O. Reg. 48/01 s. 1.1(1)(c))';
+    return ' that count ('+total+' in all, less '+cu.anc+' parking, storage or service '+(cu.anc===1?'unit':'units')+', O. Reg. 48/01 s. 1.1)';
+  }
+
   var current=null;
 
   calcBtn.addEventListener('click',function(){
@@ -609,10 +635,12 @@
     if(!kind||!(kind in LADDER)){show('Choose which meeting you are holding.');return;}
     var present=readInt(inPerson), byProxy=readInt(proxy);
     if((present!==null&&present<0)||(byProxy!==null&&byProxy<0)){show('Attendance numbers cannot be negative.');return;}
+    var cu=countingUnits(total);
+    if(!cu)return;
     var attended=(present||0)+(byProxy||0);
     var attendanceEntered=(present!==null||byProxy!==null);
-    if(attendanceEntered&&attended>total){
-      show('Units present ('+attended+') cannot exceed the total units ('+total+').');
+    if(attendanceEntered&&attended>cu.base){
+      show('Units present ('+attended+') cannot exceed the units that count toward quorum ('+cu.base+').');
       return;
     }
     err.style.display='none';
@@ -645,14 +673,14 @@
       flagText='A meeting requisitioned by owners under s. 46 sits here. Repeated attempts do not unlock the 15% figure — that ladder is only for an AGM, a turn-over meeting, or a prescribed meeting.';
     }
 
-    var required=(pct===null)?1:pctOf(total,pct);
-    current={total:total,kind:kind,label:mtype.options[mtype.selectedIndex].text,att:att,isLadder:isLadder,
+    var required=(pct===null)?1:pctOf(cu.base,pct);
+    current={total:total,base:cu.base,anc:cu.anc,kind:kind,label:mtype.options[mtype.selectedIndex].text,att:att,isLadder:isLadder,
              pct:pct,cite:cite,required:required,attended:attended,attendanceEntered:attendanceEntered};
 
     quorumStamp.textContent=required+(required===1?' unit':' units');
     quorumSub.textContent=(pct===null)
       ? 'the single owner, present in person or by proxy'
-      : pct+'% of '+total+(total===1?' unit':' units')+', held by owners entitled to vote, present in person or by proxy';
+      : pct+'% of '+cu.base+(cu.base===1?' unit':' units')+baseNote(cu,total)+', held by owners entitled to vote, present in person or by proxy';
     badgeCite.textContent='Condominium Act, 1998, '+cite;
     citeLine.innerHTML='<strong>Condominium Act, 1998, '+cite+'</strong> — '+ruleText;
 
@@ -686,7 +714,9 @@
     var c=current;
     var s='Ontario condominium quorum — '+c.label+
       (c.isLadder?(', attempt '+(c.att>=3?'3 or later':c.att)):'')+
-      '. Corporation has '+c.total+(c.total===1?' unit':' units')+'. Quorum requires '+c.required+
+      '. Corporation has '+c.total+(c.total===1?' unit':' units')+
+      (c.anc&&c.base!==c.total?', of which '+c.base+' count (parking, storage and service units excluded under O. Reg. 48/01 s. 1.1)':'')+
+      '. Quorum requires '+c.required+
       (c.required===1?' unit':' units')+
       (c.pct===null?' (single-owner corporation)':' — '+c.pct+'% of the units, held by owners entitled to vote and present in person or by proxy')+
       ', under Condominium Act, 1998, '+c.cite+'.';
@@ -695,7 +725,7 @@
         (c.attended>=c.required?'met.':'NOT met, short by '+(c.required-c.attended)+'.');
     }
     s+=' A registered by-law may set quorum at 25% throughout (s. 50(1.2)), so check the corporation by-laws.'+
-      ' Verified August 27, 2026 against the Condominium Act, 1998 on ontario.ca, current to the e-Laws currency date of September 30, 2026.';
+      ' Verified October 6, 2026 against the Condominium Act, 1998 on ontario.ca, current to the e-Laws currency date of September 30, 2026.';
     copyToClipboard(s);
   });
 

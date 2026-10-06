@@ -312,6 +312,8 @@
       <div class="opt-block active" id="unitsBlock">
         <label for="units">Total units in the corporation <span class="hint">turns the percentage into a number of owners</span></label>
         <input type="number" id="units" min="1" step="1" inputmode="numeric">
+        <div id="ancBlock"><label for="ancillary">How many of those are parking, storage or service units? <span class="hint">(optional; leave blank if none. They do not count toward the percentage, O. Reg. 48/01 s. 1.1)</span></label>
+        <input type="number" id="ancillary" min="0" step="1" placeholder="0"></div>
       </div>
 
       <div class="opt-block active" id="bylawBlock">
@@ -349,7 +351,7 @@
         <p class="date" id="thrHead">&mdash;</p>
         <p class="sub" id="thrSub"></p>
       </div>
-      <p class="verified-badge"><span class="check">&#10003;</span> Verified September 12, 2026 &middot; <span id="badgeCite">Condominium Act, 1998, ss. 56, 58, 97 and 107</span></p>
+      <p class="verified-badge"><span class="check">&#10003;</span> Verified October 6, 2026 &middot; <span id="badgeCite">Condominium Act, 1998, ss. 56, 58, 97 and 107</span></p>
       <p class="badge-note">Sources checked automatically every Monday. Last check October 5, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
 
       <p class="cite-line" id="citeLine1"></p>
@@ -446,6 +448,8 @@
     <p>Section 107 does not work by a vote at a meeting. It works by written consents from the owners of units at the time the board approved the amendment: 90 per cent where the amendment changes a matter described in s. 7(2)(c), (d) or (f) or s. 7(4)(e), and 80 per cent in every other case. A board resolution, a meeting under s. 107(3) and (4), and notice to mortgagees sit alongside the consents rather than replacing them.</p>
 
     <dl class="faq">
+      <dt>Do parking and locker units count?</dt>
+      <dd>For a by-law under s. 56(10) and a substantial change under s. 97(4), no, when they are separate units: O. Reg. 48/01 s. 1.1 reads &ldquo;the units&rdquo; in those provisions as the units that are not parking, storage or service units under s. 49(3) of the Act. Enter them in the second box and the calculator leaves them out. A declaration amendment under s. 107 is different: s. 1.1 does not list s. 107, so this calculator measures those consents against every unit.</dd>
       <dt>Is it 66 2/3 per cent of the units, or of the owners who vote?</dt>
       <dd>Of the units. Section 97(4) requires owners of at least 66 2/3 per cent of the units to vote in favour, at a meeting called for that purpose under s. 97(5). Attendance does not lower it. In a 100-unit corporation that is 67 units, whether 70 owners show up or 100 do.</dd>
       <dt>Our by-law got a majority of everyone in the room but not of all units. Did it pass?</dt>
@@ -460,7 +464,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 56, 58, 97 and 107, and O. Reg. 48/01, ss. 14 and 24.3. Last verified 12 September 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 30 September 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 56, 58, 97 and 107, and O. Reg. 48/01, ss. 14 and 24.3. Last verified 6 October 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 30 September 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
     <p>Built for the volunteer boards who keep Ontario&rsquo;s condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
@@ -530,6 +534,7 @@
   var decision=document.getElementById('decision'),
       unitsBlock=document.getElementById('unitsBlock'),
       units=document.getElementById('units'),
+      ancillary=document.getElementById('ancillary'),
       bylawBlock=document.getElementById('bylawBlock'),
       bylawKind=document.getElementById('bylawKind'),
       s97Block=document.getElementById('s97Block'),
@@ -575,6 +580,7 @@
   function toggle(){
     var d=decision.value;
     unitsBlock.classList.toggle('active',d!=='rule');
+    document.getElementById('ancBlock').style.display=(d==='declaration')?'none':'';
     bylawBlock.classList.toggle('active',d==='bylaw');
     s97Block.classList.toggle('active',d==='s97');
     declBlock.classList.toggle('active',d==='declaration');
@@ -590,6 +596,32 @@
     result.style.display='none';
   }
 
+
+  /* Which units the percentage is taken of. O. Reg. 48/01 s. 1.1(1)(b) reads
+     "a portion of the units" in this section as a portion of the units NOT
+     described in s. 49(3) of the Act (parking, storage, services, facilities,
+     mechanical installations), unless every unit is one of those (s. 1.1(1)(c)).
+     Returns null on bad input, after showing the error. */
+  function readInt(el){
+    var v=el.value.trim();
+    if(v==='')return null;
+    var n=parseInt(v,10);
+    return isNaN(n)?null:n;
+  }
+  function countingUnits(total){
+    var a=readInt(ancillary);
+    if(a===null||a===0)return {base:total,anc:0};
+    if(a<0){show('Parking, storage or service units cannot be negative.');return null;}
+    if(a>total){show('Parking, storage or service units ('+a+') cannot exceed the total units ('+total+').');return null;}
+    if(a===total)return {base:total,anc:a,all:true};
+    return {base:total-a,anc:a};
+  }
+  function baseNote(cu,total){
+    if(!cu.anc)return '';
+    if(cu.all)return ' (every unit is a parking, storage or service unit, so all '+total+' count, O. Reg. 48/01 s. 1.1(1)(c))';
+    return ' that count ('+total+' in all, less '+cu.anc+' parking, storage or service '+(cu.anc===1?'unit':'units')+', O. Reg. 48/01 s. 1.1)';
+  }
+
   var current=null;
 
   calcBtn.addEventListener('click',function(){
@@ -600,6 +632,15 @@
       n=parseInt(units.value,10);
       if(!(n>0)){show('Enter the total number of units in the corporation.');return;}
       if(n>100000){show('That unit count looks wrong. Enter the number of units in this corporation.');return;}
+    }
+    /* s. 56(10)(a) and s. 97(4) are listed in O. Reg. 48/01 s. 1.1(2), so parking,
+       storage and service units drop out of the count. s. 107 is not listed, so a
+       declaration amendment is still measured against every unit. */
+    var total=n, cu={base:n,anc:0}, bn='';
+    if(d==='bylaw'||d==='s97'){
+      cu=countingUnits(total);
+      if(!cu)return;
+      n=cu.base; bn=baseNote(cu,total);
     }
     err.style.display='none';
     warnNote.style.display='none';
@@ -625,7 +666,7 @@
       } else {
         var need=majorityOfAll(n);
         head=need+' of '+n+' units';
-        sub='a majority of all units in the corporation, however many owners attend';
+        sub=(bn?'a majority of the '+n+' units'+bn:'a majority of all units in the corporation')+', however many owners attend';
         c1='<strong>Condominium Act, 1998, s. 56(10)</strong> &mdash; a by-law is not effective until the owners of a majority of the units in the corporation vote in favour of confirming it, and a copy is registered.';
         c2='<strong>O. Reg. 48/01, s. 14(2)</strong> &mdash; a short list of by-laws needs only a majority of those present or by proxy instead. If this by-law is described in s. 45(7), s. 47(6), s. 52(1.1.1), paragraph 12 of s. 55(1) or paragraph 3 of s. 55(2) of the Act, or s. 14(0.1) of the regulation, change the second field and read that answer instead.';
         aTitle='What else has to happen';
@@ -670,7 +711,7 @@
       if(substantial){
         var need97=atLeastPct(n,2,3);
         head=need97+' of '+n+' units';
-        sub='at least 66 2/3 per cent of all units, at a meeting called for that purpose';
+        sub=(bn?'at least 66 2/3 per cent of the '+n+' units'+bn:'at least 66 2/3 per cent of all units')+', at a meeting called for that purpose';
         c1='<strong>Condominium Act, 1998, s. 97(4) and (5)</strong> &mdash; a substantial addition, alteration or improvement needs owners of at least 66 2/3 per cent of the units voting in favour, at a meeting called for the purpose.';
         if(elect.checked&&!(k>limit)){
           c2='<strong>Condominium Act, 1998, s. 97(6)(b)</strong> &mdash; the estimated cost of '+money.format(k)+' does not exceed 10 per cent of the budget ('+money.format(limit)+'), but the board has elected to treat the change as substantial, which it may do regardless of cost.';
@@ -735,6 +776,7 @@
       copy='Declaration amendment: written consents from the owners of '+needD+' of '+n+' units, being '+pct+' (Condominium Act, 1998 s. 107(2)'+(listed?'(d)':'(e)')+'). Consents must come from owners of units at the time the board approved the amendment, alongside a board resolution, a meeting under s. 107(3) and (4), and notice to mortgagees.';
     }
 
+    if(bn&&!cu.all&&copy&&(d==='bylaw'&&bylawKind.value!=='prescribed'||d==='s97'&&head.indexOf(' of ')>0)){copy+=' Counted on '+n+' units: the corporation has '+total+' in all, and its '+cu.anc+' parking, storage or service '+(cu.anc===1?'unit is':'units are')+' left out under O. Reg. 48/01 s. 1.1.';}
     if(d!=='rule'&&d!=='s97'){stampKey.textContent=(d==='declaration')?'The written consents you need':'The vote you need';}
 
     thrHead.textContent=head;
@@ -801,7 +843,7 @@
 
   copyBtn.addEventListener('click',function(){
     if(!current)return;
-    var s=current.copy+' Verified September 12, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
+    var s=current.copy+' Verified October 6, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
     copyToClipboard(s);
   });
 

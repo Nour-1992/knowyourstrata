@@ -312,6 +312,9 @@
       <label for="units">Total units in the corporation</label>
       <input type="number" id="units" min="1" step="1" placeholder="120">
 
+      <label for="ancillary">How many of those are parking, storage or service units? <span class="hint">(optional; leave blank if none. They do not count toward the percentage, O. Reg. 48/01 s. 1.1)</span></label>
+      <input type="number" id="ancillary" min="0" step="1" placeholder="0">
+
       <label for="received">Date the board received the requisition <span class="hint">(optional — leave blank for the general timeline)</span></label>
       <input type="date" id="received">
 
@@ -325,7 +328,7 @@
         <p class="date" id="unitsNeeded">—</p>
         <p class="sub" id="unitsSub"></p>
       </div>
-      <p class="verified-badge"><span class="check">✓</span> Verified August 27, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 46</span></p>
+      <p class="verified-badge"><span class="check">✓</span> Verified October 6, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 46</span></p>
       <p class="badge-note">Sources checked automatically every Monday. Last check October 5, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
 
       <p class="cite-line"><strong>Condominium Act, 1998, s. 46(1)</strong> — "A requisition for a meeting of owners may be made by those owners who at the time the board receives the requisition, own at least 15 per cent of the units, are listed in the record maintained by the corporation under section 46.1 and are entitled to vote."</p>
@@ -426,6 +429,8 @@
     <p>One narrow addition: if the business involves removing or electing a director in a position reserved under s. 51(6), the pending law sets a separate 15%-of-non-leased-voting-units threshold for that specific purpose — a distinction that doesn't exist in current law.</p>
 
     <dl class="faq">
+      <dt>Do parking and locker units count toward the 15 per cent?</dt>
+      <dd>No, when they are separate units. O. Reg. 48/01 s. 1.1 reads &ldquo;15 per cent of the units&rdquo; in s. 46(1) as 15 per cent of the units that are not parking, storage or service units under s. 49(3) of the Act. The same rule carries over to the replacement s. 46(1)(a) on December 31, 2026. A corporation with 200 suites and 150 parking units needs 30 units, not 53. Enter them in the second box and the calculator does this for you.</dd>
       <dt>Does the 15% threshold change on December 31, 2026?</dt>
       <dd>No. We read the pending replacement text directly rather than assuming: the 15%-of-units figure in the new s. 46(1)(a) is identical to the current s. 46(1). What changes is everything around it — eligibility, form, and the timeline.</dd>
       <dt>Is the 30-day arrears rule in effect right now?</dt>
@@ -442,7 +447,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 46 and s. 46.1 (current text, and the pending replacement enacted by 2015, c. 28, Sched. 1, s. 40), and O. Reg. 48/01, ss. 12.2.1 to 12.2.7. Last verified 27 August 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 30 September 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 46 and s. 46.1 (current text, and the pending replacement enacted by 2015, c. 28, Sched. 1, s. 40), and O. Reg. 48/01, ss. 12.2.1 to 12.2.7. Last verified 6 October 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 30 September 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
     <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
@@ -511,6 +516,7 @@
 (function(){
   var units=document.getElementById('units'),
       received=document.getElementById('received'),
+      ancillary=document.getElementById('ancillary'),
       calcBtn=document.getElementById('calc'),
       err=document.getElementById('err'),
       result=document.getElementById('result'),
@@ -550,18 +556,40 @@
     result.style.display='none';
   }
 
+
+  /* Which units the percentage is taken of. O. Reg. 48/01 s. 1.1(1)(b) reads
+     "a portion of the units" in this section as a portion of the units NOT
+     described in s. 49(3) of the Act (parking, storage, services, facilities,
+     mechanical installations), unless every unit is one of those (s. 1.1(1)(c)).
+     Returns null on bad input, after showing the error. */
+  function countingUnits(total){
+    var a=readInt(ancillary);
+    if(a===null||a===0)return {base:total,anc:0};
+    if(a<0){show('Parking, storage or service units cannot be negative.');return null;}
+    if(a>total){show('Parking, storage or service units ('+a+') cannot exceed the total units ('+total+').');return null;}
+    if(a===total)return {base:total,anc:a,all:true};
+    return {base:total-a,anc:a};
+  }
+  function baseNote(cu,total){
+    if(!cu.anc)return '';
+    if(cu.all)return ' (every unit is a parking, storage or service unit, so all '+total+' count, O. Reg. 48/01 s. 1.1(1)(c))';
+    return ' that count ('+total+' in all, less '+cu.anc+' parking, storage or service '+(cu.anc===1?'unit':'units')+', O. Reg. 48/01 s. 1.1)';
+  }
+
   var current=null;
 
   calcBtn.addEventListener('click',function(){
     var total=readInt(units);
     if(total===null||total<1){show('Enter how many units the corporation has.');return;}
+    var cu=countingUnits(total);
+    if(!cu)return;
     err.style.display='none';
 
     // A fraction of a unit can't sign a requisition, so this rounds up --
     // the same convention used on the quorum tool for the same reason.
-    var needed=Math.ceil(total*0.15);
+    var needed=Math.ceil(cu.base*0.15);
     unitsNeeded.textContent=needed+(needed===1?' unit':' units');
-    unitsSub.textContent='15% of '+total+(total===1?' unit':' units')+', rounded up';
+    unitsSub.textContent='15% of '+cu.base+(cu.base===1?' unit':' units')+baseNote(cu,total)+', rounded up';
 
     var meetBy=null;
     if(received.value){
@@ -579,7 +607,7 @@
       pastNote.style.display='none';
     }
 
-    current={total:total,needed:needed,received:received.value?parseLocal(received.value):null,meetBy:meetBy};
+    current={total:total,base:cu.base,anc:cu.anc,needed:needed,received:received.value?parseLocal(received.value):null,meetBy:meetBy};
 
     result.style.display='block';
     result.classList.remove('show');
@@ -636,6 +664,7 @@
   copyBtn.addEventListener('click',function(){
     if(!current)return;
     var s='Corporation has '+current.total+(current.total===1?' unit':' units')+
+      (current.anc&&current.base!==current.total?', of which '+current.base+' count (parking, storage and service units excluded under O. Reg. 48/01 s. 1.1)':'')+
       '. Requisitioning owners must together own at least '+current.needed+
       (current.needed===1?' unit':' units')+' (15%, rounded up) under Condominium Act, 1998 s. 46(1).';
     if(current.meetBy){
@@ -644,7 +673,7 @@
       s+=' The board must call and hold the meeting within 35 days of receiving the requisition (s. 46(4)); if it doesn\'t, a requisitionist may call it themselves within 45 days (s. 46(5)).';
     }
     s+=' Note: this is current law. Ontario\'s pending December 31, 2026 amendments keep the 15% threshold but restructure the timeline and add a 30-day arrears eligibility bar.'+
-      ' Verified August 27, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
+      ' Verified October 6, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
     copyToClipboard(s);
   });
 
