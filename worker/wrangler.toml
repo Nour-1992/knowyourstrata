@@ -39,7 +39,12 @@ compatibility_date = "2026-08-21"
 # consecutive weeks (23 Aug, 30 Aug, 6 Sep, 13 Sep) while this comment
 # claimed Monday, and the dashboard confirmed it: setting 2 displays as
 # "At 08:00 AM on Monday" with the next run on Mon 21 Sep 2026.
-crons = ["0 8 * * 2"]  # Weekly, MONDAY 08:00 UTC (2 = Monday here)
+crons = ["0 8 * * 2", "0 9 * * 2"]
+# 08:00 Monday: the source check, then a workflow_dispatch of the weekly
+#               editorial Action (it no longer waits on GitHub's late cron).
+# 09:00 Monday: ask GitHub whether that run exists, and record the answer.
+# Both strings are matched in src/index.js (CRON_CHECK, CRON_VERIFY); change
+# them together.
 
 [[kv_namespaces]]
 binding = "WATCHER_KV"
@@ -49,3 +54,13 @@ id = "6359a8114b29408f8f6b729a0cb96508"
 binding = "WATCHER_STATUS_SECRET"
 store_id = "beaccdc53cc3460ca4969c04ccb55096"
 secret_name = "watcher-status-secret"
+
+# GitHub fine-grained token for the editorial kick (added 2026-10-07).
+# Scope: ONLY the Nour-1992/knowyourstrata repository, permission
+# "Actions: Read and write", nothing else. Created by Nour on GitHub and
+# pasted into the Secrets Store as "github-dispatch-token" BEFORE this file
+# is deployed, or the deploy fails on a missing secret.
+[[secrets_store_secrets]]
+binding = "GITHUB_DISPATCH_TOKEN"
+store_id = "beaccdc53cc3460ca4969c04ccb55096"
+secret_name = "github-dispatch-token"

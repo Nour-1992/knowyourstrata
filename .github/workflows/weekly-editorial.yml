@@ -22,12 +22,21 @@
 name: Weekly editorial pass
 
 on:
+  # Since 2026-10-07 the WATCHER starts this run: right after its Monday
+  # 08:00 UTC check it calls workflow_dispatch, so the pass no longer waits on
+  # GitHub's own cron, which was observed starting 6.5 to 8.75 hours late.
+  # The schedule below stays as a FALLBACK in case the kick fails; the
+  # duplicate guard further down stops it opening a second pull request for a
+  # week that already has one. The badge date is taken from the watcher run,
+  # not from today, so a late fallback still stamps the right day.
   schedule:
-    # 08:30 UTC Monday, half an hour after the watcher cron. Also runs if the
-    # watcher fired the day before: the badge date is taken from the run
-    # itself, not from today, so a Sunday check still stamps Sunday.
     - cron: '30 8 * * 1'
   workflow_dispatch:
+
+# Never two passes at once (a kick and a fallback can overlap).
+concurrency:
+  group: weekly-editorial
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -59,8 +68,18 @@ jobs:
 
       - name: Stop early if nothing was applied
         id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [ "$(node -p "require(process.env.RUNNER_TEMP + '/summary.json').edited === false")" = "true" ]; then
+          RUNDATE=$(node -p "require(process.env.RUNNER_TEMP + '/summary.json').runDate || ''")
+          OPEN=""
+          if [ -n "$RUNDATE" ]; then
+            OPEN=$(gh pr list --state open --search "in:title \"run of $RUNDATE\"" --json number --jq '.[0].number' || true)
+          fi
+          if [ -n "$OPEN" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "reason=pull request #$OPEN is already open for the run of $RUNDATE" >> "$GITHUB_OUTPUT"
+          elif [ "$(node -p "require(process.env.RUNNER_TEMP + '/summary.json').edited === false")" = "true" ]; then
             echo "reason=$(node -p "require(process.env.RUNNER_TEMP + '/summary.json').abort")" >> "$GITHUB_OUTPUT"
             echo "skip=true" >> "$GITHUB_OUTPUT"
           elif [ -z "$(git status --porcelain)" ]; then

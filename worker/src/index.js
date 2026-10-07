@@ -46,6 +46,10 @@
  *                   for confirming a source's fetch actually works from
  *                   inside this Worker's runtime, not just from other
  *                   tooling.
+ *   GET /dispatch -- ask GitHub to run the weekly editorial workflow now.
+ *   GET /verify   -- ask GitHub whether this week's workflow run exists.
+ *                   Both are recorded and shown under "editorial" in
+ *                   /status.json. See EDITORIAL KICK below.
  */
 
 import { SOURCES } from './sources.js';
@@ -228,7 +232,121 @@ function statusBadge(status) {
   return `<span style="display:inline-block;padding:2px 8px;border-radius:3px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#fff;background:${color}">${esc(status)}</span>`;
 }
 
+/* ------------------------------------------------------------------------
+   EDITORIAL KICK, added 2026-10-07.
+
+   The weekly editorial pass is a GitHub Action. Its own cron is best-effort
+   and observed to start 6.5 to 8.75 hours late (21 Sep, 28 Sep, 5 Oct), and
+   GitHub can drop a scheduled run without telling anyone. This Worker's cron
+   is the reliable clock, so right after the Monday check it asks GitHub to
+   run the workflow now (workflow_dispatch), and an hour later it asks GitHub
+   whether a run actually exists. Both answers are stored in KV and published
+   in /status.json under "editorial", which is what the Monday responder reads.
+   That closes the blind spot: a missing run is now visible, not silent.
+
+   Needs a GitHub fine-grained token, scoped to this one repository, with
+   "Actions: Read and write" and nothing else, stored in the Secrets Store and
+   bound as GITHUB_DISPATCH_TOKEN (see wrangler.toml). With no token bound the
+   check still runs and the editorial block says "not configured".
+   ------------------------------------------------------------------------ */
+const GH_REPO = 'Nour-1992/knowyourstrata';
+const GH_WORKFLOW = 'weekly-editorial.yml';
+const CRON_CHECK = '0 8 * * 2';      // Monday 08:00 UTC (Cloudflare: 2 = Monday)
+const CRON_VERIFY = '0 9 * * 2';     // Monday 09:00 UTC
+
+async function githubToken(env) {
+  if (!env.GITHUB_DISPATCH_TOKEN) return null;
+  try {
+    const v = typeof env.GITHUB_DISPATCH_TOKEN === 'string'
+      ? env.GITHUB_DISPATCH_TOKEN
+      : await env.GITHUB_DISPATCH_TOKEN.get();
+    return typeof v === 'string' && v.length > 0 ? v : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function ghHeaders(token) {
+  return {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent': USER_AGENT
+  };
+}
+
+async function dispatchEditorial(env) {
+  const at = new Date().toISOString();
+  const token = await githubToken(env);
+  let record;
+  if (!token) {
+    record = { at, ok: false, configured: false, note: 'GITHUB_DISPATCH_TOKEN is not bound; the workflow was not kicked.' };
+  } else {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
+        method: 'POST',
+        headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: 'main' })
+      });
+      // GitHub answers 204 No Content on success.
+      record = { at, ok: res.status === 204, configured: true, httpStatus: res.status };
+      if (res.status !== 204) record.error = (await res.text()).slice(0, 300);
+    } catch (e) {
+      record = { at, ok: false, configured: true, error: String(e && e.message || e).slice(0, 300) };
+    }
+  }
+  await env.WATCHER_KV.put('editorialDispatch', JSON.stringify(record));
+  return record;
+}
+
+/* Asks GitHub for the workflow's most recent runs and records whether one
+   was created on or after this week's check. It cannot see a pull request's
+   merge state, only that the run exists and how it ended. */
+async function verifyEditorial(env) {
+  const at = new Date().toISOString();
+  const token = await githubToken(env);
+  const lastRunRaw = await env.WATCHER_KV.get('lastRun');
+  const since = lastRunRaw ? JSON.parse(lastRunRaw).at : null;
+  let record;
+  if (!token) {
+    record = { at, configured: false, note: 'GITHUB_DISPATCH_TOKEN is not bound; runs were not checked.' };
+  } else {
+    try {
+      const res = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/runs?per_page=5`, {
+        headers: ghHeaders(token)
+      });
+      if (res.status !== 200) {
+        record = { at, configured: true, ok: false, httpStatus: res.status, error: (await res.text()).slice(0, 300) };
+      } else {
+        const body = await res.json();
+        const runs = (body.workflow_runs || []).map((r) => ({
+          id: r.id, event: r.event, status: r.status, conclusion: r.conclusion,
+          createdAt: r.created_at, url: r.html_url
+        }));
+        const thisWeek = since ? runs.filter((r) => r.createdAt >= since) : [];
+        record = {
+          at, configured: true, ok: true, since,
+          runFoundThisWeek: thisWeek.length > 0,
+          latestThisWeek: thisWeek[0] || null,
+          recent: runs
+        };
+      }
+    } catch (e) {
+      record = { at, configured: true, ok: false, error: String(e && e.message || e).slice(0, 300) };
+    }
+  }
+  await env.WATCHER_KV.put('editorialRunCheck', JSON.stringify(record));
+  return record;
+}
+
+async function editorialState(env) {
+  const d = await env.WATCHER_KV.get('editorialDispatch');
+  const c = await env.WATCHER_KV.get('editorialRunCheck');
+  return { dispatch: d ? JSON.parse(d) : null, runCheck: c ? JSON.parse(c) : null };
+}
+
 async function renderStatusPage(env) {
+  const ed = await editorialState(env);
   const lastRunRaw = await env.WATCHER_KV.get('lastRun');
   const lastRun = lastRunRaw ? JSON.parse(lastRunRaw) : null;
 
@@ -274,6 +392,8 @@ async function renderStatusPage(env) {
 <h1>Legislative-Change Watcher</h1>
 <p style="color:#5E6E68">Detects changes only -- never edits site content. A "changed" source means a normal brief/build/verify pass is due, not that anything on the site is already wrong.</p>
 <p style="font-size:.85rem;color:#5E6E68">Runs weekly (Mondays, ~08:00 UTC). Last full run: ${esc(lastRun ? lastRun.at : 'never')}.</p>
+<p style="font-size:.85rem;color:#5E6E68">Editorial workflow kick: ${esc(ed.dispatch ? (ed.dispatch.ok ? 'sent ' + ed.dispatch.at : 'NOT sent ' + (ed.dispatch.at || '') + ' ' + (ed.dispatch.note || ed.dispatch.error || ('HTTP ' + ed.dispatch.httpStatus))) : 'never')}.
+ Run check: ${esc(ed.runCheck ? (ed.runCheck.ok ? (ed.runCheck.runFoundThisWeek ? 'run found, ' + ed.runCheck.latestThisWeek.status + (ed.runCheck.latestThisWeek.conclusion ? ' / ' + ed.runCheck.latestThisWeek.conclusion : '') : 'NO RUN this week') + ' (' + ed.runCheck.at + ')' : 'could not check: ' + (ed.runCheck.note || ed.runCheck.error || ('HTTP ' + ed.runCheck.httpStatus))) : 'never')}.</p>
 <hr style="margin:20px 0;border:none;border-top:1px solid #ddd">
 ${rows.join('')}
 </body></html>`;
@@ -314,12 +434,19 @@ async function statusJson(env) {
     sources.push(row);
   }
 
-  return { lastRun, sourceCount: SOURCES.length, sources };
+  return { lastRun, sourceCount: SOURCES.length, sources, editorial: await editorialState(env) };
 }
 
 export default {
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(runCheck(env));
+    if (event.cron === CRON_VERIFY) {
+      ctx.waitUntil(verifyEditorial(env));
+      return;
+    }
+    // CRON_CHECK, or any cron string not recognised: the weekly check runs,
+    // then the editorial workflow is kicked so it does not wait on GitHub's
+    // own late schedule.
+    ctx.waitUntil(runCheck(env).then(() => dispatchEditorial(env)));
   },
 
   async fetch(request, env) {
@@ -342,6 +469,24 @@ export default {
     if (url.pathname === '/run') {
       if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
       const result = await runCheck(env);
+      return new Response(JSON.stringify(result, null, 2), {
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+      });
+    }
+
+    /* Manual fallbacks, same auth: kick the workflow now, or ask GitHub
+       whether this week's run exists. Neither runs the source check. */
+    if (url.pathname === '/dispatch') {
+      if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
+      const result = await dispatchEditorial(env);
+      return new Response(JSON.stringify(result, null, 2), {
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
+      });
+    }
+
+    if (url.pathname === '/verify') {
+      if (!(await authorized(request, env))) return new Response('Not found', { status: 404 });
+      const result = await verifyEditorial(env);
       return new Response(JSON.stringify(result, null, 2), {
         headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
       });
