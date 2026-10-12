@@ -253,6 +253,8 @@ const GH_REPO = 'Nour-1992/knowyourstrata';
 const GH_WORKFLOW = 'weekly-editorial.yml';
 const CRON_CHECK = '0 8 * * 2';      // Monday 08:00 UTC (Cloudflare: 2 = Monday)
 const CRON_VERIFY = '0 9 * * 2';     // Monday 09:00 UTC
+const VERIFY_DELAY_MS = 120000;       // run check two minutes after the kick
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function githubToken(env) {
   if (!env.GITHUB_DISPATCH_TOKEN) return null;
@@ -446,7 +448,16 @@ export default {
     // CRON_CHECK, or any cron string not recognised: the weekly check runs,
     // then the editorial workflow is kicked so it does not wait on GitHub's
     // own late schedule.
-    ctx.waitUntil(runCheck(env).then(() => dispatchEditorial(env)));
+    // Then, two minutes after the kick, ask GitHub whether the run exists.
+    // Added 2026-10-12: on the first live Monday the separate 09:00 cron did
+    // not refresh the run check, so the check no longer depends on it. The
+    // 09:00 cron stays as a second look. A scheduled handler may run for up to
+    // 15 minutes of wall time, and waiting costs no CPU.
+    ctx.waitUntil(
+      runCheck(env)
+        .then(() => dispatchEditorial(env))
+        .then((d) => (d && d.ok ? sleep(env.VERIFY_DELAY_MS ?? VERIFY_DELAY_MS).then(() => verifyEditorial(env)) : null))
+    );
   },
 
   async fetch(request, env) {

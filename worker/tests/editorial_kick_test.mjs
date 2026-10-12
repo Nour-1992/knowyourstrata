@@ -6,8 +6,8 @@
  * What matters:
  *   1. the 08:00 cron runs the check AND THEN dispatches, with the token,
  *      against the right workflow, on main;
- *   2. the 09:00 cron does not re-run the check, and records whether a run
- *      exists since this week's check;
+ *   2. the 08:00 handler checks the run two minutes after kicking it, and the
+ *      09:00 cron does the same without re-running the source check;
  *   3. with no token bound nothing is sent and the status says so;
  *   4. a GitHub refusal is recorded, not swallowed;
  *   5. /status.json publishes all of it under "editorial".
@@ -25,6 +25,7 @@ function makeEnv(token) {
     WATCHER_KV: { get: async (k) => (kv.has(k) ? kv.get(k) : null), put: async (k, v) => { kv.set(k, v); } },
     WATCHER_STATUS_SECRET: { get: async () => 'secret' },
     GITHUB_DISPATCH_TOKEN: token === undefined ? undefined : { get: async () => token },
+    VERIFY_DELAY_MS: 0,   // the real Worker waits two minutes; tests do not
     _kv: kv
   };
 }
@@ -55,6 +56,8 @@ globalThis.fetch = async (url, init = {}) => {
   ok(d[0] && d[0].headers.Authorization === 'Bearer tok123', 'dispatch carries the token');
   const rec = JSON.parse(env._kv.get('editorialDispatch'));
   ok(rec.ok === true && rec.httpStatus === 204, 'a 204 is recorded as ok');
+  const rcAfterKick = env._kv.get('editorialRunCheck');
+  ok(!!rcAfterKick && calls.some((x) => x.url.includes('/runs')) && calls.findIndex((x) => x.url.includes('/runs')) > calls.findIndex((x) => x.url.includes('/dispatches')), '08:00 also checks the run itself, after the kick (no reliance on the 09:00 cron)');
 
   // 2. 09:00 on the same env
   calls = []; const lastAt = JSON.parse(env._kv.get('lastRun')).at;
@@ -100,6 +103,7 @@ globalThis.fetch = async (url, init = {}) => {
   await worker.scheduled({ cron: '0 8 * * 2' }, env, c); await c.done();
   const rec = JSON.parse(env._kv.get('editorialDispatch'));
   ok(rec.ok === false && rec.httpStatus === 401 && /Bad credentials/.test(rec.error), 'a refusal is recorded with its status and message');
+  ok(!env._kv.has('editorialRunCheck'), 'a failed kick does not trigger the in-handler run check');
   ghDispatchStatus = 204;
 }
 
