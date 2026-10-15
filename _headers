@@ -6,6 +6,10 @@
 # stale-while-revalidate keeps repeat visits fast while still letting a change
 # to kys.css reach everyone within a day, with no version query strings to
 # maintain. Added 2026, after the September spam update freeze.
+#
+# Since 2026-10-15 the pages carry kys.css inline (scripts/inline_css.py) and
+# no longer request it. The file is still served here for anything that still
+# links it, such as a page cached before the change.
 
 /assets/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=604800

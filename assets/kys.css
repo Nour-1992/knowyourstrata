@@ -13,6 +13,12 @@
 /* Know Your Strata — shared design system.
    Loaded before each page's own <style>, so a page can still override.
 
+   INLINED, since 2026-10-15: pages do not link this file. scripts/inline_css.py
+   minifies it into a <style id="kys-css"> block in every page, where the link
+   used to be, so it no longer blocks first paint. This file is still the one
+   source of truth: edit it here, then run  python3 scripts/inline_css.py
+   (and  --check  to confirm no page is stale). Never edit the inline blocks.
+
    Palette note: the ground moved off warm cream to a cool pale sage. Spruce is
    kept as the trust anchor since five tools already carry it, but it now sits
    in a cool system rather than a warm one. Citations and verified dates are set

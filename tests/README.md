@@ -44,8 +44,12 @@ element holding the answer, the expected text, and one line on *why the case
 exists*. That last field is not decoration — it is what tells the next person
 whether a failure is a bug or a stale expectation.
 
-Not yet covered: `on/notice-of-meeting-deadline`,
-`on/reserve-fund-study-deadline`, `bc/depreciation-report-deadline`. These take
+`on/records-request-deadline` and `on/reserve-fund-study-deadline` also carry
+holiday cases (Legislation Act, 2006, ss. 88(2) and 89(1)): a deadline landing on
+Labour Day, Thanksgiving or a Christmas run moves to the next day that is not a
+holiday, and a Saturday deadline stands.
+
+Not yet covered: `on/notice-of-meeting-deadline`, `bc/depreciation-report-deadline`. These take
 more inputs and branch more; they are the obvious next additions.
 
 ## `events_test.py`

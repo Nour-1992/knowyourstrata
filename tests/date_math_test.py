@@ -93,6 +93,29 @@ CASES = [
     ('/on/records-request-deadline', {'received': '2026-12-15'}, 'deadline1',
      'Thursday, January 14, 2027',
      '30 days across the turn of the year'),
+    ('/on/records-request-deadline', {'received': '2026-08-08'}, 'deadline1',
+     'Tuesday, September 8, 2026',
+     'HOLIDAY: day 30 is Labour Day, so Legislation Act s. 89(1) moves it to Tuesday'),
+    ('/on/records-request-deadline', {'received': '2026-09-12'}, 'deadline1',
+     'Tuesday, October 13, 2026',
+     'HOLIDAY: day 30 is Thanksgiving Monday'),
+    ('/on/records-request-deadline', {'received': '2026-09-10'}, 'deadline1',
+     'Saturday, October 10, 2026',
+     'SATURDAY IS NOT A HOLIDAY under s. 88(2): the deadline stands'),
+
+    # -- Ontario reserve fund study ------------------------------------------
+    ('/on/reserve-fund-study-deadline', {'mode': 'prior', 'completed': '2023-09-07', 'lastClass': 'comprehensive'}, 'dueDate',
+     'Tuesday, September 8, 2026',
+     'HOLIDAY: three years lands on Labour Day'),
+    ('/on/reserve-fund-study-deadline', {'mode': 'prior', 'completed': '2023-09-12', 'lastClass': 'site'}, 'dueDate',
+     'Saturday, September 12, 2026',
+     'SATURDAY stands'),
+    ('/on/reserve-fund-study-deadline', {'mode': 'prior', 'completed': '2020-02-29', 'lastClass': 'nosite'}, 'dueDate',
+     'Tuesday, February 28, 2023',
+     'LEAP: a February 29 start lands on February 28, not March 1'),
+    ('/on/reserve-fund-study-deadline', {'mode': 'new', 'registered': '2025-12-25'}, 'dueDate',
+     'Monday, December 28, 2026',
+     'HOLIDAY RUN: Christmas Friday, Boxing Day Saturday, Sunday, so Monday'),
 ]
 
 
