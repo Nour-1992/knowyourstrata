@@ -309,7 +309,7 @@
   <header>
     <p class="eyebrow">Ontario · Condominium Act, 1998</p>
     <h1>How many owners do we need to requisition a meeting?</h1>
-    <p class="lede">Enter the total units in the corporation. Get the number needed to requisition a meeting under the current 15% rule — plus what changes when Ontario's pending amendments take effect on December 31, 2026.</p>
+    <p class="lede">Enter the units in the corporation. Get the number of owners needed to requisition a meeting under s. 46, and the deadlines that follow, under whichever version of the section applies: the current one, or the replacement that takes effect on December 31, 2026.</p>
   </header>
 
   <div class="card">
@@ -320,7 +320,7 @@
       <label for="ancillary">How many of those are parking, storage or service units? <span class="hint">(optional; leave blank if none. They do not count toward the percentage, O. Reg. 48/01 s. 1.1)</span></label>
       <input type="number" id="ancillary" min="0" step="1" placeholder="0">
 
-      <label for="received">Date the board received the requisition <span class="hint">(optional — leave blank for the general timeline)</span></label>
+      <label for="received">Date the board received the requisition <span class="hint">(optional; it decides which version of s. 46 applies and dates the deadlines. Leave blank to see the rules that apply today)</span></label>
       <input type="date" id="received">
 
       <button id="calc">Check the threshold</button>
@@ -330,46 +330,46 @@
     <div class="result" id="result">
       <div class="stamp">
         <p class="k">Requisitioning owners must together own at least</p>
-        <p class="date" id="unitsNeeded">—</p>
+        <p class="date" id="unitsNeeded">&mdash;</p>
         <p class="sub" id="unitsSub"></p>
       </div>
-      <p class="verified-badge"><span class="check">✓</span> Verified October 6, 2026 · <span id="badgeCite">Condominium Act, 1998, s. 46</span></p>
+      <p class="verified-badge"><span class="check">&#10003;</span> Verified October 6, 2026 &middot; <span id="badgeCite">Condominium Act, 1998, s. 46</span></p>
       <p class="badge-note">Sources checked automatically every Monday. Last check October 12, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a></span></p>
 
-      <p class="cite-line"><strong>Condominium Act, 1998, s. 46(1)</strong> — "A requisition for a meeting of owners may be made by those owners who at the time the board receives the requisition, own at least 15 per cent of the units, are listed in the record maintained by the corporation under section 46.1 and are entitled to vote."</p>
+      <p class="cite-line" id="regimeLine"></p>
 
       <div class="who">
-        <h3>What a valid requisition needs — current law</h3>
-        <ul>
-          <li>In <strong>writing</strong>, signed by the requisitionists.</li>
-          <li>States the <strong>nature of the business</strong> to be presented at the meeting.</li>
-          <li>Delivered <strong>personally or by registered mail</strong> to the board president or secretary, or deposited at the corporation's address for service.</li>
-        </ul>
-        <p class="cite">Condominium Act, 1998, s. 46(2). No prescribed form is required under current law.</p>
+        <h3 id="needsHead">What a valid requisition needs</h3>
+        <ul id="needsList"></ul>
+        <p class="cite" id="needsCite"></p>
       </div>
 
-      <p class="cite-line" id="meetByLine"><strong>Meeting deadline</strong> — the board must call and hold the meeting within 35 days, or the business goes onto the next AGM agenda if the requisitionists agree. <span class="cite-tag">s. 46(4)</span></p>
-      <p class="cite-line">If the board doesn't act, a requisitionist may call the meeting themselves — it must then be held within 45 days of the day they call it. <span class="cite-tag">s. 46(5)</span></p>
+      <div class="who">
+        <h3>The clock</h3>
+        <ul id="clockList"></ul>
+        <p class="cite" id="clockCite"></p>
+      </div>
+
       <p class="past" id="pastNote"></p>
 
-      <div class="transition no-print">
+      <div class="transition no-print" id="changeBox">
         <p class="transition-eyebrow">Changing December 31, 2026</p>
-        <h3>The 15% threshold stays the same. Almost everything else doesn't.</h3>
-        <p>Ontario's 2015 amendments to this section are scheduled to be proclaimed into force on this date. The share of units needed to requisition does <strong>not</strong> change — but the eligibility conditions, the form, and the entire response timeline do:</p>
+        <h3>The 15% stays. The process around it is rebuilt.</h3>
+        <p>A requisition the board receives on or after December 31, 2026 runs under the new section 46. One received before that day stays under the old section to the end (O. Reg. 48/01 s. 80).</p>
         <ul>
-          <li>A <strong>new eligibility bar</strong>: requisitionists can't be 30+ days in arrears on common expenses. Not a rule today.</li>
-          <li>A <strong>prescribed form</strong> replaces today's plain written requisition.</li>
-          <li>The board gets <strong>20 days to respond</strong> in writing (the Act itself says 10, but O. Reg. 48/01 — coming into force alongside it — actually sets this at 20).</li>
-          <li>If it agrees, the meeting must be held within <strong>40 more days after that response window ends</strong> — around 60 days total, not 35.</li>
-          <li>If it declines, requisitionists get <strong>10 days to revise</strong>, then <strong>20 days to apply to the Condominium Authority Tribunal</strong> (or Superior Court) — replacing today's simple "call it yourself in 45 days" option.</li>
+          <li>A <strong>new eligibility bar</strong>: requisitionists cannot have common expense contributions 30 days or more in arrears.</li>
+          <li>A <strong>prescribed form</strong>, the Requisition to Call and Hold a Meeting of Owners, replaces a plain signed letter.</li>
+          <li>The board has <strong>20 days to respond</strong> in writing. Silence counts as agreeing.</li>
+          <li>If it agrees, the meeting must be held within <strong>40 days after the response period ends</strong>, about 60 days from receipt instead of 35.</li>
+          <li>If it declines, requisitionists have <strong>10 days to revise</strong>, or <strong>20 days to apply</strong> to the Condominium Authority Tribunal or the Superior Court of Justice. The &ldquo;call it yourself&rdquo; option ends.</li>
         </ul>
-        <p class="cite">Condominium Act, 1998, s. 46 (as replaced by 2015, c. 28, Sched. 1, s. 40) &amp; O. Reg. 48/01, ss. 12.2.1–12.2.7. See the full breakdown below.</p>
+        <p class="cite">Condominium Act, 1998, s. 46 as replaced by 2015, c. 28, Sched. 1, s. 40; O. Reg. 48/01, ss. 12.2.1 to 12.2.7 and 80, as amended by O. Reg. 236/26. Enter a received date on or after December 31, 2026 to see the new clock.</p>
       </div>
 
       <div class="copybar no-print">
         <button type="button" class="copy-btn" id="copyBtn">Copy result</button>
         <button type="button" class="copy-btn" id="printBtn">Print / save PDF</button>
-        <span class="copied-note" id="copiedNote">Copied ✓</span>
+        <span class="copied-note" id="copiedNote">Copied &#10003;</span>
       </div>
     </div>
   </div>
@@ -410,49 +410,55 @@
   </section>
 
   <section class="explain">
-    <h2>Who can requisition, and how</h2>
-    <p>Section 46 of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> sets the bar at 15% of the units, held by owners who are already on the corporation's own owners' record and entitled to vote:</p>
-    <p class="quote">"A requisition for a meeting of owners may be made by those owners who at the time the board receives the requisition, own at least 15 per cent of the units, are listed in the record maintained by the corporation under section 46.1 and are entitled to vote."</p>
-    <p>The requisition itself is informal under current law — no prescribed form exists yet:</p>
-    <p class="quote">"The requisition shall, (a) be in writing and be signed by the requisitionists; (b) state the nature of the business to be presented at the meeting; and (c) be delivered personally or by registered mail to the president or secretary of the board or deposited at the address for service of the corporation."</p>
+    <h2>Two versions of section 46, and the date that picks one</h2>
+    <p>Section 46 of the <a href="https://www.ontario.ca/laws/statute/98c19" rel="noopener">Condominium Act, 1998</a> is repealed and replaced on December 31, 2026 by the Protecting Condominium Owners Act, 2015. The changeover is decided by one fact: the day the board <strong>received</strong> the requisition.</p>
+    <p class="quote">&ldquo;Section 46 of the Act, as it reads on the day this section comes into force, does not apply with respect to a requisition that is received by the board before that day and instead section 46 of the Act, as it read immediately before that day, continues to apply to such a requisition.&rdquo;</p>
+    <p>That is O. Reg. 48/01 s. 80. A requisition received on December 30 runs on the old 35 day clock even if the meeting lands in February. One received on December 31 runs on the new process from the start. This calculator applies whichever version the received date calls for.</p>
 
-    <h2 style="margin-top:32px">The current timeline: 35 days, or 45 if the board doesn't act</h2>
-    <p>Once the board receives a valid requisition, section 46(4) requires it to either add the business to the next AGM (if the requisitionists agree) or "call and hold a meeting of owners within 35 days." If the board misses that, section 46(5) is a self-help remedy: a requisitionist can call the meeting themselves, and it "shall be held within 45 days of the day on which the meeting is called."</p>
+    <h2 style="margin-top:32px">Who can requisition</h2>
+    <p>Both versions set the same bar: owners who own at least 15 per cent of the units, and who appear in the corporation&rsquo;s s. 46.1 record of owners. The replacement adds a third condition:</p>
+    <p class="quote future">&ldquo;(c) have no contributions to the common expenses payable for their units that have been in arrears for 30 days or more.&rdquo;</p>
+    <p><strong>Which units count.</strong> O. Reg. 48/01 s. 1.1 reads &ldquo;15 per cent of the units&rdquo; as 15 per cent of the units that are not parking, storage or service units under s. 49(3) of the Act, unless every unit is one. It applies to the old s. 46(1) and to the new s. 46(1)(a) alike. A corporation with 200 suites and 150 parking units needs owners of 30 units, not 53.</p>
+    <p><strong>Reserved board positions.</strong> If the business is removing or electing a director in a position reserved under s. 51(6), the 15 per cent is taken of those reserved units instead: the owner-occupied units under O. Reg. 48/01 s. 1.1(1)(a) for the old section, and the non-leased voting units under the new s. 46(2). A requisition that fails that test but meets the general one can still go ahead for its other business (new s. 46(3)).</p>
 
-    <h2 style="margin-top:32px" id="transition-detail">What changes on December 31, 2026 — and what doesn't</h2>
-    <p>The 2015 Protecting Condominium Owners Act rewrote section 46 entirely; those changes are scheduled to be proclaimed into force on this date. Reading the pending text directly, the threshold itself carries over unchanged:</p>
-    <p class="quote future">"...a requisition for a meeting of owners can only be made by those owners who, at the time the board receives the requisition, (a) own at least 15 per cent of the units..."</p>
-    <p>But two new conditions are added alongside it — appearing in the s. 46.1 owners' record (already required today) and, new, having no arrears of 30 days or more:</p>
-    <p class="quote future">"...(c) have no contributions to the common expenses payable for their units that have been in arrears for 30 days or more."</p>
-    <p>The requisition also stops being a plain written note: the pending law requires "the prescribed information" in "the prescribed form." And the timeline is restructured from a single deadline into a multi-step process:</p>
+    <h2 style="margin-top:32px">The old section: 35 days, then 45</h2>
+    <p>For a requisition received before December 31, 2026, it must be in writing, signed by the requisitionists, state the nature of the business, and be delivered personally or by registered mail to the president or secretary, or deposited at the corporation&rsquo;s address for service (s. 46(2)). If it seeks to remove directors it must name each one, give the reasons, and say whether the director holds a reserved position (s. 46(3)).</p>
+    <p>The board must then either add the business to the next AGM, if the requisitionists ask or consent in writing, or &ldquo;call and hold a meeting of owners within 35 days&rdquo; (s. 46(4)). If it does neither, a requisitionist may call the meeting, to be held within 45 days of the day it is called (s. 46(5)), and the corporation must reimburse the reasonable costs on request (s. 46(6)).</p>
+
+    <h2 style="margin-top:32px" id="transition-detail">The new section: respond in 20, hold within 40 more</h2>
     <ul class="plain">
-      <li><strong>Board response — 20 days, not 10.</strong> The pending Act text itself says the board has "10 days or such other time period, if any, that is prescribed" to respond in writing. O. Reg. 48/01 — amended in the same package — prescribes 20 days for this purpose, which is the figure that actually governs.</li>
-      <li><strong>Meeting deadline — 40 more days.</strong> If the board agrees, it must call and hold the meeting (or add it to the next AGM, on a defined schedule) within 40 days <em>after the end of that response period</em> — so roughly 60 days from requisition to meeting in the ordinary case, not 35.</li>
-      <li><strong>If the board declines — 10 days to revise.</strong> Requisitionists can fix and resubmit using the prescribed form.</li>
-      <li><strong>If that's declined too — 20 days to escalate.</strong> Requisitionists can apply to the Condominium Authority Tribunal (once it has jurisdiction here) or the Superior Court before the requisition is deemed abandoned. Today's simple "call the meeting yourself within 45 days" option does not carry over into this structure.</li>
+      <li><strong>The form.</strong> The requisition must contain the prescribed information in the prescribed form (new s. 46(5)): the Requisition to Call and Hold a Meeting of Owners, published by the Condominium Authority of Ontario (O. Reg. 48/01 ss. 12.2.1 and 16.1). It names the corporation, the unit count and what 15 per cent of it is, each requisitionist&rsquo;s unit, the purpose, and one or two contacts for the board&rsquo;s reply.</li>
+      <li><strong>Delivery.</strong> Personally, by registered mail, or at the address for service (new s. 46(6)), and also by prepaid mail, courier or the mail box at the corporation&rsquo;s or the condominium manager&rsquo;s address for service or an address the board has named by resolution, or by email or other electronic means if the board has accepted that by resolution (O. Reg. 48/01 s. 12.2.2).</li>
+      <li><strong>Purpose.</strong> An information meeting with no vote beyond routine procedure, the removal or election of directors, or another purpose the Act or regulations allow (new s. 46(4)).</li>
+      <li><strong>The board responds in 20 days.</strong> The Act says &ldquo;within 10 days or such other time period, if any, that is prescribed&rdquo;, and O. Reg. 48/01 s. 12.2.3 prescribes 20. The response is in writing and either agrees to call the meeting or says why the requisition does not comply (new s. 46(7)). <strong>Silence counts as agreeing</strong> (new s. 46(10)).</li>
+      <li><strong>The meeting within 40 more days.</strong> Once the board agrees, or is deemed to, it must call and hold the meeting within 40 days after the end of the 20 day response period, or add the business to an AGM held at least 40 days after it if the requisitionists asked for that (new s. 46(11)). From receipt, that is about 60 days.</li>
+      <li><strong>If the board declines.</strong> The requisitionists may revise within 10 days on a fresh form (new s. 46(13); O. Reg. 48/01 s. 12.2.7), or within 20 days apply to the Condominium Authority Tribunal, or to the Superior Court of Justice where the Tribunal cannot hear it. Otherwise the requisition is deemed abandoned (new s. 46(15)). The old right to call the meeting yourself does not carry over.</li>
+      <li><strong>Withdrawal.</strong> The named contact can withdraw the requisition by written notice within 15 days after delivering it, and the board then need not respond (new s. 46(8); O. Reg. 48/01 s. 12.2.4).</li>
     </ul>
-    <p>One narrow addition: if the business involves removing or electing a director in a position reserved under s. 51(6), the pending law sets a separate 15%-of-non-leased-voting-units threshold for that specific purpose — a distinction that doesn't exist in current law.</p>
+
+    <h2 style="margin-top:32px">Counting the days</h2>
+    <p>Each deadline is counted the way the Legislation Act, 2006 counts &ldquo;within&rdquo; a number of days: excluding the day of the trigger, so day 1 is the day after it. If the last day falls on a holiday, s. 89(1) moves it to the next day that is not one. Sunday is a holiday under s. 88(2); <strong>Saturday is not</strong>, so a deadline landing on a Saturday stays there. A holiday fixed by proclamation cannot be predicted, so check any date that lands near one.</p>
 
     <dl class="faq">
       <dt>Do parking and locker units count toward the 15 per cent?</dt>
       <dd>No, when they are separate units. O. Reg. 48/01 s. 1.1 reads &ldquo;15 per cent of the units&rdquo; in s. 46(1) as 15 per cent of the units that are not parking, storage or service units under s. 49(3) of the Act. The same rule carries over to the replacement s. 46(1)(a) on December 31, 2026. A corporation with 200 suites and 150 parking units needs 30 units, not 53. Enter them in the second box and the calculator does this for you.</dd>
-      <dt>Does the 15% threshold change on December 31, 2026?</dt>
-      <dd>No. We read the pending replacement text directly rather than assuming: the 15%-of-units figure in the new s. 46(1)(a) is identical to the current s. 46(1). What changes is everything around it — eligibility, form, and the timeline.</dd>
-      <dt>Is the 30-day arrears rule in effect right now?</dt>
-      <dd>No. It appears only in the pending replacement of s. 46(1), not in the current, in-force text. A requisition today isn't invalidated by arrears under section 46 itself.</dd>
-      <dt>The Act says the board gets 10 days to respond — why does this page say 20?</dt>
-      <dd>Because section 46(7) of the pending text explicitly defers to "such other time period, if any, that is prescribed," and O. Reg. 48/01 — amended in the same not-yet-in-force package — prescribes 20 days for that purpose. Both pieces come into force together, so 20 days is what will actually apply.</dd>
-      <dt>Is December 31, 2026 a guaranteed date?</dt>
-      <dd>It's the date currently stated on the official consolidation, tied to a proclamation order of the Lieutenant Governor in Council. Ontario condominium law has shifted proclamation dates before, so treat this as the best current information and confirm again as the date approaches.</dd>
-      <dt>Do a corporation's by-laws affect any of this?</dt>
-      <dd>We found no by-law power over the threshold or the timeline in either the current or pending text of section 46 — unlike quorum, where a registered by-law can hold quorum at 25% throughout.</dd>
+      <dt>Our board received a requisition on December 20, 2026. Which rules apply?</dt>
+      <dd>The old ones, all the way through. O. Reg. 48/01 s. 80 keeps the old s. 46 for any requisition the board received before December 31, 2026, so the board still has 35 days to call and hold the meeting, and the 45 day self-help route under the old s. 46(5) is still there if it does not.</dd>
+      <dt>Does the 15 per cent threshold change on December 31, 2026?</dt>
+      <dd>No. The figure in the new s. 46(1)(a) is the same as in the old s. 46(1), and O. Reg. 48/01 s. 1.1 applies to both. What changes is who is eligible, the form, and the whole timeline.</dd>
+      <dt>The Act says the board has 10 days to respond. Why does this page say 20?</dt>
+      <dd>Because the new s. 46(7) says &ldquo;within 10 days or such other time period, if any, that is prescribed&rdquo;, and O. Reg. 48/01 s. 12.2.3 prescribes 20 days. The regulation was amended for this by O. Reg. 236/26 and comes into force on the same day.</dd>
+      <dt>What if the board never answers?</dt>
+      <dd>Under the new section, silence is a yes. New s. 46(10) deems a board that does not respond in time to have agreed, and the 40 day clock to hold the meeting starts when the 20 day response period ends.</dd>
+      <dt>Is December 31, 2026 a fixed date?</dt>
+      <dd>It is the day named by order of the Lieutenant Governor in Council, as printed in the official consolidation on e-Laws. Ontario has moved condominium proclamation dates before, so this page is checked against e-Laws every week and will say so if the date moves.</dd>
       <dt>Is this legal advice?</dt>
-      <dd>No. It's general information based on the current legislation, verified against the sources linked above. For anything contested — especially once the new process is live — talk to a condominium lawyer.</dd>
+      <dd>No. It is general information based on the legislation, verified against the sources linked above. For anything contested, especially a declined requisition heading to the Tribunal, talk to a condominium lawyer.</dd>
     </dl>
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 46 and s. 46.1 (current text, and the pending replacement enacted by 2015, c. 28, Sched. 1, s. 40), and O. Reg. 48/01, ss. 12.2.1 to 12.2.7. Last verified 6 October 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 7 October 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, s. 46 (as it reads before December 31, 2026, and as replaced on that day by 2015, c. 28, Sched. 1, s. 40), s. 46.1 and s. 49(3); O. Reg. 48/01, ss. 1.1, 12.2.1 to 12.2.7 and 80, as amended by O. Reg. 236/26; and the Legislation Act, 2006, ss. 88 and 89. Last verified 6 October 2026 against the official statute and regulation on ontario.ca, e-Laws currency date 7 October 2026; the consolidations in force are unchanged since 31 December 2025 for the Act and 20 July 2026 for the regulation. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
     <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
@@ -521,34 +527,46 @@
 <script>
 (function(){
   var units=document.getElementById('units'),
-      received=document.getElementById('received'),
       ancillary=document.getElementById('ancillary'),
+      received=document.getElementById('received'),
       calcBtn=document.getElementById('calc'),
       err=document.getElementById('err'),
       result=document.getElementById('result'),
       unitsNeeded=document.getElementById('unitsNeeded'),
       unitsSub=document.getElementById('unitsSub'),
-      meetByLine=document.getElementById('meetByLine'),
+      badgeCite=document.getElementById('badgeCite'),
+      regimeLine=document.getElementById('regimeLine'),
+      needsHead=document.getElementById('needsHead'),
+      needsList=document.getElementById('needsList'),
+      needsCite=document.getElementById('needsCite'),
+      clockList=document.getElementById('clockList'),
+      clockCite=document.getElementById('clockCite'),
       pastNote=document.getElementById('pastNote'),
+      changeBox=document.getElementById('changeBox'),
       copyBtn=document.getElementById('copyBtn'),
       printBtn=document.getElementById('printBtn'),
       copiedNote=document.getElementById('copiedNote');
 
-  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  /* All dates are UTC midnights, so no timezone or daylight saving shift can
+     move a day. */
+  var fmt=new Intl.DateTimeFormat('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'UTC'});
+  var DAY=86400000;
+  /* The day the replacement s. 46 and O. Reg. 48/01 ss. 12.2.1 to 12.2.7 and
+     80 come into force, as printed on e-Laws (2015, c. 28, Sched. 1, s. 40;
+     O. Reg. 236/26). If the proclamation date moves, this is the one line to
+     change. */
+  var NEW_S46=Date.UTC(2026,11,31);
 
-  function parseLocal(v){
-    var p=v.split('-');
-    return new Date(+p[0], +p[1]-1, +p[2]);
+  function parseDate(s){
+    if(!s)return null;
+    var p=s.split('-');
+    if(p.length!==3)return null;
+    var d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));
+    return isNaN(d.getTime())?null:d;
   }
-  function addDays(d,n){
-    var c=new Date(d.getTime());
-    c.setDate(c.getDate()+n);
-    return c;
-  }
-  function today0(){
-    var t=new Date();
-    return new Date(t.getFullYear(),t.getMonth(),t.getDate());
-  }
+  function iso(d){return d.toISOString().slice(0,10);}
+  function addDays(d,n){return new Date(d.getTime()+n*DAY);}
+  function todayUTC(){var t=new Date();return new Date(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()));}
   function readInt(el){
     var v=el.value.trim();
     if(v==='')return null;
@@ -556,18 +574,63 @@
     return isNaN(n)?null:n;
   }
 
-  function show(msg){
-    err.textContent=msg;
-    err.style.display='block';
-    result.style.display='none';
+  function easterSunday(y){
+    var a=y%19,b=Math.floor(y/100),c=y%100,dd=Math.floor(b/4),e=b%4,
+        f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-dd-g+15)%30,
+        i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),
+        mo=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
+    return new Date(Date.UTC(y,mo-1,day));
   }
+  function nthWeekdayBefore(y,mo,dow,beforeDay){
+    var d=new Date(Date.UTC(y,mo,beforeDay));
+    while(d.getUTCDay()!==dow){d=new Date(d.getTime()-DAY);}
+    return d;
+  }
+  function nthWeekdayOfMonth(y,mo,dow,n){
+    var d=new Date(Date.UTC(y,mo,1));
+    while(d.getUTCDay()!==dow){d=new Date(d.getTime()+DAY);}
+    return new Date(d.getTime()+(n-1)*7*DAY);
+  }
+  /* Legislation Act, 2006 s. 88(2), the same list the lien and status
+     certificate tools use. Saturday is deliberately ABSENT. */
+  function holidayName(d){
+    var y=d.getUTCFullYear(),mo=d.getUTCMonth(),day=d.getUTCDate(),dow=d.getUTCDay();
+    if(dow===0)return 'a Sunday';
+    if(mo===0&&day===1)return 'New Year’s Day';
+    if(mo===0&&dow===1&&day===2)return 'the Monday after a Sunday New Year’s Day';
+    if(mo===1&&dow===1&&day>=15&&day<=21)return 'Family Day';
+    var e=easterSunday(y);
+    if(iso(d)===iso(new Date(e.getTime()-2*DAY)))return 'Good Friday';
+    if(iso(d)===iso(new Date(e.getTime()+DAY)))return 'Easter Monday';
+    if(mo===4&&iso(d)===iso(nthWeekdayBefore(y,4,1,24)))return 'Victoria Day';
+    if(mo===6&&day===1)return 'Canada Day';
+    if(mo===6&&day===2&&new Date(Date.UTC(y,6,1)).getUTCDay()===0)return 'Canada Day (moved from a Sunday)';
+    if(mo===8&&iso(d)===iso(nthWeekdayOfMonth(y,8,1,1)))return 'Labour Day';
+    if(mo===9&&iso(d)===iso(nthWeekdayOfMonth(y,9,1,2)))return 'Thanksgiving Day';
+    if(mo===10&&day===11)return 'Remembrance Day';
+    if(mo===11&&day===25)return 'Christmas Day';
+    if(mo===11&&day===26)return 'Boxing Day';
+    if(mo===11&&day===27&&new Date(Date.UTC(y,11,25)).getUTCDay()===6)return 'the Monday after a Saturday Christmas Day';
+    return null;
+  }
+  /* A time limit that would end on a holiday runs to the next day that is not
+     one (s. 89(1)). Returns the date and, if it moved, why. */
+  function deadline(start,n){
+    var raw=addDays(start,n), d=raw, why=null;
+    var hn=holidayName(d);
+    if(hn){why=hn;while(holidayName(d)){d=addDays(d,1);}}
+    return {raw:raw,date:d,moved:why};
+  }
+  function why(x){return x.moved==='a Sunday'?'a holiday under s. 88(2)':x.moved;}
+  function dl(x){
+    return '<strong>'+fmt.format(x.date)+'</strong>'+(x.moved?' (the last day, '+fmt.format(x.raw)+', is '+why(x)+', so Legislation Act s. 89(1) moves it)':'');
+  }
+  function dlText(x){return fmt.format(x.date)+(x.moved?' (the last day, '+fmt.format(x.raw)+', is '+why(x)+', moved under Legislation Act s. 89(1))':'');}
 
-
-  /* Which units the percentage is taken of. O. Reg. 48/01 s. 1.1(1)(b) reads
-     "a portion of the units" in this section as a portion of the units NOT
-     described in s. 49(3) of the Act (parking, storage, services, facilities,
-     mechanical installations), unless every unit is one of those (s. 1.1(1)(c)).
-     Returns null on bad input, after showing the error. */
+  /* O. Reg. 48/01 s. 1.1(1)(b): the percentage is of the units that are not
+     parking, storage or service units under s. 49(3), unless every unit is
+     one (s. 1.1(1)(c)). It applies to the old s. 46(1) (para 10 of s. 1.1(2))
+     and the new s. 46(1)(a) (para 11). */
   function countingUnits(total){
     var a=readInt(ancillary);
     if(a===null||a===0)return {base:total,anc:0};
@@ -582,6 +645,13 @@
     return ' that count ('+total+' in all, less '+cu.anc+' parking, storage or service '+(cu.anc===1?'unit':'units')+', O. Reg. 48/01 s. 1.1)';
   }
 
+  function show(msg){
+    err.textContent=msg;
+    err.style.display='block';
+    result.style.display='none';
+  }
+  function li(items){return items.map(function(s){return '<li>'+s+'</li>';}).join('');}
+
   var current=null;
 
   calcBtn.addEventListener('click',function(){
@@ -589,31 +659,107 @@
     if(total===null||total<1){show('Enter how many units the corporation has.');return;}
     var cu=countingUnits(total);
     if(!cu)return;
+    var r=null;
+    if(received.value){
+      r=parseDate(received.value);
+      if(!r){show('That received date could not be read. Use the date picker.');return;}
+    }
     err.style.display='none';
 
-    // A fraction of a unit can't sign a requisition, so this rounds up --
-    // the same convention used on the quorum tool for the same reason.
+    var today=todayUTC();
+    var pivot=r||today;
+    var isNew=pivot.getTime()>=NEW_S46;
+
+    // A fraction of a unit cannot sign a requisition, so this rounds up, the
+    // same convention as the quorum tool.
     var needed=Math.ceil(cu.base*0.15);
     unitsNeeded.textContent=needed+(needed===1?' unit':' units');
     unitsSub.textContent='15% of '+cu.base+(cu.base===1?' unit':' units')+baseNote(cu,total)+', rounded up';
 
-    var meetBy=null;
-    if(received.value){
-      var r=parseLocal(received.value);
-      meetBy=addDays(r,35);
-      meetByLine.innerHTML='<strong>Meeting deadline</strong> — the board must call and hold the meeting no later than '+fmt.format(meetBy)+', 35 days after receiving the requisition on '+fmt.format(r)+'. <span class="cite-tag">s. 46(4)</span>';
-      if(meetBy<today0()){
-        pastNote.style.display='block';
-        pastNote.textContent='That 35-day deadline has already passed. Check whether a requisitionist has since called the meeting themselves under s. 46(5) — if so, it must be held within 45 days of the day they called it.';
+    var copyClock='';
+    if(!isNew){
+      badgeCite.textContent='Condominium Act, 1998, s. 46';
+      regimeLine.innerHTML='<strong>Section 46 as it reads before December 31, 2026</strong> applies, because '+
+        (r?'the board received this requisition on '+fmt.format(r)+', before the new section takes effect, and O. Reg. 48/01 s. 80 keeps the old section for it to the end.'
+          :'no received date was entered and today is before December 31, 2026. A requisition received on or after that day runs under the new section instead.');
+      needsHead.textContent='What a valid requisition needs';
+      needsList.innerHTML=li([
+        'Owners who together own at least <strong>'+needed+'</strong> of the '+cu.base+' units that count, when the board receives it.',
+        'Each requisitionist <strong>listed in the s. 46.1 record</strong> of owners and entitled to vote.',
+        'In <strong>writing</strong>, signed by the requisitionists, stating the <strong>nature of the business</strong>.',
+        'Delivered <strong>personally or by registered mail</strong> to the president or secretary, or deposited at the corporation’s address for service.',
+        'If it seeks to remove a director: each name, the reasons, and whether the position is reserved under s. 51(6).'
+      ]);
+      needsCite.textContent='Condominium Act, 1998, s. 46(1) to (3); O. Reg. 48/01, s. 1.1. No prescribed form under this version.';
+      if(r){
+        var m35=deadline(r,35);
+        clockList.innerHTML=li([
+          'The board must <strong>call and hold</strong> the meeting by '+dl(m35)+', 35 days after receiving it, unless the requisitionists asked or agreed in writing to add the business to the next AGM (s. 46(4)).',
+          'If it does neither, a requisitionist may <strong>call the meeting</strong>, which must be held within 45 days of the day it is called, and the corporation must reimburse the reasonable costs on request (s. 46(5), (6)).'
+        ]);
+        copyClock=' Board must call and hold the meeting by '+dlText(m35)+' (35 days from receipt on '+fmt.format(r)+', s. 46(4)); if it does not, a requisitionist may call it, to be held within 45 days of the day it is called (s. 46(5)).';
+        if(m35.date<today){
+          pastNote.style.display='block';
+          pastNote.textContent='That 35 day deadline has passed. If a requisitionist has since called the meeting under s. 46(5), it must be held within 45 days of the day it was called.';
+        } else pastNote.style.display='none';
       } else {
+        clockList.innerHTML=li([
+          'The board must <strong>call and hold</strong> the meeting within <strong>35 days</strong> of receiving it, or add the business to the next AGM if the requisitionists ask or agree in writing (s. 46(4)).',
+          'If it does neither, a requisitionist may call the meeting, to be held within <strong>45 days</strong> of the day it is called, at the corporation’s cost on request (s. 46(5), (6)).',
+          'Enter the received date above to get the actual deadline.'
+        ]);
+        copyClock=' Board must call and hold the meeting within 35 days of receipt (s. 46(4)); if it does not, a requisitionist may call it, to be held within 45 days of the day it is called (s. 46(5)).';
         pastNote.style.display='none';
       }
+      clockCite.textContent='Condominium Act, 1998, s. 46(4) to (6). Deadlines exclude the day of receipt; one ending on a holiday moves to the next day that is not (Legislation Act, 2006 s. 89(1)).';
+      changeBox.style.display=(today.getTime()<NEW_S46)?'':'none';
     } else {
-      meetByLine.innerHTML='<strong>Meeting deadline</strong> — the board must call and hold the meeting within 35 days of receiving the requisition, or the business goes onto the next AGM agenda if the requisitionists agree. <span class="cite-tag">s. 46(4)</span>';
-      pastNote.style.display='none';
+      badgeCite.textContent='Condominium Act, 1998, s. 46, as replaced';
+      regimeLine.innerHTML='<strong>Section 46 as replaced on December 31, 2026</strong> applies, because '+
+        (r?'the board received this requisition on '+fmt.format(r)+', on or after the day the new section took effect.'
+          :'no received date was entered and the new section is now in force. A requisition the board received before December 31, 2026 still runs under the old section (O. Reg. 48/01 s. 80); enter its date to see that version.');
+      needsHead.textContent='What a valid requisition needs';
+      needsList.innerHTML=li([
+        'Owners who together own at least <strong>'+needed+'</strong> of the '+cu.base+' units that count, when the board receives it (s. 46(1)(a)).',
+        'Each requisitionist <strong>in the s. 46.1 record</strong> of owners, or required to be (s. 46(1)(b)).',
+        '<strong>No common expense arrears of 30 days or more</strong> on any requisitionist’s unit (s. 46(1)(c)).',
+        'The <strong>prescribed form</strong>, Requisition to Call and Hold a Meeting of Owners, with the prescribed information (s. 46(5); O. Reg. 48/01 s. 12.2.1).',
+        'Delivered personally, by registered mail or at the address for service, or by the extra methods in O. Reg. 48/01 s. 12.2.2 (s. 46(6)).',
+        'If the business is a director in a <strong>reserved position</strong>: 15% of the non-leased voting units instead (s. 46(2)).'
+      ]);
+      needsCite.textContent='Condominium Act, 1998, s. 46(1) to (6), as replaced by 2015, c. 28, Sched. 1, s. 40; O. Reg. 48/01, ss. 1.1, 12.2.1, 12.2.2.';
+      if(r){
+        var resp=deadline(r,20);
+        /* The 40 days run from the END of the response period (s. 46(11)(b)),
+           which is day 20 itself, not the date a holiday may have moved a
+           board's last day to respond. */
+        var m40=deadline(resp.raw,40);
+        clockList.innerHTML=li([
+          'The board must <strong>respond in writing</strong> by '+dl(resp)+': agree to call the meeting, or say why the requisition does not comply. No response counts as agreeing (s. 46(7), (10); O. Reg. 48/01 s. 12.2.3).',
+          'If it agrees, or is deemed to, it must <strong>call and hold</strong> the meeting by '+dl(m40)+', 40 days after the 20 day response period ends, unless the requisitionists asked for the next AGM held at least 40 days after that (s. 46(11)).',
+          'If it declines, the requisitionists may <strong>revise within 10 days</strong> on a fresh form, or <strong>within 20 days</strong> apply to the Condominium Authority Tribunal or the Superior Court of Justice. Otherwise the requisition is deemed abandoned (s. 46(13), (15)).',
+          'The named contact may <strong>withdraw</strong> it by written notice by '+dl(deadline(r,15))+', 15 days after delivery (s. 46(8); O. Reg. 48/01 s. 12.2.4).'
+        ]);
+        copyClock=' Board must respond in writing by '+dlText(resp)+' (20 days from receipt on '+fmt.format(r)+', s. 46(7); O. Reg. 48/01 s. 12.2.3); no response counts as agreeing (s. 46(10)). If it agrees, the meeting must be called and held by '+dlText(m40)+' (40 days after the response period ends, s. 46(11)(b)). If it declines: revise within 10 days or apply to the Condominium Authority Tribunal or Superior Court within 20 days (s. 46(13), (15)).';
+        if(m40.date<today){
+          pastNote.style.display='block';
+          pastNote.textContent='Both deadlines have passed. If the board agreed, or never answered, the meeting should already have been held; a board that declined starts the 10 and 20 day clocks from its response.';
+        } else pastNote.style.display='none';
+      } else {
+        clockList.innerHTML=li([
+          'The board must <strong>respond in writing within 20 days</strong>: agree, or say why the requisition does not comply. No response counts as agreeing (s. 46(7), (10); O. Reg. 48/01 s. 12.2.3).',
+          'If it agrees, or is deemed to, it must <strong>call and hold</strong> the meeting within <strong>40 days after</strong> the response period ends, about 60 days from receipt (s. 46(11)).',
+          'If it declines: <strong>10 days to revise</strong>, or <strong>20 days to apply</strong> to the Condominium Authority Tribunal or the Superior Court of Justice, or the requisition is deemed abandoned (s. 46(13), (15)).',
+          'Enter the received date above to get the actual deadlines.'
+        ]);
+        copyClock=' Board must respond in writing within 20 days of receipt (s. 46(7); O. Reg. 48/01 s. 12.2.3); no response counts as agreeing (s. 46(10)). If it agrees, the meeting must be called and held within 40 days after the response period ends (s. 46(11)(b)). If it declines: revise within 10 days or apply to the Condominium Authority Tribunal or Superior Court within 20 days (s. 46(13), (15)).';
+        pastNote.style.display='none';
+      }
+      clockCite.textContent='Condominium Act, 1998, s. 46(7) to (15), as replaced; O. Reg. 48/01, ss. 12.2.3, 12.2.4. Deadlines exclude the day of receipt; one ending on a holiday moves to the next day that is not (Legislation Act, 2006 s. 89(1)).';
+      changeBox.style.display='none';
     }
 
-    current={total:total,base:cu.base,anc:cu.anc,needed:needed,received:received.value?parseLocal(received.value):null,meetBy:meetBy};
+    current={total:total,base:cu.base,anc:cu.anc,needed:needed,isNew:isNew,clock:copyClock};
 
     result.style.display='block';
     result.classList.remove('show');
@@ -622,8 +768,8 @@
   });
 
   /* Clipboard with a fallback. navigator.clipboard is undefined outside secure
-     contexts and can still reject on HTTPS (denied permission, document not
-     focused), so neither path is assumed and neither fails silently. */
+     contexts and can still reject on HTTPS, so neither path is assumed and
+     neither fails silently. */
   function flashNote(text,isError){
     copiedNote.textContent=text;
     copiedNote.className='copied-note show'+(isError?' err':'');
@@ -649,7 +795,7 @@
   }
   function copyFallback(text){
     if(legacyCopy(text))flashNote('Copied ✓',false);
-    else flashNote('Copy not supported — please select the text and copy manually.',true);
+    else flashNote('Copy not supported. Please select the text and copy manually.',true);
   }
   function copyToClipboard(text){
     if(navigator.clipboard&&navigator.clipboard.writeText){
@@ -669,23 +815,18 @@
 
   copyBtn.addEventListener('click',function(){
     if(!current)return;
-    var s='Corporation has '+current.total+(current.total===1?' unit':' units')+
-      (current.anc&&current.base!==current.total?', of which '+current.base+' count (parking, storage and service units excluded under O. Reg. 48/01 s. 1.1)':'')+
-      '. Requisitioning owners must together own at least '+current.needed+
-      (current.needed===1?' unit':' units')+' (15%, rounded up) under Condominium Act, 1998 s. 46(1).';
-    if(current.meetBy){
-      s+=' Meeting must be held by '+fmt.format(current.meetBy)+' (35 days from receipt, s. 46(4)); if the board misses it, a requisitionist may call it themselves within 45 days (s. 46(5)).';
-    } else {
-      s+=' The board must call and hold the meeting within 35 days of receiving the requisition (s. 46(4)); if it doesn\'t, a requisitionist may call it themselves within 45 days (s. 46(5)).';
-    }
-    s+=' Note: this is current law. Ontario\'s pending December 31, 2026 amendments keep the 15% threshold but restructure the timeline and add a 30-day arrears eligibility bar.'+
+    var c=current;
+    var s='Corporation has '+c.total+(c.total===1?' unit':' units')+
+      (c.anc&&c.base!==c.total?', of which '+c.base+' count (parking, storage and service units excluded under O. Reg. 48/01 s. 1.1)':'')+
+      '. Requisitioning owners must together own at least '+c.needed+(c.needed===1?' unit':' units')+
+      ' (15%, rounded up) under Condominium Act, 1998 s. 46(1)'+(c.isNew?'(a), as replaced December 31, 2026':', as it reads before December 31, 2026')+'.'+
+      (c.isNew?' Requisitionists must also be in the s. 46.1 record and have no common expense arrears of 30 days or more, and must use the prescribed form (s. 46(1)(b), (c), (5)).':'')+
+      c.clock+
       ' Verified October 6, 2026 against the Condominium Act, 1998 and O. Reg. 48/01 on ontario.ca.';
     copyToClipboard(s);
   });
 
-  printBtn.addEventListener('click',function(){
-    window.print();
-  });
+  printBtn.addEventListener('click',function(){window.print();});
 })();
 </script>
 <script src="/assets/kys-events.js" defer></script>
