@@ -7,7 +7,8 @@
 <meta name="description" content="Split an Ontario condo budget across units by the proportions in your declaration. Section 84 sets no default formula, so the declaration governs. Includes the section 93(5) reserve fund floor.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="/assets/kys.css">
 <link rel="canonical" href="https://knowyourstrata.com/on/common-expense-calculator">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -30,38 +31,6 @@
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
   "description": "Split an Ontario condo budget across units by the proportions in your declaration. Section 84 sets no default formula, so the declaration governs. Includes the section 93(5) reserve fund floor."
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How are common expenses divided between units in an Ontario condo?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "By the proportions specified in the declaration. Section 84(1) of the Condominium Act, 1998 says owners shall contribute to the common expenses in the proportions specified in the declaration. Unlike British Columbia, the Act supplies no default formula, so there is no statutory fallback if you do not have the declaration in front of you."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the minimum reserve fund contribution for an Ontario condo?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Until the corporation has conducted a first reserve fund study and implemented a funding plan under section 94, section 93(5) sets the total reserve contribution at the greater of the section 93(6) amount and 10 per cent of the budgeted amount required for contributions to the common expenses exclusive of the reserve fund. The last four words matter: it is 10 per cent of the budget without the reserve line, not 10 per cent of the whole budget."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can an owner refuse to pay common expenses?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Section 84(3) says an owner is not exempt from contributing even if the owner has waived or abandoned the right to use the common elements, is making a claim against the corporation, or is restricted from using the common elements by the declaration, by-laws or rules."
-      }
-    }
-  ]
 }
 </script>
 <style>
@@ -296,6 +265,12 @@
     </div>
   </div>
 </nav>
+<main class="wrap">
+  <header>
+    <p class="eyebrow">Ontario &middot; Condominium Act, 1998</p>
+    <h1>How much does each unit pay toward the common expenses?</h1>
+    <p class="lede">The declaration decides. Under section 84(1), owners contribute to the common expenses in the proportions the declaration specifies. Enter the budget and each unit&rsquo;s proportion and this splits it unit by unit, then checks the reserve fund line against the section 93(5) floor where that floor applies.</p>
+  </header>
   <div class="card">
     <div class="inputs no-print">
       <label for="annualBudget">Annual budget for common expenses <span class="hint">(the whole budget, including the reserve fund line)</span></label>
@@ -451,6 +426,7 @@
     <p>Built for the volunteer boards who keep Ontario&rsquo;s condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
+</main>
 
 <script>
 (function(){

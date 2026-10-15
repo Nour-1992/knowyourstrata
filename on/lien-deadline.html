@@ -7,7 +7,8 @@
 <meta name="description" content="An Ontario condo lien expires three months after the default unless a certificate of lien is registered. Work out that date, the 10-day written notice to the owner, and the encumbrancer notice that protects the lien's priority.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="/assets/kys.css">
 <link rel="canonical" href="https://knowyourstrata.com/on/lien-deadline">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -30,38 +31,6 @@
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CAD" },
   "description": "An Ontario condo lien expires three months after the default unless a certificate of lien is registered. Work out that date, the 10-day written notice to the owner, and the encumbrancer notice that protects the lien's priority."
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How long does an Ontario condo corporation have to register a lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Three months. Section 85(2) of the Condominium Act, 1998 says the lien expires three months after the default that gave rise to it unless the corporation registers a certificate of lien within that time. In practice the working deadline is shorter, because section 85(4) requires at least 10 days of written notice to the owner before the certificate is registered."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What happens if the condo corporation does not notify the mortgagee of a lien?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The lien loses its priority over that encumbrance, in whole or in part. Section 86(3) requires written notice to every encumbrancer registered against the title on or before the day the certificate of lien is registered, section 86(4) requires personal service or registered prepaid mail to the last known address, and section 86(5) says the lien loses priority over an encumbrance unless the required notice is given. Section 86(5) is subject to section 86(6): if the notice is given late, after registration, the lien keeps priority for the arrears that accrued in the three months before the notice and those that accrue after it, with interest and reasonable collection costs. Older arrears rank behind the encumbrance."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How is the three month lien deadline counted in Ontario?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Under section 89(6) of the Legislation Act, 2006, the months are counted from the day of the default excluding the month it falls in, and the period ends on the day in the final month with the same calendar number, or on that month's last day if there is no such number. A default on 31 January therefore runs to 30 April. If that day is a holiday under section 88(2), section 89(1) extends it to the next day that is not a holiday. Saturday is not a holiday under that list."
-      }
-    }
-  ]
 }
 </script>
 <style>
@@ -92,13 +61,13 @@
   }
   label{display:block;font-weight:600;font-size:.95rem;margin-bottom:6px}
   .hint{font-weight:400;color:#5E6E68;font-size:.85rem}
-  input[type="text"],input[type="number"],select{
+  input[type="text"],input[type="number"],input[type="date"],select{
     width:100%;padding:12px 14px;font-size:1.05rem;
     font-family:inherit;color:var(--ink);
     border:1.5px solid var(--line);border-radius:8px;background:#fff;
     margin-bottom:20px;
   }
-  input[type="text"]:focus,input[type="number"]:focus,select:focus,button:focus{
+  input[type="text"]:focus,input[type="number"]:focus,input[type="date"]:focus,select:focus,button:focus{
     outline:3px solid var(--sage);outline-offset:2px;border-color:var(--spruce);
   }
   .dollar-input{position:relative;margin-bottom:20px}
@@ -303,6 +272,7 @@
     </div>
   </div>
 </nav>
+<main class="wrap">
   <header>
     <p class="eyebrow">Ontario &middot; Condominium Act, 1998</p>
     <h1>How long do we have to register the lien?</h1>
@@ -447,6 +417,7 @@
     <p>Built for the volunteer boards who keep Ontario&rsquo;s condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
+</main>
 
 <script>
 (function(){
