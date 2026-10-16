@@ -116,6 +116,23 @@ CASES = [
     ('/on/reserve-fund-study-deadline', {'mode': 'new', 'registered': '2025-12-25'}, 'dueDate',
      'Monday, December 28, 2026',
      'HOLIDAY RUN: Christmas Friday, Boxing Day Saturday, Sunday, so Monday'),
+
+    # -- Ontario AGM deadline, s. 45(2) and Legislation Act s. 89(6) --------
+    ('/on/agm-deadline', {'fye': '2026-12-31'}, 'dueDate',
+     'Wednesday, June 30, 2027',
+     'MONTHS: June has no 31st, so six months from December 31 is June 30'),
+    ('/on/agm-deadline', {'fye': '2026-06-30'}, 'dueDate',
+     'Wednesday, December 30, 2026',
+     'MONTHS: same day number, so December 30, not December 31'),
+    ('/on/agm-deadline', {'fye': '2026-08-31'}, 'dueDate',
+     'Monday, March 1, 2027',
+     'MONTHS + HOLIDAY: last day of February 2027 is a Sunday, s. 89(1)'),
+    ('/on/agm-deadline', {'fye': '2027-08-31'}, 'dueDate',
+     'Tuesday, February 29, 2028',
+     'LEAP: the count lands on February 29 in a leap year'),
+    ('/on/agm-deadline', {'mode': 'first', 'reg': '2026-07-31'}, 'dueDate',
+     'Saturday, October 31, 2026',
+     'FIRST AGM: three months to October 31, a Saturday, which is not a holiday and stands'),
 ]
 
 
