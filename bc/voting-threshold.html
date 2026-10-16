@@ -289,7 +289,7 @@
           <option value="budget2">Approve a replacement budget after one was voted down</option>
           <option value="crf34">Spend from the contingency reserve fund — general</option>
           <option value="crfmaj">Spend from the CRF — depreciation report, EV charging, electrical planning report</option>
-          <option value="levy34">Special levy split by unit entitlement (the section 99 formula)</option>
+          <option value="levy34">Special levy split by unit entitlement (section 99) or a filed section 100 formula</option>
           <option value="levyun">Special levy split some other "fair division" — including equally</option>
         </optgroup>
         <optgroup label="Property">
@@ -435,7 +435,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 1, 71, 79, 82, 96, 103, 104, 108, 125, 127, 128, 261, 272 and 277. Last verified August 15, 2026 against the official consolidation at bclaws.gov.bc.ca, current to October 6, 2026. The sections this tool relies on are checked against the official consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Strata Property Act, SBC 1998, c. 43, ss. 1, 71, 79, 82, 96, 99, 100, 103, 104, 108, 125, 127, 128, 261, 272 and 277. Last verified August 15, 2026 against the official consolidation at bclaws.gov.bc.ca, current to October 6, 2026; ss. 99, 100 and 108 were re-read on October 16, 2026. The sections this tool relies on are checked against the official consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
     <p>Built for the volunteer councils who keep B.C.'s stratas running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/how-we-verify">How we verify</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
@@ -539,10 +539,10 @@
       text:'A majority vote is enough where the CRF spending is to obtain a depreciation report, to do repair or replacement recommended in the current depreciation report, for EV charging infrastructure, or to obtain an electrical planning report.',
       flag:'These are the only CRF cases at majority. Anything outside the s. 96 (b)(i)(A) list falls back to a 3/4 vote.'},
     levy34:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 108(2)(a)',
-      text:'A special levy calculated using the section 99 unit-entitlement formula is approved by a 3/4 vote.'},
+      text:'A special levy calculated in accordance with section 99 (unit entitlement), or with a different formula the strata adopted by unanimous vote and filed in the land title office under section 100, is approved by a 3/4 vote.'},
     levyun:{t:'Unanimous vote',g:UNAN,cite:'Strata Property Act s. 108(2)(b)',
       text:'Splitting a levy "in another way that establishes a fair division of expenses for that particular levy" — including equal shares — requires a unanimous vote.',
-      flag:'A 3/4 vote cannot authorise an equal split unless the split is what the strata apportionment formula already produces, which normally means the unit entitlements happen to be equal and the s. 99 result is an equal split.'},
+      flag:'A 3/4 vote cannot authorise an equal split unless the split is what the strata apportionment formula already produces, which normally means the unit entitlements happen to be equal and the s. 99 result is an equal split, or a filed s. 100 formula produces one.'},
     cp34:{t:'3/4 vote',g:Q34,cite:'Strata Property Act s. 71(b)(ii)',
       text:'A significant change in the use or appearance of common property, or of land that is a common asset, needs a 3/4 vote.',
       flag:'No vote is needed where "there are reasonable grounds to believe that immediate change is necessary to ensure safety or prevent significant loss or damage" (s. 71(a)).'},
