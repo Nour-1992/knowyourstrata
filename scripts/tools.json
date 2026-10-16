@@ -13,7 +13,9 @@
    "name": "AGM / SGM notice calculator",
    "cite": "SPA ss. 45, 61",
    "topic": "meetings",
-   "desc": "Pick your meeting date, get the last legal day to send notice — including the counting rules that turn \"2 weeks\" into about 20 days."
+   "desc": "Pick your meeting date, get the last legal day to send notice — including the counting rules that turn \"2 weeks\" into about 20 days.",
+   "answer": "Give at least 2 weeks' written notice of a BC strata AGM or SGM. Counted the legal way, that means sending it no later than 20 days before the meeting by mail, email, fax or mailbox, or 16 days before if it is handed to the person.",
+   "answer_cite": "Strata Property Act ss. 45(1), 61(3); Interpretation Act ss. 25, 25.2"
   },
   {
    "prov": "BC",
@@ -21,7 +23,9 @@
    "name": "Special levy calculator",
    "cite": "SPA ss. 99, 108",
    "topic": "money",
-   "desc": "Split a levy across units by unit entitlement, reconciled to the cent, with the 3/4-vote and unanimous-vote routes explained."
+   "desc": "Split a levy across units by unit entitlement, reconciled to the cent, with the 3/4-vote and unanimous-vote routes explained.",
+   "answer": "By default each lot pays its unit entitlement divided by the total entitlement of all lots, approved by a 3/4 vote. Splitting the levy any other fair way, including equally, needs a unanimous vote.",
+   "answer_cite": "Strata Property Act ss. 99, 108"
   },
   {
    "prov": "BC",
@@ -29,7 +33,9 @@
    "name": "Quorum calculator",
    "cite": "SPA s. 48",
    "topic": "votes",
-   "desc": "How many votes you need present in person or by proxy — plus the adjournment rule when you fall short."
+   "desc": "How many votes you need present in person or by proxy — plus the adjournment rule when you fall short.",
+   "answer": "Eligible voters holding 1/3 of the strata corporation's votes, present in person or by proxy, unless your bylaws say otherwise. With fewer than 4 lots or fewer than 4 owners, it is 2/3.",
+   "answer_cite": "Strata Property Act s. 48(2)"
   },
   {
    "prov": "BC",
@@ -37,7 +43,9 @@
    "name": "Voting threshold checker",
    "cite": "SPA ss. 1, 71, 96, 108, 128",
    "topic": "votes",
-   "desc": "Nineteen decisions mapped to the vote each one needs — majority, 3/4, 80% or unanimous — with the section for every row."
+   "desc": "Nineteen decisions mapped to the vote each one needs — majority, 3/4, 80% or unanimous — with the section for every row.",
+   "answer": "It depends on the decision. The Act uses four vote types: a majority or 3/4 of the votes cast by those present, 80% of all eligible voters, or unanimous. Pick your decision to see which one applies and the section that sets it.",
+   "answer_cite": "Strata Property Act s. 1"
   },
   {
    "prov": "BC",
@@ -45,7 +53,9 @@
    "name": "Records request deadline",
    "cite": "SPA ss. 36, 59",
    "topic": "records",
-   "desc": "Two weeks for records, one week for bylaws or a Form B. Enter the date the request arrived and get the day you must comply by."
+   "desc": "Two weeks for records, one week for bylaws or a Form B. Enter the date the request arrived and get the day you must comply by.",
+   "answer": "Within 2 weeks for most records, within 1 week if the request is only for bylaws or rules, and within 1 week for an Information Certificate (Form B).",
+   "answer_cite": "Strata Property Act ss. 36, 59"
   },
   {
    "prov": "BC",
@@ -53,7 +63,9 @@
    "name": "Strata fee / budget calculator",
    "cite": "SPA ss. 99, 100, 246",
    "topic": "money",
-   "desc": "Split the annual budget across units by unit entitlement — annual and monthly fees per lot, reconciled to the cent."
+   "desc": "Split the annual budget across units by unit entitlement — annual and monthly fees per lot, reconciled to the cent.",
+   "answer": "Each lot pays the approved budget in proportion to its unit entitlement: its own entitlement divided by the total entitlement of all lots. Two lots in the same building usually pay different amounts.",
+   "answer_cite": "Strata Property Act ss. 99, 246"
   },
   {
    "prov": "BC",
@@ -61,7 +73,9 @@
    "name": "CRF contribution checker",
    "cite": "SPA s. 93",
    "topic": "money",
-   "desc": "Is your budgeted contingency reserve fund contribution above the 10% statutory floor — and does a large CRF balance actually change that?"
+   "desc": "Is your budgeted contingency reserve fund contribution above the 10% statutory floor — and does a large CRF balance actually change that?",
+   "answer": "At least 10% of the amount budgeted for the operating fund, every year, with no exception for a large existing balance.",
+   "answer_cite": "Strata Property Act s. 93; Strata Property Regulation ss. 3.4, 6.1"
   },
   {
    "prov": "BC",
@@ -69,7 +83,9 @@
    "name": "Insurance deductible — who pays",
    "cite": "SPA s. 158",
    "topic": "risk",
-   "desc": "A few branching questions to work out who pays the deductible and how — the corporation, or the owner directly — with the case law behind it."
+   "desc": "A few branching questions to work out who pays the deductible and how — the corporation, or the owner directly — with the case law behind it.",
+   "answer": "By default the strata corporation pays it, as a common expense through strata fees. The strata can sue an owner to recover the deductible if the owner is responsible for the loss, and your bylaws can change what it has to prove.",
+   "answer_cite": "Strata Property Act s. 158"
   },
   {
    "prov": "BC",
@@ -77,7 +93,9 @@
    "name": "Fine & enforcement procedure",
    "cite": "SPA s. 135",
    "topic": "risk",
-   "desc": "A step-through check of the complaint, particulars, hearing and decision sequence courts strike fines down over most often."
+   "desc": "A step-through check of the complaint, particulars, hearing and decision sequence courts strike fines down over most often.",
+   "answer": "Only if, before fining, the strata received a complaint, gave the owner or tenant the particulars in writing, and gave a reasonable chance to answer, including a hearing if one was requested. A fine imposed without those steps is open to challenge.",
+   "answer_cite": "Strata Property Act s. 135"
   },
   {
    "prov": "BC",
@@ -85,7 +103,9 @@
    "name": "Meeting minutes generator",
    "cite": "SPA s. 35",
    "topic": "meetings",
-   "desc": "Fill in attendance, motions and votes, get back a structured minutes document with the required elements built in and cited."
+   "desc": "Fill in attendance, motions and votes, get back a structured minutes document with the required elements built in and cited.",
+   "answer": "Minutes are required for every general and council meeting and must record the results of any votes. The Act sets no format, which is the gap this generator fills.",
+   "answer_cite": "Strata Property Act s. 35(1)(a); Standard Bylaw 18(3)"
   },
   {
    "prov": "BC",
@@ -93,7 +113,9 @@
    "name": "Depreciation report deadline",
    "cite": "SPA s. 94",
    "topic": "money",
-   "desc": "The 2024 rules on one page: your due date by region, by five-year renewal, or for a newly formed strata — plus the four-lot exemption and the end of the deferral vote."
+   "desc": "The 2024 rules on one page: your due date by region, by five-year renewal, or for a newly formed strata — plus the four-lot exemption and the end of the deferral vote.",
+   "answer": "Every BC strata with 5 or more lots must obtain a depreciation report every 5 years, and the option to defer it by vote is gone. Stratas with 4 or fewer lots are exempt, and first deadlines phase in by region.",
+   "answer_cite": "Strata Property Act s. 94; Strata Property Regulation s. 6.21"
   },
   {
    "prov": "ON",
@@ -101,7 +123,9 @@
    "name": "Quorum calculator",
    "cite": "Condo Act s. 50",
    "topic": "votes",
-   "desc": "25% of the units — and the reduced 15% that applies only on a third attempt at an AGM or turn-over meeting, not to a requisitioned one."
+   "desc": "25% of the units — and the reduced 15% that applies only on a third attempt at an AGM or turn-over meeting, not to a requisitioned one.",
+   "answer": "Owners of 25% of the units. It drops to 15% only on a third attempt at an AGM, and parking, storage and service units are left out of the count.",
+   "answer_cite": "Condominium Act, 1998 s. 50; O. Reg. 48/01 s. 1.1"
   },
   {
    "prov": "ON",
@@ -109,7 +133,9 @@
    "name": "Notice of meeting deadline",
    "cite": "Condo Act s. 47",
    "topic": "meetings",
-   "desc": "Preliminary Notice and Notice of Meeting send-by dates, board-called or owner-requisitioned."
+   "desc": "Preliminary Notice and Notice of Meeting send-by dates, board-called or owner-requisitioned.",
+   "answer": "Send the Preliminary Notice at least 20 days before the Notice of Meeting, and the Notice of Meeting at least 15 days before the meeting, so start at least 35 days out.",
+   "answer_cite": "Condominium Act, 1998 ss. 45.1, 47(1)"
   },
   {
    "prov": "ON",
@@ -117,7 +143,9 @@
    "name": "Requisition threshold checker",
    "cite": "Condo Act s. 46",
    "topic": "meetings",
-   "desc": "What share of units is needed to requisition a meeting, the current 35/45-day timeline, and what changes December 31, 2026."
+   "desc": "What share of units is needed to requisition a meeting, the current 35/45-day timeline, and what changes December 31, 2026.",
+   "answer": "Under the current section 46, owners of at least 15% of the units can requisition a meeting, not counting parking, storage or service units. A requisition received on or after December 31, 2026 follows the new section 46 instead.",
+   "answer_cite": "Condominium Act, 1998 s. 46; O. Reg. 48/01 ss. 1.1, 80"
   },
   {
    "prov": "ON",
@@ -125,7 +153,9 @@
    "name": "Records request deadline",
    "cite": "Condo Act s. 55",
    "topic": "records",
-   "desc": "Board's-response and delivery deadlines for an owner's request for records — core and non-core records run different clocks."
+   "desc": "Board's-response and delivery deadlines for an owner's request for records — core and non-core records run different clocks.",
+   "answer": "The board must respond within 30 days of receiving the request, saying whether it will allow access and what the fee is. Delivering the records can run on a second clock.",
+   "answer_cite": "O. Reg. 48/01 s. 13.3(6)"
   },
   {
    "prov": "ON",
@@ -133,7 +163,9 @@
    "name": "Reserve fund study deadline",
    "cite": "Condo Act s. 94",
    "topic": "money",
-   "desc": "When the next study is due on a rolling 3-year clock, and which of the three study classes it must be."
+   "desc": "When the next study is due on a rolling 3-year clock, and which of the three study classes it must be.",
+   "answer": "The first study, always comprehensive, is due within the year after the declaration is registered. After that, a new study is due within every three years of completing the last one.",
+   "answer_cite": "Condominium Act, 1998 s. 94(4); O. Reg. 48/01 ss. 27, 28"
   },
   {
    "prov": "ON",
@@ -141,7 +173,9 @@
    "name": "Status certificate deadline",
    "cite": "Condo Act s. 76",
    "topic": "records",
-   "desc": "The day a certificate is due, the $100 tax-inclusive fee cap, and the clean certificate the Act deems issued if the board is late."
+   "desc": "The day a certificate is due, the $100 tax-inclusive fee cap, and the clean certificate the Act deems issued if the board is late.",
+   "answer": "Within 10 days after the corporation has both the request and the fee, counted from whichever arrived later. If it is late, the Act deems a certificate given in the buyer's favour, and the fee is capped at $100 including tax.",
+   "answer_cite": "Condominium Act, 1998 s. 76(3), (5), (6); O. Reg. 48/01 s. 18(4)"
   },
   {
    "prov": "ON",
@@ -149,7 +183,9 @@
    "name": "Voting threshold checker",
    "cite": "Condo Act ss. 56, 97, 107",
    "topic": "votes",
-   "desc": "The vote a by-law, a rule, a common element change or a declaration amendment actually needs, including the prescribed by-laws that need only a majority of the room."
+   "desc": "The vote a by-law, a rule, a common element change or a declaration amendment actually needs, including the prescribed by-laws that need only a majority of the room.",
+   "answer": "It depends on the decision. A by-law needs owners of a majority of all units, a substantial change to the common elements needs 66 2/3% of all units, and a declaration amendment needs 80% or 90% written consent.",
+   "answer_cite": "Condominium Act, 1998 ss. 56(10), 97(4), 107(2)"
   },
   {
    "prov": "ON",
@@ -157,7 +193,9 @@
    "name": "Insurance deductible chargeback",
    "cite": "Condo Act s. 105",
    "topic": "risk",
-   "desc": "Whether a deductible can be charged back to an owner, how much, and the own-unit limit in s. 105(2) that decides most of these wrong."
+   "desc": "Whether a deductible can be charged back to an owner, how much, and the own-unit limit in s. 105(2) that decides most of these wrong.",
+   "answer": "Automatically, only for damage to the owner's own unit caused by the owner, their lessee or someone living there with their permission, and only up to the lesser of the repair cost and the deductible. Other damage stays a common expense unless a by-law under s. 105(3) says otherwise.",
+   "answer_cite": "Condominium Act, 1998 s. 105"
   },
   {
    "prov": "ON",
@@ -165,7 +203,9 @@
    "name": "Common expense calculator",
    "cite": "Condo Act s. 84",
    "topic": "money",
-   "desc": "Splits the annual budget across units by the proportions in your declaration, to the cent, and checks the s. 93(5) reserve fund floor."
+   "desc": "Splits the annual budget across units by the proportions in your declaration, to the cent, and checks the s. 93(5) reserve fund floor.",
+   "answer": "In the proportions your declaration sets out. The Act has no default formula and no deemed equal split, so the declaration governs.",
+   "answer_cite": "Condominium Act, 1998 s. 84(1)"
   },
   {
    "prov": "ON",
@@ -173,7 +213,9 @@
    "name": "Lien deadline calculator",
    "cite": "Condo Act s. 85",
    "topic": "money",
-   "desc": "The lien expires three months after the default. Works out that date, the 10 days notice the owner is owed first, and the encumbrancer notice that keeps the lien in priority."
+   "desc": "The lien expires three months after the default. Works out that date, the 10 days notice the owner is owed first, and the encumbrancer notice that keeps the lien in priority.",
+   "answer": "Register a certificate of lien within three months of the default or the lien expires, and give the owner at least 10 days' written notice before you register.",
+   "answer_cite": "Condominium Act, 1998 s. 85(2), (4)"
   },
   {
    "prov": "ON",
@@ -181,7 +223,9 @@
    "name": "AGM deadline",
    "cite": "Condo Act s. 45(2)",
    "topic": "meetings",
-   "desc": "The AGM is due within six months of the fiscal year end, counted the Legislation Act way. Gets that date and the latest preliminary notice, notice of meeting and record date."
+   "desc": "The AGM is due within six months of the fiscal year end, counted the Legislation Act way. Gets that date and the latest preliminary notice, notice of meeting and record date.",
+   "answer": "Within six months of the end of each fiscal year. A new corporation holds its first meeting of owners within three months of registration.",
+   "answer_cite": "Condominium Act, 1998 s. 45(2)"
   },
   {
    "prov": "ON",
@@ -189,7 +233,9 @@
    "name": "Information certificate deadline",
    "cite": "O. Reg. 48/01 s. 11.1",
    "topic": "records",
-   "desc": "The two periodic information certificate dates in your fiscal year, 60 days after the first and third quarters, and the 30 and 5 day update deadlines."
+   "desc": "The two periodic information certificate dates in your fiscal year, 60 days after the first and third quarters, and the 30 and 5 day update deadlines.",
+   "answer": "Within 60 days after the end of the first and the third quarter of the fiscal year. The second and fourth quarters have no certificate of their own unless a by-law adds one.",
+   "answer_cite": "Condominium Act, 1998 s. 26.3; O. Reg. 48/01 s. 11.1(4)"
   }
  ]
 }

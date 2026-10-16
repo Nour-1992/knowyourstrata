@@ -13,6 +13,26 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,5.2vw,2.75rem
 .lede{color:var(--ink-2);font-size:1.06rem;max-width:62ch}
 h2{letter-spacing:-.01em}
 
+/* Short answer under the heading (scripts/build_answers.py) */
+.answer{margin:18px 0 0;padding:14px 16px;max-width:66ch;background:var(--wash);border-left:3px solid var(--spruce);border-radius:0 12px 12px 0;color:var(--ink);font-size:1rem;line-height:1.55}
+.answer-k{display:block;font-family:var(--mono);font-weight:500;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--spruce);margin-bottom:4px}
+.answer-cite{display:block;margin-top:6px;font-family:var(--mono);font-size:.74rem;color:var(--ink-3)}
+
+/* "Add this calculator to your website" (scripts/build_embeds.py) */
+.embed-offer{margin:14px 2px 0;font-size:.9rem;color:var(--ink-3)}
+.embed-offer a{color:var(--spruce);font-weight:600}
+
+/* Embed mode: ?embed=1 shows only the calculator (set by the theme boot script) */
+.kys-embed body{background:var(--surface)}
+.kys-embed .kys-top,.kys-embed .kys-back,.kys-embed main>:not(.wrap),.kys-embed body>:not(main):not(script):not(style),
+.kys-embed .wrap>:not(header):not(.card):not(.result):not(.embed-credit),.kys-embed header>:not(h1){display:none!important}
+.kys-embed .wrap{max-width:none;padding:12px 14px 4px}
+.kys-embed header{padding:0 0 10px}
+.kys-embed h1{font-size:1.35rem;margin:0}
+.kys-embed .card{box-shadow:none}
+.embed-credit{margin:10px 2px 6px;font-size:.82rem;color:var(--ink-3)}
+.embed-credit a{color:var(--spruce);font-weight:600}
+
 /* The calculator */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:26px 24px}
 label{color:var(--ink)}

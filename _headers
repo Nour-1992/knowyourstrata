@@ -25,3 +25,18 @@
 /assets/fonts/*
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
+
+# Calculators may be embedded on other sites (?embed=1, see /embed and
+# scripts/build_embeds.py), so tool pages carry no framing restriction. The
+# pages that sell, unlock or deliver a paid pack are never framed by anyone
+# else: that keeps a lookalike page from overlaying the checkout or the pack.
+/bc/starter-pack*
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
+
+/on/starter-pack*
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
+
+/api/*
+  X-Frame-Options: DENY

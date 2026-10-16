@@ -113,6 +113,44 @@ async def main():
             check('payload carries nothing but name and detail',
                   set(sent[0].keys()) == {'name', 'detail'}, str(sent[0].keys()))
 
+        print('\n── tool_used on tools without #calc ' + '─' * 25)
+        # Until 2026-10-16 only #calc was bound, so these four were never counted.
+        async def click_check(p):
+            await p.select_option('#decision', index=1)
+            await p.click('#check')
+        sent = await collect('/bc/voting-threshold', click_check)
+        check('BC voting tool (#check) sends tool_used',
+              any(e.get('name') == 'tool_used' and e.get('detail') == 'bc/voting-threshold' for e in sent), str(sent))
+
+        async def click_gen(p):
+            await p.click('#genBtn')
+        sent = await collect('/bc/meeting-minutes-generator', click_gen)
+        check('minutes generator (#genBtn) sends tool_used',
+              any(e.get('name') == 'tool_used' and e.get('detail') == 'bc/meeting-minutes-generator' for e in sent), str(sent))
+
+        async def reach_result(p):
+            await p.evaluate("document.querySelector('.card [data-result]').click()")
+        for slug in ('bc/insurance-deductible', 'bc/fine-enforcement-procedure'):
+            sent = await collect('/' + slug, reach_result)
+            check(f'decision tree {slug} sends tool_used on reaching an answer',
+                  any(e.get('name') == 'tool_used' and e.get('detail') == slug for e in sent), str(sent))
+
+        print('\n── embed_view ' + '─' * 47)
+        sent = await collect('/bc/agm-notice?embed=1')
+        ev = [e for e in sent if e.get('name') == 'embed_view']
+        check('opening a tool with ?embed=1 sends one embed_view', len(ev) == 1, str(sent))
+        if ev:
+            check('embed_view detail is the tool slug', ev[0].get('detail') == 'bc/agm-notice', str(ev[0]))
+        sent = await collect('/bc/agm-notice')
+        check('a normal visit sends no embed_view', not any(e.get('name') == 'embed_view' for e in sent), str(sent))
+        sent = await collect('/bc/agm-notice?embed=1', gpc=True)
+        check('GPC suppresses embed_view', sent == [], str(sent))
+        async def settle(p):
+            await p.wait_for_timeout(1200)
+        sent = await collect('/embed', settle)
+        check("the /embed page's own live preview is not counted as an embed",
+              not any(e.get('name') == 'embed_view' for e in sent), str(sent))
+
         print('\n── pack_view ' + '─' * 48)
         sent = await collect('/bc/starter-pack')
         views = [e for e in sent if e.get('name') == 'pack_view']

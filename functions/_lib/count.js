@@ -20,6 +20,7 @@
 // stored, so a malicious or buggy caller cannot fill the table with junk.
 export const EVENTS = {
   tool_used: 'a calculator was run',
+  embed_view: 'a calculator was shown inside another website (?embed=1)',
   pack_view: 'a Starter Pack sales page was opened',
   pack_click: 'the Stripe checkout link was clicked',
   subscribed: 'an address joined the list (counted server-side)',
@@ -33,21 +34,36 @@ const TOOL_SLUGS = new Set([
   'bc/insurance-deductible', 'bc/fine-enforcement-procedure',
   'bc/meeting-minutes-generator', 'bc/depreciation-report-deadline',
   'on/quorum', 'on/notice-of-meeting-deadline', 'on/records-request-deadline',
-  'on/requisition-threshold', 'on/reserve-fund-study-deadline'
+  'on/requisition-threshold', 'on/reserve-fund-study-deadline',
+  'on/status-certificate-deadline', 'on/voting-threshold', 'on/insurance-deductible',
+  'on/common-expense-calculator', 'on/lien-deadline',
+  'on/information-certificate-deadline', 'on/agm-deadline'
 ]);
+// Must list every tool in scripts/tools.json. tests/events_test.py asserts it:
+// until 2026-10-16 the seven newest Ontario tools were missing and dropped.
+export { TOOL_SLUGS };
 const PACKS = new Set(['bc', 'on']);
 
 export function validate(name, detail) {
   if (!Object.prototype.hasOwnProperty.call(EVENTS, name)) return null;
   detail = typeof detail === 'string' ? detail : '';
 
-  if (name === 'tool_used') {
+  if (name === 'tool_used' || name === 'embed_view') {
     return TOOL_SLUGS.has(detail) ? { name, detail } : null;
   }
   if (name === 'pack_view' || name === 'pack_click' || name === 'purchased') {
     return PACKS.has(detail) ? { name, detail } : null;
   }
   return { name, detail: '' };   // subscribed carries no detail
+}
+
+export const SCHEMA = [
+  `CREATE TABLE IF NOT EXISTS events (day TEXT NOT NULL, name TEXT NOT NULL, detail TEXT NOT NULL DEFAULT '', count INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, name, detail))`,
+  `CREATE INDEX IF NOT EXISTS events_day_idx ON events (day)`
+];
+
+export async function ensureSchema(env) {
+  for (const sql of SCHEMA) await env.DB.prepare(sql).run();
 }
 
 function utcDay(now) {
@@ -65,10 +81,21 @@ export async function count(env, name, detail) {
     const ok = validate(name, detail);
     if (!ok) return false;
 
-    await env.DB.prepare(
+    const write = () => env.DB.prepare(
       `INSERT INTO events (day, name, detail, count) VALUES (?, ?, ?, 1)
          ON CONFLICT (day, name, detail) DO UPDATE SET count = count + 1`
     ).bind(utcDay(), ok.name, ok.detail).run();
+    try {
+      await write();
+    } catch (err) {
+      // The database existed from August 2026 but its table was never created,
+      // so every write failed here and nothing was ever counted. Create the
+      // table on first use instead of depending on a manual console step, then
+      // retry once. Same statements as db/schema.sql.
+      if (!/no such table/i.test(String(err && err.message))) throw err;
+      await ensureSchema(env);
+      await write();
+    }
     return true;
   } catch (err) {
     console.error('count: failed', name, detail, err && err.message);

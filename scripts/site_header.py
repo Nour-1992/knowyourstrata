@@ -22,7 +22,11 @@ LINKS = [('bc', '/bc/', 'BC tools'), ('on', '/on/', 'Ontario tools'),
 MOON = '<svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>'
 SUN = '<svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
 MENU = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
-BOOT = '<script id="kys-theme-boot">try{var t=localStorage.getItem("kys-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>'
+BOOT = ('<script id="kys-theme-boot">try{var r=document.documentElement,q=location.search,t=null;'
+        'if(/[?&]embed=1(&|$)/.test(q)){r.classList.add("kys-embed");var m=q.match(/[?&]theme=(dark|light)(&|$)/);if(m)t=m[1];'
+        'var e=document.createElement("script");e.src="/assets/kys-embed.js";e.defer=true;document.head.appendChild(e)}'
+        'if(!t)t=localStorage.getItem("kys-theme");if(t==="dark"||t==="light")r.setAttribute("data-theme",t)}catch(e){}</script>')
+BOOT_RX = re.compile(r'<script id="kys-theme-boot">.*?</script>', re.S)
 TOGGLE_JS = ('<script>(function(){var b=document.getElementById("kysTheme");if(!b)return;'
              'b.addEventListener("click",function(){var r=document.documentElement,'
              'c=r.getAttribute("data-theme")||(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"),'
@@ -60,7 +64,9 @@ def process(rel, s):
     if not m:
         raise SystemExit('no header in ' + rel)
     s = s[:m.start()] + header(rel, bool(m.group(1))) + s[m.end():]
-    if 'id="kys-theme-boot"' not in s:
+    if 'id="kys-theme-boot"' in s:
+        s = BOOT_RX.sub(lambda _: BOOT, s, count=1)
+    else:
         s = s.replace('<meta charset="UTF-8">', '<meta charset="UTF-8">\n' + BOOT, 1) if '<meta charset="UTF-8">' in s else s.replace('<head>', '<head>\n' + BOOT, 1)
     return s
 

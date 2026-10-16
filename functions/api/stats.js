@@ -11,7 +11,7 @@
  * The response is aggregate counts only, because aggregate counts are the only
  * thing stored. There is nothing per-visitor to return.
  */
-import { EVENTS } from '../_lib/count.js';
+import { EVENTS, ensureSchema } from '../_lib/count.js';
 
 function json(body, status) {
   return new Response(JSON.stringify(body, null, 2), {
@@ -49,6 +49,9 @@ export async function onRequestGet({ request, env }) {
   const since = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
 
   try {
+    // Create the table if it has never been written to, so a fresh database
+    // reads as zero instead of failing (see ensureSchema in count.js).
+    await ensureSchema(env);
     const rows = (await env.DB.prepare(
       `SELECT day, name, detail, count FROM events
         WHERE day >= ? ORDER BY day DESC, name ASC, detail ASC`
@@ -77,6 +80,7 @@ export async function onRequestGet({ request, env }) {
       totals,
       funnel: {
         tool_used: t('tool_used'),
+        embed_view: t('embed_view'),
         pack_view: t('pack_view'),
         pack_click: t('pack_click'),
         purchased: t('purchased'),

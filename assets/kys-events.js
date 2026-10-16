@@ -1,7 +1,8 @@
 /* Know Your Strata — first-party funnel counter.
  *
- * Counts five things: a calculator being run, a pack sales page being opened,
- * the checkout link being clicked, a signup, and a purchase. The last two are
+ * Counts six things: a calculator being run, a calculator shown inside another
+ * website (embed), a pack sales page being opened, the checkout link being
+ * clicked, a signup, and a purchase. The last two are
  * counted server-side where they cannot be blocked or faked; this file handles
  * the first three.
  *
@@ -51,10 +52,29 @@
 
     ready(function () {
       try {
-        // 1. A calculator was run. Every tool page uses #calc as its button.
-        var calc = document.getElementById('calc');
-        if (calc) {
-          calc.addEventListener('click', function () { send('tool_used', path); });
+        // 1. A calculator was run. Most tool pages use #calc; the BC voting
+        //    tool uses #check and the minutes generator #genBtn. Two BC tools
+        //    are decision trees with no button at all: reaching an answer is a
+        //    click on an option carrying data-result. Until 2026-10-16 only
+        //    #calc was bound, so four BC tools were never counted.
+        var ids = ['calc', 'check', 'genBtn'];
+        for (var j = 0; j < ids.length; j++) {
+          var b = document.getElementById(ids[j]);
+          if (b) b.addEventListener('click', function () { send('tool_used', path); });
+        }
+        document.addEventListener('click', function (e) {
+          var t = e.target && e.target.closest && e.target.closest('.card [data-result]');
+          if (t) send('tool_used', path);
+        });
+
+        // 1b. The page is running inside another website's frame (?embed=1).
+        //     The live preview on /embed is a frame inside this same site, and
+        //     reading the parent's location only succeeds when it is same-site,
+        //     so that preview is not counted as someone else's embed.
+        if (document.documentElement.classList.contains('kys-embed')) {
+          var ownSite = false;
+          try { ownSite = window.parent !== window && window.parent.location.host === location.host; } catch (e) { ownSite = false; }
+          if (!ownSite) send('embed_view', path);
         }
 
         // 2. A pack sales page was opened.
