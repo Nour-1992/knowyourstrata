@@ -1,0 +1,59 @@
+/* Know Your Strata shared components, v2 (October 2026 redesign).
+   Inlined as <style id="kys-ui"> at the END of <head>, after each page's own
+   <style>, so these rules unify the components every tool page shares while
+   leaving page-specific layout alone. Same selectors as the page styles, so
+   source order decides; keep it that way rather than escalating specificity.
+   Edit here, then run  python3 scripts/inline_css.py . */
+
+/* Tool pages: one comfortable reading column */
+.wrap{max-width:780px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+header{padding-top:36px}
+.eyebrow{font-family:var(--mono);font-weight:500;font-size:.74rem;letter-spacing:.1em;color:var(--spruce)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,5.2vw,2.75rem);line-height:1.1;letter-spacing:-.02em;color:var(--ink);text-wrap:balance}
+.lede{color:var(--ink-2);font-size:1.06rem;max-width:62ch}
+h2{letter-spacing:-.01em}
+
+/* The calculator */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:26px 24px}
+label{color:var(--ink)}
+.hint{color:var(--ink-3)}
+input[type="number"],input[type="date"],input[type="text"],input[type="email"],select,textarea{background:var(--surface);color:var(--ink);border:1.5px solid var(--line);border-radius:10px}
+input[type="number"]:hover,input[type="date"]:hover,input[type="text"]:hover,select:hover,textarea:hover{border-color:var(--sage)}
+button{border-radius:10px;letter-spacing:.005em}
+.error{color:var(--seal)}
+
+/* The answer panel: answer first, then reasoning */
+.stamp{background:var(--spruce);color:var(--on-accent);border-radius:14px;padding:22px 24px;text-align:left;box-shadow:var(--shadow)}
+.stamp .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;opacity:.8}
+.stamp .date{font-family:var(--display);font-weight:700;letter-spacing:-.015em;font-size:clamp(1.6rem,5vw,2.2rem);line-height:1.15}
+.stamp .sub{margin-left:0;margin-right:0;max-width:56ch;opacity:.88}
+.verified-badge{border-radius:6px;background:var(--seal-bg);border-color:var(--seal);color:var(--seal)}
+.badge-note{color:var(--ink-3)}
+.cite-line,.quote{background:var(--wash);border-left:3px solid var(--sage);border-radius:0 10px 10px 0;color:var(--ink-2)}
+.cite-line strong{color:var(--ink)}
+.flag,.bylaw-note,.flag-note{background:var(--amber-bg);border-left-color:var(--amber);color:var(--amber-ink)}
+.past{color:var(--seal)}
+.copy-btn{background:var(--surface);color:var(--spruce);border:1.5px solid var(--spruce);border-radius:10px}
+.copy-btn:hover{background:var(--tint)}
+
+/* Below the answer */
+.subscribe{background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.sub-row input[type="email"]{background:var(--paper)}
+.more-tools ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.more-tools li{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:11px 14px;border-bottom:1px solid var(--line)}
+.more-tools li:last-child{border-bottom:1px solid var(--line)}
+.more-tools li:has(.current){background:var(--tint);border-color:transparent}
+section.explain h2,.more-tools h2,.subscribe h2,.ladder h2{font-family:var(--display);font-weight:700;color:var(--ink)}
+section.explain p,section.explain li{color:var(--ink)}
+.faq dt{color:var(--ink)}
+.faq dd{color:var(--ink-2)}
+footer{color:var(--ink-3);border-top-color:var(--line)}
+footer a{color:var(--spruce)}
+table{color:var(--ink)}
+
+/* Print: always the light palette */
+@media print{:root{--paper:#fff;--surface:#fff;--card:#fff;--ink:#111;--ink-soft:#333;--ink-2:#333;--ink-3:#555;--line:#ccc;--rule:#ccc;--spruce:#193B32;--spruce-deep:#11302A;--on-accent:#fff;--tint:#eef3f0;--wash:#f3f6f4;--seal:#8E2E29;--seal-bg:#fff;--amber-bg:#fff;--amber-ink:#5A4A1E;color-scheme:light}.stamp,.card{box-shadow:none}}
+
+/* Pack pages: the "kept current" note is reassurance, not a warning */
+.snapshot{background:var(--wash);border-left-color:var(--sage);color:var(--ink-2)}
+.snapshot strong{color:var(--ink)}

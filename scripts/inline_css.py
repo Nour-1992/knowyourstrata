@@ -44,6 +44,18 @@ PAGE_DIRS = ['', 'bc', 'on']
 
 LINK_RX = re.compile(r'<link rel="stylesheet" href="/assets/kys\.css">')
 BLOCK_RX = re.compile(r'<style id="kys-css">.*?</style>', re.S)
+UI_PATH = os.path.join(ROOT, 'assets', 'kys-ui.css')
+UI_RX = re.compile(r'<style id="kys-ui">.*?</style>\n?', re.S)
+
+
+def put_ui(html, ui_block):
+    """kys-ui.css goes last in <head>, after the page's own styles, so the
+    shared components win over the per-page copies of the same rules."""
+    html = UI_RX.sub('', html)
+    i = html.find('</head>')
+    if i < 0:
+        raise ValueError('no </head>')
+    return html[:i] + ui_block + '\n' + html[i:]
 
 
 def minify(css):
@@ -113,6 +125,11 @@ def main():
     check = '--check' in sys.argv[1:]
     with open(CSS_PATH, encoding='utf-8') as f:
         new_block = block(minify(f.read()))
+    with open(UI_PATH, encoding='utf-8') as f:
+        ui_css = minify(f.read())
+    if '</style' in ui_css.lower():
+        raise ValueError('kys-ui.css contains "</style"')
+    ui_block = f'<style id="kys-ui">{ui_css}</style>'
 
     stale, written, current = [], [], 0
     for rel in pages():
@@ -126,6 +143,7 @@ def main():
             sys.exit(2)
         if out is None:
             continue
+        out = put_ui(out, ui_block)
         if out == html:
             current += 1
             continue

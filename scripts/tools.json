@@ -1,0 +1,195 @@
+{
+ "topics": {
+  "meetings": "Meetings",
+  "votes": "Votes & quorum",
+  "money": "Money",
+  "records": "Records & certificates",
+  "risk": "Insurance & fines"
+ },
+ "tools": [
+  {
+   "prov": "BC",
+   "href": "/bc/agm-notice",
+   "name": "AGM / SGM notice calculator",
+   "cite": "SPA ss. 45, 61",
+   "topic": "meetings",
+   "desc": "Pick your meeting date, get the last legal day to send notice — including the counting rules that turn \"2 weeks\" into about 20 days."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/special-levy",
+   "name": "Special levy calculator",
+   "cite": "SPA ss. 99, 108",
+   "topic": "money",
+   "desc": "Split a levy across units by unit entitlement, reconciled to the cent, with the 3/4-vote and unanimous-vote routes explained."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/quorum",
+   "name": "Quorum calculator",
+   "cite": "SPA s. 48",
+   "topic": "votes",
+   "desc": "How many votes you need present in person or by proxy — plus the adjournment rule when you fall short."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/voting-threshold",
+   "name": "Voting threshold checker",
+   "cite": "SPA ss. 1, 71, 96, 108, 128",
+   "topic": "votes",
+   "desc": "Nineteen decisions mapped to the vote each one needs — majority, 3/4, 80% or unanimous — with the section for every row."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/records-deadline",
+   "name": "Records request deadline",
+   "cite": "SPA ss. 36, 59",
+   "topic": "records",
+   "desc": "Two weeks for records, one week for bylaws or a Form B. Enter the date the request arrived and get the day you must comply by."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/strata-fees",
+   "name": "Strata fee / budget calculator",
+   "cite": "SPA ss. 99, 100, 246",
+   "topic": "money",
+   "desc": "Split the annual budget across units by unit entitlement — annual and monthly fees per lot, reconciled to the cent."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/crf-contribution",
+   "name": "CRF contribution checker",
+   "cite": "SPA s. 93",
+   "topic": "money",
+   "desc": "Is your budgeted contingency reserve fund contribution above the 10% statutory floor — and does a large CRF balance actually change that?"
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/insurance-deductible",
+   "name": "Insurance deductible — who pays",
+   "cite": "SPA s. 158",
+   "topic": "risk",
+   "desc": "A few branching questions to work out who pays the deductible and how — the corporation, or the owner directly — with the case law behind it."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/fine-enforcement-procedure",
+   "name": "Fine & enforcement procedure",
+   "cite": "SPA s. 135",
+   "topic": "risk",
+   "desc": "A step-through check of the complaint, particulars, hearing and decision sequence courts strike fines down over most often."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/meeting-minutes-generator",
+   "name": "Meeting minutes generator",
+   "cite": "SPA s. 35",
+   "topic": "meetings",
+   "desc": "Fill in attendance, motions and votes, get back a structured minutes document with the required elements built in and cited."
+  },
+  {
+   "prov": "BC",
+   "href": "/bc/depreciation-report-deadline",
+   "name": "Depreciation report deadline",
+   "cite": "SPA s. 94",
+   "topic": "money",
+   "desc": "The 2024 rules on one page: your due date by region, by five-year renewal, or for a newly formed strata — plus the four-lot exemption and the end of the deferral vote."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/quorum",
+   "name": "Quorum calculator",
+   "cite": "Condo Act s. 50",
+   "topic": "votes",
+   "desc": "25% of the units — and the reduced 15% that applies only on a third attempt at an AGM or turn-over meeting, not to a requisitioned one."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/notice-of-meeting-deadline",
+   "name": "Notice of meeting deadline",
+   "cite": "Condo Act s. 47",
+   "topic": "meetings",
+   "desc": "Preliminary Notice and Notice of Meeting send-by dates, board-called or owner-requisitioned."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/requisition-threshold",
+   "name": "Requisition threshold checker",
+   "cite": "Condo Act s. 46",
+   "topic": "meetings",
+   "desc": "What share of units is needed to requisition a meeting, the current 35/45-day timeline, and what changes December 31, 2026."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/records-request-deadline",
+   "name": "Records request deadline",
+   "cite": "Condo Act s. 55",
+   "topic": "records",
+   "desc": "Board's-response and delivery deadlines for an owner's request for records — core and non-core records run different clocks."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/reserve-fund-study-deadline",
+   "name": "Reserve fund study deadline",
+   "cite": "Condo Act s. 94",
+   "topic": "money",
+   "desc": "When the next study is due on a rolling 3-year clock, and which of the three study classes it must be."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/status-certificate-deadline",
+   "name": "Status certificate deadline",
+   "cite": "Condo Act s. 76",
+   "topic": "records",
+   "desc": "The day a certificate is due, the $100 tax-inclusive fee cap, and the clean certificate the Act deems issued if the board is late."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/voting-threshold",
+   "name": "Voting threshold checker",
+   "cite": "Condo Act ss. 56, 97, 107",
+   "topic": "votes",
+   "desc": "The vote a by-law, a rule, a common element change or a declaration amendment actually needs, including the prescribed by-laws that need only a majority of the room."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/insurance-deductible",
+   "name": "Insurance deductible chargeback",
+   "cite": "Condo Act s. 105",
+   "topic": "risk",
+   "desc": "Whether a deductible can be charged back to an owner, how much, and the own-unit limit in s. 105(2) that decides most of these wrong."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/common-expense-calculator",
+   "name": "Common expense calculator",
+   "cite": "Condo Act s. 84",
+   "topic": "money",
+   "desc": "Splits the annual budget across units by the proportions in your declaration, to the cent, and checks the s. 93(5) reserve fund floor."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/lien-deadline",
+   "name": "Lien deadline calculator",
+   "cite": "Condo Act s. 85",
+   "topic": "money",
+   "desc": "The lien expires three months after the default. Works out that date, the 10 days notice the owner is owed first, and the encumbrancer notice that keeps the lien in priority."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/agm-deadline",
+   "name": "AGM deadline",
+   "cite": "Condo Act s. 45(2)",
+   "topic": "meetings",
+   "desc": "The AGM is due within six months of the fiscal year end, counted the Legislation Act way. Gets that date and the latest preliminary notice, notice of meeting and record date."
+  },
+  {
+   "prov": "ON",
+   "href": "/on/information-certificate-deadline",
+   "name": "Information certificate deadline",
+   "cite": "O. Reg. 48/01 s. 11.1",
+   "topic": "records",
+   "desc": "The two periodic information certificate dates in your fiscal year, 60 days after the first and third quarters, and the 30 and 5 day update deadlines."
+  }
+ ]
+}
