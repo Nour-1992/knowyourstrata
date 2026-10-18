@@ -31,7 +31,7 @@ def card(t):
 def render(prov):
     tools = [t for t in DATA['tools'] if prov is None or t['prov'] == prov]
     return '<!-- tools:start -->\n<div class="dir-grid" id="dirGrid">\n' + '\n'.join(card(t) for t in tools) + \
-        '\n<p class="dir-empty" id="dirEmpty" hidden>No tool matches that yet. Try a broader word, or clear the filters.</p>\n</div>\n<!-- tools:end -->'
+        '\n<p class="dir-empty" id="dirEmpty" hidden>No tool matches that yet. Try a broader word, or <button type="button" class="dir-clear" data-clear>show all tools</button>.</p>\n</div>\n<!-- tools:end -->'
 
 
 def counts(s):

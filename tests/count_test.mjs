@@ -1,10 +1,9 @@
 // Server-side counter tests. Run: node tests/count_test.mjs
 //
-// The counter shipped in August 2026 and recorded nothing for two months: the
-// D1 database existed and was bound, but its table had never been created, so
-// every INSERT failed and count() swallowed the error by design. These tests
-// pin the fix (create the table on first use) and the allowlist, which had
-// also fallen behind: seven Ontario tools were missing from it.
+// count() swallows errors by design, so a missing table or a stale allowlist
+// would fail silently. These tests pin the safety net (create the table on
+// first use) and the allowlist, which had fallen behind until 16 October 2026:
+// the seven newest Ontario tools were missing from it and their use was dropped.
 import { count, validate, TOOL_SLUGS } from '../functions/_lib/count.js';
 import { readFileSync } from 'node:fs';
 

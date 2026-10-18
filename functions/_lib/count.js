@@ -88,10 +88,10 @@ export async function count(env, name, detail) {
     try {
       await write();
     } catch (err) {
-      // The database existed from August 2026 but its table was never created,
-      // so every write failed here and nothing was ever counted. Create the
-      // table on first use instead of depending on a manual console step, then
-      // retry once. Same statements as db/schema.sql.
+      // Safety net: if the table is ever missing (a new or reset database),
+      // create it on first use instead of depending on a manual console step,
+      // then retry once. Same statements as db/schema.sql. (The live table has
+      // existed since 26 August 2026; this guards against it going missing.)
       if (!/no such table/i.test(String(err && err.message))) throw err;
       await ensureSchema(env);
       await write();
