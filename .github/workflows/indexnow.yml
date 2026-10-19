@@ -1,0 +1,125 @@
+# Tell Bing (and every IndexNow engine: Yandex, Seznam, Naver) which pages
+# changed, every time main changes.
+#
+# Why: Cloudflare Crawler Hints is on, but Bing's IndexNow report showed it
+# pinging only fonts, the favicon and robots.txt, never a tool or pack page.
+# Bing is the engine actually sending visitors, so it should hear about every
+# change to a page the same day. This covers Nour's push scripts and merged
+# editorial pull requests alike.
+#
+# The key below is PUBLIC by design. IndexNow proves ownership by fetching it
+# from the site root (/38c1bcbb8b45dad76a9e779dcdf9affd.txt), so it is not a secret and needs
+# no repository secret. To rotate it, add a new key file, change KEY here, and
+# delete the old file.
+#
+# Only URLs that appear in sitemap.xml are sent, so the gated pack pages, 404
+# and anything else unlisted never are. When the key file itself changes (the
+# first run), every sitemap URL is sent once. Run it by hand from the Actions
+# tab with "all" ticked to resend the whole sitemap.
+
+name: IndexNow ping
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '*.txt'
+      - 'sitemap.xml'
+  workflow_dispatch:
+    inputs:
+      all:
+        description: 'Send every URL in sitemap.xml'
+        type: boolean
+        default: true
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  KEY: 38c1bcbb8b45dad76a9e779dcdf9affd
+  HOST: knowyourstrata.com
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Work out which URLs changed
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.all }}
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess
+          host = os.environ['HOST']; key = os.environ['KEY']
+          listed = re.findall(r'<loc>([^<]+)</loc>', open('sitemap.xml', encoding='utf-8').read())
+          before, after = os.environ.get('BEFORE', ''), os.environ['AFTER']
+          send_all = os.environ.get('ALL') == 'true'
+          files = []
+          if not send_all:
+              if not before or set(before) == {'0'}:
+                  send_all = True
+              else:
+                  files = subprocess.check_output(['git', 'diff', '--name-only', before, after], text=True).split()
+                  send_all = key + '.txt' in files
+          if send_all:
+              urls = listed
+          else:
+              def url(f):
+                  if not f.endswith('.html'):
+                      return None
+                  p = f[:-5]
+                  if p == 'index':
+                      p = ''
+                  elif p.endswith('/index'):
+                      p = p[:-5]
+                  return 'https://%s/%s' % (host, p)
+              urls = [u for u in (url(f) for f in files) if u in listed]
+          print('%d URL(s) to send' % len(urls))
+          for u in urls:
+              print('  ' + u)
+          open('urls.txt', 'w').write('\n'.join(urls))
+          PY
+
+      - name: Wait for Cloudflare to finish deploying
+        run: |
+          # Pages deploys in about a minute. Sending before that would point
+          # Bing at the old page. Also confirm the key file is live.
+          if [ ! -s urls.txt ]; then echo 'Nothing to send.'; exit 0; fi
+          sleep 120
+          for i in $(seq 1 20); do
+            if [ "$(curl -fsS --max-time 20 "https://$HOST/$KEY.txt" || true)" = "$KEY" ]; then
+              echo 'Key file is live.'; exit 0
+            fi
+            sleep 15
+          done
+          echo 'Key file never appeared at the site root.' >&2
+          exit 1
+
+      - name: Send to IndexNow
+        run: |
+          if [ ! -s urls.txt ]; then echo 'Nothing to send.'; exit 0; fi
+          python3 - <<'PY'
+          import json, os, urllib.request
+          host = os.environ['HOST']; key = os.environ['KEY']
+          urls = [u for u in open('urls.txt').read().split('\n') if u]
+          body = json.dumps({'host': host, 'key': key,
+                             'keyLocation': 'https://%s/%s.txt' % (host, key),
+                             'urlList': urls}).encode()
+          req = urllib.request.Request('https://api.indexnow.org/indexnow', data=body,
+                                       headers={'Content-Type': 'application/json; charset=utf-8'})
+          try:
+              with urllib.request.urlopen(req, timeout=60) as r:
+                  print('IndexNow answered %d for %d URL(s).' % (r.status, len(urls)))
+          except urllib.error.HTTPError as e:
+              raise SystemExit('IndexNow refused: %d %s' % (e.code, e.read()[:300]))
+          PY
