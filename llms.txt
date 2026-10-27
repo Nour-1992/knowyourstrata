@@ -33,6 +33,10 @@ Each tool page states a short answer under its heading, then the calculator, the
 - [AGM deadline](https://knowyourstrata.com/on/agm-deadline): When must our Ontario condo hold its AGM? Within six months of the end of each fiscal year. A new corporation holds its first meeting of owners within three months of registration. (Condominium Act, 1998 s. 45(2))
 - [Information certificate deadline](https://knowyourstrata.com/on/information-certificate-deadline): When is our periodic information certificate due? Within 60 days after the end of the first and the third quarter of the fiscal year. The second and fourth quarters have no certificate of their own unless a by-law adds one. (Condominium Act, 1998 s. 26.3; O. Reg. 48/01 s. 11.1(4))
 
+## Guides
+
+- [What changes for Ontario condo boards on December 31, 2026](https://knowyourstrata.com/on/december-31-2026-changes): the new requisition process (prescribed form, 20 day board answer, 40 day meeting clock), the reserved seat moving to non-leased voting units, and which date decides (O. Reg. 48/01 ss. 79 to 81)
+
 ## About the site
 
 - [How we verify](https://knowyourstrata.com/how-we-verify): the method behind every verification date

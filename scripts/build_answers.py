@@ -65,6 +65,10 @@ def llms():
             if t['prov'] == prov:
                 out.append('- [%s](%s%s): %s %s (%s)' % (t['name'], SITE, t['href'], question(t), t['answer'], t['answer_cite']))
         out.append('')
+    out += ['## Guides', '',
+            '- [What changes for Ontario condo boards on December 31, 2026](%s/on/december-31-2026-changes): '
+            'the new requisition process (prescribed form, 20 day board answer, 40 day meeting clock), the reserved seat '
+            'moving to non-leased voting units, and which date decides (O. Reg. 48/01 ss. 79 to 81)' % SITE, '']
     out += ['## About the site', '',
             '- [How we verify](%s/how-we-verify): the method behind every verification date' % SITE,
             '- [Monitoring record](%s/monitoring): every weekly source check and what it found' % SITE,

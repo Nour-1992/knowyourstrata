@@ -321,16 +321,20 @@
         <div class="stamp">
           <p class="k">Meeting must be held no later than</p>
           <p class="date" id="meetByDate">—</p>
-          <p class="sub">if the board proceeds itself — s. 46(4)(b)</p>
+          <p class="sub" id="reqSub">if the board proceeds itself — s. 46(4)(b)</p>
         </div>
-        <p class="verified-badge"><span class="check">✓</span> Verified August 27, 2026 · <span id="badgeCiteReq">Condominium Act, 1998, ss. 46, 47</span></p>
+        <p class="verified-badge"><span class="check">✓</span> <span id="reqVerified">Verified August 27, 2026</span> · <span id="badgeCiteReq">Condominium Act, 1998, ss. 46, 47</span></p>
         <p class="badge-note">Sources checked automatically every Monday. Last check October 26, 2026, no change found.<span class="badge-note-more"> <a href="/monitoring">See the record</a> &middot;</span> <span class="badge-note-more"><a href="/how-we-verify">How we verify</a></span></p>
         <p class="past" id="pastNoteReq"></p>
 
+        <p class="cite-line" id="reqRegime"></p>
+        <p class="cite-line" id="reqResponseLine" style="display:none"></p>
         <p class="cite-line" id="reqNoticeLine"></p>
         <p class="cite-line" id="reqPrelimLine"></p>
-        <p class="flag">That 5-day figure is <strong>CAO's recommended practice, not a Condominium Act deadline</strong> — the Act sets no separate day count for sending the Preliminary Notice, only the 35-day outer limit for the whole process. And the numbers are worth a second look together: 5 days plus the mandatory 15-day and 20-day notice periods that follow it add up to 40 days — five more than the 35-day meeting deadline the Act actually sets. Sending the Preliminary Notice sooner than CAO's 5-day mark leaves more room to still meet the statutory 15/20-day minimums inside the 35-day cap.</p>
-        <p class="flag">If the board doesn't call and hold the meeting within the 35 days, a requisitionist may call it instead — that meeting "shall be held within 45 days of the day on which the meeting is called." <span class="ref">s. 46(5)</span></p>
+        <p class="flag" id="flagCao">That 5-day figure is <strong>CAO's recommended practice, not a Condominium Act deadline</strong> — the Act sets no separate day count for sending the Preliminary Notice, only the 35-day outer limit for the whole process. And the numbers are worth a second look together: 5 days plus the mandatory 15-day and 20-day notice periods that follow it add up to 40 days — five more than the 35-day meeting deadline the Act actually sets. Sending the Preliminary Notice sooner than CAO's 5-day mark leaves more room to still meet the statutory 15/20-day minimums inside the 35-day cap.</p>
+        <p class="flag" id="flagSelfHelp">If the board doesn't call and hold the meeting within the 35 days, a requisitionist may call it instead — that meeting "shall be held within 45 days of the day on which the meeting is called." <span class="ref">s. 46(5)</span></p>
+        <p class="flag" id="flagNew" style="display:none">Under the new section there is no requisitionist self-help meeting. If the board refuses, the requisitionists may revise the requisition on a fresh form within 10 days, or within 20 days apply to the Condominium Authority Tribunal or the Superior Court of Justice; otherwise the requisition is treated as abandoned. If the requisitionists asked in the requisition (or later agreed in writing) to add the business to the next AGM instead, it goes on the agenda of the next AGM scheduled at least 40 days after the response period ends. <span class="ref">s. 46(11)(a), (13), (15), as replaced December 31, 2026</span></p>
+        <p class="flag" id="flagChange">A requisition the board receives on or after December 31, 2026 runs on a different clock: a 20 day written response, then 40 days to hold the meeting. Enter a received date from that day on to see it. <span class="ref"><a href="/on/december-31-2026-changes">What changes on December 31, 2026</a></span></p>
       </div>
 
       <div class="copybar no-print">
@@ -354,6 +358,16 @@
     <p>Section 46 lets owners holding at least 15% of the units requisition a meeting. Once the board receives it, section 46(4)(b) requires the board to "call and hold a meeting of owners within 35 days." If the board doesn't, section 46(5) lets a requisitionist call the meeting themselves, and it "shall be held within 45 days of the day on which the meeting is called."</p>
     <p>The 15-day and 20-day notice minimums in s. 47(1) still apply to a requisitioned meeting — nothing in the Act carves it out. We looked for a stated deadline for sending the Preliminary Notice itself — a specific number of days after the requisition arrives — in both the Act and O. Reg. 48/01, and found none. The <a href="https://www.condoauthorityontario.ca/condo-living/owners-meetings/owner-requisitioned-meetings/" rel="noopener">Condominium Authority of Ontario recommends sending it within 5 days</a> of receiving the requisition, but that's CAO's own guidance to boards, not a section of the Act — it appears on CAO's site without a citation, unlike the 15-day and 35-day figures next to it, which do trace to ss. 47(1)(b) and 46(4)(b).</p>
     <p>Do the math on CAO's own number, though, and it's tighter than it looks: 5 days to send the Preliminary Notice, plus the mandatory 20-day gap before the Notice of Meeting, plus the mandatory 15-day gap before the meeting itself, comes to 40 days — five more than the 35-day cap the Act sets in s. 46(4)(b). Following CAO's 5-day guidance to the letter and then the statutory minimums to the letter can't both fit inside 35 days. A board that wants to actually hit the 35-day deadline has less runway than CAO's recommended practice implies.</p>
+
+    <h2 style="margin-top:32px">From December 31, 2026: a 20 day response, then 40 days</h2>
+    <p>Section 46 is repealed and replaced on December 31, 2026 (2015, c. 28, Sched. 1, s. 40). Which version applies turns on one fact, the day the board received the requisition: one received before December 31 stays under the old section to the end, even if its meeting lands in January (O. Reg. 48/01 s. 80). For one received on or after that day:</p>
+    <ul>
+      <li>The board must respond in writing within 20 days, saying it will call and hold the meeting or why the requisition does not comply. No response counts as agreeing. <span class="ref">s. 46(7), (10); O. Reg. 48/01 s. 12.2.3</span></li>
+      <li>If it agrees, or is deemed to, it must call and hold the meeting within 40 days after the 20 day response period ends, unless the requisitionists asked for the business to go to the next AGM instead. <span class="ref">s. 46(11)</span></li>
+      <li>The 15 and 20 day notice minimums in s. 47(1) still apply inside that window, so the calculator works the Notice of Meeting and Preliminary Notice back from the last permitted meeting day.</li>
+      <li>There is no requisitionist self-help meeting any more. A refused requisition can be revised within 10 days or taken to the Condominium Authority Tribunal or the court within 20 days. <span class="ref">s. 46(13), (15)</span></li>
+    </ul>
+    <p>CAO's 5-day Preliminary Notice guidance was written for the old 35-day cap and is not applied to the new clock. Who may requisition, the prescribed form and the rest of the change are on <a href="/on/december-31-2026-changes">what changes for Ontario boards on December 31, 2026</a>.</p>
 
     <h2 style="margin-top:32px">Do by-laws change any of this?</h2>
     <p>We checked. The only by-law power over notice we found in s. 47 is in subsection (6) — a by-law can restrict giving notice by electronic communication, or set extra conditions for it. Nothing in ss. 45.1, 46 or 47 lets a by-law shorten or lengthen the 15-day, 20-day, 35-day or 45-day counts themselves. That's different from quorum, where a registered by-law can hold quorum at 25% throughout (s. 50(1.2)) — there's no equivalent override here.</p>
@@ -406,7 +420,7 @@
   </section>
 
   <footer>
-    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 45, 45.1, 46 and 47. Last verified 27 August 2026 against the official statute on ontario.ca, e-Laws currency date 21 October 2026; the consolidation in force is unchanged since 31 December 2025. The 5-day Preliminary Notice figure for requisitioned meetings is recommended practice from the Condominium Authority of Ontario, not a statutory deadline — see condoauthorityontario.ca. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
+    <p><strong>General information, not legal advice.</strong> Based on the Condominium Act, 1998, S.O. 1998, c. 19, ss. 45, 45.1, 46 and 47, with s. 46 as replaced on December 31, 2026 by 2015, c. 28, Sched. 1, s. 40; O. Reg. 48/01, ss. 12.2.3 and 80, as amended by O. Reg. 236/26; and the Legislation Act, 2006, ss. 88 and 89 for the new clock. Last verified 27 August 2026 against the official statute on ontario.ca (the December 31, 2026 requisition clock read on 27 October 2026), e-Laws currency date 21 October 2026; the consolidation in force is unchanged since 31 December 2025. The 5-day Preliminary Notice figure for requisitioned meetings is recommended practice from the Condominium Authority of Ontario, not a statutory deadline — see condoauthorityontario.ca. The sections this tool relies on are checked against the official e-Laws consolidation every Monday by an automated watcher; a detected change triggers a human re-read before anything here is updated.</p>
     <p>Built for the volunteer boards who keep Ontario's condominiums running.</p>
     <p class="kys-sitelinks"><a href="/about">About</a> &middot; <a href="/contact">Contact</a> &middot; <a href="/monitoring">Monitoring</a> &middot; <a href="/how-we-verify">How we verify</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
   </footer>
@@ -491,6 +505,15 @@
       pastNoteReq=document.getElementById('pastNoteReq'),
       reqNoticeLine=document.getElementById('reqNoticeLine'),
       reqPrelimLine=document.getElementById('reqPrelimLine'),
+      reqRegime=document.getElementById('reqRegime'),
+      reqResponseLine=document.getElementById('reqResponseLine'),
+      reqSub=document.getElementById('reqSub'),
+      reqVerified=document.getElementById('reqVerified'),
+      badgeCiteReq=document.getElementById('badgeCiteReq'),
+      flagCao=document.getElementById('flagCao'),
+      flagSelfHelp=document.getElementById('flagSelfHelp'),
+      flagNew=document.getElementById('flagNew'),
+      flagChange=document.getElementById('flagChange'),
       copyBtn=document.getElementById('copyBtn'),
       printBtn=document.getElementById('printBtn'),
       copiedNote=document.getElementById('copiedNote');
@@ -505,6 +528,63 @@
     var c=new Date(d.getTime());
     c.setDate(c.getDate()+n);
     return c;
+  }
+  /* From December 31, 2026 the replacement s. 46 applies to a requisition the
+     board receives on or after that day; one received before stays under the
+     old section to the end (O. Reg. 48/01 s. 80). Same constant, holiday list
+     and day counting as the requisition calculator, so the two never disagree.
+     If the proclamation date moves, change NEW_S46 here and there. */
+  var NEW_S46=new Date(2026,11,31);
+  function iso(d){return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+  function easterSunday(y){
+    var a=y%19,b=Math.floor(y/100),c=y%100,dd=Math.floor(b/4),e=b%4,
+        f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-dd-g+15)%30,
+        i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),
+        mo=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
+    return new Date(y,mo-1,day);
+  }
+  function nthWeekdayBefore(y,mo,dow,beforeDay){
+    var d=new Date(y,mo,beforeDay);
+    while(d.getDay()!==dow){d=addDays(d,-1);}
+    return d;
+  }
+  function nthWeekdayOfMonth(y,mo,dow,n){
+    var d=new Date(y,mo,1);
+    while(d.getDay()!==dow){d=addDays(d,1);}
+    return addDays(d,(n-1)*7);
+  }
+  /* Legislation Act, 2006 s. 88(2). Saturday is deliberately absent. */
+  function holidayName(d){
+    var y=d.getFullYear(),mo=d.getMonth(),day=d.getDate(),dow=d.getDay();
+    if(dow===0)return 'a Sunday';
+    if(mo===0&&day===1)return 'New Year’s Day';
+    if(mo===0&&dow===1&&day===2)return 'the Monday after a Sunday New Year’s Day';
+    if(mo===1&&dow===1&&day>=15&&day<=21)return 'Family Day';
+    var e=easterSunday(y);
+    if(iso(d)===iso(addDays(e,-2)))return 'Good Friday';
+    if(iso(d)===iso(addDays(e,1)))return 'Easter Monday';
+    if(mo===4&&iso(d)===iso(nthWeekdayBefore(y,4,1,24)))return 'Victoria Day';
+    if(mo===6&&day===1)return 'Canada Day';
+    if(mo===6&&day===2&&new Date(y,6,1).getDay()===0)return 'Canada Day (moved from a Sunday)';
+    if(mo===8&&iso(d)===iso(nthWeekdayOfMonth(y,8,1,1)))return 'Labour Day';
+    if(mo===9&&iso(d)===iso(nthWeekdayOfMonth(y,9,1,2)))return 'Thanksgiving Day';
+    if(mo===10&&day===11)return 'Remembrance Day';
+    if(mo===11&&day===25)return 'Christmas Day';
+    if(mo===11&&day===26)return 'Boxing Day';
+    if(mo===11&&day===27&&new Date(y,11,25).getDay()===6)return 'the Monday after a Saturday Christmas Day';
+    if(mo===11&&day===27&&new Date(y,11,25).getDay()===0)return 'the Tuesday after a Sunday Christmas Day';
+    return null;
+  }
+  /* A time limit that would end on a holiday runs to the next day that is not
+     one (Legislation Act, 2006 s. 89(1)). */
+  function deadline(start,n){
+    var raw=addDays(start,n), d=raw, why=null;
+    var hn=holidayName(d);
+    if(hn){why=hn;while(holidayName(d)){d=addDays(d,1);}}
+    return {raw:raw,date:d,moved:why};
+  }
+  function moveNote(x){
+    return x.moved?' (the last day, '+fmt.format(x.raw)+', is '+(x.moved==='a Sunday'?'a holiday under s. 88(2)':x.moved)+', so Legislation Act s. 89(1) moves it)':'';
   }
   function today0(){
     var t=new Date();
@@ -557,19 +637,64 @@
       err.style.display='none';
 
       var r=parseLocal(requisition.value);
-      var meetBy=addDays(r,35);
-      var noticeLatest=addDays(meetBy,-15);
-      var prelimRecommended=addDays(r,5);
+      var isNew=r.getTime()>=NEW_S46.getTime();
+      flagCao.style.display=isNew?'none':'';
+      flagSelfHelp.style.display=isNew?'none':'';
+      flagNew.style.display=isNew?'':'none';
+      flagChange.style.display=(!isNew&&today0().getTime()<NEW_S46.getTime())?'':'none';
+      reqResponseLine.style.display=isNew?'':'none';
 
-      meetByDate.textContent=fmt.format(meetBy);
-      reqNoticeLine.innerHTML='<strong>Notice of Meeting</strong> still needs to go out at least 15 days before whatever date is picked — at the very latest, that\'s '+fmt.format(noticeLatest)+'. <span class="ref">s. 47(1)(b)</span>';
-      reqPrelimLine.innerHTML='<strong>Preliminary Notice</strong> — CAO recommends sending it within 5 days of receiving the requisition, which would be '+fmt.format(prelimRecommended)+'. <span class="ref">CAO guidance, not a statutory deadline</span>';
+      if(!isNew){
+        /* Old s. 46(4)(b): 35 days; a last day on a holiday moves to the next
+           day that is not one (Legislation Act, 2006 s. 89(1)). */
+        var m35=deadline(r,35);
+        var meetBy=m35.date;
+        var noticeLatest=addDays(meetBy,-15);
+        var prelimRecommended=addDays(r,5);
 
-      if(meetBy<today0()){
-        pastNoteReq.style.display='block';
-        pastNoteReq.textContent='That 35-day deadline has already passed. Check whether a requisitionist has since called the meeting themselves under s. 46(5) — if so, it must be held within 45 days of the day they called it.';
+        reqSub.textContent='if the board proceeds itself — s. 46(4)(b)';
+        reqVerified.textContent='Verified August 27, 2026';
+        badgeCiteReq.textContent='Condominium Act, 1998, ss. 46, 47';
+        reqRegime.innerHTML='<strong>Section 46 as it reads before December 31, 2026</strong> applies: the board received this requisition before that day, and O. Reg. 48/01 s. 80 keeps the old section for it to the end.';
+        meetByDate.textContent=fmt.format(meetBy);
+        reqRegime.innerHTML+=(m35.moved?' The 35th day'+moveNote(m35)+'.':'');
+        reqNoticeLine.innerHTML='<strong>Notice of Meeting</strong> still needs to go out at least 15 days before whatever date is picked — at the very latest, that\'s '+fmt.format(noticeLatest)+'. <span class="ref">s. 47(1)(b)</span>';
+        reqPrelimLine.innerHTML='<strong>Preliminary Notice</strong> — CAO recommends sending it within 5 days of receiving the requisition, which would be '+fmt.format(prelimRecommended)+'. <span class="ref">CAO guidance, not a statutory deadline</span>';
+
+        if(meetBy<today0()){
+          pastNoteReq.style.display='block';
+          pastNoteReq.textContent='That 35-day deadline has already passed. Check whether a requisitionist has since called the meeting themselves under s. 46(5) — if so, it must be held within 45 days of the day they called it.';
+        } else {
+          pastNoteReq.style.display='none';
+        }
+        current={isReq:true,isNew:false,requisition:r,meetBy:meetBy,noticeLatest:noticeLatest,prelimRecommended:prelimRecommended};
       } else {
-        pastNoteReq.style.display='none';
+        /* New s. 46(7): written response within the prescribed period, which
+           O. Reg. 48/01 s. 12.2.3 sets at 20 days; silence counts as agreeing
+           (s. 46(10)). New s. 46(11)(b): call and hold the meeting within 40
+           days after the END of the response period, which is day 20 itself,
+           not a later day a holiday may have moved the board's deadline to. */
+        var resp=deadline(r,20);
+        var meet=deadline(resp.raw,40);
+        var noticeLatestN=addDays(meet.date,-15);
+        var prelimLatestN=addDays(noticeLatestN,-20);
+
+        reqSub.textContent='40 days after the 20 day response period ends — s. 46(11)(b), as replaced';
+        reqVerified.textContent='Verified October 27, 2026';
+        badgeCiteReq.textContent='Condominium Act, 1998, ss. 46 (as replaced December 31, 2026), 47; O. Reg. 48/01, s. 12.2.3';
+        reqRegime.innerHTML='<strong>Section 46 as replaced on December 31, 2026</strong> applies, because the board received this requisition on or after that day.';
+        meetByDate.textContent=fmt.format(meet.date);
+        reqResponseLine.innerHTML='<strong>Board\'s written response</strong> due by '+fmt.format(resp.date)+moveNote(resp)+': it will call and hold the meeting, or why the requisition does not comply. No response by then counts as agreeing. <span class="ref">s. 46(7), (10); O. Reg. 48/01 s. 12.2.3</span>';
+        reqNoticeLine.innerHTML='<strong>Notice of Meeting</strong> at least 15 days before the meeting: for a meeting on the last permitted day, by '+fmt.format(noticeLatestN)+'. <span class="ref">s. 47(1)(b)</span>';
+        reqPrelimLine.innerHTML='<strong>Preliminary Notice</strong> at least 20 days before the Notice of Meeting: for that meeting date, by '+fmt.format(prelimLatestN)+'. Pick an earlier meeting date and both move earlier with it. <span class="ref">ss. 45.1, 47(1)(c)</span>'+(meet.moved?' The meeting day itself moved'+moveNote(meet)+'.':'');
+
+        if(meet.date<today0()){
+          pastNoteReq.style.display='block';
+          pastNoteReq.textContent='That 40 day deadline has already passed. Under the new section there is no requisitionist self-help meeting; the remedy runs through the Condominium Authority Tribunal or the court.';
+        } else {
+          pastNoteReq.style.display='none';
+        }
+        current={isReq:true,isNew:true,requisition:r,resp:resp,meet:meet,noticeLatest:noticeLatestN,prelimLatest:prelimLatestN};
       }
 
       resultBoard.style.display='none';
@@ -636,6 +761,12 @@
       s='For our meeting on '+fmt.format(current.meeting)+', the Preliminary Notice must be sent no later than '+
         fmt.format(current.prelimBy)+' and the Notice of Meeting no later than '+fmt.format(current.noticeBy)+
         ", under Condominium Act, 1998 s. 47(1)(b)-(c). Verified August 27, 2026.";
+    } else if(current.isNew){
+      s='For a requisition the board received on '+fmt.format(current.requisition)+
+        ' (Condominium Act, 1998 s. 46 as replaced December 31, 2026): the board must respond in writing by '+fmt.format(current.resp.date)+
+        ' (s. 46(7); O. Reg. 48/01 s. 12.2.3), and no response counts as agreeing (s. 46(10)). If it agrees, it must call and hold the meeting by '+
+        fmt.format(current.meet.date)+', 40 days after the response period ends (s. 46(11)(b)). For a meeting on that day, the Notice of Meeting goes out by '+
+        fmt.format(current.noticeLatest)+' and the Preliminary Notice by '+fmt.format(current.prelimLatest)+' (s. 47(1)(b), (c)). Verified October 27, 2026.';
     } else {
       s='For a meeting requisitioned on '+fmt.format(current.requisition)+
         ', the board must call and hold it no later than '+fmt.format(current.meetBy)+
